@@ -6,11 +6,11 @@ using UnityEngine;
 namespace BlueSteelGenesis.Character {
 public abstract class Character : MonoBehaviour {
   public virtual void damage(int dmg) {
-    currentHealth -= dmg;
+    currentHealth -= Math.Max(dmg, 1);
     if (current_health_ == 0) die();
   }
   public virtual void heal(int hp) {
-    currentHealth += hp;
+    currentHealth += Math.Max(hp, 1);
   }
 
   abstract protected void die();
