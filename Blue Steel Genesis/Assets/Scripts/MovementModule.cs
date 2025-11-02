@@ -1,24 +1,42 @@
 using UnityEngine;
 
+/// <summary>
+/// модуль движения
+/// </summary>
 public class MovementModule : Module
 {
+    /// <summary>
+    /// Transform игрока для управления его позицией и движением
+    /// </summary>
     private Transform playerTransform;
+    /// <summary>
+    /// длина шага
+    /// </summary>
     private float stepDistance = 1.0f;
 
-    
+    /// <summary>
+    /// Конструктор без возможности указать дистанцию шага
+    /// </summary>
+    /// <param name="playerTransform"></param>
     public MovementModule(Transform playerTransform)
     {
         this.playerTransform = playerTransform;
     }
 
-    
+    /// <summary>
+    /// Конструктор с возможностью указать дистанцию шага
+    /// </summary>
+    /// <param name="playerTransform"></param>
+    /// <param name="stepDistance"></param>
     public MovementModule(Transform playerTransform, float stepDistance)
     {
         this.playerTransform = playerTransform;
         this.stepDistance = stepDistance;
     }
 
-    
+    /// <summary>
+    ///  Реализация выполнения движения
+    /// </summary>
     public override void Execute()
     {
         if (!isActive || playerTransform == null)
