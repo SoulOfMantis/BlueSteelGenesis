@@ -12,8 +12,19 @@ public abstract class Character : MonoBehaviour {
   public virtual void heal(int hp) {
     currentHealth += Math.Max(hp, 1);
   }
-
   abstract protected void die();
+
+  public virtual void startTurn() {
+    myTurn = true;
+    currentEnergy = maxEnergy;
+    // TODO: trigger modules
+  }
+  public virtual void endTurn() {
+    myTurn = false;
+    // TODO: trigger modules
+  }
+
+
 
   public void move(int x, int y) => move(new Vector2Int(x, y));
   public void move(Vector2Int pos) {
@@ -23,6 +34,12 @@ public abstract class Character : MonoBehaviour {
   public void strike(Vector2Int pos, int dmg) {
     // TODO
   }
+
+  // TODO: public void addModule(/* smth */)
+  // TODO: protected void triggerModule(/* smth */)
+  // TODO: protected void triggerModules(TriggerType)
+
+
 
   public int currentHealth {
     get => current_health_;
@@ -34,7 +51,21 @@ public abstract class Character : MonoBehaviour {
     protected set => max_health_ = value;
   }
 
+  public int currentEnergy {
+    get => current_energy_;
+    protected set =>
+      current_energy_ = Math.Clamp(value, 0, maxEnergy);
+  }
+  public int maxEnergy { get; protected set; }
+
+  protected bool myTurn { get; private set; }
+
+
+
   private int current_health_;
   private int max_health_;
+
+  private int current_energy_;
+  // private List<Module> modules_;
 }
 }
