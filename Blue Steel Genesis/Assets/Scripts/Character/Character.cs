@@ -44,12 +44,9 @@ public abstract class Character : MonoBehaviour {
   public int currentHealth {
     get => current_health_;
     protected set =>
-      current_health_ = Math.Clamp(value, 0, max_health_);
+      current_health_ = Math.Clamp(value, 0, maxHealth);
   }
-  public int maxHealth {
-    get => max_health_;
-    protected set => max_health_ = value;
-  }
+  public int maxHealth { get; protected set; }
 
   public int currentEnergy {
     get => current_energy_;
@@ -63,8 +60,6 @@ public abstract class Character : MonoBehaviour {
 
 
   private int current_health_;
-  private int max_health_;
-
   private int current_energy_;
   // private List<Module> modules_;
 }
