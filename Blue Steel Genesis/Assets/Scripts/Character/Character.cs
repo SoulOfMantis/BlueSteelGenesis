@@ -26,12 +26,12 @@ public abstract class Character : MonoBehaviour {
 
 
 
-  public void move(int x, int y) => move(new Vector2Int(x, y));
-  public void move(Vector2Int pos) {
+  public void move(int x, int y, int z) => move(new Vector3Int(x, y, z));
+  public void move(Vector3Int pos) {
     // TODO
   }
-  public void strike(int x, int y, int dmg) => strike(new Vector2Int(x, y), dmg);
-  public void strike(Vector2Int pos, int dmg) {
+  public void strike(int x, int y, int z, int dmg) => strike(new Vector3Int(x, y, z), dmg);
+  public void strike(Vector3Int pos, int dmg) {
     // TODO
   }
 
