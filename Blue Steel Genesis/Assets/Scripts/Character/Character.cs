@@ -15,6 +15,15 @@ public abstract class Character : MonoBehaviour {
 
   abstract protected void die();
 
+  public void move(int x, int y) => move(new Vector2Int(x, y));
+  public void move(Vector2Int pos) {
+    // TODO
+  }
+  public void strike(int x, int y, int dmg) => strike(new Vector2Int(x, y), dmg);
+  public void strike(Vector2Int pos, int dmg) {
+    // TODO
+  }
+
   public int currentHealth {
     get => current_health_;
     protected set =>
