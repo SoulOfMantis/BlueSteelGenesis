@@ -2,20 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// менеджер модулей
+/// Менеджер модулей
 /// </summary>
 public class ModuleManager
 {
-    /// <summary>
-    /// список все модулей
-    /// </summary>
     private List<Module> modules = new List<Module>();
 
-    
-    /// <summary>
-    /// добавление модуля
-    /// </summary>
-    /// <param name="module"></param>
     public void AddModule(Module module)
     {
         modules.Add(module);
@@ -23,20 +15,12 @@ public class ModuleManager
         Debug.Log($"Модуль {module.GetType().Name} добавлен");
     }
 
-    /// <summary>
-    /// убрать модуль
-    /// </summary>
-    /// <param name="module"></param>
     public void RemoveModule(Module module)
     {
         modules.Remove(module);
         Debug.Log($"Модуль {module.GetType().Name} удален");
     }
 
-    
-    /// <summary>
-    /// выполнить действие всех модулей (потом будет изменён на добавлении всех активных модулей на панель)
-    /// </summary>
     public void ExecuteAll()
     {
         foreach (var module in modules)
@@ -48,25 +32,6 @@ public class ModuleManager
         }
     }
 
-    /// <summary>
-    /// обновить все модули
-    /// </summary>
-    public void UpdateAll()
-    {
-        foreach (var module in modules)
-        {
-            if (module.IsActive)
-            {
-                module.Update();
-            }
-        }
-    }
-
-    /// <summary>
-    /// Включить/выключить конкретный тип модулей
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="active"></param>
     public void SetModuleActive<T>(bool active) where T : Module
     {
         foreach (var module in modules)
