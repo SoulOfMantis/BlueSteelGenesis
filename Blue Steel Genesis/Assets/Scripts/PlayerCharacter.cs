@@ -1,12 +1,26 @@
-using UnityEngine;
 using BlueSteelGenesis.Character;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
 
 public class PlayerCharacter : Character
 {
+    public List<Button> buttons;
+    public List<int> modules; //Заглушка: 0 -- пассивный, 1 -- активный
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        for (int i = 0; i < buttons.Count; i++)
+        {
+            if (modules[i] == 0)
+            {
+                buttons[i].gameObject.SetActive(false);
+            }
+        }
     }
 
     // Update is called once per frame
