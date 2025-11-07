@@ -6,32 +6,17 @@ using UnityEngine;
 public class InitiativeTracker : MonoBehaviour
 {
 
-    public class TestObject
-    {
-        int MyInt;
-        public void PrintInt()
-        {
-            Debug.Log(MyInt);
-        }
-        public TestObject(int n)
-        {
-            MyInt = n;
-        }
-    }
-    List<TestObject> test = new();
+    public List<TestObject> test;
 
     void Start()
     {
-        for (int i = 0; i < 10; i++)
-        {
-            test.Add(new TestObject(i));
-        }
+
 
     }
 
     void Update()
     {
-        for (int i = 1;i < 10; i++)
+        for (int i = 1;i < test.Count; i++)
         {
             test[i].PrintInt();
         }
