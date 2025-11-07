@@ -18,7 +18,7 @@ public class InitiativeTracker : MonoBehaviour
     {
         for (int i = 1;i < test.Count; i++)
         {
-            test[i].PrintInt();
+            test[i].move();
         }
 
     }
