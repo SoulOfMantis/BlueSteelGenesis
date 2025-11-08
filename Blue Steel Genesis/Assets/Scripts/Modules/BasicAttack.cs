@@ -1,25 +1,22 @@
 using UnityEngine;
 using BlueSteelGenesis.Character;
 
-
-
 namespace BlueSteelGenesis.Modules
 {
     /// <summary>
-    /// Базовый модуль движения (BMM сокращение)
+    /// Базовый модуль атаки (BAM сокращение)
     /// </summary>
-    public class BasicMovement : ActiveModule
+    public class BasicAttack : ActiveModule
     {
         public override void Effect(BlueSteelGenesis.Character.Character user, Vector3Int pos)
         {
-            user.move(pos);
-            Debug.Log("BMM executed");
+            user.strike(pos, 1);
+            Debug.Log("BAM attack executed");
         }
-
 
         public override void Execute()
         {
-            Debug.Log("BMM executed");
+            Debug.Log("BAM executed");
         }
     }
 }

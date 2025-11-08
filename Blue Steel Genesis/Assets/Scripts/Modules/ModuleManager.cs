@@ -1,45 +1,51 @@
+using BlueSteelGenesis.Character;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Менеджер модулей
-/// </summary>
-public class ModuleManager
+namespace BlueSteelGenesis.Modules
 {
-    private List<Module> modules = new List<Module>();
-
-    public void AddModule(Module module)
+    public class ModuleManager
     {
-        modules.Add(module);
-        module.Initialize();
-        Debug.Log($"Модуль {module.GetType().Name} добавлен");
-    }
+        private List<GameModule> modules = new List<GameModule>();
 
-    public void RemoveModule(Module module)
-    {
-        modules.Remove(module);
-        Debug.Log($"Модуль {module.GetType().Name} удален");
-    }
-
-    public void ExecuteAll()
-    {
-        foreach (var module in modules)
+        public void AddModule(GameModule module)
         {
-            if (module.IsActive)
+            modules.Add(module);
+            module.Initialize();
+            Debug.Log($"Модуль {module.GetType().Name} добавлен");
+        }
+
+        public void RemoveModule(GameModule module)
+        {
+            modules.Remove(module);
+            Debug.Log($"Модуль {module.GetType().Name} удален");
+        }
+
+        public void ExecuteAll()
+        {
+            foreach (var module in modules)
             {
                 module.Execute();
             }
         }
-    }
 
-    public void SetModuleActive<T>(bool active) where T : Module
-    {
-        foreach (var module in modules)
+        public void TriggerAll(BlueSteelGenesis.Character.Character user, Vector3Int pos)
         {
-            if (module is T)
+            foreach (var module in modules)
             {
-                module.IsActive = active;
-                Debug.Log($"Модуль {typeof(T).Name} установлен в состояние: {active}");
+                module.OnTrigger(user, pos);
+            }
+        }
+
+        public void SetModuleActive<T>(bool active) where T : GameModule
+        {
+            foreach (var module in modules)
+            {
+                if (module is T)
+                {
+
+                    Debug.Log($"Модуль {typeof(T).Name} установлен в состояние: {active}");
+                }
             }
         }
     }
