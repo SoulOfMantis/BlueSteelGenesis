@@ -1,56 +1,59 @@
-using BlueSteelGenesis.Character;
-using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 
-public class PlayerCharacter : Character
+
+namespace BlueSteelGenesis.Character_Modules
 {
-    public List<Button> buttons;
-    public List<int> modules; //Заглушка: 0 -- пассивный, 1 -- активный
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class PlayerCharacter : Character
     {
-        for (int i = 0; i < buttons.Count; i++)
+        public List<Button> buttons;
+        public List<int> modules; //Заглушка: 0 -- пассивный, 1 -- активный
+
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Start()
         {
-            if (modules[i] == 0)
+            for (int i = 0; i < buttons.Count; i++)
             {
-                buttons[i].gameObject.SetActive(false);
+                if (modules[i] == 0)
+                {
+                    buttons[i].gameObject.SetActive(false);
+                }
             }
         }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+
+        public override void startTurn()
+        {
+            base.startTurn();
+            //TODO: Включить кнопки для игрока
+        }
+
+        //public override void damage(int dmg)
+        //{
+        //    base.damage(dmg);
+        //    Debug.Log($"Игрок получил {dmg} урона!");
+        //}
+
+        //public override void heal(int hp)
+        //{
+        //    base.heal(hp);
+        //    Debug.Log($"Игрок полечился на {hp}!");
+        //}
+
+        override protected void die()
+        {
+            //TODO: trigger modules on dying
+            Debug.Log("Игрок умер!");
+        }
+
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public override void startTurn()
-    {
-        base.startTurn();
-        //TODO: Включить кнопки для игрока
-    }
-
-    //public override void damage(int dmg)
-    //{
-    //    base.damage(dmg);
-    //    Debug.Log($"Игрок получил {dmg} урона!");
-    //}
-
-    //public override void heal(int hp)
-    //{
-    //    base.heal(hp);
-    //    Debug.Log($"Игрок полечился на {hp}!");
-    //}
-
-    override protected void die()
-    {
-        //TODO: trigger modules on dying
-        Debug.Log("Игрок умер!");
-    }
-
 }
+

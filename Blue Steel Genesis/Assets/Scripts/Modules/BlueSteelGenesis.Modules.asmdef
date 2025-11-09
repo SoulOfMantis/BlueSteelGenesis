@@ -1,7 +1,0 @@
-{
-    "name": "BlueSteelGenesis.Modules",
-    "references": [
-    "BlueSteelGenesis.Character"],
-    "includePlatforms": [],
-    "excludePlatforms": []
-}

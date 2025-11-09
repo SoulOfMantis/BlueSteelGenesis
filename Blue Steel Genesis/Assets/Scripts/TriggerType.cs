@@ -1,7 +1,5 @@
-using UnityEngine;
 
-
-namespace BlueSteelGenesis.Modules
+namespace BlueSteelGenesis.Character_Modules
 {
     public enum TriggerType
     {
