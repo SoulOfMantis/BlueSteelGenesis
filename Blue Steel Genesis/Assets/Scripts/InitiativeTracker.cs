@@ -10,7 +10,7 @@ public class InitiativeTracker : MonoBehaviour
     int i = 0;
     private void FindAllCharacters()
     {
-        Character[] allCharacters = FindObjectsOfType<Character>();
+        Character[] allCharacters = FindObjectsByType<Character>(FindObjectsSortMode.None);
         characters.AddRange(allCharacters);
 
         Debug.Log($"Найдено персонажей: {characters.Count}");
