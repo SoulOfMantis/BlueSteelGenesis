@@ -17,12 +17,15 @@ public abstract class Character : MonoBehaviour {
   abstract protected void die();
 
  public virtual void startTurn() {
-    myTurn = true;
-    currentEnergy = maxEnergy;
-    // TODO: trigger modules
+
+        myTurn = true;
+        currentEnergy = maxEnergy;
+        // TODO: trigger modules
   }
   public virtual void endTurn() {
-    myTurn = false;
+
+        myTurn = false;
+        Tracker.StartNextTurn();
 
     // TODO: trigger modules
   }
