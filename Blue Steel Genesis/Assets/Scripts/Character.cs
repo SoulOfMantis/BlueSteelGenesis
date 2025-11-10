@@ -13,7 +13,8 @@ namespace BlueSteelGenesis.Character_Modules
         {
             currentHealth -= Math.Max(dmg, 1);
             triggerModules(TriggerType.OnDamage, Vector3Int.zero);
-            if (currentHealth == 0) die();
+            if (currentHealth == 0) 
+                die();
         }
 
         public virtual void heal(int hp)
@@ -58,7 +59,7 @@ namespace BlueSteelGenesis.Character_Modules
         }
 
      
-        public bool UseActiveModule(int moduleIndex, Vector3Int pos)
+        public bool useActiveModule(int moduleIndex, Vector3Int pos)
         {
             if (moduleIndex < 0 || moduleIndex >= modules_.Count)
                 return false;
@@ -72,7 +73,7 @@ namespace BlueSteelGenesis.Character_Modules
             return false;
         }
 
-        protected void triggerModules(TriggerType triggerType, Vector3Int pos)
+       protected void triggerModules(TriggerType triggerType, Vector3Int pos)
         {
             foreach (var module in modules_)
             {

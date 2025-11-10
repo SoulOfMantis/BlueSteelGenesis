@@ -7,7 +7,7 @@ namespace BlueSteelGenesis.Character_Modules
     /// <summary>
     /// Пассивный модуль яда или поджога - наносит урон при начале хода
     /// </summary>
-    public class PoisonModule : PassiveModule
+    public class PoisonModule : StatusModule
     {
         private int poisonDamage;
 
@@ -16,19 +16,6 @@ namespace BlueSteelGenesis.Character_Modules
             triggerType = TriggerType.OnTurnStart;
             poisonDamage = damage;
             turnsLeft = duration;
-        }
-
-        
-        protected override void TurnTick(Character user)
-        {
-            if (turnsLeft > 0)
-            {
-                turnsLeft--;
-                if (turnsLeft == 0)
-                {
-                    Debug.Log("Poison effect ended");
-                }
-            }
         }
 
         protected override void OnTriggerEffect(Character user, Vector3Int pos)

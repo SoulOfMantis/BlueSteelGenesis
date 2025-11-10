@@ -36,21 +36,20 @@ namespace BlueSteelGenesis.Character_Modules
             //TODO: Включить кнопки для игрока
         }
 
-        //public override void damage(int dmg)
-        //{
-        //    base.damage(dmg);
-        //    Debug.Log($"Игрок получил {dmg} урона!");
-        //}
+        public override void damage(int dmg)
+        {
+            base.damage(dmg);
+            Debug.Log($"Игрок получил {dmg} урона!");
+        }
 
-        //public override void heal(int hp)
-        //{
-        //    base.heal(hp);
-        //    Debug.Log($"Игрок полечился на {hp}!");
-        //}
+        public override void heal(int hp)
+        {
+            base.heal(hp);
+            Debug.Log($"Игрок полечился на {hp}!");
+        }
 
         override protected void die()
         {
-            //TODO: trigger modules on dying
             Debug.Log("Игрок умер!");
         }
 
