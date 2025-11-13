@@ -8,6 +8,93 @@ namespace BlueSteelGenesis.Character_Modules
     public abstract class Character : MonoBehaviour
     {
         private List<GameModule> modules_ = new List<GameModule>();
+        private List<StatusEffect> activeStatuses = new List<StatusEffect>();
+
+        /// <summary>
+        /// Добавляет статус персонажу
+        /// </summary>
+        public void AddStatus(StatusEffect status)
+        {
+            var existingStatus = activeStatuses.Find(s => s.GetType() == status.GetType());
+            if (existingStatus != null)
+            {
+                existingStatus.Refresh(status);
+                Debug.Log($"Status {status.GetType().Name} refreshed");
+            }
+            else
+            {
+                activeStatuses.Add(status);
+                status.OnApply(this);
+                Debug.Log($"Status {status.GetType().Name} applied");
+            }
+        }
+
+        /// <summary>
+        /// Удаляет статус у персонажа
+        /// </summary>
+        public void RemoveStatus(StatusEffect status)
+        {
+            if (activeStatuses.Remove(status))
+            {
+                status.OnRemove(this);
+                Debug.Log($"Status {status.GetType().Name} removed");
+            }
+        }
+
+        /// <summary>
+        /// Удаляет статус по типу
+        /// </summary>
+        public void RemoveStatus<T>() where T : StatusEffect
+        {
+            var status = activeStatuses.Find(s => s is T);
+            if (status != null)
+            {
+                RemoveStatus(status);
+            }
+        }
+
+        /// <summary>
+        /// Проверяет, есть ли статус у персонажа
+        /// </summary>
+        public bool HasStatus<T>() where T : StatusEffect
+        {
+            return activeStatuses.Exists(s => s is T);
+        }
+
+        /// <summary>
+        /// Получает статус по типу
+        /// </summary>
+        public T GetStatus<T>() where T : StatusEffect
+        {
+            return (T)activeStatuses.Find(s => s is T);
+        }
+
+        /// <summary>
+        /// Обрабатывает статусы в начале хода
+        /// </summary>
+        private void ProcessStartOfTurnStatuses()
+        {
+            for (int i = activeStatuses.Count - 1; i >= 0; i--)
+            {
+                var status = activeStatuses[i];
+                status.OnTurnStart(this);
+                if (status.TickDuration())
+                {
+                    RemoveStatus(status);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Обрабатывает статусы в конце хода
+        /// </summary>
+        private void ProcessEndOfTurnStatuses()
+        {
+            foreach (var status in activeStatuses)
+            {
+                status.OnTurnEnd(this);
+            }
+        }
 
         public virtual void damage(int dmg)
         {
@@ -29,11 +116,14 @@ namespace BlueSteelGenesis.Character_Modules
         {
             myTurn = true;
             currentEnergy = maxEnergy;
+            ProcessStartOfTurnStatuses();
+
             triggerModules(TriggerType.OnTurnStart, Vector3Int.zero);
         }
 
         public virtual void endTurn()
         {
+            ProcessEndOfTurnStatuses();
             triggerModules(TriggerType.OnTurnEnd, Vector3Int.zero);
             myTurn = false;
         }
