@@ -2,105 +2,65 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 namespace BlueSteelGenesis.Character_Modules
 {
     public abstract class Character : MonoBehaviour
     {
         private List<GameModule> modules_ = new List<GameModule>();
-        private List<StatusEffect> activeStatuses = new List<StatusEffect>();
+        private List<GameModule> statusEffects = new List<GameModule>();
 
-        /// <summary>
-        /// Добавляет статус персонажу
-        /// </summary>
-        public void AddStatus(StatusEffect status)
+
+        public void AddStatusEffect(GameModule statusEffect)
         {
-            var existingStatus = activeStatuses.Find(s => s.GetType() == status.GetType());
-            if (existingStatus != null)
+            statusEffects.Add(statusEffect);
+            statusEffect.Initialize();
+            Debug.Log($"Status effect {statusEffect.GetType().Name} added to {GetType().Name}");
+        }
+
+
+        public void RemoveStatusEffect(GameModule statusEffect)
+        {
+            if (statusEffects.Remove(statusEffect))
             {
-                existingStatus.Refresh(status);
-                Debug.Log($"Status {status.GetType().Name} refreshed");
-            }
-            else
-            {
-                activeStatuses.Add(status);
-                status.OnApply(this);
-                Debug.Log($"Status {status.GetType().Name} applied");
+                Debug.Log($"Status effect {statusEffect.GetType().Name} removed from {GetType().Name}");
             }
         }
 
-        /// <summary>
-        /// Удаляет статус у персонажа
-        /// </summary>
-        public void RemoveStatus(StatusEffect status)
+        protected void ProcessStatusEffects(TriggerType triggerType, Vector3Int pos)
         {
-            if (activeStatuses.Remove(status))
+            List<GameModule> expiredStatuses = new List<GameModule>();
+
+            foreach (var status in statusEffects)
             {
-                status.OnRemove(this);
-                Debug.Log($"Status {status.GetType().Name} removed");
-            }
-        }
-
-        /// <summary>
-        /// Удаляет статус по типу
-        /// </summary>
-        public void RemoveStatus<T>() where T : StatusEffect
-        {
-            var status = activeStatuses.Find(s => s is T);
-            if (status != null)
-            {
-                RemoveStatus(status);
-            }
-        }
-
-        /// <summary>
-        /// Проверяет, есть ли статус у персонажа
-        /// </summary>
-        public bool HasStatus<T>() where T : StatusEffect
-        {
-            return activeStatuses.Exists(s => s is T);
-        }
-
-        /// <summary>
-        /// Получает статус по типу
-        /// </summary>
-        public T GetStatus<T>() where T : StatusEffect
-        {
-            return (T)activeStatuses.Find(s => s is T);
-        }
-
-        /// <summary>
-        /// Обрабатывает статусы в начале хода
-        /// </summary>
-        private void ProcessStartOfTurnStatuses()
-        {
-            for (int i = activeStatuses.Count - 1; i >= 0; i--)
-            {
-                var status = activeStatuses[i];
-                status.OnTurnStart(this);
-                if (status.TickDuration())
+                if (status is PassiveModule passiveModule && passiveModule.triggerType == triggerType)
                 {
-                    RemoveStatus(status);
+                    passiveModule.Effect(this, pos);
+
+                    if (status is StatusModule statusModule && statusModule.IsExpired())
+                    {
+                        expiredStatuses.Add(status);
+                    }
                 }
             }
+
+            foreach (var expiredStatus in expiredStatuses)
+            {
+                RemoveStatusEffect(expiredStatus);
+            }
         }
 
-        /// <summary>
-        /// Обрабатывает статусы в конце хода
-        /// </summary>
-        private void ProcessEndOfTurnStatuses()
+
+        protected void UpdateStatusEffects()
         {
-            foreach (var status in activeStatuses)
-            {
-                status.OnTurnEnd(this);
-            }
+            ProcessStatusEffects(TriggerType.OnTurnEnd, Vector3Int.zero);
         }
 
         public virtual void damage(int dmg)
         {
             currentHealth -= Math.Max(dmg, 1);
             triggerModules(TriggerType.OnDamage, Vector3Int.zero);
-            if (currentHealth == 0) 
+            ProcessStatusEffects(TriggerType.OnDamage, Vector3Int.zero);
+            if (currentHealth == 0)
                 die();
         }
 
@@ -108,6 +68,7 @@ namespace BlueSteelGenesis.Character_Modules
         {
             currentHealth += Math.Max(hp, 1);
             triggerModules(TriggerType.OnHeal, Vector3Int.zero);
+            ProcessStatusEffects(TriggerType.OnHeal, Vector3Int.zero);
         }
 
         abstract protected void die();
@@ -116,23 +77,23 @@ namespace BlueSteelGenesis.Character_Modules
         {
             myTurn = true;
             currentEnergy = maxEnergy;
-            ProcessStartOfTurnStatuses();
-
             triggerModules(TriggerType.OnTurnStart, Vector3Int.zero);
+            ProcessStatusEffects(TriggerType.OnTurnStart, Vector3Int.zero);
         }
 
         public virtual void endTurn()
         {
-            ProcessEndOfTurnStatuses();
             triggerModules(TriggerType.OnTurnEnd, Vector3Int.zero);
+            UpdateStatusEffects(); 
             myTurn = false;
         }
 
         public void move(int x, int y, int z) => move(new Vector3Int(x, y, z));
         public void move(Vector3Int pos)
         {
-            transform.position = pos; 
+            transform.position = pos;
             triggerModules(TriggerType.OnMove, pos);
+            ProcessStatusEffects(TriggerType.OnMove, pos);
         }
 
         public void strike(int x, int y, int z, int dmg) => strike(new Vector3Int(x, y, z), dmg);
@@ -140,6 +101,7 @@ namespace BlueSteelGenesis.Character_Modules
         {
             Debug.Log($"Strike at {pos} for {dmg} damage");
             triggerModules(TriggerType.OnStrike, pos);
+            ProcessStatusEffects(TriggerType.OnStrike, pos);
         }
 
         public void addModule(GameModule module)
@@ -148,7 +110,6 @@ namespace BlueSteelGenesis.Character_Modules
             module.Initialize();
         }
 
-     
         public bool useActiveModule(int moduleIndex, Vector3Int pos)
         {
             if (moduleIndex < 0 || moduleIndex >= modules_.Count)
@@ -163,7 +124,7 @@ namespace BlueSteelGenesis.Character_Modules
             return false;
         }
 
-       protected void triggerModules(TriggerType triggerType, Vector3Int pos)
+        protected void triggerModules(TriggerType triggerType, Vector3Int pos)
         {
             foreach (var module in modules_)
             {
@@ -181,7 +142,6 @@ namespace BlueSteelGenesis.Character_Modules
             protected set => current_health_ = Math.Clamp(value, 0, maxHealth);
         }
         public int maxHealth { get; protected set; } = 100;
-
 
         public int currentEnergy
         {

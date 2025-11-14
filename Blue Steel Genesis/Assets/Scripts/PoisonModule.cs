@@ -1,7 +1,5 @@
 using UnityEngine;
 
-
-
 namespace BlueSteelGenesis.Character_Modules
 {
     /// <summary>
@@ -24,9 +22,18 @@ namespace BlueSteelGenesis.Character_Modules
             {
                 user.damage(poisonDamage);
                 Debug.Log($"Poison dealt {poisonDamage} damage to {user.GetType().Name}");
+
+                turnsLeft--;
+                if (turnsLeft <= 0)
+                {
+                    Debug.Log($"Poison status expired on {user.GetType().Name}");
+                }
             }
-            TurnTick(user);
+        }
+
+        public override bool IsExpired()
+        {
+            return turnsLeft <= 0;
         }
     }
 }
-
