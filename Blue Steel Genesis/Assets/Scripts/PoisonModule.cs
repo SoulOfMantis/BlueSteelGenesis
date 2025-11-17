@@ -3,7 +3,7 @@ using UnityEngine;
 namespace BlueSteelGenesis.Character_Modules
 {
     /// <summary>
-    /// Пассивный модуль яда или поджога - наносит урон при начале хода
+    /// Пассивный модуль яда  - наносит урон при начале хода
     /// </summary>
     public class PoisonModule : StatusModule
     {
@@ -18,17 +18,14 @@ namespace BlueSteelGenesis.Character_Modules
 
         public override void Effect(Character user, Vector3Int pos)
         {
-            if (turnsLeft > 0)
-            {
-                user.damage(poisonDamage);
-                Debug.Log($"Poison dealt {poisonDamage} damage to {user.GetType().Name}");
+            user.damage(poisonDamage);
+            Debug.Log($"Poison dealt {poisonDamage} damage to {user.GetType().Name}");
+            turnTick();
+        }
 
-                turnsLeft--;
-                if (turnsLeft <= 0)
-                {
-                    Debug.Log($"Poison status expired on {user.GetType().Name}");
-                }
-            }
+        public override void Refresh(StatusModule other)
+        {
+            if (other is PoisonModule p) turnsLeft += p.turnsLeft;
         }
 
         public override bool IsExpired()

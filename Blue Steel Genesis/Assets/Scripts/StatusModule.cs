@@ -6,6 +6,13 @@ namespace BlueSteelGenesis.Character_Modules
     {
         protected int turnsLeft;
 
+        protected void turnTick()
+        {
+            turnsLeft--;
+        }
+
+        public abstract void Refresh(StatusModule other);
+
         public abstract bool IsExpired();
     }
 }

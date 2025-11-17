@@ -9,6 +9,7 @@ namespace BlueSteelGenesis.Character_Modules
         OnHeal,
         OnDeath,
         OnMove,
-        OnStrike
+        OnStrike,
+        OnApply
     }
 }
