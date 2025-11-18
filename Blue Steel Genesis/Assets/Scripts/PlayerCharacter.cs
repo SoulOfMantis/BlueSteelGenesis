@@ -2,32 +2,50 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using System;
+using TMPro;
 
 
 namespace BlueSteelGenesis.Character_Modules
 {
     public class PlayerCharacter : Character
     {
-        public List<Button> buttons;
-        public List<int> modules; //Заглушка: 0 -- пассивный, 1 -- активный
-
+        //public List<Button> buttons;
+        //public TM healthDisplay;
+        public TMP_Text energyDisplay;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-            for (int i = 0; i < buttons.Count; i++)
-            {
-                if (modules[i] == 0)
-                {
-                    buttons[i].gameObject.SetActive(false);
-                }
-            }
+           
+        }
+
+        public void EndBattle()
+        {
+            statusModules = new List<StatusModule>();
         }
 
         // Update is called once per frame
         void Update()
         {
 
+        }
+
+        void updateHealth()
+        {
+
+        }
+
+        void updateEnergy()
+        {
+
+        }
+
+        public override bool useActiveModule(int moduleIndex, Vector3Int pos)
+        {
+            var flag = base.useActiveModule(moduleIndex, pos);
+            if (flag)
+                updateEnergy();
+            return flag;
         }
 
         public override void startTurn()
@@ -40,12 +58,14 @@ namespace BlueSteelGenesis.Character_Modules
         {
             base.damage(dmg);
             Debug.Log($"Игрок получил {dmg} урона!");
+            updateHealth();
         }
 
         public override void heal(int hp)
         {
             base.heal(hp);
             Debug.Log($"Игрок полечился на {hp}!");
+            updateHealth();
         }
 
         override protected void die()
