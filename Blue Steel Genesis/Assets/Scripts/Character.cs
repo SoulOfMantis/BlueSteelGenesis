@@ -9,7 +9,6 @@ namespace BlueSteelGenesis.Character_Modules
         protected List<GameModule> modules_ = new List<GameModule>();
         protected List<StatusModule> statusModules = new List<StatusModule>();
 
-
         public bool IsModulePassive(int index)
         {
             if (!DoesModuleExist(index)) return false;
@@ -77,7 +76,7 @@ namespace BlueSteelGenesis.Character_Modules
         public virtual void damage(int dmg)
         {
             currentHealth -= Math.Max(dmg, 1);
-            triggerModules(TriggerType.OnDamage, Position);
+            //triggerModules(TriggerType.OnDamage, Position);
             if (currentHealth == 0)
                 die();
         }
@@ -94,14 +93,14 @@ namespace BlueSteelGenesis.Character_Modules
         {
             myTurn = true;
             currentEnergy = maxEnergy;
-            triggerModules(TriggerType.OnTurnStart, Position);
+            //triggerModules(TriggerType.OnTurnStart, Position);
         }
 
         public virtual void endTurn()
         {
             if (myTurn)
             {
-                triggerModules(TriggerType.OnTurnEnd, Position);
+                //triggerModules(TriggerType.OnTurnEnd, Position);
                 myTurn = false;
             }
         }
@@ -109,7 +108,7 @@ namespace BlueSteelGenesis.Character_Modules
         public void move(int x, int y, int z) => move(new Vector3Int(x, y, z));
         public void move(Vector3Int pos)
         {
-            //transform.position = pos;
+
             triggerModules(TriggerType.OnMove, pos);
         }
 
@@ -160,9 +159,6 @@ namespace BlueSteelGenesis.Character_Modules
             protected set => current_health_ = Math.Clamp(value, 0, maxHealth);
         }
         public int maxHealth { get; protected set; } = 100;
-
-        public Vector3Int Position { get; protected set; }
-
         public int currentEnergy
         {
             get => current_energy_;

@@ -11,8 +11,8 @@ namespace BlueSteelGenesis.Character_Modules
     public class PlayerCharacter : Character
     {
         //public List<Button> buttons;
-        //public TM healthDisplay;
         public TMP_Text energyDisplay;
+        public TMP_Text healthDisplay;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -32,12 +32,12 @@ namespace BlueSteelGenesis.Character_Modules
 
         void updateHealth()
         {
-
+            healthDisplay.text = $"{currentHealth}/{maxHealth}";
         }
 
         void updateEnergy()
         {
-
+            energyDisplay.text = $"{currentEnergy}/{maxEnergy}";
         }
 
         public override bool useActiveModule(int moduleIndex, Vector3Int pos)

@@ -37,7 +37,7 @@ namespace BlueSteelGenesis.Character_Modules
             if (inUse)
             {
                 var pos = getCellByClick();
-                if (false) return; //invalid position
+                //if (false) return; //invalid position
                 if (player.useActiveModule(n, pos))
                 {
                     //use animation
