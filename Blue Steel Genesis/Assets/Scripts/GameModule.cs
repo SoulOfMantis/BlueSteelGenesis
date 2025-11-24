@@ -11,7 +11,7 @@ namespace BlueSteelGenesis.Character_Modules
     public abstract class GameModule
 
     {
-        public int range;
+        public int range = 0;
        protected List<Vector3Int> getAvailableCells(int n, Vector3Int start)
         {
             List<Vector3Int> res = new List<Vector3Int>();
