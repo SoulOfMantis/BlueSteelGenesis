@@ -13,21 +13,14 @@ namespace BlueSteelGenesis.Character_Modules
     {
         public BasicMovement()
         {
+            range = 3;
             energyCost = 1;
         }
 
         public override void Effect(Character user, Vector3Int pos)
         {
-            if (CanActivate(user))
-            {
-                user.currentEnergy -= energyCost;
-                user.move(pos);
-                Debug.Log("BMM executed");
-            }
-            else
-            {
-                Debug.Log("Not enough energy for movement!");
-            }
+            user.move(pos);
+            Debug.Log("BMM executed");
         }
     }
 }
