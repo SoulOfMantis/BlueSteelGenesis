@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace BlueSteelGenesis.Character_Modules
@@ -67,10 +68,8 @@ namespace BlueSteelGenesis.Character_Modules
         }
         public bool useActiveModule(int moduleIndex, Vector3Int pos)
         {
-            if (moduleIndex < 0 || moduleIndex >= modules_.Count)
-                return false;
-            var module = modules_[moduleIndex];
-            if (module is ActiveModule activeModule && hasEnoughEnergy(activeModule))
+            if (modules_.ElementAtOrDefault(moduleIndex) is ActiveModule activeModule
+                && trySpendEnergy(activeModule.energyCost))
             {
                 activeModule.Effect(this, pos);
                 return true;
@@ -79,69 +78,44 @@ namespace BlueSteelGenesis.Character_Modules
         }
         public void AddStatusModule(StatusModule status)
         {
-            if (!statusModules.Exists(x => x.GetType() == status.GetType()))
+            var module = statusModules.Find(m => m.GetType() == status.GetType());
+            if (module != null)
+                module.Refresh(status);
+            else
             {
                 statusModules.Add(status);
                 status.Initialize();
                 Debug.Log($"Status module {status.GetType().Name} added to {GetType().Name}");
             }
-            else
-            {
-                statusModules.Find(x => x == status).Refresh(status);
-            }
-        }
-        public void RemoveStatusModule(StatusModule status)
-        {
-            if (statusModules.Remove(status))
-            {
-                Debug.Log($"Status module {status.GetType().Name} removed from {GetType().Name}");
-            }
         }
         protected void ProcessStatusModules(TriggerType triggerType, Vector3Int pos)
         {
-            List<StatusModule> expiredStatuses = new List<StatusModule>();
-
-            foreach (var status in statusModules)
-            {
-                if (status.triggerType == triggerType)
-                {
-                    status.Effect(this, pos);
-                    if (status.IsExpired())
-                    {
-                        expiredStatuses.Add(status);
-                    }
-                }
-            }
-
-            foreach (var expiredStatus in expiredStatuses)
-            {
-                RemoveStatusModule(expiredStatus);
-            }
+            statusModules.ForEach(m => {
+                if (triggerType == m.triggerType) m.Effect(this, pos);
+            });
+            statusModules.RemoveAll(m => m.IsExpired());
         }
-        protected bool hasEnoughEnergy(ActiveModule module)
+        protected bool trySpendEnergy(int amount)
         {
-            if (module == null || currentEnergy < module.energyCost) return false;
-            currentEnergy -= module.energyCost;
+            if (amount > currentEnergy)
+                return false;
+            currentEnergy -= amount;
             return true;
         }
         protected void triggerModules(TriggerType triggerType, Vector3Int pos)
         {
-            foreach (var module in modules_)
-            {
-                if (module is PassiveModule passiveModule &&
-                    passiveModule.triggerType == triggerType)
-                {
-                    passiveModule.Effect(this, pos);
-                }
-            }
+            modules_.ForEach(m => {
+                if (m is PassiveModule pm && pm.triggerType == triggerType)
+                    pm.Effect(this, pos);
+            });
             ProcessStatusModules(triggerType, pos);
         }
 
 
 
         public static InitiativeTracker Tracker;
-        private List<GameModule> modules_ = new List<GameModule>();
-        private List<StatusModule> statusModules = new List<StatusModule>();
+        private List<GameModule> modules_ = new();
+        private List<StatusModule> statusModules = new();
 
         public int currentHealth
         {
