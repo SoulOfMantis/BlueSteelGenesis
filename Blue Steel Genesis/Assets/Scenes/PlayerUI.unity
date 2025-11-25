@@ -205,8 +205,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 120715545}
         m_TargetAssemblyTypeName: BlueSteelGenesis.Character_Modules.ModuleButton,
-          BlueSteelGenesis.Character_Modules
-        m_MethodName: activateModule
+          Assembly-CSharp
+        m_MethodName: toggleSkill
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -266,7 +266,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d2cafc8adbfb6e4c9ec814155aee98f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BlueSteelGenesis.Character_Modules::BlueSteelGenesis.Character_Modules.ModuleButton
-  player: {fileID: 651793050}
   n: 3
 --- !u!1 &190888012
 GameObject:
@@ -618,8 +617,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 238118559}
         m_TargetAssemblyTypeName: BlueSteelGenesis.Character_Modules.ModuleButton,
-          BlueSteelGenesis.Character_Modules
-        m_MethodName: activateModule
+          Assembly-CSharp
+        m_MethodName: toggleSkill
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -679,7 +678,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d2cafc8adbfb6e4c9ec814155aee98f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  player: {fileID: 651793050}
   n: 0
 --- !u!1 &410087039
 GameObject:
@@ -1034,7 +1032,7 @@ GameObject:
   - component: {fileID: 651793050}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1212,8 +1210,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 724140784}
         m_TargetAssemblyTypeName: BlueSteelGenesis.Character_Modules.ModuleButton,
-          BlueSteelGenesis.Character_Modules
-        m_MethodName: activateModule
+          Assembly-CSharp
+        m_MethodName: toggleSkill
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1273,7 +1271,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d2cafc8adbfb6e4c9ec814155aee98f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BlueSteelGenesis.Character_Modules::BlueSteelGenesis.Character_Modules.ModuleButton
-  player: {fileID: 651793050}
   n: 2
 --- !u!1 &733401455
 GameObject:
@@ -1769,8 +1766,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 791360943}
         m_TargetAssemblyTypeName: BlueSteelGenesis.Character_Modules.ModuleButton,
-          BlueSteelGenesis.Character_Modules
-        m_MethodName: activateModule
+          Assembly-CSharp
+        m_MethodName: toggleSkill
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1830,7 +1827,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d2cafc8adbfb6e4c9ec814155aee98f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BlueSteelGenesis.Character_Modules::BlueSteelGenesis.Character_Modules.ModuleButton
-  player: {fileID: 651793050}
   n: 1
 --- !u!1 &793666999
 GameObject:
@@ -1918,8 +1914,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 793667004}
         m_TargetAssemblyTypeName: BlueSteelGenesis.Character_Modules.ModuleButton,
-          BlueSteelGenesis.Character_Modules
-        m_MethodName: activateModule
+          Assembly-CSharp
+        m_MethodName: toggleSkill
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1979,7 +1975,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d2cafc8adbfb6e4c9ec814155aee98f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BlueSteelGenesis.Character_Modules::BlueSteelGenesis.Character_Modules.ModuleButton
-  player: {fileID: 651793050}
   n: 4
 --- !u!1 &832575517
 GameObject:
@@ -2388,8 +2383,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1117325896}
         m_TargetAssemblyTypeName: BlueSteelGenesis.Character_Modules.ModuleButton,
-          BlueSteelGenesis.Character_Modules
-        m_MethodName: activateModule
+          Assembly-CSharp
+        m_MethodName: toggleSkill
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2449,7 +2444,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d2cafc8adbfb6e4c9ec814155aee98f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BlueSteelGenesis.Character_Modules::BlueSteelGenesis.Character_Modules.ModuleButton
-  player: {fileID: 651793050}
   n: 5
 --- !u!1 &1405863192
 GameObject:

@@ -128,7 +128,7 @@ namespace BlueSteelGenesis.Character_Modules
 
         public bool DoesModuleExist(int index)
         {
-            if (index > modules_.Count || index < 0) return false;
+            if (index > modules_.Count || index < 0 || modules_.Count == 0) return false;
             return (modules_[index] == null);
         }
 
@@ -147,7 +147,7 @@ namespace BlueSteelGenesis.Character_Modules
         protected virtual bool hasEnoughEnergy(ActiveModule module)
         {
             if (module == null || currentEnergy < module.energyCost) return false;
-            currentEnergy - module.energyCost;
+            currentEnergy -= module.energyCost;
             return true;
         }
 
@@ -164,13 +164,14 @@ namespace BlueSteelGenesis.Character_Modules
             ProcessStatusModules(triggerType, pos);
         }
 
-        public list<Vector3Int> getCellsInRangeForModule(int moduleIndex)
+        public List<Vector3Int> getCellsInRangeForModule(int moduleIndex)
         {
             if (DoesModuleExist(moduleIndex))
                 return modules_[moduleIndex].getCellsInRange(Pos);
+            return null;
         }
 
-        public Vector3Int Pos { get; protected set; };
+        public Vector3Int Pos { get; protected set; }
 
         public int currentHealth
         {
@@ -178,14 +179,14 @@ namespace BlueSteelGenesis.Character_Modules
             protected set => current_health_ = Math.Clamp(value, 0, maxHealth);
         }
 
-        public int maxHealth { get; protected set; };
+        public int maxHealth { get; protected set; }
 
         public int currentEnergy
         {
             get => current_energy_;
             protected set => current_energy_ = Math.Clamp(value, 0, maxEnergy);
         }
-        public int maxEnergy { get; protected set; };
+        public int maxEnergy { get; protected set; }
 
         public bool myTurn { get; protected set; }
 

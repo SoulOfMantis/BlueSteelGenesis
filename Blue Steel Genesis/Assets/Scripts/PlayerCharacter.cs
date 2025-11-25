@@ -10,7 +10,6 @@ namespace BlueSteelGenesis.Character_Modules
 {
     public class PlayerCharacter : Character
     {
-        //public List<Button> buttons;
         public TMP_Text energyDisplay;
         public TMP_Text healthDisplay;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -30,24 +29,6 @@ namespace BlueSteelGenesis.Character_Modules
             statusModules = new List<StatusModule>();
         }
 
-        public bool IsModulePassive(int index)
-        {
-            if (!DoesModuleExist(index)) return false;
-            return (modules_[index] is PassiveModule);
-        }
-
-        public bool IsModuleActive(int index)
-        {
-            if (!DoesModuleExist(index)) return false;
-            return (modules_[index] is ActiveModule);
-        }
-
-        public bool DoesModuleExist(int index)
-        {
-            if (index > modules_.Count || index < 0) return false;
-            return (modules_[index] == null);
-        }
-
         void updateHealth()
         {
             healthDisplay.text = $"{currentHealth}/{maxHealth}";
@@ -64,16 +45,29 @@ namespace BlueSteelGenesis.Character_Modules
             if (flag)
             {
                 updateEnergy();
-                //playerSprite.moduleUseSuccessOrSmth
+                //play animation of module use success
+            }
+            else
+            {
+                //play animation of module use fail
             }
             return flag;
         }
 
+        protected override bool hasEnoughEnergy(ActiveModule module)
+        {
+            var flag = base.hasEnoughEnergy(module);
+            if (!flag)
+            {                
+                //play animation of not enough energy for module
+            }
+            return flag;
+        }
 
         public override void startTurn()
         {
             base.startTurn();
-            //TODO: Включить кнопки для игрока
+            //play start turn animation
         }
 
         public override void damage(int dmg)
@@ -81,6 +75,7 @@ namespace BlueSteelGenesis.Character_Modules
             base.damage(dmg);
             Debug.Log($"Игрок получил {dmg} урона!");
             updateHealth();
+            //play taking damage animation
         }
 
         public override void heal(int hp)
@@ -88,6 +83,7 @@ namespace BlueSteelGenesis.Character_Modules
             base.heal(hp);
             Debug.Log($"Игрок полечился на {hp}!");
             updateHealth();
+            //play healing animation
         }
 
         override protected void die()
