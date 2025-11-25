@@ -22,31 +22,27 @@ namespace BlueSteelGenesis.Character_Modules
         // Update is called once per frame
         void Update()
         {
+            if (inUse && Input.GetMouseButtonDown(0))
+            {
+                Vector3Int cell = Vector3Int.zero; //заглушка
+                                                   //Vector3Int cell = SceneTracker.getCellByScreenPosition(Input.mousePosition);
 
+                //TOD: use 
+                //worldPoint = Camera.main.ScreenToWorldPoint(MousePosition);  tileMap.WorldToCell(worldPoint);
+                //MousePosition -- добавить z-координату, равную расстоянию от камеры до поля (пока можно захардкодить), в остальном полученный вектор
+                if (player.getCellsInRangeForModule(n).Contains(cell))
+                {
+                    player.useActiveModule(n, cell);
+                }
+                else inUse = false;
+            }
         }
 
-        Vector3Int getCellByClick()
-        {
-            //...
-            return Vector3Int.zero;
-        }
 
-        public void activateModule()
+        public void toggleSkill()
         {
             inUse = !inUse;
-            if (inUse)
-            {
-                var pos = getCellByClick();
-                //if (false) return; //invalid position
-                if (player.useActiveModule(n, pos))
-                {
-                    //use animation
-                }
-                else
-                {
-                    //failed to use animation
-                }
-            }
+
         }
     }
 

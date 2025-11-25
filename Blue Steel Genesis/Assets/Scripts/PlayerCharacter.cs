@@ -19,15 +19,33 @@ namespace BlueSteelGenesis.Character_Modules
            
         }
 
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+
         public void EndBattle()
         {
             statusModules = new List<StatusModule>();
         }
 
-        // Update is called once per frame
-        void Update()
+        public bool IsModulePassive(int index)
         {
+            if (!DoesModuleExist(index)) return false;
+            return (modules_[index] is PassiveModule);
+        }
 
+        public bool IsModuleActive(int index)
+        {
+            if (!DoesModuleExist(index)) return false;
+            return (modules_[index] is ActiveModule);
+        }
+
+        public bool DoesModuleExist(int index)
+        {
+            if (index > modules_.Count || index < 0) return false;
+            return (modules_[index] == null);
         }
 
         void updateHealth()
@@ -44,9 +62,13 @@ namespace BlueSteelGenesis.Character_Modules
         {
             var flag = base.useActiveModule(moduleIndex, pos);
             if (flag)
+            {
                 updateEnergy();
+                //playerSprite.moduleUseSuccessOrSmth
+            }
             return flag;
         }
+
 
         public override void startTurn()
         {

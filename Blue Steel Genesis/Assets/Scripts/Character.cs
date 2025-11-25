@@ -10,25 +10,6 @@ namespace BlueSteelGenesis.Character_Modules
         protected List<GameModule> modules_ = new List<GameModule>();
         protected List<StatusModule> statusModules = new List<StatusModule>();
 
-        public bool IsModulePassive(int index)
-        {
-            if (!DoesModuleExist(index)) return false;
-            return (modules_[index] is PassiveModule);
-        }
-
-        public bool IsModuleActive(int index)
-        {
-            if (!DoesModuleExist(index)) return false;
-            return (modules_[index] is ActiveModule);
-        }
-
-        public bool DoesModuleExist(int index)
-        {
-            if (index > modules_.Count || index < 0) return false;
-            return (modules_[index] == null);
-        }
-
-
         public void AddStatusModule(StatusModule status)
         {
             if (!statusModules.Exists(x => x.GetType() == status.GetType()))
@@ -42,7 +23,6 @@ namespace BlueSteelGenesis.Character_Modules
                 statusModules.Find(x => x == status).Refresh(status);
             }
         }
-
 
         public void RemoveStatusModule(StatusModule status)
         {
@@ -153,6 +133,14 @@ namespace BlueSteelGenesis.Character_Modules
             }
             ProcessStatusModules(triggerType, pos);
         }
+
+        public list<Vector3Int> getCellsInRangeForModule(int moduleIndex)
+        {
+            if (DoesModuleExist(moduleIndex))
+                return modules_[moduleIndex].getCellsInRange(Pos);
+        }
+
+        public Vector3Int Pos { get; protected set; };
 
         public int currentHealth
         {
