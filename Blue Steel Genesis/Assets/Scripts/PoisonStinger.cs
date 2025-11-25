@@ -12,7 +12,7 @@ namespace BlueSteelGenesis.Character_Modules
         private int hitDamage;
         private int duration;
 
-        public PoisonStinger(int damage = 1, int duration = 3, int hitDamage = 3) : BasicAttack()
+        public PoisonStinger(int damage = 1, int duration = 3, int hitDamage = 3) : base()
         {
             poisonDamage = damage;
             this.hitDamage = hitDamage;
@@ -21,7 +21,7 @@ namespace BlueSteelGenesis.Character_Modules
 
         public override void Effect(Character user, Vector3Int pos)
         {
-            base.Effect();
+            base.Effect(user, pos);
             PoisonModule poison = new PoisonModule(poisonDamage, duration);
             user.apply(pos, poison);
         }

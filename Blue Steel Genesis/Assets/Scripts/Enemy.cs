@@ -1,6 +1,7 @@
 using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
+using BlueSteelGenesis.Character_Modules;
 
     public class Enemy : Character
     {
