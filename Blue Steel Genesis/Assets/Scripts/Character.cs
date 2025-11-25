@@ -9,6 +9,14 @@ namespace BlueSteelGenesis.Character_Modules
 {
     public abstract class Character : MonoBehaviour
     {
+        public Character(int maxHealth, int maxEnergy)
+        {
+            this.maxHealth = maxHealth;
+            this.maxEnergy = maxEnergy;
+        }
+
+
+
         public virtual void damage(int dmg)
         {
             currentHealth -= Math.Max(dmg, 1);
