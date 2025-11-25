@@ -6,13 +6,13 @@ namespace BlueSteelGenesis.Character_Modules
     /// <summary>
     /// Активный модуль ядовитого жала - наносит урон и накладывает отравление
     /// </summary>
-    public class PoisonStinger : ActiveModule
+    public class PoisonStinger : BasicAttack
     {
         private int poisonDamage;
         private int hitDamage;
         private int duration;
 
-        public PoisonStinger(int damage = 1, int duration = 3, int hitDamage = 3)
+        public PoisonStinger(int damage = 1, int duration = 3, int hitDamage = 3) : BasicAttack()
         {
             poisonDamage = damage;
             this.hitDamage = hitDamage;
@@ -21,7 +21,7 @@ namespace BlueSteelGenesis.Character_Modules
 
         public override void Effect(Character user, Vector3Int pos)
         {
-            user.strike(pos, hitDamage);
+            base.Effect();
             PoisonModule poison = new PoisonModule(poisonDamage, duration);
             user.apply(pos, poison);
         }
