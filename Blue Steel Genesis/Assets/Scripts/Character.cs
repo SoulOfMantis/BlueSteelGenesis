@@ -114,10 +114,40 @@ namespace BlueSteelGenesis.Character_Modules
             module.Initialize();
         }
 
+        public bool IsModulePassive(int index)
+        {
+            if (!DoesModuleExist(index)) return false;
+            return (modules_[index] is PassiveModule);
+        }
+
+        public bool IsModuleActive(int index)
+        {
+            if (!DoesModuleExist(index)) return false;
+            return (modules_[index] is ActiveModule);
+        }
+
+        public bool DoesModuleExist(int index)
+        {
+            if (index > modules_.Count || index < 0) return false;
+            return (modules_[index] == null);
+        }
+
         public virtual bool useActiveModule(int moduleIndex, Vector3Int pos)
         {
             if (!IsModuleActive(moduleIndex)) return false;
-            modules_[moduleIndex].Effect(this, pos);
+            var module = modules_[moduleIndex];
+            if (module is ActiveModule activeModule && hasEnoughEnergy(activeModule))
+            {
+                activeModule.Effect(this, pos);
+                return true;
+            }
+            return false;
+        }
+
+        protected virtual bool hasEnoughEnergy(ActiveModule module)
+        {
+            if (module == null || currentEnergy < module.energyCost) return false;
+            currentEnergy - module.energyCost;
             return true;
         }
 
@@ -147,17 +177,19 @@ namespace BlueSteelGenesis.Character_Modules
             get => current_health_;
             protected set => current_health_ = Math.Clamp(value, 0, maxHealth);
         }
-        public int maxHealth { get; protected set; } = 100;
+
+        public int maxHealth { get; protected set; };
+
         public int currentEnergy
         {
             get => current_energy_;
-            set => current_energy_ = Math.Clamp(value, 0, maxEnergy);
+            protected set => current_energy_ = Math.Clamp(value, 0, maxEnergy);
         }
-        public int maxEnergy { get; protected set; } = 5;
+        public int maxEnergy { get; protected set; };
 
         public bool myTurn { get; protected set; }
 
-        private int current_health_ = 100;
+        private int current_health_;
         private int current_energy_;
     }
 }
