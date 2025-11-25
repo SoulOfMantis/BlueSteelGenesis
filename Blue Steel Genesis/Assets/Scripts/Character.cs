@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 namespace BlueSteelGenesis.Character_Modules
 {
@@ -11,14 +12,14 @@ namespace BlueSteelGenesis.Character_Modules
         public virtual void damage(int dmg)
         {
             currentHealth -= Math.Max(dmg, 1);
-            triggerModules(TriggerType.OnDamage, Vector3Int.zero);
+            triggerModules(TriggerType.OnDamage);
             if (currentHealth == 0)
                 die();
         }
         public virtual void heal(int hp)
         {
             currentHealth += Math.Max(hp, 1);
-            triggerModules(TriggerType.OnHeal, Vector3Int.zero);
+            triggerModules(TriggerType.OnHeal);
         }
         abstract protected void die();
 
@@ -28,11 +29,11 @@ namespace BlueSteelGenesis.Character_Modules
         {
             myTurn = true;
             currentEnergy = maxEnergy;
-            triggerModules(TriggerType.OnTurnStart, Vector3Int.zero);
+            triggerModules(TriggerType.OnTurnStart);
         }
         public virtual void endTurn()
         {
-            triggerModules(TriggerType.OnTurnEnd, Vector3Int.zero);
+            triggerModules(TriggerType.OnTurnEnd);
             myTurn = false;
         }
 
@@ -41,22 +42,22 @@ namespace BlueSteelGenesis.Character_Modules
         public void move(int x, int y, int z) => move(new Vector3Int(x, y, z));
         public void move(Vector3Int pos)
         {
-            transform.position = pos;
-            triggerModules(TriggerType.OnMove, pos);
+            Position = pos;
+            triggerModules(TriggerType.OnMove);
         }
 
         public void strike(int x, int y, int z, int dmg) => strike(new Vector3Int(x, y, z), dmg);
         public void strike(Vector3Int pos, int dmg)
         {
             Debug.Log($"Strike at {pos} for {dmg} damage");
-            triggerModules(TriggerType.OnStrike, pos);
+            triggerModules(TriggerType.OnStrike);
         }
 
         public void apply(int x, int y, int z, StatusModule status) => apply(new Vector3Int(x, y, z), status);
         public void apply(Vector3Int pos, StatusModule status)
         {
             Debug.Log($"Apply {status.GetType().Name} at {pos}");
-            triggerModules(TriggerType.OnApply, pos);
+            triggerModules(TriggerType.OnApply);
         }
 
 
@@ -88,18 +89,18 @@ namespace BlueSteelGenesis.Character_Modules
             }
             return false;
         }
-        protected void triggerModules(TriggerType triggerType, Vector3Int pos)
+        protected void triggerModules(TriggerType triggerType)
         {
             modules_.ForEach(m => {
                 if (m is PassiveModule pm && pm.triggerType == triggerType)
-                    pm.Effect(this, pos);
+                    pm.Effect(this, Position);
             });
-            processStatusModules(triggerType, pos);
+            processStatusModules(triggerType);
         }
-        protected void processStatusModules(TriggerType triggerType, Vector3Int pos)
+        protected void processStatusModules(TriggerType triggerType)
         {
             status_modules_.ForEach(m => {
-                if (triggerType == m.triggerType) m.Effect(this, pos);
+                if (triggerType == m.triggerType) m.Effect(this, Position);
             });
             status_modules_.RemoveAll(m => m.IsExpired());
         }
@@ -131,9 +132,18 @@ namespace BlueSteelGenesis.Character_Modules
 
         public bool myTurn { get; protected set; }
 
+        public Vector3Int Position {
+            get => position_;
+            protected set { 
+                // TODO: adjust transform
+                position_ = value;
+            }
+        }
+
         private List<GameModule> modules_ = new();
         private List<StatusModule> status_modules_ = new();
         private int current_health_;
         private int current_energy_;
+        private Vector3Int position_;
     }
 }
