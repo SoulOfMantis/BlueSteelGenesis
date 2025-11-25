@@ -66,6 +66,18 @@ namespace BlueSteelGenesis.Character_Modules
             modules_.Add(module);
             module.Initialize();
         }
+        public void addStatusModule(StatusModule status)
+        {
+            var module = status_modules_.Find(m => m.GetType() == status.GetType());
+            if (module != null)
+                module.Refresh(status);
+            else
+            {
+                status_modules_.Add(status);
+                status.Initialize();
+                Debug.Log($"Status module {status.GetType().Name} added to {GetType().Name}");
+            }
+        }
         public bool useActiveModule(int moduleIndex, Vector3Int pos)
         {
             if (modules_.ElementAtOrDefault(moduleIndex) is ActiveModule activeModule
@@ -76,24 +88,20 @@ namespace BlueSteelGenesis.Character_Modules
             }
             return false;
         }
-        public void AddStatusModule(StatusModule status)
+        protected void triggerModules(TriggerType triggerType, Vector3Int pos)
         {
-            var module = statusModules.Find(m => m.GetType() == status.GetType());
-            if (module != null)
-                module.Refresh(status);
-            else
-            {
-                statusModules.Add(status);
-                status.Initialize();
-                Debug.Log($"Status module {status.GetType().Name} added to {GetType().Name}");
-            }
+            modules_.ForEach(m => {
+                if (m is PassiveModule pm && pm.triggerType == triggerType)
+                    pm.Effect(this, pos);
+            });
+            processStatusModules(triggerType, pos);
         }
-        protected void ProcessStatusModules(TriggerType triggerType, Vector3Int pos)
+        protected void processStatusModules(TriggerType triggerType, Vector3Int pos)
         {
-            statusModules.ForEach(m => {
+            status_modules_.ForEach(m => {
                 if (triggerType == m.triggerType) m.Effect(this, pos);
             });
-            statusModules.RemoveAll(m => m.IsExpired());
+            status_modules_.RemoveAll(m => m.IsExpired());
         }
         protected bool trySpendEnergy(int amount)
         {
@@ -102,20 +110,10 @@ namespace BlueSteelGenesis.Character_Modules
             currentEnergy -= amount;
             return true;
         }
-        protected void triggerModules(TriggerType triggerType, Vector3Int pos)
-        {
-            modules_.ForEach(m => {
-                if (m is PassiveModule pm && pm.triggerType == triggerType)
-                    pm.Effect(this, pos);
-            });
-            ProcessStatusModules(triggerType, pos);
-        }
 
 
 
         public static InitiativeTracker Tracker;
-        private List<GameModule> modules_ = new();
-        private List<StatusModule> statusModules = new();
 
         public int currentHealth
         {
@@ -133,6 +131,8 @@ namespace BlueSteelGenesis.Character_Modules
 
         public bool myTurn { get; protected set; }
 
+        private List<GameModule> modules_ = new();
+        private List<StatusModule> status_modules_ = new();
         private int current_health_;
         private int current_energy_;
     }
