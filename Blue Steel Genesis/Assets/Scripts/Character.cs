@@ -15,6 +15,8 @@ namespace BlueSteelGenesis.Character_Modules
         {
             this.maxHealth = maxHealth;
             this.maxEnergy = maxEnergy;
+            currentHealth = maxHealth;
+            currentEnergy = maxEnergy;
         }
 
 
