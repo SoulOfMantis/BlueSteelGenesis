@@ -121,7 +121,7 @@ namespace BlueSteelGenesis.Character_Modules
                 && isCorrectPosition(activeModule, pos)
                 && trySpendEnergy(activeModule.energyCost))
             {
-                activeModule.Effect(this, pos);
+                useActiveModule_internal(activeModule, pos);
                 return true;
             }
             return false;
@@ -129,13 +129,13 @@ namespace BlueSteelGenesis.Character_Modules
         protected void triggerModules(TriggerType triggerType)
         {
             foreach (var pm in listModules<PassiveModule>().Where(pm => pm.triggerType == triggerType))
-                pm.Effect(this, Position);
+                usePassiveModule_internal(pm);
             processStatusModules(triggerType);
         }
         protected void processStatusModules(TriggerType triggerType)
         {
             foreach (var st in status_modules_.Where(m => triggerType == m.triggerType))
-                st.Effect(this, Position);
+                useStatusModule_internal(st);
             status_modules_.RemoveAll(m => m.IsExpired());
         }
 
@@ -166,6 +166,9 @@ namespace BlueSteelGenesis.Character_Modules
         protected bool doesModuleExist(int module_index) => getModule<GameModule>(module_index) != null;
         protected virtual bool isCorrectPosition(ActiveModule module, Vector3Int pos) => true;
         protected virtual bool hasEnoughEnergy(ActiveModule module) => module != null && currentEnergy >= module.energyCost;
+        protected virtual void useActiveModule_internal(ActiveModule m, Vector3Int pos) => m.Effect(this, pos);
+        protected virtual void usePassiveModule_internal(PassiveModule m) => m.Effect(this, Position);
+        protected virtual void useStatusModule_internal(StatusModule m) => m.Effect(this, Position);
 
 
 
