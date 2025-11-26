@@ -35,6 +35,17 @@ namespace BlueSteelGenesis.Character_Modules
         }
         abstract protected void die();
 
+        public virtual void drainEnergy(int amount)
+        {
+            currentEnergy -= Math.Max(amount, 1);
+            triggerModules(TriggerType.OnEnergyDrain);
+        }
+        public virtual void restoreEnergy(int amount)
+        {
+            currentEnergy += Math.Max(amount, 1);
+            triggerModules(TriggerType.OnEnergyRestore);
+        }
+
 
 
         public virtual void startBattle()

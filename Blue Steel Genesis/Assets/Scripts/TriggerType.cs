@@ -12,6 +12,8 @@ namespace BlueSteelGenesis.Character_Modules
         OnDeath,
         OnMove,
         OnStrike,
-        OnApply
+        OnApply,
+        OnEnergyRestore,
+        OnEnergyDrain
     }
 }
