@@ -148,8 +148,11 @@ namespace BlueSteelGenesis.Character_Modules
             }
         }
 
-        private List<GameModule> modules_ = new();
-        private List<StatusModule> status_modules_ = new();
+
+
+        protected List<GameModule> modules_ = new();
+        protected List<StatusModule> status_modules_ = new();
+
         private int current_health_;
         private int current_energy_;
         private Vector3Int position_;
