@@ -35,6 +35,18 @@ namespace BlueSteelGenesis.Character_Modules
 
 
 
+        public virtual void startBattle()
+        {
+            currentHealth = maxHealth;
+            currentEnergy = maxEnergy;
+            // TODO: adjust position
+            triggerModules(TriggerType.OnBattleStart);
+        }
+        public virtual void endBattle()
+        {
+            status_modules_.Clear();
+            triggerModules(TriggerType.OnBattleEnd);
+        }
         public virtual void startTurn()
         {
             myTurn = true;

@@ -3,6 +3,8 @@ namespace BlueSteelGenesis.Character_Modules
 {
     public enum TriggerType
     {
+        OnBattleStart,
+        OnBattleEnd,
         OnTurnStart,
         OnTurnEnd,
         OnDamage,
