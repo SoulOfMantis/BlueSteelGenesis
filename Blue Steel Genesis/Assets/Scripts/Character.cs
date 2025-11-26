@@ -20,7 +20,6 @@ namespace BlueSteelGenesis.Character_Modules
         }
 
 
-
         public virtual void damage(int dmg)
         {
             currentHealth -= Math.Max(dmg, 1);
@@ -47,11 +46,8 @@ namespace BlueSteelGenesis.Character_Modules
         }
 
 
-
         public virtual void startBattle()
         {
-            currentHealth = maxHealth;
-            currentEnergy = maxEnergy;
             // TODO: adjust position
             triggerModules(TriggerType.OnBattleStart);
         }
@@ -63,7 +59,7 @@ namespace BlueSteelGenesis.Character_Modules
         public virtual void startTurn()
         {
             myTurn = true;
-            currentEnergy = maxEnergy;
+            restoreEnergy(maxEnergy);
             triggerModules(TriggerType.OnTurnStart);
         }
         public virtual void endTurn()
@@ -71,7 +67,6 @@ namespace BlueSteelGenesis.Character_Modules
             triggerModules(TriggerType.OnTurnEnd);
             myTurn = false;
         }
-
 
 
         public void move(int x, int y, int z) => move(new Vector3Int(x, y, z));
@@ -85,16 +80,15 @@ namespace BlueSteelGenesis.Character_Modules
         public void strike(Vector3Int pos, int dmg)
         {
             Debug.Log($"Strike at {pos} for {dmg} damage");
-            triggerModules(TriggerType.OnStrike);
+            triggerModules(TriggerType.OnStrike, pos);
         }
 
         public void apply(int x, int y, int z, StatusModule status) => apply(new Vector3Int(x, y, z), status);
         public void apply(Vector3Int pos, StatusModule status)
         {
             Debug.Log($"Apply {status.GetType().Name} at {pos}");
-            triggerModules(TriggerType.OnApply);
+            triggerModules(TriggerType.OnApply, pos);
         }
-
 
 
         public void addModule(GameModule module)
@@ -117,11 +111,10 @@ namespace BlueSteelGenesis.Character_Modules
         public bool useActiveModule(int moduleIndex, Vector3Int pos)
         {
             var activeModule = getModule<ActiveModule>(moduleIndex);
-            if (activeModule != null
-                && isCorrectPosition(activeModule, pos)
-                && trySpendEnergy(activeModule.energyCost))
+            if (hasEnoughEnergy(activeModule) && isCorrectPosition(activeModule, pos))
             {
                 useActiveModule_internal(activeModule, pos);
+                drainEnergy(activeModule.energyCost);
                 return true;
             }
             return false;
@@ -138,7 +131,6 @@ namespace BlueSteelGenesis.Character_Modules
                 useStatusModule_internal(st);
             status_modules_.RemoveAll(m => m.IsExpired());
         }
-
         
 
         protected IEnumerable<ModuleT> listModules<ModuleT>()
@@ -154,25 +146,17 @@ namespace BlueSteelGenesis.Character_Modules
                 return res;
             return null;
         }
-        protected bool trySpendEnergy(int amount)
-        {
-            if (amount > currentEnergy)
-                return false;
-            currentEnergy -= amount;
-            return true;
-        }
+
+
         protected bool isPassive(int module_index) => getModule<PassiveModule>(module_index) != null;
         protected bool isActive(int module_index) => getModule<ActiveModule>(module_index) != null;
         protected bool doesModuleExist(int module_index) => getModule<GameModule>(module_index) != null;
         protected virtual bool isCorrectPosition(ActiveModule module, Vector3Int pos) => true;
         protected virtual bool hasEnoughEnergy(ActiveModule module) => module != null && currentEnergy >= module.energyCost;
         protected virtual void useActiveModule_internal(ActiveModule m, Vector3Int pos) => m.Effect(this, pos);
-        protected virtual void usePassiveModule_internal(PassiveModule m) => m.Effect(this, Position);
+        protected virtual void usePassiveModule_internal(PassiveModule m, Vector3Int pos = Position) => m.Effect(this, pos);
         protected virtual void useStatusModule_internal(StatusModule m) => m.Effect(this, Position);
 
-
-
-        public static InitiativeTracker Tracker;
 
         public int currentHealth
         {
@@ -197,7 +181,6 @@ namespace BlueSteelGenesis.Character_Modules
                 position_ = value;
             }
         }
-
 
 
         protected List<GameModule> modules_ = new();
