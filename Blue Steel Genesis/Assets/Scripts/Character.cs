@@ -2,6 +2,8 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using Unity.Profiling.Editor;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
@@ -89,7 +91,9 @@ namespace BlueSteelGenesis.Character_Modules
         }
         public bool useActiveModule(int moduleIndex, Vector3Int pos)
         {
-            if (modules_.ElementAtOrDefault(moduleIndex) is ActiveModule activeModule
+            var activeModule = getModule<ActiveModule>(moduleIndex);
+            if (activeModule != null
+                && isCorrectPosition(activeModule, pos)
                 && trySpendEnergy(activeModule.energyCost))
             {
                 activeModule.Effect(this, pos);
@@ -99,18 +103,31 @@ namespace BlueSteelGenesis.Character_Modules
         }
         protected void triggerModules(TriggerType triggerType)
         {
-            modules_.ForEach(m => {
-                if (m is PassiveModule pm && pm.triggerType == triggerType)
-                    pm.Effect(this, Position);
-            });
+            foreach (var pm in listModules<PassiveModule>().Where(pm => pm.triggerType == triggerType))
+                pm.Effect(this, Position);
             processStatusModules(triggerType);
         }
         protected void processStatusModules(TriggerType triggerType)
         {
-            status_modules_.ForEach(m => {
-                if (triggerType == m.triggerType) m.Effect(this, Position);
-            });
+            foreach (var st in status_modules_.Where(m => triggerType == m.triggerType))
+                st.Effect(this, Position);
             status_modules_.RemoveAll(m => m.IsExpired());
+        }
+
+        
+
+        protected IEnumerable<ModuleT> listModules<ModuleT>()
+            where ModuleT: GameModule
+        {
+            return modules_.Where(m => m is ModuleT).Select(m => m as ModuleT);
+        }
+        protected ModuleT getModule<ModuleT>(int module_index)
+            where ModuleT: GameModule
+        {
+            var module = modules_.ElementAtOrDefault(module_index);
+            if (module is ModuleT res)
+                return res;
+            return null;
         }
         protected bool trySpendEnergy(int amount)
         {
@@ -119,6 +136,11 @@ namespace BlueSteelGenesis.Character_Modules
             currentEnergy -= amount;
             return true;
         }
+        protected bool isPassive(int module_index) => getModule<PassiveModule>(module_index) != null;
+        protected bool isActive(int module_index) => getModule<ActiveModule>(module_index) != null;
+        protected bool doesModuleExist(int module_index) => getModule<GameModule>(module_index) != null;
+        protected virtual bool isCorrectPosition(ActiveModule module, Vector3Int pos) => true;
+        protected virtual bool hasEnoughEnergy(ActiveModule module) => module != null && currentEnergy >= module.energyCost;
 
 
 
