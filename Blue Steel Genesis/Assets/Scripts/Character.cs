@@ -188,6 +188,6 @@ namespace BlueSteelGenesis.Character_Modules
 
         private int current_health_;
         private int current_energy_;
-        private Vector3Int position_;
+        public static Vector3Int position_;
     }
 }
