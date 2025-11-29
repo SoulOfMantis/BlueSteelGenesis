@@ -12,7 +12,12 @@ namespace BlueSteelGenesis.Character_Modules
     {
         public TMP_Text energyDisplay;
         public TMP_Text healthDisplay;
-        PlayerCharacter() : base(1, 1) {} // TODO: adjust values
+        PlayerCharacter() : base(1, 1) // TODO: adjust values
+        {
+            //modules hardcoded for now
+            addModule(new BasicMovement());
+            addModule(new PoisonStinger());
+        } 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -25,11 +30,6 @@ namespace BlueSteelGenesis.Character_Modules
 
         }
 
-        public void EndBattle()
-        {
-            statusModules = new List<StatusModule>();
-        }
-
         void updateHealth()
         {
             healthDisplay.text = $"{currentHealth}/{maxHealth}";
@@ -40,17 +40,28 @@ namespace BlueSteelGenesis.Character_Modules
             energyDisplay.text = $"{currentEnergy}/{maxEnergy}";
         }
 
-        public override bool useActiveModule(int moduleIndex, Vector3Int pos)
+        protected override void useActiveModule_internal(ActiveModule m, Vector3Int pos)
         {
-            var flag = base.useActiveModule(moduleIndex, pos);
-            if (flag)
+            //play using module animation
+            base.useActiveModule_internal(m, pos);
+        }
+        protected override void usePassiveModule_internal(PassiveModule m, Vector3Int pos)
+        {
+            //play using module animation
+            base.usePassiveModule_internal(m, pos);
+        }
+        protected override void useStatusModule_internal(StatusModule m)
+        {
+            //play using module animation
+            base.useStatusModule_internal(m);
+    }
+
+        protected override bool isCorrectPosition(ActiveModule module, Vector3Int pos)
+        {
+            var flag = base.isCorrectPosition(module, pos);
+            if (!flag)
             {
-                updateEnergy();
-                //play animation of module use success
-            }
-            else
-            {
-                //play animation of module use fail
+                //play animation of incorrect position for module
             }
             return flag;
         }
@@ -65,10 +76,33 @@ namespace BlueSteelGenesis.Character_Modules
             return flag;
         }
 
+        public bool canUseModule(int module_index)
+        {
+            return myTurn && hasEnoughEnergy(getModule<ActieModule>(module_index));
+        }
+
+        public override void startBattle()
+        {
+            base.startBattle();
+            //play starting battle animation
+        }
+
+        public override void endBattle()
+        {
+            base.endBattle();
+            //play ending battle animation
+        }
+
         public override void startTurn()
         {
             base.startTurn();
             //play start turn animation
+        }
+
+        public override void endTurn()
+        {
+            base.endTurn();
+            //play turn end animation
         }
 
         public override void damage(int dmg)
@@ -87,9 +121,24 @@ namespace BlueSteelGenesis.Character_Modules
             //play healing animation
         }
 
+        public override void drainEnergy(int amount)
+        {
+            base.drainEnergy(amount);
+            updateEnergy();
+            //play losing energy animation
+        }
+        public override void restoreEnergy(int amount)
+        {
+            base.restoreEnergy(amount);
+            updateEnergy();
+            //play restoring energy animation
+        }
+
         override protected void die()
         {
             Debug.Log("Игрок умер!");
+            //TODO: player loss
+            //play dying animation
         }
 
     }

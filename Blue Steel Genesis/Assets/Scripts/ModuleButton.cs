@@ -16,8 +16,8 @@ namespace BlueSteelGenesis.Character_Modules
             button = gameObject.GetComponent<Button>();
             if (!player.DoesModuleExist(n))
                 gameObject.SetActive(false);
-            this.enabled = player.IsModuleActive(n);
             buttonInteractableManaging();
+            this.enabled = player.IsModuleActive(n);
         }
 
         // Update is called once per frame
@@ -30,18 +30,14 @@ namespace BlueSteelGenesis.Character_Modules
 
                 //Vector3Int cell = SceneTracker.sceneTracker.getCellByScreenPosition(Input.mousePosition);
 
-
-                if (player.getCellsInRangeForModule(n).Contains(cell))
-                {
-                    player.useActiveModule(n, cell);
-                }
+                player.useActiveModule(n, cell);
                 inUse = false;
             }
         }
 
         void buttonInteractableManaging()
         {
-            button.interactable = player.myTurn;
+            button.interactable = player.canUseModule(n);
         }
 
         public void toggleSkill()
@@ -49,7 +45,7 @@ namespace BlueSteelGenesis.Character_Modules
             inUse = !inUse;
             if (inUse)
             {
-                //toggle tiles to be higlighted
+                 //toggle tiles to be higlighted
             }
             else
             {
