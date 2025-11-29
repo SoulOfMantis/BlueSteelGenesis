@@ -12,6 +12,7 @@ namespace BlueSteelGenesis.Character_Modules
     {
         public TMP_Text energyDisplay;
         public TMP_Text healthDisplay;
+        PlayerCharacter() : base(1, 1) {} // TODO: adjust values
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
