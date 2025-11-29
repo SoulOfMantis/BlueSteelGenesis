@@ -1,9 +1,12 @@
 using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
+using BlueSteelGenesis.Character_Modules;
 
     public class Enemy : Character
     {
+    Enemy() : base(1, 1) {} // TODO: move to derived classes
+
     protected override void die()
         {
         Debug.Log($"{name} умер");

@@ -12,6 +12,8 @@ namespace BlueSteelGenesis.Character_Modules
         public List<Button> buttons;
         public List<int> modules; //Заглушка: 0 -- пассивный, 1 -- активный
 
+        PlayerCharacter() : base(1, 1) {} // TODO: adjust values
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {

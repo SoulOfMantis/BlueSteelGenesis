@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
+using BlueSteelGenesis.Character_Modules;
 
+using Character = BlueSteelGenesis.Character_Modules.Character;
 public class InitiativeTracker : MonoBehaviour
 {
     public List<Character> characters;
