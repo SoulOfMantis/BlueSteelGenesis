@@ -73,7 +73,7 @@ namespace BlueSteelGenesis.Character_Modules
         public void move(Vector3Int pos)
         {
             Position = pos;
-            triggerModules(TriggerType.OnMove);
+            triggerModules(TriggerType.OnMove, pos);
         }
 
         public void strike(int x, int y, int z, int dmg) => strike(new Vector3Int(x, y, z), dmg);
@@ -119,10 +119,11 @@ namespace BlueSteelGenesis.Character_Modules
             }
             return false;
         }
-        protected void triggerModules(TriggerType triggerType)
+        protected void triggerModules(TriggerType triggerType) => triggerModules(triggerType, Position);
+        protected void triggerModules(TriggerType triggerType, Vector3Int pos)
         {
             foreach (var pm in listModules<PassiveModule>().Where(pm => pm.triggerType == triggerType))
-                usePassiveModule_internal(pm);
+                usePassiveModule_internal(pm, pos);
             processStatusModules(triggerType);
         }
         protected void processStatusModules(TriggerType triggerType)
@@ -155,7 +156,6 @@ namespace BlueSteelGenesis.Character_Modules
         protected virtual bool hasEnoughEnergy(ActiveModule module) => module != null && currentEnergy >= module.energyCost;
         protected virtual void useActiveModule_internal(ActiveModule m, Vector3Int pos) => m.Effect(this, pos);
         protected virtual void usePassiveModule_internal(PassiveModule m, Vector3Int pos) => m.Effect(this, pos);
-        protected virtual void usePassiveModule_internal(PassiveModule m) => usePassiveModule_internal(m, Position);
         protected virtual void useStatusModule_internal(StatusModule m) => m.Effect(this, Position);
 
 
