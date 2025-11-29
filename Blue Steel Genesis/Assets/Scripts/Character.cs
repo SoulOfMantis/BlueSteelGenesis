@@ -154,7 +154,8 @@ namespace BlueSteelGenesis.Character_Modules
         protected virtual bool isCorrectPosition(ActiveModule module, Vector3Int pos) => true;
         protected virtual bool hasEnoughEnergy(ActiveModule module) => module != null && currentEnergy >= module.energyCost;
         protected virtual void useActiveModule_internal(ActiveModule m, Vector3Int pos) => m.Effect(this, pos);
-        protected virtual void usePassiveModule_internal(PassiveModule m, Vector3Int pos = Position) => m.Effect(this, pos);
+        protected virtual void usePassiveModule_internal(PassiveModule m, Vector3Int pos) => m.Effect(this, pos);
+        protected virtual void usePassiveModule_internal(PassiveModule m) => usePassiveModule_internal(m, Position);
         protected virtual void useStatusModule_internal(StatusModule m) => m.Effect(this, Position);
 
 
