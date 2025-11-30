@@ -5,7 +5,7 @@ using BlueSteelGenesis.Character_Modules;
 
     public class Enemy : Character
     {
-    Enemy() : base(1, 1) {} // TODO: move to derived classes
+    Enemy(int MaxHealth,int MaxEnergy) : base(MaxHealth, MaxEnergy) {} // TODO: move to derived classes
 
     protected override void die()
         {
@@ -13,11 +13,7 @@ using BlueSteelGenesis.Character_Modules;
         Tracker.RemoveCharacter(this);
         Destroy(gameObject);
     }
-    public override void startTurn()
-    {
-        base.startTurn();
-        endTurn();
-    }
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
         {
