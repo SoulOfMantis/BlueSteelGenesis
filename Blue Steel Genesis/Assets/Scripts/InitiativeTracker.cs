@@ -36,7 +36,7 @@ public class InitiativeTracker : MonoBehaviour
 
     void Start()
     {
-        Character.Tracker = this;
+        //Character.Tracker = this;
 
         StartNextTurn();
 
