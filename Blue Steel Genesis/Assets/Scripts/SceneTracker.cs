@@ -1,45 +1,57 @@
+using BlueSteelGenesis.Character_Modules;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
-using BlueSteelGenesis.Character_Modules;
 
 
 public class SceneTracker : MonoBehaviour
 {
-    Character FindCharacterAtPosition(Vector3Int pos)
+    private InitiativeTracker init;
+    private List<Obstacle> obstacles;
+    public Tilemap tl;
+    public Character FindCharacterAtPosition(Vector3Int pos)
     {
-        if (Character.position_ == pos) return null;
-        return null;
+        return init.characters.Find(c  => c.Position == pos);
     }
-    Obstacle FindObstacleAtPosition(Vector3Int pos)
+    public Obstacle FindObstacleAtPosition(Vector3Int pos)
     {
-        if (Obstacle.position_ == pos) return null;
-        return null;
+        return obstacles.Find(o => o.Position == pos);
     }
-    bool IsOccupied(Vector3Int pos)
+    public bool IsOccupied(Vector3Int pos)
     {
-        if ((FindCharacterAtPosition(pos) != null) | (FindCharacterAtPosition(pos) != null)) return true;
-        return false;
+        return (FindCharacterAtPosition(pos) != null) | (FindCharacterAtPosition(pos) != null);
     }
-    Vector3 CellToWorld(Vector3Int pos)
+    public Vector3 CellToWorld(Vector3Int pos)
     {
-        var tl = new Tilemap();
         return tl.CellToWorld(pos);
     }
-    Vector3 WorldToCell(Vector3Int pos)
+    public Vector3 WorldToCell(Vector3Int pos)
     {
-        var tl = new Tilemap();
         return tl.WorldToCell(pos);
     }
-    private Vector3Int GetCellByScreenPosition(Vector3 pos)
+    public Vector3Int GetCellByScreenPosition(Vector3 pos)
     {
-        // TODO
-        return null;
+
+        return Vector3Int.zero;
     }
+    public bool OutOfBounds(Vector3Int pos) 
+    {
+        return false;
+    }
+    public void AddCharacter(Character charact)
+    {
+        init.characters.Add(charact);
+    }
+    public void RemoveCharacter(Character character)
+    {
+        init.characters.Remove(character);
+    }
+
 
     void Start()
     {
-        
+        init = new InitiativeTracker();
+        Character.tracker = this;
     }
 
     void Update()

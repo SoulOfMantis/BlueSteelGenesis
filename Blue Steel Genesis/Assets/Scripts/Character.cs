@@ -11,6 +11,7 @@ namespace BlueSteelGenesis.Character_Modules
 {
     public abstract class Character : MonoBehaviour
     {
+        public static SceneTracker tracker; // Для простоты доступа к трекеру
         public Character(int maxHealth, int maxEnergy)
         {
             this.maxHealth = maxHealth;
@@ -189,6 +190,7 @@ namespace BlueSteelGenesis.Character_Modules
 
         private int current_health_;
         private int current_energy_;
-        public static Vector3Int position_;
+        private Vector3Int position_;
+
     }
 }

@@ -13,5 +13,5 @@ public class Obstacle : MonoBehaviour
             position_ = value;
         }
     }
-    public static Vector3Int position_;
+    private Vector3Int position_;
 }
