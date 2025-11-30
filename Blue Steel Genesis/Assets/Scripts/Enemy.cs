@@ -10,7 +10,7 @@ using BlueSteelGenesis.Character_Modules;
     protected override void die()
         {
         Debug.Log($"{name} умер");
-        Tracker.RemoveCharacter(this);
+        //Tracker.RemoveCharacter(this);
         Destroy(gameObject);
     }
     public override void startTurn()
