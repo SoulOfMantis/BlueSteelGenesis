@@ -5,12 +5,12 @@ using BlueSteelGenesis.Character_Modules;
 
     public class Enemy : Character
     {
-    Enemy(int MaxHealth,int MaxEnergy) : base(MaxHealth, MaxEnergy) {} // TODO: move to derived classes
+    public Enemy(int MaxHealth,int MaxEnergy) : base(MaxHealth, MaxEnergy) {} // TODO: move to derived classes
 
     protected override void die()
         {
         Debug.Log($"{name} умер");
-        Tracker.RemoveCharacter(this);
+        //Tracker.RemoveCharacter(this);
         Destroy(gameObject);
     }
     
