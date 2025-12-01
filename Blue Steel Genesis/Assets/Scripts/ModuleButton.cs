@@ -14,10 +14,10 @@ namespace BlueSteelGenesis.Character_Modules
         {
             player = GameObject.FindWithTag("Player").GetComponent<PlayerCharacter>(); //Will cause a crash if there's no active player game object, shouldn't let this happen
             button = gameObject.GetComponent<Button>();
-            if (!player.DoesModuleExist(n))
+            if (!player.doesModuleExist(n))
                 gameObject.SetActive(false);
             buttonInteractableManaging();
-            this.enabled = player.IsModuleActive(n);
+            this.enabled = player.isActive(n);
         }
 
         // Update is called once per frame
@@ -26,7 +26,7 @@ namespace BlueSteelGenesis.Character_Modules
             buttonInteractableManaging();
             if (inUse && Input.GetMouseButtonDown(0))
             {
-                Vector3Int cell = Vector3Int.zero; //заглушка
+                Vector3Int cell = Vector3Int.zero; //        
 
                 //Vector3Int cell = SceneTracker.sceneTracker.getCellByScreenPosition(Input.mousePosition);
 
