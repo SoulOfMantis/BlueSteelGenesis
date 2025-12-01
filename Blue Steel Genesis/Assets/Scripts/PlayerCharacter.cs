@@ -78,7 +78,7 @@ namespace BlueSteelGenesis.Character_Modules
 
         public bool canUseModule(int module_index)
         {
-            return myTurn && hasEnoughEnergy(getModule<ActieModule>(module_index));
+            return myTurn && hasEnoughEnergy(getModule<ActiveModule>(module_index));
         }
 
         public override void startBattle()
@@ -108,7 +108,7 @@ namespace BlueSteelGenesis.Character_Modules
         public override void damage(int dmg)
         {
             base.damage(dmg);
-            Debug.Log($"Игрок получил {dmg} урона!");
+            Debug.Log($"              {dmg}      !");
             updateHealth();
             //play taking damage animation
         }
@@ -116,7 +116,7 @@ namespace BlueSteelGenesis.Character_Modules
         public override void heal(int hp)
         {
             base.heal(hp);
-            Debug.Log($"Игрок полечился на {hp}!");
+            Debug.Log($"                   {hp}!");
             updateHealth();
             //play healing animation
         }
@@ -136,7 +136,7 @@ namespace BlueSteelGenesis.Character_Modules
 
         override protected void die()
         {
-            Debug.Log("Игрок умер!");
+            Debug.Log("          !");
             //TODO: player loss
             //play dying animation
         }
