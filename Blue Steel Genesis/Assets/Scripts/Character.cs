@@ -150,9 +150,9 @@ namespace BlueSteelGenesis.Character_Modules
         }
 
 
-        protected bool isPassive(int module_index) => getModule<PassiveModule>(module_index) != null;
-        protected bool isActive(int module_index) => getModule<ActiveModule>(module_index) != null;
-        protected bool doesModuleExist(int module_index) => getModule<GameModule>(module_index) != null;
+        public bool isPassive(int module_index) => getModule<PassiveModule>(module_index) != null;
+        public bool isActive(int module_index) => getModule<ActiveModule>(module_index) != null;
+        public bool doesModuleExist(int module_index) => getModule<GameModule>(module_index) != null;
         protected virtual bool isCorrectPosition(ActiveModule module, Vector3Int pos) => true;
         protected virtual bool hasEnoughEnergy(ActiveModule module) => module != null && currentEnergy >= module.energyCost;
         protected virtual void useActiveModule_internal(ActiveModule m, Vector3Int pos) => m.Effect(this, pos);
