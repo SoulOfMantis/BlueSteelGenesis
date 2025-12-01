@@ -173,6 +173,7 @@ namespace BlueSteelGenesis.Character_Modules
             protected set => current_energy_ = Math.Clamp(value, 0, maxEnergy);
         }
         public int maxEnergy { get; protected set; }
+        public int initiative { get; protected set; }
 
         public bool myTurn { get; protected set; }
 
@@ -191,6 +192,7 @@ namespace BlueSteelGenesis.Character_Modules
         private int current_health_;
         private int current_energy_;
         private Vector3Int position_;
+
 
     }
 }

@@ -9,6 +9,10 @@ public class SceneTracker : MonoBehaviour
     private InitiativeTracker init;
     private List<Obstacle> obstacles;
     public Tilemap tl;
+    private int max_y = 4;
+    private int max_x = 3;
+    private float CameraDistance = 10;
+
     public Character FindCharacterAtPosition(Vector3Int pos)
     {
         return init.characters.Find(c  => c.Position == pos);
@@ -19,7 +23,7 @@ public class SceneTracker : MonoBehaviour
     }
     public bool IsOccupied(Vector3Int pos)
     {
-        return (FindCharacterAtPosition(pos) != null) | (FindCharacterAtPosition(pos) != null);
+        return (FindCharacterAtPosition(pos) != null) || (FindObstacleAtPosition(pos) != null);
     }
     public Vector3 CellToWorld(Vector3Int pos)
     {
@@ -29,28 +33,44 @@ public class SceneTracker : MonoBehaviour
     {
         return tl.WorldToCell(pos);
     }
-    public Vector3Int GetCellByScreenPosition(Vector3 pos)
+    public Vector3Int GetCellByScreenPosition(Vector3 MousePosition)
     {
+        MousePosition.z = CameraDistance;
+        Vector3 worldPoint = Camera.main.ScreenToWorldPoint(MousePosition);
 
-        return Vector3Int.zero;
+        Vector3Int cell = tl.WorldToCell(worldPoint);
+
+        if (OutOfBounds(cell))
+        {
+            return new Vector3Int(-1, -1, -1);
+        }
+
+        return cell;
     }
     public bool OutOfBounds(Vector3Int pos) 
     {
-        return false;
+        return (pos.x > max_x) || (pos.y > max_y) || (pos.x < 0) || (pos.y < 0);
     }
     public void AddCharacter(Character charact)
     {
-        init.characters.Add(charact);
+        init.AddCharacter(charact);
     }
     public void RemoveCharacter(Character character)
     {
-        init.characters.Remove(character);
+        init.RemoveCharacter(character);
     }
+
+    // Ќаходит в персах игрока и возвращает его
+    public PlayerCharacter getPlayer()
+    {
+        return init.characters.Find(c => c is PlayerCharacter) as PlayerCharacter;
+    }
+
 
 
     void Start()
     {
-        init = new InitiativeTracker();
+        init = gameObject.AddComponent(typeof(InitiativeTracker)) as InitiativeTracker;
         Character.tracker = this;
     }
 
