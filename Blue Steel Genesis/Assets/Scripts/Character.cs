@@ -11,12 +11,13 @@ namespace BlueSteelGenesis.Character_Modules
 {
     public abstract class Character : MonoBehaviour
     {
-        public Character(int maxHealth, int maxEnergy)
+        public Character(int maxHealth, int maxEnergy, int initiative)
         {
             this.maxHealth = maxHealth;
             this.maxEnergy = maxEnergy;
             currentHealth = maxHealth;
             currentEnergy = maxEnergy;
+	    Initiative = initiative;
         }
 
 
@@ -72,6 +73,8 @@ namespace BlueSteelGenesis.Character_Modules
         public void move(int x, int y, int z) => move(new Vector3Int(x, y, z));
         public void move(Vector3Int pos)
         {
+            if (tracker.OutOfBounds(pos) || tracker.IsOccupied(pos))
+                return;
             Position = pos;
             triggerModules(TriggerType.OnMove, pos);
         }
@@ -79,15 +82,23 @@ namespace BlueSteelGenesis.Character_Modules
         public void strike(int x, int y, int z, int dmg) => strike(new Vector3Int(x, y, z), dmg);
         public void strike(Vector3Int pos, int dmg)
         {
-            Debug.Log($"Strike at {pos} for {dmg} damage");
+            Character target = tracker.FindCharacterAtPosition(pos);
+            if (target == null)
+                return;
+            target.damage(dmg);
             triggerModules(TriggerType.OnStrike, pos);
+            Debug.Log($"Strike at {pos} for {dmg} damage");
         }
 
         public void apply(int x, int y, int z, StatusModule status) => apply(new Vector3Int(x, y, z), status);
         public void apply(Vector3Int pos, StatusModule status)
         {
-            Debug.Log($"Apply {status.GetType().Name} at {pos}");
+            Character target = tracker.FindCharacterAtPosition(pos);
+            if (target == null)
+                return;
+            target.addStatusModule(status);
             triggerModules(TriggerType.OnApply, pos);
+            Debug.Log($"Apply {status.GetType().Name} at {pos}");
         }
 
 
@@ -172,17 +183,20 @@ namespace BlueSteelGenesis.Character_Modules
             protected set => current_energy_ = Math.Clamp(value, 0, maxEnergy);
         }
         public int maxEnergy { get; protected set; }
+        public int Initiative { get; protected set; }
 
         public bool myTurn { get; protected set; }
 
         public Vector3Int Position {
             get => position_;
             protected set { 
-                // TODO: adjust transform
+                transform.position = tracker.CellToWorld(value);
                 position_ = value;
             }
         }
 
+
+        public static SceneTracker tracker;
 
         protected List<GameModule> modules_ = new();
         protected List<StatusModule> status_modules_ = new();
