@@ -48,7 +48,7 @@ public class InitiativeTracker : MonoBehaviour
 
     public void StartBattle() 
     {
-        characters.Sort((c1, c2) => (c1.initiative.CompareTo(c2.initiative)));
+        characters.Sort((c1, c2) => (c1.Initiative.CompareTo(c2.Initiative)));
         characters.ForEach(c => c.startBattle());
         StartNextTurn();
     }
