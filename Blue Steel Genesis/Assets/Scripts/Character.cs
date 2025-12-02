@@ -17,7 +17,7 @@ namespace BlueSteelGenesis.Character_Modules
             this.maxEnergy = maxEnergy;
             currentHealth = maxHealth;
             currentEnergy = maxEnergy;
-	    Initiative = initiative;
+            Initiative = initiative;
         }
 
 
@@ -154,9 +154,7 @@ namespace BlueSteelGenesis.Character_Modules
             where ModuleT: GameModule
         {
             var module = modules_.ElementAtOrDefault(module_index);
-            if (module is ModuleT res)
-                return res;
-            return null;
+            return module as ModuleT;
         }
 
 
