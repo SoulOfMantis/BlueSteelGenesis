@@ -38,7 +38,7 @@ public class InitiativeTracker : MonoBehaviour
             currentCharacterIndex = (currentCharacterIndex) % characters.Count;
 
 
-            Debug.Log($"Начинается ход {characters[currentCharacterIndex].name}");
+            Debug.Log($"ГЌГ Г·ГЁГ­Г ГҐГІГ±Гї ГµГ®Г¤ {characters[currentCharacterIndex].name}");
             characters[currentCharacterIndex].startTurn();
             currentCharacterIndex++;
         }
