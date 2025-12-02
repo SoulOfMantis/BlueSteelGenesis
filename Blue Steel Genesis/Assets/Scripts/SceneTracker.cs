@@ -29,7 +29,7 @@ public class SceneTracker : MonoBehaviour
     {
         return tl.CellToWorld(pos);
     }
-    public Vector3 WorldToCell(Vector3Int pos)
+    public Vector3Int WorldToCell(Vector3 pos)
     {
         return tl.WorldToCell(pos);
     }
