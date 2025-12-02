@@ -48,7 +48,7 @@ namespace BlueSteelGenesis.Character_Modules
 
         public virtual void startBattle()
         {
-            // TODO: adjust position
+            Position = tracker.WorldToCell(transform.position);
             triggerModules(TriggerType.OnBattleStart);
         }
         public virtual void endBattle()
