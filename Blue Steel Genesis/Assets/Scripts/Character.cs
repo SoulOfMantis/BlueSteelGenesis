@@ -11,12 +11,13 @@ namespace BlueSteelGenesis.Character_Modules
 {
     public abstract class Character : MonoBehaviour
     {
-        public Character(int maxHealth, int maxEnergy)
+        public Character(int maxHealth, int maxEnergy, int initiative)
         {
             this.maxHealth = maxHealth;
             this.maxEnergy = maxEnergy;
             currentHealth = maxHealth;
             currentEnergy = maxEnergy;
+	    Initiative = initiative;
         }
 
 
@@ -182,7 +183,7 @@ namespace BlueSteelGenesis.Character_Modules
             protected set => current_energy_ = Math.Clamp(value, 0, maxEnergy);
         }
         public int maxEnergy { get; protected set; }
-        public int initiative { get; protected set; }
+        public int Initiative { get; protected set; }
 
         public bool myTurn { get; protected set; }
 
