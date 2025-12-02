@@ -8,7 +8,7 @@ using UnityEngine;
 using Character = BlueSteelGenesis.Character_Modules.Character;
 public class InitiativeTracker : MonoBehaviour
 {
-    public List<Character> characters;
+    public List<Character> characters = new();
 
     int currentCharacterIndex = 0;
     public void AddCharacter(Character charact)
