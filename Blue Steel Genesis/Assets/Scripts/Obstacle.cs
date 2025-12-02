@@ -9,7 +9,7 @@ public class Obstacle : MonoBehaviour
         get => position_;
         protected set
         {
-            // TODO: adjust transform
+            transform.position = Character.tracker..CellToWorld(value);
             position_ = value;
         }
     }
