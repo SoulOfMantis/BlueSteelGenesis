@@ -1,10 +1,10 @@
+using BlueSteelGenesis.Character_Modules;
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
-using BlueSteelGenesis.Character_Modules;
-
 using Character = BlueSteelGenesis.Character_Modules.Character;
 public class InitiativeTracker : MonoBehaviour
 {
@@ -13,35 +13,49 @@ public class InitiativeTracker : MonoBehaviour
     int currentCharacterIndex = 0;
     public void AddCharacter(Character charact)
     {
-        characters.Add(charact);
+        if ((charact != null) && !(characters.Contains(charact)))
+        {
+            characters.Add(charact);
+        }
     }
-    public void RemoveCharacter(Character character)
+    public void RemoveCharacter(Character charact)
     {
-        characters.Remove(character);
+        if (characters.Contains(charact))
+        {
+            characters.Remove(charact);
+        }
     }
-
-
+    public bool CheckVictory()
+    {
+        return characters.All(c => c is PlayerCharacter);
+    }
 
 
     public void StartNextTurn()
     {
+        if (!CheckVictory())
+        {
+            currentCharacterIndex = (currentCharacterIndex) % characters.Count;
 
-        currentCharacterIndex = (currentCharacterIndex + 1) % characters.Count;
 
-        Debug.Log($"Íà÷èíàåòñÿ õîä {characters[currentCharacterIndex].name}");
-        characters[currentCharacterIndex].startTurn();
+            Debug.Log($"ÃÃ Ã·Ã¨Ã­Ã Ã¥Ã²Ã±Ã¿ ÃµÃ®Ã¤ {characters[currentCharacterIndex].name}");
+            characters[currentCharacterIndex].startTurn();
+            currentCharacterIndex++;
+        }
+        else { PlayerCharacter.Victory(); }
 
     }
 
+    public void StartBattle() 
+    {
+        characters.Sort((c1, c2) => (c1.Initiative.CompareTo(c2.Initiative)));
+        characters.ForEach(c => c.startBattle());
+        StartNextTurn();
+    }
 
     void Start()
     {
-        Character.Tracker = this;
-
-        StartNextTurn();
-
-            
-        
+        StartBattle();
     }
 
     void Update()

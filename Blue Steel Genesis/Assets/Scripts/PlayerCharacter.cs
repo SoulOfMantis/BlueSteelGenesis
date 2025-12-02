@@ -12,7 +12,7 @@ namespace BlueSteelGenesis.Character_Modules
     {
         public TMP_Text energyDisplay;
         public TMP_Text healthDisplay;
-        PlayerCharacter() : base(1, 1) // TODO: adjust values
+        PlayerCharacter() : base(3, 3, 10) // TODO: adjust values
         {
             //modules hardcoded for now
             addModule(new BasicMovement());
@@ -141,6 +141,10 @@ namespace BlueSteelGenesis.Character_Modules
             //play dying animation
         }
 
+        public static void Victory() 
+        {
+
+        }
     }
 }
 
