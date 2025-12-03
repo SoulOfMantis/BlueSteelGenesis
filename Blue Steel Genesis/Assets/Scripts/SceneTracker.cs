@@ -13,6 +13,7 @@ public class SceneTracker : MonoBehaviour
     private int max_x = 3;
     private float CameraDistance;
     public List<HighlightableTile> tiles;
+    private List<Vector3Int> map = new List<Vector3Int>();
 
     public Character FindCharacterAtPosition(Vector3Int pos)
     {
@@ -72,10 +73,10 @@ public class SceneTracker : MonoBehaviour
     {
         foreach (var cell in cells)
         {
-            var h = tiles.Find(t => tl.GetTile(cell) == t.BaseTile);
-            if (h != null)
+            var m = tiles.FindIndex(t => tl.GetTile(cell) == t.BaseTile);
+            if (m >= 0)
             {
-                tl.SetTile(cell, h.HighlightedTile);
+                tl.SetTile(cell, tiles[m].HighlightedTile);
             }
         }
     }
@@ -85,10 +86,10 @@ public class SceneTracker : MonoBehaviour
     {
         foreach (var cell in cells)
         {
-            var b = tiles.Find(t => tl.GetTile(cell) == t.HighlightedTile);
-            if (b != null)
+            var n = tiles.FindIndex(t => tl.GetTile(cell) == t.HighlightedTile);
+            if (n >= 0)
             {
-                tl.SetTile(cell, b.BaseTile);
+                tl.SetTile(cell, tiles[n].BaseTile);
             }
         }
 
@@ -100,17 +101,20 @@ public class SceneTracker : MonoBehaviour
         CameraDistance = tl.transform.position.z - Camera.main.transform.position.z;
         init = gameObject.AddComponent(typeof(InitiativeTracker)) as InitiativeTracker;
         Character.tracker = this;
+        map.Add(new Vector3Int(0, 0, 0));
+        map.Add(new Vector3Int(0, 1, 0));
+        tiles.Add(new HighlightableTile(tl.GetTile(map[0]), tl.GetTile(map[1])));
     }
 
     void Update()
     {
-        if (Input.GetKey("h"))
+        if (Input.GetKey(KeyCode.H))
         {
-            HighlightCells(new List<Vector3Int>(new Vector3Int(0, 0, 0)));
+            HighlightCells(map);
         }
-        else if (Input.GetKey("u"))
+        else if (Input.GetKey(KeyCode.U))
         {
-            ClearHighlights(new List<Vector3Int>(new Vector3Int(0, 0, 0)));
+            ClearHighlights(map);
         }
 
     }

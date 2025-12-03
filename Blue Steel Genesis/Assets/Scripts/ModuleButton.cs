@@ -55,7 +55,7 @@ namespace BlueSteelGenesis.Character_Modules
             if (inUse)
             {
                 //unhighlight tiles
-                Character.tracker.ClearHighlights();
+                Character.tracker.ClearHighlights(new List<Vector3Int>());
                 inUse = false;
             }
             else if (player.canUseModule(connectedModuleIndex))

@@ -7,4 +7,10 @@ public readonly struct HighlightableTile
 {
     public readonly TileBase BaseTile;
     public readonly TileBase HighlightedTile;
+
+    public HighlightableTile(TileBase baseTile, TileBase highlightedTile)
+    {
+        this.BaseTile = baseTile;
+        this.HighlightedTile = highlightedTile;
+    }
 }
