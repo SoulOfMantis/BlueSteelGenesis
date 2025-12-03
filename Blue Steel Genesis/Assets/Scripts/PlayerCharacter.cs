@@ -24,6 +24,7 @@ namespace BlueSteelGenesis.Character_Modules
         void Start()
         {
             if (tracker != null) tracker.AddCharacter(this);
+            Debug.Log("Player added");
         }
 
         // Update is called once per frame

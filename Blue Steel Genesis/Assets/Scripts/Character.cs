@@ -59,6 +59,7 @@ namespace BlueSteelGenesis.Character_Modules
         }
         public virtual void startTurn()
         {
+            Debug.Log($"turn started");
             myTurn = true;
             restoreEnergy(maxEnergy);
             triggerModules(TriggerType.OnTurnStart);
@@ -67,7 +68,7 @@ namespace BlueSteelGenesis.Character_Modules
         {
             triggerModules(TriggerType.OnTurnEnd);
             myTurn = false;
-            //tracker.NextTurn();
+            tracker.NextTurn();
         }
 
 

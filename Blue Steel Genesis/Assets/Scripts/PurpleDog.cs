@@ -15,6 +15,7 @@ public class PurpleDog : Enemy
     void Start()
     {
         if (tracker != null) tracker.AddCharacter(this);
+        Debug.Log("Dog added");
     }
 
 
@@ -35,7 +36,7 @@ public class PurpleDog : Enemy
     {
 
         BasicAttack attack = getModule<BasicAttack>(0);
-        
+        Debug.Log($"Cost {attack.energyCost} {currentEnergy}");
         // Available cells
         var attackRange = attack.getCellsInRange(Position);
 

@@ -10,11 +10,12 @@ public class InitiativeTracker : MonoBehaviour
 {
     public List<Character> characters = new();
 
-    int currentCharacterIndex = 0;
+    int currentCharacterIndex = -1;
     public void AddCharacter(Character charact)
     {
         if ((charact != null) && !(characters.Contains(charact)))
         {
+            Debug.Log($"Added {charact.name}");
             characters.Add(charact);
         }
     }
@@ -32,20 +33,22 @@ public class InitiativeTracker : MonoBehaviour
 
     public bool CheckDefeat()
     {
-        return characters.Exists(c => c is PlayerCharacter);
+        return !characters.Exists(c => c is PlayerCharacter);
     }
 
 
     public void StartNextTurn()
     {
+        Debug.Log($"StartNextTurn");
         if (!CheckVictory() && !CheckDefeat())
         {
-            currentCharacterIndex = (currentCharacterIndex) % characters.Count;
+            Debug.Log($"{currentCharacterIndex} {characters.Count} turn");
+            currentCharacterIndex = (currentCharacterIndex + 1) % characters.Count;
 
 
             Debug.Log($"Сейчас ход {characters[currentCharacterIndex].GetType().Name}");
             characters[currentCharacterIndex].startTurn();
-            currentCharacterIndex++;
+            //currentCharacterIndex++;
         }
         //else { PlayerCharacter.Victory(); }
 
