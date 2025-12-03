@@ -115,7 +115,6 @@ namespace BlueSteelGenesis.Character_Modules
         public override void startTurn()
         {
             base.startTurn();
-            updateButtons();
             //play start turn animation
         }
 
@@ -128,16 +127,16 @@ namespace BlueSteelGenesis.Character_Modules
 
         public override void damage(int dmg)
         {
-            base.damage(dmg);
             Debug.Log($"Игрок получил {dmg} урона!");
+            base.damage(dmg);
             updateHealth();
             //play taking damage animation
         }
 
         public override void heal(int hp)
         {
-            base.heal(hp);
             Debug.Log($"Игрок восстановил {hp} здоровья!");
+            base.heal(hp);
             updateHealth();
             //play healing animation
         }
