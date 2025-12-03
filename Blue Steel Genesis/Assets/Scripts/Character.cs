@@ -67,6 +67,7 @@ namespace BlueSteelGenesis.Character_Modules
         {
             triggerModules(TriggerType.OnTurnEnd);
             myTurn = false;
+            //tracker.NextTurn();
         }
 
 

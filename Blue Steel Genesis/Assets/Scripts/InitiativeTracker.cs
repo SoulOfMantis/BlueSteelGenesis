@@ -30,25 +30,30 @@ public class InitiativeTracker : MonoBehaviour
         return characters.All(c => c is PlayerCharacter);
     }
 
+    public bool CheckDefeat()
+    {
+        return characters.Exists(c => c is PlayerCharacter);
+    }
+
 
     public void StartNextTurn()
     {
-        if (!CheckVictory())
+        if (!CheckVictory() && !CheckDefeat())
         {
             currentCharacterIndex = (currentCharacterIndex) % characters.Count;
 
 
-            Debug.Log($"Íà÷èíàåòñÿ õîä {characters[currentCharacterIndex].name}");
+            Debug.Log($"Сейчас ход {characters[currentCharacterIndex].GetType().Name}");
             characters[currentCharacterIndex].startTurn();
             currentCharacterIndex++;
         }
-        else { PlayerCharacter.Victory(); }
+        //else { PlayerCharacter.Victory(); }
 
     }
 
     public void StartBattle() 
     {
-        characters.Sort((c1, c2) => (c1.Initiative.CompareTo(c2.Initiative)));
+        characters.Sort((c1, c2) => (c2.Initiative.CompareTo(c1.Initiative)));
         characters.ForEach(c => c.startBattle());
         StartNextTurn();
     }

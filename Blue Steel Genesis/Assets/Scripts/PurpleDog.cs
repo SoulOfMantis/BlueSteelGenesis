@@ -33,6 +33,7 @@ public class PurpleDog : Enemy
     // Check if PD can attack player
     private bool CanAttack(Vector3Int playerPosition)
     {
+
         BasicAttack attack = getModule<BasicAttack>(0);
         
         // Available cells
@@ -45,6 +46,7 @@ public class PurpleDog : Enemy
     // Finds best position to get to player
     private Vector3Int FindBestPosition(Vector3Int playerPosition)
     {   
+
         BasicMovement move = getModule<BasicMovement>(1);
 
         // Available cells

@@ -13,7 +13,7 @@ namespace BlueSteelGenesis.Character_Modules
         public static List<ModuleButton> activeModuleButtons = new();
         public TMP_Text energyDisplay;
         public TMP_Text healthDisplay;
-        PlayerCharacter() : base(3, 3, 10)
+        PlayerCharacter() : base(10, 3, 10)
         {
             //modules hardcoded for now
             addModule(new PoisonStinger());
@@ -153,6 +153,7 @@ namespace BlueSteelGenesis.Character_Modules
         override protected void die()
         {
             Debug.Log("Игрок умер!");
+            tracker.RemoveCharacter(this);
             //TODO: player loss
             //play dying animation
         }
