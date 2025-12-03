@@ -12,6 +12,7 @@ public class SceneTracker : MonoBehaviour
     private int max_y = 4;
     private int max_x = 3;
     private float CameraDistance = 10;
+    private TileHighlighter tileHighlighter;
 
     public Character FindCharacterAtPosition(Vector3Int pos)
     {
@@ -66,6 +67,16 @@ public class SceneTracker : MonoBehaviour
         return init.characters.Find(c => c is PlayerCharacter) as PlayerCharacter;
     }
 
+    // Highlights given cells
+    public void HighlightAvailableCells(List<Vector3Int> cells)
+    {
+        if (tileHighlighter == null)
+        {
+            tileHighlighter = gameObject.AddComponent<TileHighlighter>();
+            tileHighlighter.tm = tl;
+        }
+        tileHighlighter.HighlightCells(cells); 
+    }
 
 
     void Start()
