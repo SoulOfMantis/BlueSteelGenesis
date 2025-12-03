@@ -12,7 +12,7 @@ public class SceneTracker : MonoBehaviour
     private int max_y = 4;
     private int max_x = 3;
     private float CameraDistance;
-    private TileHighlighter tileHighlighter;
+    public List<HighlightableTile> tiles;
 
     public Character FindCharacterAtPosition(Vector3Int pos)
     {
@@ -70,16 +70,29 @@ public class SceneTracker : MonoBehaviour
     // Highlights given cells
     public void HighlightCells(List<Vector3Int> cells)
     {
-        if (tileHighlighter == null)
+        foreach (var cell in cells)
         {
-            tileHighlighter = gameObject.AddComponent<TileHighlighter>();
-            tileHighlighter.tm = tl;
+            var h = tiles.Find(t => tl.GetTile(cell) == t.BaseTile);
+            if (h != null)
+            {
+                tl.SetTile(cell, h.HighlightedTile);
+            }
         }
-        tileHighlighter.HighlightCells(cells); 
     }
 
     // Clears the highlighted cells
-    public void ClearHighlights() => tileHighlighter.ClearHighlights();
+    public void ClearHighlights(List<Vector3Int> cells)
+    {
+        foreach (var cell in cells)
+        {
+            var b = tiles.Find(t => tl.GetTile(cell) == t.HighlightedTile);
+            if (b != null)
+            {
+                tl.SetTile(cell, b.BaseTile);
+            }
+        }
+
+    }
 
 
     void Start()
@@ -91,6 +104,14 @@ public class SceneTracker : MonoBehaviour
 
     void Update()
     {
-        
+        if (Input.GetKey("h"))
+        {
+            HighlightCells(new List<Vector3Int>(new Vector3Int(0, 0, 0)));
+        }
+        else if (Input.GetKey("u"))
+        {
+            ClearHighlights(new List<Vector3Int>(new Vector3Int(0, 0, 0)));
+        }
+
     }
 }
