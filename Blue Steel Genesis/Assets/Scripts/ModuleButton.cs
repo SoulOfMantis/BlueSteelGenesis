@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 namespace BlueSteelGenesis.Character_Modules
@@ -47,17 +49,19 @@ namespace BlueSteelGenesis.Character_Modules
                 if (inUse) toggleSkill();
             }
         }
-
+        
         public void toggleSkill()
         {
             if (inUse)
             {
                 //unhighlight tiles
+                Character.tracker.ClearHighlights();
                 inUse = false;
             }
             else if (player.canUseModule(connectedModuleIndex))
             {
                 //highlight tiles
+                Character.tracker.HighlightCells(new List<Vector3Int>());
                 inUse = true;
             }
         }

@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
-using NUnit.Framework;
 
 // Class used for highlighting cells
 public class TileHighlighter : MonoBehaviour

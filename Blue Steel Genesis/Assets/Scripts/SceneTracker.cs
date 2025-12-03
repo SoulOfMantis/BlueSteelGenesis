@@ -68,7 +68,7 @@ public class SceneTracker : MonoBehaviour
     }
 
     // Highlights given cells
-    public void HighlightAvailableCells(List<Vector3Int> cells)
+    public void HighlightCells(List<Vector3Int> cells)
     {
         if (tileHighlighter == null)
         {
@@ -77,6 +77,9 @@ public class SceneTracker : MonoBehaviour
         }
         tileHighlighter.HighlightCells(cells); 
     }
+
+    // Clears the highlighted cells
+    public void ClearHighlights() => tileHighlighter.ClearHighlights();
 
 
     void Start()
