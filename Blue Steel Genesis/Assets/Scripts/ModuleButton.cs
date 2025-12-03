@@ -30,19 +30,19 @@ namespace BlueSteelGenesis.Character_Modules
         {
             if (inUse && Input.GetMouseButtonDown(0))
             {
+                toggleSkill();
                 Vector3Int cell = Character.tracker.GetCellByScreenPosition(Input.mousePosition);
                 if (cell != new Vector3Int(-1, -1, -1))
                 {
                     player.useActiveModule(connectedModuleIndex, cell);
                 }
                 else Debug.Log("Impossible position!");
-                inUse = false;
             }
         }
 
         public void buttonInteractableManaging()
         {
-            if (player.myTurn)  button.interactable = true;            
+            if (player.myTurn) button.interactable = true;            
             else
             {
                 button.interactable = false;
@@ -55,13 +55,13 @@ namespace BlueSteelGenesis.Character_Modules
             if (inUse)
             {
                 //unhighlight tiles
-                Character.tracker.ClearHighlights(new List<Vector3Int>());
+                Character.tracker.ClearHighlights(player.GetModulePositions(connectedModuleIndex));
                 inUse = false;
             }
             else if (player.canUseModule(connectedModuleIndex))
             {
                 //highlight tiles
-                Character.tracker.HighlightCells(new List<Vector3Int>());
+                Character.tracker.HighlightCells(player.GetModulePositions(connectedModuleIndex));
                 inUse = true;
             }
         }

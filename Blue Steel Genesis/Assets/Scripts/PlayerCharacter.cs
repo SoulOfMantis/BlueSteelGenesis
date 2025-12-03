@@ -13,7 +13,7 @@ namespace BlueSteelGenesis.Character_Modules
         public static List<ModuleButton> activeModuleButtons = new();
         public TMP_Text energyDisplay;
         public TMP_Text healthDisplay;
-        PlayerCharacter() : base(3, 3, 10)
+        PlayerCharacter() : base(10, 3, 10)
         {
             //modules hardcoded for now
             addModule(new PoisonStinger());
@@ -24,6 +24,7 @@ namespace BlueSteelGenesis.Character_Modules
         void Start()
         {
             if (tracker != null) tracker.AddCharacter(this);
+            Debug.Log("Player added");
         }
 
         // Update is called once per frame
@@ -31,6 +32,8 @@ namespace BlueSteelGenesis.Character_Modules
         {
 
         }
+
+        public List<Vector3Int> GetModulePositions(int n) => modules_[n].getCellsInRange(Position);
 
         void updateHealth()
         {
@@ -40,9 +43,12 @@ namespace BlueSteelGenesis.Character_Modules
         void updateEnergy()
         {
             energyDisplay.text = $"{currentEnergy}/{maxEnergy}";
-            activeModuleButtons.ForEach(mb => mb.buttonInteractableManaging());
         }
 
+        void updateButtons()
+        {
+            activeModuleButtons.ForEach(mb => mb.buttonInteractableManaging());
+        }
         public string getmoduleName(int index)
         {
             if (!doesModuleExist(index)) return null;
@@ -115,22 +121,22 @@ namespace BlueSteelGenesis.Character_Modules
         public override void endTurn()
         {
             base.endTurn();
-            updateEnergy();
+            updateButtons();
             //play turn end animation
         }
 
         public override void damage(int dmg)
         {
-            base.damage(dmg);
             Debug.Log($"Игрок получил {dmg} урона!");
+            base.damage(dmg);
             updateHealth();
             //play taking damage animation
         }
 
         public override void heal(int hp)
         {
-            base.heal(hp);
             Debug.Log($"Игрок восстановил {hp} здоровья!");
+            base.heal(hp);
             updateHealth();
             //play healing animation
         }
@@ -138,12 +144,14 @@ namespace BlueSteelGenesis.Character_Modules
         public override void drainEnergy(int amount)
         {
             base.drainEnergy(amount);
+            updateButtons();
             updateEnergy();
             //play losing energy animation
         }
         public override void restoreEnergy(int amount)
         {
             base.restoreEnergy(amount);
+            updateButtons();
             updateEnergy();
             //play restoring energy animation
         }
@@ -151,6 +159,7 @@ namespace BlueSteelGenesis.Character_Modules
         override protected void die()
         {
             Debug.Log("Игрок умер!");
+            tracker.RemoveCharacter(this);
             //TODO: player loss
             //play dying animation
         }

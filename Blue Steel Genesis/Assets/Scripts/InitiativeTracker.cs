@@ -10,11 +10,12 @@ public class InitiativeTracker : MonoBehaviour
 {
     public List<Character> characters = new();
 
-    int currentCharacterIndex = 0;
+    int currentCharacterIndex = -1;
     public void AddCharacter(Character charact)
     {
         if ((charact != null) && !(characters.Contains(charact)))
         {
+            Debug.Log($"Added {charact.name}");
             characters.Add(charact);
         }
     }
@@ -30,25 +31,32 @@ public class InitiativeTracker : MonoBehaviour
         return characters.All(c => c is PlayerCharacter);
     }
 
+    public bool CheckDefeat()
+    {
+        return !characters.Exists(c => c is PlayerCharacter);
+    }
+
 
     public void StartNextTurn()
     {
-        if (!CheckVictory())
+        Debug.Log($"StartNextTurn");
+        if (!CheckVictory() && !CheckDefeat())
         {
-            currentCharacterIndex = (currentCharacterIndex) % characters.Count;
+            Debug.Log($"{currentCharacterIndex} {characters.Count} turn");
+            currentCharacterIndex = (currentCharacterIndex + 1) % characters.Count;
 
 
-            Debug.Log($"Íà÷èíàåòñÿ õîä {characters[currentCharacterIndex].name}");
+            Debug.Log($"Сейчас ход {characters[currentCharacterIndex].GetType().Name}");
             characters[currentCharacterIndex].startTurn();
-            currentCharacterIndex++;
+            //currentCharacterIndex++;
         }
-        else { PlayerCharacter.Victory(); }
+        //else { PlayerCharacter.Victory(); }
 
     }
 
     public void StartBattle() 
     {
-        characters.Sort((c1, c2) => (c1.Initiative.CompareTo(c2.Initiative)));
+        characters.Sort((c1, c2) => (c2.Initiative.CompareTo(c1.Initiative)));
         characters.ForEach(c => c.startBattle());
         StartNextTurn();
     }

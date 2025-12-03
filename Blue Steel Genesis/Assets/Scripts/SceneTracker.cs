@@ -9,9 +9,9 @@ public class SceneTracker : MonoBehaviour
     private InitiativeTracker init;
     private List<Obstacle> obstacles = new();
     public Tilemap tl;
-    private int max_y = 4;
-    private int max_x = 3;
-    private float CameraDistance;
+    private int max_y = 3;
+    private int max_x = 17;
+    private float CameraDistance = 10;
     public List<HighlightableTile> tiles;
     private List<Vector3Int> map = new List<Vector3Int>();
 
@@ -29,7 +29,7 @@ public class SceneTracker : MonoBehaviour
     }
     public Vector3 CellToWorld(Vector3Int pos)
     {
-        return tl.CellToWorld(pos);
+        return tl.GetCellCenterWorld(pos);
     }
     public Vector3Int WorldToCell(Vector3 pos)
     {
@@ -95,14 +95,18 @@ public class SceneTracker : MonoBehaviour
 
     }
 
+    public void NextTurn()
+    {
+        init.StartNextTurn();
+    }
+
 
     void Start()
     {
-        CameraDistance = tl.transform.position.z - Camera.main.transform.position.z;
         init = gameObject.AddComponent(typeof(InitiativeTracker)) as InitiativeTracker;
         Character.tracker = this;
         map.Add(new Vector3Int(0, 0, 0));
-        //map.Add(new Vector3Int(0, 1, 0));
+        map.Add(new Vector3Int(0, 1, 0));
         //tiles.Add(new HighlightableTile(tl.GetTile(map[0]), tl.GetTile(map[1])));
     }
 
