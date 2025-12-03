@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,49 +8,57 @@ namespace BlueSteelGenesis.Character_Modules
     {
         private PlayerCharacter player;
         private Button button;
-        public int n;
+        public int connectedModuleIndex;
         private bool inUse = false;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
             player = GameObject.FindWithTag("Player").GetComponent<PlayerCharacter>(); //Will cause a crash if there's no active player game object, shouldn't let this happen
             button = gameObject.GetComponent<Button>();
-            if (!player.doesModuleExist(n))
+            if (!player.doesModuleExist(connectedModuleIndex))
                 gameObject.SetActive(false);
-            buttonInteractableManaging();
-            this.enabled = player.isActive(n);
+            button.interactable = false;
+            enabled = player.isActive(connectedModuleIndex);
+            PlayerCharacter.activeModuleButtons.Add(this);
+            button.GetComponentInChildren<TMP_Text>().text = player.getmoduleName(connectedModuleIndex);
         }
 
         // Update is called once per frame
         void Update()
         {
-            buttonInteractableManaging();
             if (inUse && Input.GetMouseButtonDown(0))
             {
-                Vector3Int cell = Vector3Int.zero; //        
-
-                //Vector3Int cell = SceneTracker.sceneTracker.getCellByScreenPosition(Input.mousePosition);
-
-                player.useActiveModule(n, cell);
+                Vector3Int cell = Character.tracker.GetCellByScreenPosition(Input.mousePosition);
+                if (cell != new Vector3Int(-1, -1, -1))
+                {
+                    player.useActiveModule(connectedModuleIndex, cell);
+                }
+                else Debug.Log("Impossible position!");
                 inUse = false;
             }
         }
 
-        void buttonInteractableManaging()
+        public void buttonInteractableManaging()
         {
-            button.interactable = player.canUseModule(n);
+            if (player.myTurn)  button.interactable = true;            
+            else
+            {
+                button.interactable = false;
+                if (inUse) toggleSkill();
+            }
         }
 
         public void toggleSkill()
         {
-            inUse = !inUse;
             if (inUse)
             {
-                 //toggle tiles to be higlighted
+                //unhighlight tiles
+                inUse = false;
             }
-            else
+            else if (player.canUseModule(connectedModuleIndex))
             {
-                //toggle tiles to not be highlighted
+                //highlight tiles
+                inUse = true;
             }
         }
     }
