@@ -42,7 +42,7 @@ namespace BlueSteelGenesis.Character_Modules
 
         public void buttonInteractableManaging()
         {
-            if (player.myTurn)  button.interactable = true;            
+            if (player.myTurn) button.interactable = true;            
             else
             {
                 button.interactable = false;

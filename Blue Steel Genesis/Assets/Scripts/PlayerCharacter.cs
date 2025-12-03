@@ -43,9 +43,12 @@ namespace BlueSteelGenesis.Character_Modules
         void updateEnergy()
         {
             energyDisplay.text = $"{currentEnergy}/{maxEnergy}";
-            activeModuleButtons.ForEach(mb => mb.buttonInteractableManaging());
         }
 
+        void updateButtons()
+        {
+            activeModuleButtons.ForEach(mb => mb.buttonInteractableManaging());
+        }
         public string getmoduleName(int index)
         {
             if (!doesModuleExist(index)) return null;
@@ -112,13 +115,14 @@ namespace BlueSteelGenesis.Character_Modules
         public override void startTurn()
         {
             base.startTurn();
+            updateButtons();
             //play start turn animation
         }
 
         public override void endTurn()
         {
             base.endTurn();
-            updateEnergy();
+            updateButtons();
             //play turn end animation
         }
 
@@ -141,12 +145,14 @@ namespace BlueSteelGenesis.Character_Modules
         public override void drainEnergy(int amount)
         {
             base.drainEnergy(amount);
+            updateButtons();
             updateEnergy();
             //play losing energy animation
         }
         public override void restoreEnergy(int amount)
         {
             base.restoreEnergy(amount);
+            updateButtons();
             updateEnergy();
             //play restoring energy animation
         }
