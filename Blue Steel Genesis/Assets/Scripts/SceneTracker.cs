@@ -7,11 +7,11 @@ using UnityEngine.Tilemaps;
 public class SceneTracker : MonoBehaviour
 {
     private InitiativeTracker init;
-    private List<Obstacle> obstacles;
+    private List<Obstacle> obstacles = new();
     public Tilemap tl;
     private int max_y = 4;
     private int max_x = 3;
-    private float CameraDistance = 10;
+    private float CameraDistance;
 
     public Character FindCharacterAtPosition(Vector3Int pos)
     {
@@ -60,7 +60,7 @@ public class SceneTracker : MonoBehaviour
         init.RemoveCharacter(character);
     }
 
-    // Ќаходит в персах игрока и возвращает его
+    //                                         
     public PlayerCharacter getPlayer()
     {
         return init.characters.Find(c => c is PlayerCharacter) as PlayerCharacter;
@@ -70,6 +70,7 @@ public class SceneTracker : MonoBehaviour
 
     void Start()
     {
+        CameraDistance = tl.transform.position.z - Camera.main.transform.position.z;
         init = gameObject.AddComponent(typeof(InitiativeTracker)) as InitiativeTracker;
         Character.tracker = this;
     }
