@@ -331,9 +331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneTracker
   tl: {fileID: 2141590255}
-  tiles:
-  - BaseTile: {fileID: 11400000, guid: eb1f9ee2772fc184da8e3ff896e5506a, type: 2}
-    HighlightedTile: {fileID: 11400000, guid: 8af59de78a127224e95f2cc6cc0ce4a8, type: 2}
+  tiles: []
 --- !u!4 &1615897212
 Transform:
   m_ObjectHideFlags: 0

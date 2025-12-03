@@ -5,7 +5,7 @@ using BlueSteelGenesis.Character_Modules;
 
     public class Enemy : Character
     {
-    Enemy(int maxHealth, int maxEnergy, int initiative) : base(maxHealth, maxEnergy, initiative) {}
+    public Enemy(int maxHealth, int maxEnergy, int initiative) : base(maxHealth, maxEnergy, initiative) {}
 
     protected override void die()
         {

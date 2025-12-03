@@ -12,6 +12,12 @@ public class PurpleDog : Enemy
         addModule(new BasicMovement());
     }
 
+    void Start()
+    {
+        if (tracker != null) tracker.AddCharacter(this);
+    }
+
+
     // Begins PDs turn
     public override void startTurn()
     {

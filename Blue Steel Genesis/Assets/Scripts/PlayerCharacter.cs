@@ -32,6 +32,8 @@ namespace BlueSteelGenesis.Character_Modules
 
         }
 
+        public List<Vector3Int> GetModulePositions(int n) => modules_[n].getCellsInRange(Position);
+
         void updateHealth()
         {
             healthDisplay.text = $"{currentHealth}/{maxHealth}";
