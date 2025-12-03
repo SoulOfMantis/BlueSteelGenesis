@@ -7,11 +7,13 @@ using UnityEngine.Tilemaps;
 public class SceneTracker : MonoBehaviour
 {
     private InitiativeTracker init;
-    private List<Obstacle> obstacles;
+    private List<Obstacle> obstacles = new();
     public Tilemap tl;
     private int max_y = 4;
     private int max_x = 3;
-    private float CameraDistance = 10;
+    private float CameraDistance;
+    public List<HighlightableTile> tiles;
+    private List<Vector3Int> map = new List<Vector3Int>();
 
     public Character FindCharacterAtPosition(Vector3Int pos)
     {
@@ -60,22 +62,60 @@ public class SceneTracker : MonoBehaviour
         init.RemoveCharacter(character);
     }
 
-    // Ќаходит в персах игрока и возвращает его
+    //                                         
     public PlayerCharacter getPlayer()
     {
         return init.characters.Find(c => c is PlayerCharacter) as PlayerCharacter;
     }
 
+    // Highlights given cells
+    public void HighlightCells(List<Vector3Int> cells)
+    {
+        foreach (var cell in cells)
+        {
+            var m = tiles.FindIndex(t => tl.GetTile(cell) == t.BaseTile);
+            if (m >= 0)
+            {
+                tl.SetTile(cell, tiles[m].HighlightedTile);
+            }
+        }
+    }
+
+    // Clears the highlighted cells
+    public void ClearHighlights(List<Vector3Int> cells)
+    {
+        foreach (var cell in cells)
+        {
+            var n = tiles.FindIndex(t => tl.GetTile(cell) == t.HighlightedTile);
+            if (n >= 0)
+            {
+                tl.SetTile(cell, tiles[n].BaseTile);
+            }
+        }
+
+    }
 
 
     void Start()
     {
+        CameraDistance = tl.transform.position.z - Camera.main.transform.position.z;
         init = gameObject.AddComponent(typeof(InitiativeTracker)) as InitiativeTracker;
         Character.tracker = this;
+        map.Add(new Vector3Int(0, 0, 0));
+        //map.Add(new Vector3Int(0, 1, 0));
+        //tiles.Add(new HighlightableTile(tl.GetTile(map[0]), tl.GetTile(map[1])));
     }
 
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            HighlightCells(map);
+        }
+        else if (Input.GetKeyDown(KeyCode.U))
+        {
+            ClearHighlights(map);
+        }
+
     }
 }

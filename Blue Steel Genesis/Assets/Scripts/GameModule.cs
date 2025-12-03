@@ -11,6 +11,8 @@ namespace BlueSteelGenesis.Character_Modules
     public abstract class GameModule
 
     {
+        public string Name { get; protected set; }
+        public string Description { get; protected set; }
         public int range = 0;
        protected List<Vector3Int> getAvailableCells(int n, Vector3Int start)
         {
@@ -41,6 +43,7 @@ namespace BlueSteelGenesis.Character_Modules
             return getAvailableCells(range, start);
         }
 
+        public void changeName(string newName) => Name = newName;
         public abstract void Effect(Character user, Vector3Int pos);
 
         public virtual void Initialize()
