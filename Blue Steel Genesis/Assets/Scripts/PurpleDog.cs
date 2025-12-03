@@ -1,12 +1,12 @@
 using UnityEngine;
 using BlueSteelGenesis.Character_Modules;
-using System.Threading;
 using System;
+using System.Linq;
 
 public class PurpleDog : Enemy 
 {
     // Purple Dog enemy constructor
-    public PurpleDog() : base(5, 3)
+    public PurpleDog() : base(5, 3, 60)
     {
         addModule(new BasicAttack());
         addModule(new BasicMovement());
@@ -22,39 +22,45 @@ public class PurpleDog : Enemy
         endTurn();
     }
 
+    
 
     // Check if PD can attack player
-    private bool CanAttack(Vector3Int playerPosition, BasicAttack attack)
+    private bool CanAttack(Vector3Int playerPosition)
     {
-        // Check if PD has enough energy
-        if (!hasEnoughEnergy(attack)) return false;
-
+        BasicAttack attack = getModule<BasicAttack>(0);
+        
         // Available cells
         var attackRange = attack.getCellsInRange(Position);
-        
+
+
         return attackRange.Contains(playerPosition);
     }
 
     // Finds best position to get to player
-    private Vector3Int FindBestPosition(Vector3Int playerPosition, BasicMovement move)
+    private Vector3Int FindBestPosition(Vector3Int playerPosition)
     {   
+        BasicMovement move = getModule<BasicMovement>(1);
+
         // Available cells
         var moveRange = move.getCellsInRange(Position);
 
-        int distance = 1000;
-        Vector3Int bestPosition = new Vector3Int();
+        int distance = Math.Abs(playerPosition.x - Position.x) + Math.Abs(playerPosition.y - Position.y);
+        Vector3Int bestPosition = Position;
+        
+        if (distance == 1)
+            return bestPosition;
 
         // Finding closest available cell
-        foreach (var i in moveRange)
+        foreach (var cell in moveRange)
         {
-            int temp = Math.Abs(playerPosition.x - i.x) + Math.Abs(playerPosition.y - i.y);
-            if (temp < distance && temp != 0)
+            int temp = Math.Abs(playerPosition.x - cell.x) + Math.Abs(playerPosition.y - cell.y);
+            if (temp < distance && !tracker.IsOccupied(cell) && !tracker.OutOfBounds(cell))
             {
                 distance = temp;
-                bestPosition = i;
+                bestPosition = cell;
             }
         }
-
+        
         return bestPosition;
     }
 
@@ -62,26 +68,21 @@ public class PurpleDog : Enemy
     private void MainLogic()
     {
         // Object of player
-        PlayerCharacter player = this.GetComponent<PlayerCharacter>();
-
-        // Postion of player
-        Vector3Int playerPosition = player.Position;
+        PlayerCharacter player = tracker.getPlayer();
 
         // Get modules
-        BasicAttack attack = getModule<BasicAttack>(0);
-        BasicMovement move = getModule<BasicMovement>(1);
 
-        while (true)
+        while (modules_.Any(m => hasEnoughEnergy((ActiveModule)m)))
         {
             //  Try attacking player
-            if (CanAttack(playerPosition, attack) && useActiveModule(0, playerPosition))
+            if (CanAttack(player.Position) && useActiveModule(0, player.Position))
                 Debug.Log("PD attacks the player");
 
             // Get closer to player
-            else if (!CanAttack(playerPosition, attack) && useActiveModule(1, FindBestPosition(playerPosition, move)))
+            else if (useActiveModule(1, FindBestPosition(player.Position)))
                 Debug.Log("PD moves closer to player");
 
-            // No energy
+            // No available modules
             else
             {
                 Debug.Log("Ran out of energy");
