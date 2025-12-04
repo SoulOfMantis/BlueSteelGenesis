@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 namespace BlueSteelGenesis.Character_Modules
 {
