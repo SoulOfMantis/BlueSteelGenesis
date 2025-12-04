@@ -40,17 +40,15 @@ public class InitiativeTracker : MonoBehaviour
     public void StartNextTurn()
     {
         Debug.Log($"StartNextTurn");
-        if (!CheckVictory() && !CheckDefeat())
+        if (CheckVictory()) Character.tracker.getPlayer().Victory();
+        else if (!CheckDefeat())
         {
             Debug.Log($"{currentCharacterIndex} {characters.Count} turn");
             currentCharacterIndex = (currentCharacterIndex + 1) % characters.Count;
 
-
             Debug.Log($"Сейчас ход {characters[currentCharacterIndex].GetType().Name}");
             characters[currentCharacterIndex].startTurn();
-            //currentCharacterIndex++;
         }
-        //else { PlayerCharacter.Victory(); }
 
     }
 
