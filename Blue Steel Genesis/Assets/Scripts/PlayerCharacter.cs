@@ -25,8 +25,13 @@ namespace BlueSteelGenesis.Character_Modules
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-            if (tracker != null) tracker.AddCharacter(this);
-            Debug.Log("Player added");
+            if (tracker != null)
+            {
+                tracker.AddCharacter(this);
+                Debug.Log("Player added");
+            }
+            VictoryScreen.SetActive(false);
+            DefeatScreen.SetActive(false);
         }
 
         // Update is called once per frame
