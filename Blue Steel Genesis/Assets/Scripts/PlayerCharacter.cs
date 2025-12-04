@@ -13,6 +13,8 @@ namespace BlueSteelGenesis.Character_Modules
         public static List<ModuleButton> activeModuleButtons = new();
         public TMP_Text energyDisplay;
         public TMP_Text healthDisplay;
+        public GameObject VictoryScreen;
+        public GameObject DefeatScreen;
         PlayerCharacter() : base(10, 3, 10)
         {
             //modules hardcoded for now
@@ -160,14 +162,23 @@ namespace BlueSteelGenesis.Character_Modules
         {
             Debug.Log("Игрок умер!");
             tracker.RemoveCharacter(this);
+            Defeat();
             //TODO: player loss
             //play dying animation
         }
 
-        public static void Victory() 
+        public void Victory() 
         {
-
+            updateButtons();
+            endBattle();
+            VictoryScreen.SetActive(true);
         }
+        public void Defeat()
+        {
+            updateButtons();
+            DefeatScreen.SetActive(true);
+        }
+
     }
 }
 
