@@ -106,6 +106,9 @@ namespace BlueSteelGenesis.Character_Modules
         public override void startBattle()
         {
             base.startBattle();
+            updateHealth();
+            updateEnergy();
+            updateButtons();
             //play starting battle animation
         }
 
