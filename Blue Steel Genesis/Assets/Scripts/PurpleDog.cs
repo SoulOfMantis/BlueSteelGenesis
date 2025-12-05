@@ -1,15 +1,23 @@
-using UnityEngine;
 using BlueSteelGenesis.Character_Modules;
 using System;
 using System.Linq;
+using TMPro;
+using UnityEngine;
 
 public class PurpleDog : Enemy 
 {
+    public TMP_Text healthDisplay;
+
     // Purple Dog enemy constructor
     public PurpleDog() : base(5, 3, 60)
     {
         addModule(new BasicAttack());
         addModule(new BasicMovement());
+    }
+
+    void updateHealth()
+    {
+        healthDisplay.text = $"{currentHealth}/{maxHealth}";
     }
 
     void Start()
@@ -99,4 +107,26 @@ public class PurpleDog : Enemy
             }
         }
     }
-}
+
+    public override void damage(int dmg)
+    {
+        Debug.Log($"Собака получила {dmg} урона!");
+        base.damage(dmg);
+        updateHealth();
+        //play taking damage animation
+    }
+
+    public override void heal(int hp)
+    {
+        Debug.Log($"Собака восстановила {hp} здоровья!");
+        base.heal(hp);
+        updateHealth();
+        //play healing animation
+    }
+    public override void startBattle()
+    {
+        base.startBattle();
+        updateHealth();
+    }
+
+    }

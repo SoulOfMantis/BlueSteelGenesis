@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 using BlueSteelGenesis.Character_Modules;
 
 public class Obstacle : MonoBehaviour

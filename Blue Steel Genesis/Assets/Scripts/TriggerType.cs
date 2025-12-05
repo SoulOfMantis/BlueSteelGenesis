@@ -1,4 +1,3 @@
-
 namespace BlueSteelGenesis.Character_Modules
 {
     public enum TriggerType

@@ -1,10 +1,6 @@
-
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using System;
 using TMPro;
-
 
 namespace BlueSteelGenesis.Character_Modules
 {
@@ -13,6 +9,8 @@ namespace BlueSteelGenesis.Character_Modules
         public static List<ModuleButton> activeModuleButtons = new();
         public TMP_Text energyDisplay;
         public TMP_Text healthDisplay;
+        public GameObject VictoryScreen;
+        public GameObject DefeatScreen;
         PlayerCharacter() : base(10, 3, 10)
         {
             //modules hardcoded for now
@@ -23,8 +21,13 @@ namespace BlueSteelGenesis.Character_Modules
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-            if (tracker != null) tracker.AddCharacter(this);
-            Debug.Log("Player added");
+            if (tracker != null)
+            {
+                tracker.AddCharacter(this);
+                Debug.Log("Player added");
+            }
+            VictoryScreen.SetActive(false);
+            DefeatScreen.SetActive(false);
         }
 
         // Update is called once per frame
@@ -103,6 +106,9 @@ namespace BlueSteelGenesis.Character_Modules
         public override void startBattle()
         {
             base.startBattle();
+            updateHealth();
+            updateEnergy();
+            updateButtons();
             //play starting battle animation
         }
 
@@ -160,14 +166,23 @@ namespace BlueSteelGenesis.Character_Modules
         {
             Debug.Log("Игрок умер!");
             tracker.RemoveCharacter(this);
+            Defeat();
             //TODO: player loss
             //play dying animation
         }
 
-        public static void Victory() 
+        public void Victory() 
         {
-
+            updateButtons();
+            endBattle();
+            VictoryScreen.SetActive(true);
         }
+        public void Defeat()
+        {
+            updateButtons();
+            DefeatScreen.SetActive(true);
+        }
+
     }
 }
 
