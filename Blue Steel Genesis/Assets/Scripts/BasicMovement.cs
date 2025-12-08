@@ -22,5 +22,9 @@ namespace BlueSteelGenesis.Character_Modules
             user.move(pos);
             Debug.Log("BMM executed");
         }
+        public override bool checkPosition(Vector3Int pos, Character user)
+        {
+            return base.checkPosition(pos, user) && !Character.tracker.IsOccupied(pos);
+        }
     }
 }

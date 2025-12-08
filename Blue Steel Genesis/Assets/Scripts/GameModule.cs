@@ -51,6 +51,10 @@ namespace BlueSteelGenesis.Character_Modules
             Debug.Log($"Module {GetType().Name} initialized");
         }
 
+        public virtual bool checkPosition(Vector3Int pos, Character user)
+        {
+            return !Character.tracker.OutOfBounds(pos) && getCellsInRange(user.Position).Contains(pos);
+        }
     }
 }
 
