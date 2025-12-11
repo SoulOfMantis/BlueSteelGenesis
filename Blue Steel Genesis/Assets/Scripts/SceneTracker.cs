@@ -1,16 +1,23 @@
 using BlueSteelGenesis.Character_Modules;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+public static class ManhattanDistanceExt
+{
+    public static int ManhattanDistance(this Vector3Int a, Vector3Int b)
+        => Math.Abs(a.x - b.x) + Math.Abs(a.y - b.y);
+}
 
 public class SceneTracker : MonoBehaviour
 {
     private InitiativeTracker init;
     private List<Obstacle> obstacles = new();
     public Tilemap tl;
-    private int max_y = 3;
-    private int max_x = 17;
+    public int max_y{ get; private set; } = 3;
+    public int max_x{ get; private set; } = 17;
     private float CameraDistance = 10;
     public List<HighlightableTile> tiles;
     private List<Vector3Int> map = new List<Vector3Int>();
@@ -52,6 +59,11 @@ public class SceneTracker : MonoBehaviour
     public bool OutOfBounds(Vector3Int pos) 
     {
         return (pos.x > max_x) || (pos.y > max_y) || (pos.x < 0) || (pos.y < 0);
+    }
+    public IEnumerable<Vector3Int> GetNeighborTiles(Vector3Int pos) {
+        return new List<Vector3Int>(){ Vector3Int.left, Vector3Int.right, Vector3Int.down, Vector3Int.up }
+            .Select(v => v + pos)
+            .Where(p => !OutOfBounds(p));
     }
     public void AddCharacter(Character charact)
     {
@@ -95,10 +107,10 @@ public class SceneTracker : MonoBehaviour
 
     }
 
-    public void NextTurn()
+    /*public void NextTurn()
     {
         init.StartNextTurn();
-    }
+    }*/
 
 
     void Start()

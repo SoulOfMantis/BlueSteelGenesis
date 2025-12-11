@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ namespace BlueSteelGenesis.Character_Modules
         public string Name { get; protected set; }
         public string Description { get; protected set; }
         public int range = 0;
-       protected List<Vector3Int> getAvailableCells(int n, Vector3Int start)
+        protected List<Vector3Int> getAvailableCells(int n, Vector3Int start)
         {
             List<Vector3Int> res = new List<Vector3Int>();
             HashSet<Vector3Int> toAdd = new HashSet<Vector3Int>();
@@ -44,13 +45,22 @@ namespace BlueSteelGenesis.Character_Modules
         }
 
         public void changeName(string newName) => Name = newName;
-        public abstract void Effect(Character user, Vector3Int pos);
 
         public virtual void Initialize()
         {
             Debug.Log($"Module {GetType().Name} initialized");
         }
+        public GameModule() {
+            if (!(this is ImmediateModule || this is ContinuousModule))
+                throw new System.Exception("Module must implement ImmediateModule or ContinuousModule!");
+        }
+    }
 
+    public interface ImmediateModule {
+        public abstract void Effect(Character user, Vector3Int pos);
+    }
+    public interface ContinuousModule {
+        public abstract IEnumerator Effect(Character user, Vector3Int pos);
     }
 }
 

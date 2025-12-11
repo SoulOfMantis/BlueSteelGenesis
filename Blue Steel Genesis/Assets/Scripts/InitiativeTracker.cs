@@ -1,4 +1,5 @@
 using BlueSteelGenesis.Character_Modules;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -34,26 +35,24 @@ public class InitiativeTracker : MonoBehaviour
     }
 
 
-    public void StartNextTurn()
+    public IEnumerator StartNextTurn()
     {
         Debug.Log($"StartNextTurn");
-        if (CheckVictory()) Character.tracker.getPlayer().Victory();
-        else if (!CheckDefeat())
+        while (!CheckDefeat() && !CheckVictory())
         {
-            Debug.Log($"{currentCharacterIndex} {characters.Count} turn");
             currentCharacterIndex = (currentCharacterIndex + 1) % characters.Count;
 
             Debug.Log($"Сейчас ход {characters[currentCharacterIndex].GetType().Name}");
-            characters[currentCharacterIndex].startTurn();
+            yield return characters[currentCharacterIndex].startTurn();
         }
-
+        if (CheckVictory()) Character.tracker.getPlayer().Victory();
     }
 
     public void StartBattle() 
     {
         characters.Sort((c1, c2) => (c2.Initiative.CompareTo(c1.Initiative)));
         characters.ForEach(c => c.startBattle());
-        StartNextTurn();
+        StartCoroutine(StartNextTurn());
     }
 
     void Start()

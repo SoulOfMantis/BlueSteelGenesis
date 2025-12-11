@@ -1,7 +1,9 @@
 using BlueSteelGenesis.Character_Modules;
 using System;
+using System.Collections;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PurpleDog : Enemy 
@@ -28,13 +30,15 @@ public class PurpleDog : Enemy
 
 
     // Begins PDs turn
-    public override void startTurn()
+    public override IEnumerator startTurn()
     {
-        base.startTurn();
-
-        MainLogic();
-
-        endTurn();
+        yield return base.startTurn();
+        
+        if (currentHealth > 0)
+        {
+            yield return MainLogic();
+            endTurn();
+        }
     }
 
     
@@ -44,11 +48,8 @@ public class PurpleDog : Enemy
     {
 
         BasicAttack attack = getModule<BasicAttack>(0);
-        Debug.Log($"Cost {attack.energyCost} {currentEnergy}");
         // Available cells
         var attackRange = attack.getCellsInRange(Position);
-
-
         return attackRange.Contains(playerPosition);
     }
 
@@ -82,7 +83,7 @@ public class PurpleDog : Enemy
     }
 
     // Function of main logic
-    private void MainLogic()
+    private IEnumerator MainLogic()
     {
         // Object of player
         PlayerCharacter player = tracker.getPlayer();
@@ -92,12 +93,18 @@ public class PurpleDog : Enemy
         while (modules_.Any(m => hasEnoughEnergy((ActiveModule)m)))
         {
             //  Try attacking player
-            if (CanAttack(player.Position) && useActiveModule(0, player.Position))
+            if (CanAttack(player.Position) && isUsable(0, player.Position))
+            {
+                yield return useActiveModule(0, player.Position);
                 Debug.Log("PD attacks the player");
+            }
 
             // Get closer to player
-            else if (useActiveModule(1, FindBestPosition(player.Position)))
-                Debug.Log("PD moves closer to player");
+            else if (FindBestPosition(player.Position) is var best_pos && isUsable(1, best_pos))
+            {
+                yield return useActiveModule(1, best_pos);
+                Debug.Log($"PD moves closer to player: {Position} {player.Position}");
+            }
 
             // No available modules
             else

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 namespace BlueSteelGenesis.Character_Modules
 {
@@ -62,10 +63,10 @@ namespace BlueSteelGenesis.Character_Modules
             if (!doesModuleExist(index)) return null;
             return modules_[index].Description;
         }
-        protected override void useActiveModule_internal(ActiveModule m, Vector3Int pos)
+        protected override IEnumerator useActiveModule_internal(ActiveModule m, Vector3Int pos)
         {
             //play using module animation
-            base.useActiveModule_internal(m, pos);
+            return base.useActiveModule_internal(m, pos);
         }
         protected override void usePassiveModule_internal(PassiveModule m, Vector3Int pos)
         {
@@ -118,10 +119,12 @@ namespace BlueSteelGenesis.Character_Modules
             //play ending battle animation
         }
 
-        public override void startTurn()
+        public override IEnumerator startTurn()
         {
-            base.startTurn();
+            yield return base.startTurn();
             //play start turn animation
+            while (myTurn)
+                yield return null;
         }
 
         public override void endTurn()
