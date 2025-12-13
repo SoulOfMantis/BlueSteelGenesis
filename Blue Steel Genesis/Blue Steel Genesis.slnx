@@ -1,5 +1,4 @@
 ﻿<Solution>
-  <Project Path="BlueSteelGenesis.Character_Modules.csproj" />
-  <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
 </Solution>

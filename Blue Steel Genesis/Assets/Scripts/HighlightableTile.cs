@@ -1,6 +1,4 @@
-using UnityEngine;
 using UnityEngine.Tilemaps;
-using System.Collections.Generic;
 
 // Reference for tile highlighting
 [System.Serializable]

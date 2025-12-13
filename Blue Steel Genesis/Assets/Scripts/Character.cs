@@ -1,11 +1,7 @@
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using Unity.Profiling.Editor;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 namespace BlueSteelGenesis.Character_Modules
 {
@@ -59,6 +55,7 @@ namespace BlueSteelGenesis.Character_Modules
         }
         public virtual void startTurn()
         {
+            Debug.Log($"turn started");
             myTurn = true;
             restoreEnergy(maxEnergy);
             triggerModules(TriggerType.OnTurnStart);
@@ -67,6 +64,7 @@ namespace BlueSteelGenesis.Character_Modules
         {
             triggerModules(TriggerType.OnTurnEnd);
             myTurn = false;
+            tracker.NextTurn();
         }
 
 
