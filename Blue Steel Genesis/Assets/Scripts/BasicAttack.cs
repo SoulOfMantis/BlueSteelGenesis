@@ -2,8 +2,6 @@ using UnityEngine;
 
 
 
-namespace BlueSteelGenesis.Character_Modules
-{
     /// <summary>
     /// Базовый модуль атаки (BAM сокращение)
     /// </summary>
@@ -22,5 +20,5 @@ namespace BlueSteelGenesis.Character_Modules
              Debug.Log("BAM executed");
         }
     }
-}
+
 

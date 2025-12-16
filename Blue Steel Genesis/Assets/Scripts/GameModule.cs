@@ -3,8 +3,7 @@ using UnityEngine;
 
 
 
-namespace BlueSteelGenesis.Character_Modules
-{
+
     /// <summary>
     /// класс модуля
     /// </summary>
@@ -52,5 +51,5 @@ namespace BlueSteelGenesis.Character_Modules
         }
 
     }
-}
+
 

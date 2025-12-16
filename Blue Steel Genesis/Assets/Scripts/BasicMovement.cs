@@ -4,8 +4,6 @@ using UnityEngine;
 
 
 
-namespace BlueSteelGenesis.Character_Modules
-{
     /// <summary>
     /// Базовый модуль движения (BMM сокращение)
     /// </summary>
@@ -23,4 +21,3 @@ namespace BlueSteelGenesis.Character_Modules
             Debug.Log("BMM executed");
         }
     }
-}

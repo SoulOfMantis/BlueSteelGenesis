@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-namespace BlueSteelGenesis.Character_Modules
-{
     public class PlayerCharacter : Character
     {
         public static List<ModuleButton> activeModuleButtons = new();
@@ -184,5 +182,5 @@ namespace BlueSteelGenesis.Character_Modules
         }
 
     }
-}
+
 

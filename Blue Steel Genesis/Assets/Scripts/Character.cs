@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace BlueSteelGenesis.Character_Modules
-{
     public abstract class Character : MonoBehaviour
     {
         public Character(int maxHealth, int maxEnergy, int initiative)
@@ -17,30 +15,34 @@ namespace BlueSteelGenesis.Character_Modules
         }
 
 
-        public virtual void damage(int dmg)
+        public virtual void damage(int dmg, ActionContext prevAction = null)
         {
             currentHealth -= Math.Max(dmg, 1);
-            triggerModules(TriggerType.OnDamage);
+        ActionContext action = new ActionContext(null, "takeDamage", prevAction, this);
+            triggerModules(TriggerType.OnDamage, action);
             if (currentHealth == 0)
                 die();
         }
-        public virtual void heal(int hp)
+        public virtual void heal(int hp, ActionContext prevAction = null)
         {
             currentHealth += Math.Max(hp, 1);
-            triggerModules(TriggerType.OnHeal);
-        }
-        abstract protected void die();
+        ActionContext action = new ActionContext(null, "heal", prevAction, this);
+        triggerModules(TriggerType.OnHeal, action);
+    }
+    abstract protected void die();
 
-        public virtual void drainEnergy(int amount)
+        public virtual void drainEnergy(int amount, ActionContext prevAction = null)
         {
             currentEnergy -= Math.Max(amount, 1);
-            triggerModules(TriggerType.OnEnergyDrain);
+            ActionContext action = new ActionContext(null, "drainEnergy", prevAction, this);
+            triggerModules(TriggerType.OnEnergyDrain, action);
         }
-        public virtual void restoreEnergy(int amount)
+        public virtual void restoreEnergy(int amount, ActionContext prevAction = null)
         {
             currentEnergy += Math.Max(amount, 1);
-            triggerModules(TriggerType.OnEnergyRestore);
-        }
+            ActionContext action = new ActionContext(null, "restoreEnergy", prevAction, this);
+            triggerModules(TriggerType.OnEnergyRestore, action);
+    }
 
 
         public virtual void startBattle()
@@ -68,34 +70,34 @@ namespace BlueSteelGenesis.Character_Modules
         }
 
 
-        public void move(int x, int y, int z) => move(new Vector3Int(x, y, z));
-        public void move(Vector3Int pos)
+        public void move(Vector3Int pos, ActionContext prevAction = null)
         {
             if (tracker.OutOfBounds(pos) || tracker.IsOccupied(pos))
                 return;
             Position = pos;
-            triggerModules(TriggerType.OnMove, pos);
+        var action = new ActionContext(this, "move", prevAction);
+            triggerModules(TriggerType.OnMove, pos, action);
         }
 
-        public void strike(int x, int y, int z, int dmg) => strike(new Vector3Int(x, y, z), dmg);
-        public void strike(Vector3Int pos, int dmg)
+        public void strike(Vector3Int pos, int dmg, ActionContext prevAction = null)
         {
             Character target = tracker.FindCharacterAtPosition(pos);
             if (target == null)
                 return;
-            target.damage(dmg);
-            triggerModules(TriggerType.OnStrike, pos);
-            Debug.Log($"Strike at {pos} for {dmg} damage");
+         var action = new ActionContext(this, "strike", prevAction, target);
+            target.damage(dmg, action);
+        triggerModules(TriggerType.OnStrike, pos, action);
+        Debug.Log($"Strike at {pos} for {dmg} damage");
         }
 
-        public void apply(int x, int y, int z, StatusModule status) => apply(new Vector3Int(x, y, z), status);
-        public void apply(Vector3Int pos, StatusModule status)
+        public void apply(Vector3Int pos, StatusModule status, ActionContext prevAction = null)
         {
             Character target = tracker.FindCharacterAtPosition(pos);
             if (target == null)
                 return;
-            target.addStatusModule(status);
-            triggerModules(TriggerType.OnApply, pos);
+        var action = new ActionContext(this, "apply", prevAction, target);
+        target.addStatusModule(status, action);
+            triggerModules(TriggerType.OnApply, pos, action);
             Debug.Log($"Apply {status.GetType().Name} at {pos}");
         }
 
@@ -105,7 +107,7 @@ namespace BlueSteelGenesis.Character_Modules
             modules_.Add(module);
             module.Initialize();
         }
-        public void addStatusModule(StatusModule status)
+        public void addStatusModule(StatusModule status, ActionContext prevAction = null)
         {
             var module = status_modules_.Find(m => m.GetType() == status.GetType());
             if (module != null)
@@ -113,7 +115,12 @@ namespace BlueSteelGenesis.Character_Modules
             else
             {
                 status_modules_.Add(status);
-                status.Initialize();
+            var action = new ActionContext(null, "addStatusModule", prevAction, this);
+            if (status is NegativeStatus) 
+                triggerModules(TriggerType.OnNegativeStatusApplied, action);
+            else if (status is PositiveStatus) 
+                triggerModules(TriggerType.OnPositiveStatusApplied, action);
+            status.Initialize();
                 Debug.Log($"Status module {status.GetType().Name} added to {GetType().Name}");
             }
         }
@@ -128,17 +135,23 @@ namespace BlueSteelGenesis.Character_Modules
             }
             return false;
         }
-        protected void triggerModules(TriggerType triggerType) => triggerModules(triggerType, Position);
-        protected void triggerModules(TriggerType triggerType, Vector3Int pos)
+        protected void triggerModules(TriggerType triggerType, ActionContext context = null) => triggerModules(triggerType, Position, context);
+        protected void triggerModules(TriggerType triggerType, Vector3Int pos, ActionContext context = null)
         {
             foreach (var pm in listModules<PassiveModule>().Where(pm => pm.triggerType == triggerType))
-                usePassiveModule_internal(pm, pos);
-            processStatusModules(triggerType);
+               {
+            pm.loadContext(context);
+                usePassiveModule_internal(pm, pos); 
+                 }
+            processStatusModules(triggerType, context);
         }
-        protected void processStatusModules(TriggerType triggerType)
+        protected void processStatusModules(TriggerType triggerType, ActionContext context = null)
         {
-            foreach (var st in status_modules_.Where(m => triggerType == m.triggerType))
-                useStatusModule_internal(st);
+        foreach (var st in status_modules_.Where(m => triggerType == m.triggerType))
+        {
+            st.loadContext(context);
+            useStatusModule_internal(st);
+        }
             status_modules_.RemoveAll(m => m.IsExpired());
         }
         
@@ -201,4 +214,4 @@ namespace BlueSteelGenesis.Character_Modules
         private int current_energy_;
         private Vector3Int position_;
     }
-}
+

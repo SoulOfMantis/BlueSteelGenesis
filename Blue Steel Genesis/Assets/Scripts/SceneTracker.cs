@@ -1,4 +1,3 @@
-using BlueSteelGenesis.Character_Modules;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -6,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class SceneTracker : MonoBehaviour
 {
-    private InitiativeTracker init;
+    private InitiativeTracker initiative;
     private List<Obstacle> obstacles = new();
     public Tilemap tl;
     private int max_y = 3;
@@ -17,8 +16,10 @@ public class SceneTracker : MonoBehaviour
 
     public Character FindCharacterAtPosition(Vector3Int pos)
     {
-        return init.characters.Find(c  => c.Position == pos);
+        return initiative.characters.Find(c  => c.Position == pos);
     }
+    public bool isAlive(Character c)
+    { return initiative.isAlive(c); }
     public Obstacle FindObstacleAtPosition(Vector3Int pos)
     {
         return obstacles.Find(o => o.Position == pos);
@@ -55,17 +56,17 @@ public class SceneTracker : MonoBehaviour
     }
     public void AddCharacter(Character charact)
     {
-        init.AddCharacter(charact);
+        initiative.AddCharacter(charact);
     }
     public void RemoveCharacter(Character character)
     {
-        init.RemoveCharacter(character);
+        initiative.RemoveCharacter(character);
     }
 
     //                                         
     public PlayerCharacter getPlayer()
     {
-        return init.characters.Find(c => c is PlayerCharacter) as PlayerCharacter;
+        return initiative.characters.Find(c => c is PlayerCharacter) as PlayerCharacter;
     }
 
     // Highlights given cells
@@ -97,13 +98,13 @@ public class SceneTracker : MonoBehaviour
 
     public void NextTurn()
     {
-        init.StartNextTurn();
+        initiative.StartNextTurn();
     }
 
 
     void Start()
     {
-        init = gameObject.AddComponent(typeof(InitiativeTracker)) as InitiativeTracker;
+        initiative = gameObject.AddComponent(typeof(InitiativeTracker)) as InitiativeTracker;
         Character.tracker = this;
         map.Add(new Vector3Int(0, 0, 0));
         map.Add(new Vector3Int(0, 1, 0));

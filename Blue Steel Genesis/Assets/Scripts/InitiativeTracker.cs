@@ -1,8 +1,6 @@
-using BlueSteelGenesis.Character_Modules;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Character = BlueSteelGenesis.Character_Modules.Character;
 public class InitiativeTracker : MonoBehaviour
 {
     public List<Character> characters = new();
@@ -33,7 +31,8 @@ public class InitiativeTracker : MonoBehaviour
         return !characters.Exists(c => c is PlayerCharacter);
     }
 
-
+    public bool isAlive(Character c)
+    { return characters.Contains(c); }
     public void StartNextTurn()
     {
         Debug.Log($"StartNextTurn");

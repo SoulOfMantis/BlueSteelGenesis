@@ -1,11 +1,11 @@
-namespace BlueSteelGenesis.Character_Modules
-{
     public enum TriggerType
     {
         OnBattleStart,
         OnBattleEnd,
         OnTurnStart,
         OnTurnEnd,
+        OnNegativeStatusApplied,
+    OnPositiveStatusApplied,
         OnDamage,
         OnHeal,
         OnDeath,
@@ -15,4 +15,3 @@ namespace BlueSteelGenesis.Character_Modules
         OnEnergyRestore,
         OnEnergyDrain
     }
-}

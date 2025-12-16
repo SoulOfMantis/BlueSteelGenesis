@@ -2,8 +2,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace BlueSteelGenesis.Character_Modules
-{
     public class ModuleButton : MonoBehaviour
     {
         private PlayerCharacter player;
@@ -65,4 +63,4 @@ namespace BlueSteelGenesis.Character_Modules
         }
     }
 
-}
+

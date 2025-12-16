@@ -1,5 +1,3 @@
-namespace BlueSteelGenesis.Character_Modules
-{
     public abstract class StatusModule : PassiveModule
     {
         protected int turnsLeft;
@@ -13,4 +11,13 @@ namespace BlueSteelGenesis.Character_Modules
 
         public abstract bool IsExpired();
     }
+
+public abstract class PositiveStatus : StatusModule
+{
+
+}
+
+public abstract class NegativeStatus : StatusModule
+{
+
 }

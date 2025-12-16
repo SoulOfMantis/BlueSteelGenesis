@@ -1,7 +1,5 @@
 using UnityEngine;
 
-namespace BlueSteelGenesis.Character_Modules
-{
     /// <summary>
     /// Активный модуль ядовитого жала - наносит урон и накладывает отравление
     /// </summary>
@@ -26,4 +24,3 @@ namespace BlueSteelGenesis.Character_Modules
         }
 
     }
-}

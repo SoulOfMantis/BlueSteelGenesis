@@ -1,6 +1,4 @@
 using UnityEngine;
-using BlueSteelGenesis.Character_Modules;
-
 public class Obstacle : MonoBehaviour
 {
     public Vector3Int Position

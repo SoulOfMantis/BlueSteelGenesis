@@ -1,11 +1,9 @@
 using UnityEngine;
 
-namespace BlueSteelGenesis.Character_Modules
-{
     /// <summary>
     /// ѕассивный модуль €да  - наносит урон при начале хода
     /// </summary>
-    public class PoisonModule : StatusModule
+    public class PoisonModule : NegativeStatus
     {
         private int poisonDamage;
 
@@ -33,4 +31,3 @@ namespace BlueSteelGenesis.Character_Modules
             return turnsLeft <= 0;
         }
     }
-}
