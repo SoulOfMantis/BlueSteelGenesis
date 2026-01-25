@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 
@@ -9,7 +10,7 @@ namespace BlueSteelGenesis.Character_Modules
     /// <summary>
     /// Базовый модуль движения (BMM сокращение)
     /// </summary>
-    public class BasicMovement : ActiveModule, ContinuousModule
+    public class BasicMovement : ActiveModule
     {
         public BasicMovement()
         {
@@ -17,11 +18,11 @@ namespace BlueSteelGenesis.Character_Modules
             energyCost = 1;
         }
 
-        public virtual IEnumerator Effect(Character user, Vector3Int pos)
+        public override async Task Effect(Character user, Vector3Int pos)
         {
             var path = getOptimalPath(user, pos);
             if (path?.Count <= range)
-                yield return user.move(path);
+                await user.move(path);
             Debug.Log("BMM executed");
         }
         public override List<Vector3Int> getCellsInRange(Vector3Int start)

@@ -3,11 +3,9 @@ using UnityEngine;
 
 namespace BlueSteelGenesis.Character_Modules
 {
-    public abstract class PassiveModule : GameModule, ImmediateModule
+    public abstract class PassiveModule : GameModule
     {
         public TriggerType triggerType;
-
-        public abstract void Effect(Character user, Vector3Int pos);
     }
 }
     

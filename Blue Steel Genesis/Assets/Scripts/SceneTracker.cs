@@ -5,12 +5,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public static class ManhattanDistanceExt
-{
-    public static int ManhattanDistance(this Vector3Int a, Vector3Int b)
-        => Math.Abs(a.x - b.x) + Math.Abs(a.y - b.y);
-}
-
 public class SceneTracker : MonoBehaviour
 {
     private InitiativeTracker init;

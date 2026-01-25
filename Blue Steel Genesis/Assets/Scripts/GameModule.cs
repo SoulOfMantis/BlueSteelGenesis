@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 
@@ -45,22 +46,12 @@ namespace BlueSteelGenesis.Character_Modules
         }
 
         public void changeName(string newName) => Name = newName;
+        public abstract Task Effect(Character user, Vector3Int pos);
 
         public virtual void Initialize()
         {
             Debug.Log($"Module {GetType().Name} initialized");
         }
-        public GameModule() {
-            if (!(this is ImmediateModule || this is ContinuousModule))
-                throw new System.Exception("Module must implement ImmediateModule or ContinuousModule!");
-        }
-    }
-
-    public interface ImmediateModule {
-        public abstract void Effect(Character user, Vector3Int pos);
-    }
-    public interface ContinuousModule {
-        public abstract IEnumerator Effect(Character user, Vector3Int pos);
     }
 }
 

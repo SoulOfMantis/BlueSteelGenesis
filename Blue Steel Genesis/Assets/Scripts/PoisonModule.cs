@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace BlueSteelGenesis.Character_Modules
@@ -16,11 +17,12 @@ namespace BlueSteelGenesis.Character_Modules
             turnsLeft = duration;
         }
 
-        public override void Effect(Character user, Vector3Int pos)
+        public override Task Effect(Character user, Vector3Int pos)
         {
             user.damage(poisonDamage);
             Debug.Log($"Poison dealt {poisonDamage} damage to {user.GetType().Name}");
             turnTick();
+            return Task.CompletedTask;
         }
 
         public override void Refresh(StatusModule other)

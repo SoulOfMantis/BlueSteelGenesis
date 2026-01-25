@@ -32,7 +32,7 @@ namespace BlueSteelGenesis.Character_Modules
                 Vector3Int cell = Character.tracker.GetCellByScreenPosition(Input.mousePosition);
                 if (cell != new Vector3Int(-1, -1, -1))
                 {
-                    StartCoroutine(player.useActiveModule(connectedModuleIndex, cell));
+                    StartCoroutine(TaskCoro.Make(player.useActiveModule(connectedModuleIndex, cell)));
                 }
                 else Debug.Log("Impossible position!");
             }

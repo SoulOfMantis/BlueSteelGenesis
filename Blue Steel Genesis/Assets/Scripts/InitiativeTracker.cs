@@ -43,7 +43,7 @@ public class InitiativeTracker : MonoBehaviour
             currentCharacterIndex = (currentCharacterIndex + 1) % characters.Count;
 
             Debug.Log($"Сейчас ход {characters[currentCharacterIndex].GetType().Name}");
-            yield return characters[currentCharacterIndex].startTurn();
+            yield return TaskCoro.Make(characters[currentCharacterIndex].startTurn());
         }
         if (CheckVictory()) Character.tracker.getPlayer().Victory();
     }
@@ -52,7 +52,7 @@ public class InitiativeTracker : MonoBehaviour
     {
         characters.Sort((c1, c2) => (c2.Initiative.CompareTo(c1.Initiative)));
         characters.ForEach(c => c.startBattle());
-        StartCoroutine(StartNextTurn());
+        StartCoroutine(nameof(StartNextTurn));
     }
 
     void Start()

@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace BlueSteelGenesis.Character_Modules
@@ -18,12 +19,11 @@ namespace BlueSteelGenesis.Character_Modules
             this.duration = duration;
         }
 
-        public override void Effect(Character user, Vector3Int pos)
+        public override async Task Effect(Character user, Vector3Int pos)
         {
-            base.Effect(user, pos);
+            await base.Effect(user, pos);
             PoisonModule poison = new PoisonModule(poisonDamage, duration);
             user.apply(pos, poison);
         }
-
     }
 }
