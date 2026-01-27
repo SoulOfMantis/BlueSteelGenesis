@@ -37,7 +37,7 @@ public class TaskCoro {
         while (!task.IsCompleted)
             yield return null;
         if (task.IsFaulted)
-            UnityEngine.Debug.Log(task.Exception.ToString());
+            UnityEngine.Debug.LogError(task.Exception.ToString());
     }
 }
 

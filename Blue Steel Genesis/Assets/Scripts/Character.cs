@@ -70,27 +70,25 @@ namespace BlueSteelGenesis.Character_Modules
             //tracker.NextTurn();
         }
 
-        public async Task move(List<Vector3Int> steps)
+        public async Task move(Vector3Int target_pos, List<Vector3Int> allowed)
         {
-            foreach (var step in steps)
-            {
-                moveStep(step);
-                await Awaitable.WaitForSecondsAsync(move_step_timeout);
-            }
+            var path = Navigation.Dijkstra.getPath(Position, target_pos, p => allowed.Contains(p));
+            if (path == null)
+                return;
+            
+            foreach (var step in path)
+                await moveStep(step);
             triggerModules(TriggerType.OnMove, Position);
         }
-        protected virtual void moveStep(Vector3Int dir)
+        protected virtual async Task moveStep(Vector3Int dir)
         {
             Vector3Int new_pos = Position + dir;
 
             Vector3Int[] valid_moves = {Vector3Int.left, Vector3Int.right, Vector3Int.down, Vector3Int.up};
             if (!valid_moves.Contains(dir) || tracker.OutOfBounds(new_pos) || tracker.IsOccupied(new_pos)) return;
             Position = new_pos;
-        }
-        public virtual int stepPenalty(Vector3Int pos) {
-            if (tracker.IsOccupied(pos))
-                return int.MaxValue;
-            return 0;
+
+            await Awaitable.WaitForSecondsAsync(.2f); //TODO: remove delay; derived classes must await animations
         }
 
         public void strike(int x, int y, int z, int dmg) => strike(new Vector3Int(x, y, z), dmg);
@@ -213,7 +211,6 @@ namespace BlueSteelGenesis.Character_Modules
         protected List<GameModule> modules_ = new();
         protected List<StatusModule> status_modules_ = new();
 
-        protected float move_step_timeout = .2f;
         private int current_health_;
         private int current_energy_;
         private Vector3Int position_;
