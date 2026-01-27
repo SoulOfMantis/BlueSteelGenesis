@@ -35,24 +35,24 @@ public class InitiativeTracker : MonoBehaviour
     }
 
 
-    public IEnumerator StartNextTurn()
+    public void StartNextTurn()
     {
         Debug.Log($"StartNextTurn");
-        while (!CheckDefeat() && !CheckVictory())
+        if (CheckVictory()) Character.tracker.getPlayer().Victory();
+        else if (!CheckDefeat())
         {
             currentCharacterIndex = (currentCharacterIndex + 1) % characters.Count;
 
             Debug.Log($"Сейчас ход {characters[currentCharacterIndex].GetType().Name}");
-            yield return TaskCoro.Make(characters[currentCharacterIndex].startTurn());
+            StartCoroutine(TaskCoro.Make(characters[currentCharacterIndex].startTurn()));
         }
-        if (CheckVictory()) Character.tracker.getPlayer().Victory();
     }
 
     public void StartBattle() 
     {
         characters.Sort((c1, c2) => (c2.Initiative.CompareTo(c1.Initiative)));
         characters.ForEach(c => c.startBattle());
-        StartCoroutine(nameof(StartNextTurn));
+        StartNextTurn();
     }
 
     void Start()

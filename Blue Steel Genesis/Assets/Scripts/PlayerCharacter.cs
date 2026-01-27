@@ -123,7 +123,6 @@ namespace BlueSteelGenesis.Character_Modules
         {
             await base.startTurn();
             //play start turn animation
-            await CoroAwaitable.AwaitWhile(this, () => myTurn);
         }
 
         public override void endTurn()

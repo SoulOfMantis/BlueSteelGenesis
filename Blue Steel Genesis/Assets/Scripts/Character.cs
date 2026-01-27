@@ -67,7 +67,7 @@ namespace BlueSteelGenesis.Character_Modules
         {
             triggerModules(TriggerType.OnTurnEnd);
             myTurn = false;
-            //tracker.NextTurn();
+            tracker.NextTurn();
         }
 
         public async Task move(Vector3Int target_pos, List<Vector3Int> allowed)

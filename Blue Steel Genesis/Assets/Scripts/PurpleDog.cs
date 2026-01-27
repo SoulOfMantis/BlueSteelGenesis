@@ -34,10 +34,9 @@ public class PurpleDog : Enemy
         await base.startTurn();
         
         if (currentHealth > 0)
-        {
             await MainLogic();
-            endTurn();
-        }
+
+        endTurn();
     }
 
     

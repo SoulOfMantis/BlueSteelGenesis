@@ -101,10 +101,10 @@ public class SceneTracker : MonoBehaviour
 
     }
 
-    /*public void NextTurn()
+    public void NextTurn()
     {
         init.StartNextTurn();
-    }*/
+    }
 
 
     void Start()
