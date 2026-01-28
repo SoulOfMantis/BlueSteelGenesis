@@ -72,7 +72,6 @@ namespace BlueSteelGenesis.Navigation {
                     if (nb.dist > cur.dist + 1) {
                         to_handle.Remove(nb);
                         nb.dist = cur.dist + 1;
-                        distance_[neighbor_pos.x, neighbor_pos.y] = nb.dist;
                         to_handle.Add(nb);
                         distance_[neighbor_pos.x, neighbor_pos.y] = distance_[cur.pos.x, cur.pos.y] + 1;
                     }
