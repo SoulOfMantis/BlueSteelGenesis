@@ -19,15 +19,32 @@ namespace BlueSteelGenesis.Character_Modules
 
         public virtual void damage(int dmg)
         {
-            currentHealth -= Math.Max(dmg, 1);
-            triggerModules(TriggerType.OnDamage);
-            if (currentHealth == 0)
-                die();
+            dmg = Math.Max(dmg, 1);
+            if (currentShield > 0) {
+                int shield_dmg = Math.Min(currentShield, dmg);
+                currentShield -= shield_dmg;
+                dmg -= shield_dmg;
+                triggerModules(TriggerType.OnDamageShielded);
+
+                Debug.Log($"{shield_dmg} урона поглощено щитом");
+            }
+            if (dmg > 0) { 
+                currentHealth -= dmg;
+                triggerModules(TriggerType.OnDamage);
+                if (currentHealth == 0)
+                    die();
+            }
         }
         public virtual void heal(int hp)
         {
             currentHealth += Math.Max(hp, 1);
             triggerModules(TriggerType.OnHeal);
+        }
+        public virtual void giveShield(int amount)
+        {
+            currentShield += Math.Max(amount, 1);
+            triggerModules(TriggerType.OnShieldGiven);
+            Debug.Log($"Выдан щит: {amount}; Всего: {currentShield}");
         }
         abstract protected void die();
 
@@ -57,6 +74,7 @@ namespace BlueSteelGenesis.Character_Modules
         {
             Debug.Log($"turn started");
             myTurn = true;
+            currentShield = 0;
             restoreEnergy(maxEnergy);
             triggerModules(TriggerType.OnTurnStart);
         }
@@ -172,6 +190,7 @@ namespace BlueSteelGenesis.Character_Modules
             protected set => current_health_ = Math.Clamp(value, 0, maxHealth);
         }
         public int maxHealth { get; protected set; }
+        public int currentShield { get; protected set; }
 
         public int currentEnergy
         {
