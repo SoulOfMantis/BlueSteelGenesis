@@ -5,16 +5,16 @@ using UnityEngine;
 
 namespace BlueSteelGenesis.Navigation {
     public class Dijkstra {
-        public static List<Vector3Int> listReachable(Vector3Int initial_pos, Predicate<Vector3Int> is_allowed) =>
-            new Dijkstra(initial_pos, is_allowed).listReachable();
+        public static List<Vector3Int> listReachable(Vector3Int initial_pos, Predicate<Vector3Int> is_allowed, int max_length = int.MaxValue - 1) =>
+            new Dijkstra(initial_pos, is_allowed).listReachable(max_length);
         public static List<Vector3Int> getPath(Vector3Int initial_pos, Vector3Int target, Predicate<Vector3Int> is_allowed) =>
             new Dijkstra(initial_pos, is_allowed).getPath(target);
 
-        public List<Vector3Int> listReachable() {
+        public List<Vector3Int> listReachable(int max_length = int.MaxValue - 1) {
             var reachable = new List<Vector3Int>();
             for (int x = 0; x < distance_.GetLength(0); ++x)
                 for (int y = 0; y < distance_.GetLength(1); ++y)
-                    if (distance_[x, y] != int.MaxValue && distance_[x, y] != 0)
+                    if (distance_[x, y] <= max_length && distance_[x, y] != 0)
                         reachable.Add(new Vector3Int(x, y));
             return reachable;
         }
