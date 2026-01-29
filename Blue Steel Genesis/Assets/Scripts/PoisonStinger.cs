@@ -23,7 +23,7 @@ namespace BlueSteelGenesis.Character_Modules
         {
             await base.Effect(user, pos);
             PoisonModule poison = new PoisonModule(poisonDamage, duration);
-            user.apply(pos, poison);
+            await user.apply(pos, poison);
         }
     }
 }

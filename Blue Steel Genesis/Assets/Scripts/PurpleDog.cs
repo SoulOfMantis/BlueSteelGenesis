@@ -36,7 +36,7 @@ public class PurpleDog : Enemy
         if (currentHealth > 0)
             await MainLogic();
 
-        endTurn();
+        await endTurn();
     }
 
     
@@ -107,24 +107,24 @@ public class PurpleDog : Enemy
         }
     }
 
-    public override void damage(int dmg)
+    public override async Task damage(int dmg)
     {
         Debug.Log($"Собака получила {dmg} урона!");
-        base.damage(dmg);
+        await base.damage(dmg);
         updateHealth();
         //play taking damage animation
     }
 
-    public override void heal(int hp)
+    public override async Task heal(int hp)
     {
         Debug.Log($"Собака восстановила {hp} здоровья!");
-        base.heal(hp);
+        await base.heal(hp);
         updateHealth();
         //play healing animation
     }
-    public override void startBattle()
+    public override async Task startBattle()
     {
-        base.startBattle();
+        await base.startBattle();
         updateHealth();
     }
 

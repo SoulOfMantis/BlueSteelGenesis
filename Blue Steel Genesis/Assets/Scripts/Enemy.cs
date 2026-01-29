@@ -1,15 +1,17 @@
 using UnityEngine;
 using BlueSteelGenesis.Character_Modules;
+using System.Threading.Tasks;
 
-    public class Enemy : Character
+public class Enemy : Character
     {
     public Enemy(int maxHealth, int maxEnergy, int initiative) : base(maxHealth, maxEnergy, initiative) {}
 
-    protected override void die()
-        {
+    protected override Task die()
+    {
         Debug.Log($"{name} умер");
         tracker.RemoveCharacter(this);
         Destroy(gameObject);
+        return Task.CompletedTask;
     }
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created

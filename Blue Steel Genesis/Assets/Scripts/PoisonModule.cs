@@ -17,12 +17,11 @@ namespace BlueSteelGenesis.Character_Modules
             turnsLeft = duration;
         }
 
-        public override Task Effect(Character user, Vector3Int pos)
+        public override async Task Effect(Character user, Vector3Int pos)
         {
-            user.damage(poisonDamage);
+            await user.damage(poisonDamage);
             Debug.Log($"Poison dealt {poisonDamage} damage to {user.GetType().Name}");
             turnTick();
-            return Task.CompletedTask;
         }
 
         public override void Refresh(StatusModule other)

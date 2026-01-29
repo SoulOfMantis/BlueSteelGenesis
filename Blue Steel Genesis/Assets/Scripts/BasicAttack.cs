@@ -17,11 +17,10 @@ namespace BlueSteelGenesis.Character_Modules
             range = 1;
         }
 
-        public override Task Effect(Character user, Vector3Int pos)
+        public override async Task Effect(Character user, Vector3Int pos)
         {
-             user.strike(pos,1); //пока 1 урон
+             await user.strike(pos,1); //пока 1 урон
              Debug.Log("BAM executed");
-             return Task.CompletedTask;
         }
     }
 }
