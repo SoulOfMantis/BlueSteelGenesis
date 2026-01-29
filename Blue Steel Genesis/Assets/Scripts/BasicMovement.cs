@@ -23,7 +23,7 @@ namespace BlueSteelGenesis.Character_Modules
         }
         public override List<Vector3Int> getCellsInRange(Vector3Int start)
         {
-            return Navigation.Dijkstra.listReachable(start, p => start.ManhattanDistance(p) < range && !Character.tracker.IsOccupied(p));
+            return Navigation.Dijkstra.listReachable(start, p => start.ManhattanDistance(p) <= range && !Character.tracker.IsOccupied(p));
         }
     }
 }
