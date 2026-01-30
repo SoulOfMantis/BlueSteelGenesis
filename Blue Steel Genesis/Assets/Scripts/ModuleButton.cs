@@ -1,5 +1,7 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace BlueSteelGenesis.Character_Modules
@@ -8,8 +10,12 @@ namespace BlueSteelGenesis.Character_Modules
     {
         private PlayerCharacter player;
         private Button button;
+        private InputAction gridClickAction;
         public int connectedModuleIndex;
         private bool inUse = false;
+        
+        private static UnityEvent resetSelection = new();
+        
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -21,21 +27,27 @@ namespace BlueSteelGenesis.Character_Modules
             enabled = player.isActive(connectedModuleIndex);
             PlayerCharacter.activeModuleButtons.Add(this);
             button.GetComponentInChildren<TMP_Text>().text = player.getmoduleName(connectedModuleIndex);
+
+            gridClickAction = new InputAction(binding: "<Mouse>/leftButton");
+            gridClickAction.started += handleGridClick;
+            gridClickAction.Enable();
+
+            resetSelection.AddListener(deselect);
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-            if (inUse && Input.GetMouseButtonDown(0))
-            {
-                toggleSkill();
-                Vector3Int cell = Character.tracker.GetCellByScreenPosition(Input.mousePosition);
-                if (cell != new Vector3Int(-1, -1, -1))
-                {
-                    player.useActiveModule(connectedModuleIndex, cell);
-                }
-                else Debug.Log("Impossible position!");
-            }
+        private void OnDestroy() =>
+            resetSelection.RemoveListener(deselect);
+
+        public void handleGridClick(InputAction.CallbackContext _) {
+            Vector3Int cell = Character.tracker.GetCellByScreenPosition(Input.mousePosition);
+            if (!inUse || cell == new Vector3Int(-1, -1, -1) || !player.GetModulePositions(connectedModuleIndex).Contains(cell))
+                return;
+            toggleSkill();
+            player.useActiveModule(connectedModuleIndex, cell);
+        }
+
+        public void deselect() {
+            if (inUse) toggleSkill();
         }
 
         public void buttonInteractableManaging()
@@ -59,10 +71,10 @@ namespace BlueSteelGenesis.Character_Modules
             else if (player.canUseModule(connectedModuleIndex))
             {
                 //highlight tiles
+                resetSelection.Invoke();
                 Character.tracker.HighlightCells(player.GetModulePositions(connectedModuleIndex));
                 inUse = true;
             }
         }
     }
-
 }
