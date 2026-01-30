@@ -22,6 +22,11 @@ namespace BlueSteelGenesis.Character_Modules
              await user.strike(pos,1); //пока 1 урон
              Debug.Log("BAM executed");
         }
+
+        public override bool checkPosition(Vector3Int pos, Character user)
+        {
+            return base.checkPosition(pos, user) && Character.tracker.IsOccupiedByCharacter(pos) && (pos != user.Position);
+        }
     }
 }
 

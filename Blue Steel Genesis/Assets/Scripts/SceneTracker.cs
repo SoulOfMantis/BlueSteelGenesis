@@ -24,10 +24,21 @@ public class SceneTracker : MonoBehaviour
     {
         return obstacles.Find(o => o.Position == pos);
     }
+    public bool IsOccupiedByCharacter(Vector3Int pos)
+    {
+        return (FindCharacterAtPosition(pos) != null);
+    }
+
+    public bool IsOccupiedByObstacle(Vector3Int pos)
+    {
+        return (FindObstacleAtPosition(pos) != null);
+    }
+
     public bool IsOccupied(Vector3Int pos)
     {
-        return (FindCharacterAtPosition(pos) != null) || (FindObstacleAtPosition(pos) != null);
+        return IsOccupiedByCharacter(pos) || IsOccupiedByObstacle(pos);
     }
+
     public Vector3 CellToWorld(Vector3Int pos)
     {
         return tl.GetCellCenterWorld(pos);

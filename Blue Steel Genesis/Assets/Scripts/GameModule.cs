@@ -29,7 +29,6 @@ namespace BlueSteelGenesis.Character_Modules
                     toAdd.Add(new Vector3Int(cell.x - 1, cell.y));
                     toAdd.Add(new Vector3Int(cell.x, cell.y + 1));
                     toAdd.Add(new Vector3Int(cell.x, cell.y - 1));
-
                 }
                 foreach (var cell in toAdd)
                 {
@@ -51,6 +50,10 @@ namespace BlueSteelGenesis.Character_Modules
         public virtual void Initialize()
         {
             Debug.Log($"Module {GetType().Name} initialized");
+        }
+        public virtual bool checkPosition(Vector3Int pos, Character user)
+        {
+            return !Character.tracker.OutOfBounds(pos) && getCellsInRange(user.Position).Contains(pos);
         }
     }
 }

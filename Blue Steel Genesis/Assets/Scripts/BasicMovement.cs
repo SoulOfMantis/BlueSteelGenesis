@@ -25,5 +25,10 @@ namespace BlueSteelGenesis.Character_Modules
         {
             return Navigation.Dijkstra.listReachable(start, p => start.ManhattanDistance(p) <= range && !Character.tracker.IsOccupied(p), range);
         }
+
+        public override bool checkPosition(Vector3Int pos, Character user)
+        {
+            return base.checkPosition(pos, user) && !Character.tracker.IsOccupied(pos);
+        }
     }
 }
