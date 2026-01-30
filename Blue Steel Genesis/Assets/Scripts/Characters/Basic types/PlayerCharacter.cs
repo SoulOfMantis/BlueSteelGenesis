@@ -132,32 +132,32 @@ public class PlayerCharacter : Character
     public void onEndTurnButtonPressed() =>
         StartCoroutine(TaskCoro.Make(endTurn()));
 
-    public override async Task damage(int dmg)
+    public override async Task damage(int dmg, ActionContext prevAction = null)
     {
         Debug.Log($"Игрок получил {dmg} урона!");
-        await base.damage(dmg);
+        await base.damage(dmg, prevAction);
         updateHealth();
         //play taking damage animation
     }
 
-    public override async Task heal(int hp)
+    public override async Task heal(int hp, ActionContext prevAction = null)
     {
         Debug.Log($"Игрок восстановил {hp} здоровья!");
-        await base.heal(hp);
+        await base.heal(hp, prevAction);
         updateHealth();
         //play healing animation
     }
 
-    public override async Task drainEnergy(int amount)
+    public override async Task drainEnergy(int amount, ActionContext prevAction = null)
     {
-        await base.drainEnergy(amount);
+        await base.drainEnergy(amount, prevAction);
         updateButtons();
         updateEnergy();
         //play losing energy animation
     }
-    public override async Task restoreEnergy(int amount)
+    public override async Task restoreEnergy(int amount, ActionContext prevAction = null)
     {
-        await base.restoreEnergy(amount);
+        await base.restoreEnergy(amount, prevAction);
         updateButtons();
         updateEnergy();
         //play restoring energy animation

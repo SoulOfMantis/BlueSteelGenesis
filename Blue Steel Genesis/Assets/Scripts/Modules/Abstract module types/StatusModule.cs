@@ -11,3 +11,12 @@ public abstract class StatusModule : PassiveModule
 
     public abstract bool IsExpired();
 }
+public abstract class PositiveStatus : StatusModule
+{
+
+}
+
+public abstract class NegativeStatus : StatusModule
+{
+
+}

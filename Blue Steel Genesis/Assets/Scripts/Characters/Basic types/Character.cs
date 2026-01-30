@@ -16,29 +16,33 @@ public abstract class Character : MonoBehaviour
     }
 
 
-    public virtual async Task damage(int dmg)
+    public virtual async Task damage(int dmg, ActionContext prevAction = null)
     {
         currentHealth -= Math.Max(dmg, 1);
-        await triggerModules(TriggerType.OnDamage);
+        ActionContext action = new ActionContext(null, "takeDamage", prevAction, this);
+        await triggerModules(TriggerType.OnDamage, action);
         if (currentHealth == 0)
             await die();
     }
-    public virtual async Task heal(int hp)
+    public virtual async Task heal(int hp, ActionContext prevAction = null)
     {
         currentHealth += Math.Max(hp, 1);
-        await triggerModules(TriggerType.OnHeal);
+        ActionContext action = new ActionContext(null, "heal", prevAction, this);
+        await triggerModules(TriggerType.OnHeal, action);
     }
     abstract protected Task die();
 
-    public virtual async Task drainEnergy(int amount)
+    public virtual async Task drainEnergy(int amount, ActionContext prevAction = null)
     {
         currentEnergy -= Math.Max(amount, 1);
-        await triggerModules(TriggerType.OnEnergyDrain);
+        ActionContext action = new ActionContext(null, "drainEnergy", prevAction, this);
+        await triggerModules(TriggerType.OnEnergyDrain, action);
     }
-    public virtual async Task restoreEnergy(int amount)
+    public virtual async Task restoreEnergy(int amount, ActionContext prevAction = null)
     {
         currentEnergy += Math.Max(amount, 1);
-        await triggerModules(TriggerType.OnEnergyRestore);
+        ActionContext action = new ActionContext(null, "restoreEnergy", prevAction, this);
+        await triggerModules(TriggerType.OnEnergyRestore, action);
     }
 
 
@@ -66,7 +70,7 @@ public abstract class Character : MonoBehaviour
         tracker.NextTurn();
     }
 
-    public async Task move(Vector3Int target_pos, List<Vector3Int> allowed)
+    public async Task move(Vector3Int target_pos, List<Vector3Int> allowed, ActionContext prevAction = null)
     {
         var path = Navigation.Dijkstra.getPath(Position, target_pos, p => allowed.Contains(p));
         if (path == null)
@@ -74,7 +78,8 @@ public abstract class Character : MonoBehaviour
 
         foreach (var step in path)
             await moveStep(step);
-        await triggerModules(TriggerType.OnMove, Position);
+        ActionContext action = new ActionContext(null, "move", prevAction, this);
+        await triggerModules(TriggerType.OnMove, Position, action);
     }
     protected virtual async Task moveStep(Vector3Int dir)
     {
@@ -87,25 +92,25 @@ public abstract class Character : MonoBehaviour
         await Awaitable.WaitForSecondsAsync(.2f); //TODO: remove delay; derived classes must await animations
     }
 
-    public Task strike(int x, int y, int z, int dmg) => strike(new Vector3Int(x, y, z), dmg);
-    public async Task strike(Vector3Int pos, int dmg)
+    public async Task strike(Vector3Int pos, int dmg, ActionContext prevAction = null)
     {
         Character target = tracker.FindCharacterAtPosition(pos);
         if (target == null)
             return;
         await target.damage(dmg);
-        await triggerModules(TriggerType.OnStrike, pos);
+        ActionContext action = new ActionContext(null, "strike", prevAction, this);
+        await triggerModules(TriggerType.OnStrike, pos, action);
         Debug.Log($"Strike at {pos} for {dmg} damage");
     }
 
-    public Task apply(int x, int y, int z, StatusModule status) => apply(new Vector3Int(x, y, z), status);
-    public async Task apply(Vector3Int pos, StatusModule status)
+    public async Task apply(Vector3Int pos, StatusModule status, ActionContext prevAction = null)
     {
         Character target = tracker.FindCharacterAtPosition(pos);
         if (target == null)
             return;
-        target.addStatusModule(status);
-        await triggerModules(TriggerType.OnApply, pos);
+        await target.addStatusModule(status);
+        ActionContext action = new ActionContext(null, "apply", prevAction, this);
+        await triggerModules(TriggerType.OnApply, pos, action);
         Debug.Log($"Apply {status.GetType().Name} at {pos}");
     }
 
@@ -115,7 +120,7 @@ public abstract class Character : MonoBehaviour
         modules_.Add(module);
         module.Initialize();
     }
-    public void addStatusModule(StatusModule status)
+    public async Task addStatusModule(StatusModule status, ActionContext prevAction = null)
     {
         var module = status_modules_.Find(m => m.GetType() == status.GetType());
         if (module != null)
@@ -124,6 +129,16 @@ public abstract class Character : MonoBehaviour
         {
             status_modules_.Add(status);
             status.Initialize();
+            if (status is NegativeStatus)
+            {
+                var action = new ActionContext(null, "addNegativeStatusModule", prevAction, this);
+                await triggerModules(TriggerType.OnNegativeStatusApplied, action);
+             }
+            else if (status is PositiveStatus)
+            {
+                var action = new ActionContext(null, "addPositiveStatusModule", prevAction, this);
+                await triggerModules(TriggerType.OnPositiveStatusApplied, action);
+            }
             Debug.Log($"Status module {status.GetType().Name} added to {GetType().Name}");
         }
     }
@@ -138,17 +153,23 @@ public abstract class Character : MonoBehaviour
         }
         return false;
     }
-    protected Task triggerModules(TriggerType triggerType) => triggerModules(triggerType, Position);
-    protected async Task triggerModules(TriggerType triggerType, Vector3Int pos)
+    protected Task triggerModules(TriggerType triggerType, ActionContext context = null) => triggerModules(triggerType, Position, context);
+    protected async Task triggerModules(TriggerType triggerType, Vector3Int pos, ActionContext context = null)
     {
         foreach (var pm in listModules<PassiveModule>().Where(pm => pm.triggerType == triggerType))
+        {
+            pm.loadContext(context);
             await usePassiveModule_internal(pm, pos);
-        await processStatusModules(triggerType);
+        }
+        await processStatusModules(triggerType, context);
     }
-    protected async Task processStatusModules(TriggerType triggerType)
+    protected async Task processStatusModules(TriggerType triggerType, ActionContext context = null)
     {
         foreach (var st in status_modules_.Where(m => triggerType == m.triggerType))
+        {
+            st.loadContext(context);
             await useStatusModule_internal(st);
+        }
         status_modules_.RemoveAll(m => m.IsExpired());
     }
 

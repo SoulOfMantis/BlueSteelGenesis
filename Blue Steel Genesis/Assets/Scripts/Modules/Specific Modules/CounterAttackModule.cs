@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class CounterAttack : PassiveModule
@@ -12,7 +13,7 @@ public class CounterAttack : PassiveModule
         range = 1;
         triggerType = TriggerType.OnDamage;
     }
-    public override void Effect(Character user, Vector3Int pos)
+    public override async Task Effect(Character user, Vector3Int pos)
     {
         if (context == null) throw new ArgumentNullException();
         if (context.prevActionContext == null) return;
@@ -21,7 +22,7 @@ public class CounterAttack : PassiveModule
             var target = context.prevActionContext.acting;
             if (getCellsInRange(user.Position).Contains(target.Position))
             {
-                user.strike(target.Position, damage, context);
+                await user.strike(target.Position, damage, context);
             }
         }
     }

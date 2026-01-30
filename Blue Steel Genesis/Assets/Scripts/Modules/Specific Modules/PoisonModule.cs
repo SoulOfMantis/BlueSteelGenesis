@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// ѕассивный модуль €да  - наносит урон при начале хода
 /// </summary>
-public class PoisonModule : StatusModule
+public class PoisonModule : NegativeStatus
 {
     private int poisonDamage;
 

@@ -4,6 +4,8 @@ public enum TriggerType
     OnBattleEnd,
     OnTurnStart,
     OnTurnEnd,
+    OnNegativeStatusApplied,
+    OnPositiveStatusApplied,
     OnDamage,
     OnHeal,
     OnDeath,
