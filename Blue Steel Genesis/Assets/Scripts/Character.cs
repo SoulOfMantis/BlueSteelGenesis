@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 namespace BlueSteelGenesis.Character_Modules
 {
@@ -17,85 +19,96 @@ namespace BlueSteelGenesis.Character_Modules
         }
 
 
-        public virtual void damage(int dmg)
+        public virtual async Task damage(int dmg)
         {
             currentHealth -= Math.Max(dmg, 1);
-            triggerModules(TriggerType.OnDamage);
+            await triggerModules(TriggerType.OnDamage);
             if (currentHealth == 0)
-                die();
+                await die();
         }
-        public virtual void heal(int hp)
+        public virtual async Task heal(int hp)
         {
             currentHealth += Math.Max(hp, 1);
-            triggerModules(TriggerType.OnHeal);
+            await triggerModules(TriggerType.OnHeal);
         }
-        abstract protected void die();
+        abstract protected Task die();
 
-        public virtual void drainEnergy(int amount)
+        public virtual async Task drainEnergy(int amount)
         {
             currentEnergy -= Math.Max(amount, 1);
-            triggerModules(TriggerType.OnEnergyDrain);
+            await triggerModules(TriggerType.OnEnergyDrain);
         }
-        public virtual void restoreEnergy(int amount)
+        public virtual async Task restoreEnergy(int amount)
         {
             currentEnergy += Math.Max(amount, 1);
-            triggerModules(TriggerType.OnEnergyRestore);
+            await triggerModules(TriggerType.OnEnergyRestore);
         }
 
 
-        public virtual void startBattle()
+        public virtual async Task startBattle()
         {
             Position = tracker.WorldToCell(transform.position);
-            triggerModules(TriggerType.OnBattleStart);
+            await triggerModules(TriggerType.OnBattleStart);
         }
-        public virtual void endBattle()
+        public virtual async Task endBattle()
         {
             status_modules_.Clear();
-            triggerModules(TriggerType.OnBattleEnd);
+            await triggerModules(TriggerType.OnBattleEnd);
         }
-        public virtual void startTurn()
+        public virtual async Task startTurn()
         {
             Debug.Log($"turn started");
             myTurn = true;
-            restoreEnergy(maxEnergy);
-            triggerModules(TriggerType.OnTurnStart);
+            await restoreEnergy(maxEnergy);
+            await triggerModules(TriggerType.OnTurnStart);
         }
-        public virtual void endTurn()
+        public virtual async Task endTurn()
         {
-            triggerModules(TriggerType.OnTurnEnd);
+            await triggerModules(TriggerType.OnTurnEnd);
             myTurn = false;
             tracker.NextTurn();
         }
 
-
-        public void move(int x, int y, int z) => move(new Vector3Int(x, y, z));
-        public void move(Vector3Int pos)
+        public async Task move(Vector3Int target_pos, List<Vector3Int> allowed)
         {
-            if (tracker.OutOfBounds(pos) || tracker.IsOccupied(pos))
+            var path = Navigation.Dijkstra.getPath(Position, target_pos, p => allowed.Contains(p));
+            if (path == null)
                 return;
-            Position = pos;
-            triggerModules(TriggerType.OnMove, pos);
+            
+            foreach (var step in path)
+                await moveStep(step);
+            await triggerModules(TriggerType.OnMove, Position);
+        }
+        protected virtual async Task moveStep(Vector3Int dir)
+        {
+            Vector3Int new_pos = Position + dir;
+
+            Vector3Int[] valid_moves = {Vector3Int.left, Vector3Int.right, Vector3Int.down, Vector3Int.up};
+            if (!valid_moves.Contains(dir) || tracker.OutOfBounds(new_pos) || tracker.IsOccupied(new_pos)) return;
+            Position = new_pos;
+
+            await Awaitable.WaitForSecondsAsync(.2f); //TODO: remove delay; derived classes must await animations
         }
 
-        public void strike(int x, int y, int z, int dmg) => strike(new Vector3Int(x, y, z), dmg);
-        public void strike(Vector3Int pos, int dmg)
+        public Task strike(int x, int y, int z, int dmg) => strike(new Vector3Int(x, y, z), dmg);
+        public async Task strike(Vector3Int pos, int dmg)
         {
             Character target = tracker.FindCharacterAtPosition(pos);
             if (target == null)
                 return;
-            target.damage(dmg);
-            triggerModules(TriggerType.OnStrike, pos);
+            await target.damage(dmg);
+            await triggerModules(TriggerType.OnStrike, pos);
             Debug.Log($"Strike at {pos} for {dmg} damage");
         }
 
-        public void apply(int x, int y, int z, StatusModule status) => apply(new Vector3Int(x, y, z), status);
-        public void apply(Vector3Int pos, StatusModule status)
+        public Task apply(int x, int y, int z, StatusModule status) => apply(new Vector3Int(x, y, z), status);
+        public async Task apply(Vector3Int pos, StatusModule status)
         {
             Character target = tracker.FindCharacterAtPosition(pos);
             if (target == null)
                 return;
             target.addStatusModule(status);
-            triggerModules(TriggerType.OnApply, pos);
+            await triggerModules(TriggerType.OnApply, pos);
             Debug.Log($"Apply {status.GetType().Name} at {pos}");
         }
 
@@ -117,28 +130,28 @@ namespace BlueSteelGenesis.Character_Modules
                 Debug.Log($"Status module {status.GetType().Name} added to {GetType().Name}");
             }
         }
-        public bool useActiveModule(int moduleIndex, Vector3Int pos)
+        public async Task<bool> useActiveModule(int moduleIndex, Vector3Int pos)
         {
             var activeModule = getModule<ActiveModule>(moduleIndex);
             if (hasEnoughEnergy(activeModule) && isCorrectPosition(activeModule, pos))
             {
-                useActiveModule_internal(activeModule, pos);
-                drainEnergy(activeModule.energyCost);
+                await drainEnergy(activeModule.energyCost);
+                await useActiveModule_internal(activeModule, pos);
                 return true;
             }
             return false;
         }
-        protected void triggerModules(TriggerType triggerType) => triggerModules(triggerType, Position);
-        protected void triggerModules(TriggerType triggerType, Vector3Int pos)
+        protected Task triggerModules(TriggerType triggerType) => triggerModules(triggerType, Position);
+        protected async Task triggerModules(TriggerType triggerType, Vector3Int pos)
         {
             foreach (var pm in listModules<PassiveModule>().Where(pm => pm.triggerType == triggerType))
-                usePassiveModule_internal(pm, pos);
-            processStatusModules(triggerType);
+                await usePassiveModule_internal(pm, pos);
+            await processStatusModules(triggerType);
         }
-        protected void processStatusModules(TriggerType triggerType)
+        protected async Task processStatusModules(TriggerType triggerType)
         {
             foreach (var st in status_modules_.Where(m => triggerType == m.triggerType))
-                useStatusModule_internal(st);
+                await useStatusModule_internal(st);
             status_modules_.RemoveAll(m => m.IsExpired());
         }
         
@@ -161,9 +174,9 @@ namespace BlueSteelGenesis.Character_Modules
         public bool doesModuleExist(int module_index) => getModule<GameModule>(module_index) != null;
         protected virtual bool isCorrectPosition(ActiveModule module, Vector3Int pos) => module.checkPosition(pos, this);
         protected virtual bool hasEnoughEnergy(ActiveModule module) => module != null && currentEnergy >= module.energyCost;
-        protected virtual void useActiveModule_internal(ActiveModule m, Vector3Int pos) => m.Effect(this, pos);
-        protected virtual void usePassiveModule_internal(PassiveModule m, Vector3Int pos) => m.Effect(this, pos);
-        protected virtual void useStatusModule_internal(StatusModule m) => m.Effect(this, Position);
+        protected virtual Task useActiveModule_internal(ActiveModule m, Vector3Int pos) => m.Effect(this, pos);
+        protected virtual Task usePassiveModule_internal(PassiveModule m, Vector3Int pos) => m.Effect(this, pos);
+        protected virtual Task useStatusModule_internal(StatusModule m) => m.Effect(this, Position);
 
 
         public int currentHealth

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Threading.Tasks;
 
 namespace BlueSteelGenesis.Character_Modules
 {
@@ -62,20 +63,20 @@ namespace BlueSteelGenesis.Character_Modules
             if (!doesModuleExist(index)) return null;
             return modules_[index].Description;
         }
-        protected override void useActiveModule_internal(ActiveModule m, Vector3Int pos)
+        protected override async Task useActiveModule_internal(ActiveModule m, Vector3Int pos)
         {
             //play using module animation
-            base.useActiveModule_internal(m, pos);
+            await base.useActiveModule_internal(m, pos);
         }
-        protected override void usePassiveModule_internal(PassiveModule m, Vector3Int pos)
+        protected override async Task usePassiveModule_internal(PassiveModule m, Vector3Int pos)
         {
             //play using module animation
-            base.usePassiveModule_internal(m, pos);
+            await base.usePassiveModule_internal(m, pos);
         }
-        protected override void useStatusModule_internal(StatusModule m)
+        protected override async Task useStatusModule_internal(StatusModule m)
         {
             //play using module animation
-            base.useStatusModule_internal(m);
+            await base.useStatusModule_internal(m);
     }
 
         protected override bool isCorrectPosition(ActiveModule module, Vector3Int pos)
@@ -103,66 +104,68 @@ namespace BlueSteelGenesis.Character_Modules
             return myTurn && hasEnoughEnergy(getModule<ActiveModule>(module_index));
         }
 
-        public override void startBattle()
+        public override async Task startBattle()
         {
-            base.startBattle();
+            await base.startBattle();
             updateHealth();
             updateEnergy();
             updateButtons();
             //play starting battle animation
         }
 
-        public override void endBattle()
+        public override async Task endBattle()
         {
-            base.endBattle();
+            await base.endBattle();
             //play ending battle animation
         }
 
-        public override void startTurn()
+        public override async Task startTurn()
         {
-            base.startTurn();
+            await base.startTurn();
             //play start turn animation
         }
 
-        public override void endTurn()
+        public override async Task endTurn()
         {
-            base.endTurn();
+            await base.endTurn();
             updateButtons();
             //play turn end animation
         }
+        public void onEndTurnButtonPressed() =>
+            StartCoroutine(TaskCoro.Make(endTurn()));
 
-        public override void damage(int dmg)
+        public override async Task damage(int dmg)
         {
             Debug.Log($"Игрок получил {dmg} урона!");
-            base.damage(dmg);
+            await base.damage(dmg);
             updateHealth();
             //play taking damage animation
         }
 
-        public override void heal(int hp)
+        public override async Task heal(int hp)
         {
             Debug.Log($"Игрок восстановил {hp} здоровья!");
-            base.heal(hp);
+            await base.heal(hp);
             updateHealth();
             //play healing animation
         }
 
-        public override void drainEnergy(int amount)
+        public override async Task drainEnergy(int amount)
         {
-            base.drainEnergy(amount);
+            await base.drainEnergy(amount);
             updateButtons();
             updateEnergy();
             //play losing energy animation
         }
-        public override void restoreEnergy(int amount)
+        public override async Task restoreEnergy(int amount)
         {
-            base.restoreEnergy(amount);
+            await base.restoreEnergy(amount);
             updateButtons();
             updateEnergy();
             //play restoring energy animation
         }
 
-        override protected void die()
+        override protected async Task die()
         {
             Debug.Log("Игрок умер!");
             tracker.RemoveCharacter(this);
@@ -171,10 +174,10 @@ namespace BlueSteelGenesis.Character_Modules
             //play dying animation
         }
 
-        public void Victory() 
+        public async Task Victory() 
         {
             updateButtons();
-            endBattle();
+            await endBattle();
             VictoryScreen.SetActive(true);
         }
         public void Defeat()

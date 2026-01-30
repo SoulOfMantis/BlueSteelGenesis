@@ -1,6 +1,7 @@
 using BlueSteelGenesis.Character_Modules;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
@@ -28,13 +29,14 @@ public class PurpleDog : Enemy
 
 
     // Begins PDs turn
-    public override void startTurn()
+    public override async Task startTurn()
     {
-        base.startTurn();
+        await base.startTurn();
+        
+        if (currentHealth > 0)
+            await MainLogic();
 
-        MainLogic();
-
-        endTurn();
+        await endTurn();
     }
 
     
@@ -44,11 +46,8 @@ public class PurpleDog : Enemy
     {
 
         BasicAttack attack = getModule<BasicAttack>(0);
-        Debug.Log($"Cost {attack.energyCost} {currentEnergy}");
         // Available cells
         var attackRange = attack.getCellsInRange(Position);
-
-
         return attackRange.Contains(playerPosition);
     }
 
@@ -82,7 +81,7 @@ public class PurpleDog : Enemy
     }
 
     // Function of main logic
-    private void MainLogic()
+    private async Task MainLogic()
     {
         // Object of player
         PlayerCharacter player = tracker.getPlayer();
@@ -92,11 +91,11 @@ public class PurpleDog : Enemy
         while (modules_.Any(m => hasEnoughEnergy((ActiveModule)m)))
         {
             //  Try attacking player
-            if (CanAttack(player.Position) && useActiveModule(0, player.Position))
+            if (CanAttack(player.Position) && await useActiveModule(0, player.Position))
                 Debug.Log("PD attacks the player");
 
             // Get closer to player
-            else if (useActiveModule(1, FindBestPosition(player.Position)))
+            else if (await useActiveModule(1, FindBestPosition(player.Position)))
                 Debug.Log("PD moves closer to player");
 
             // No available modules
@@ -108,24 +107,24 @@ public class PurpleDog : Enemy
         }
     }
 
-    public override void damage(int dmg)
+    public override async Task damage(int dmg)
     {
         Debug.Log($"Собака получила {dmg} урона!");
-        base.damage(dmg);
+        await base.damage(dmg);
         updateHealth();
         //play taking damage animation
     }
 
-    public override void heal(int hp)
+    public override async Task heal(int hp)
     {
         Debug.Log($"Собака восстановила {hp} здоровья!");
-        base.heal(hp);
+        await base.heal(hp);
         updateHealth();
         //play healing animation
     }
-    public override void startBattle()
+    public override async Task startBattle()
     {
-        base.startBattle();
+        await base.startBattle();
         updateHealth();
     }
 

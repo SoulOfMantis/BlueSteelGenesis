@@ -1,7 +1,6 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
-
-
-
 
 
 namespace BlueSteelGenesis.Character_Modules
@@ -17,14 +16,14 @@ namespace BlueSteelGenesis.Character_Modules
             energyCost = 1;
         }
 
-        public override void Effect(Character user, Vector3Int pos)
+        public override async Task Effect(Character user, Vector3Int pos)
         {
-            user.move(pos);
+            await user.move(pos, getCellsInRange(user.Position));
             Debug.Log("BMM executed");
         }
-        public override bool checkPosition(Vector3Int pos, Character user)
+        protected override bool checkIntermediatePosition(Vector3Int pos)
         {
-            return base.checkPosition(pos, user) && !Character.tracker.IsOccupied(pos);
+            return base.checkIntermediatePosition(pos) && !Character.tracker.IsOccupied(pos);
         }
     }
 }

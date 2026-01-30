@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace BlueSteelGenesis.Character_Modules
@@ -8,22 +9,19 @@ namespace BlueSteelGenesis.Character_Modules
     public class PoisonStinger : BasicAttack
     {
         private int poisonDamage;
-        private int hitDamage;
         private int duration;
 
-        public PoisonStinger(int damage = 1, int duration = 3, int hitDamage = 3) : base()
+        public PoisonStinger(int damage = 1, int duration = 3, int hitDamage = 1) : base(hitDamage)
         {
             poisonDamage = damage;
-            this.hitDamage = hitDamage;
             this.duration = duration;
         }
 
-        public override void Effect(Character user, Vector3Int pos)
+        public override async Task Effect(Character user, Vector3Int pos)
         {
-            base.Effect(user, pos);
+            await base.Effect(user, pos);
             PoisonModule poison = new PoisonModule(poisonDamage, duration);
-            user.apply(pos, poison);
+            await user.apply(pos, poison);
         }
-
     }
 }
