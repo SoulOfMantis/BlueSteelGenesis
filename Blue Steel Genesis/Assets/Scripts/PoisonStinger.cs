@@ -9,13 +9,11 @@ namespace BlueSteelGenesis.Character_Modules
     public class PoisonStinger : BasicAttack
     {
         private int poisonDamage;
-        private int hitDamage;
         private int duration;
 
-        public PoisonStinger(int damage = 1, int duration = 3, int hitDamage = 3) : base()
+        public PoisonStinger(int damage = 1, int duration = 3, int hitDamage = 1) : base(hitDamage)
         {
             poisonDamage = damage;
-            this.hitDamage = hitDamage;
             this.duration = duration;
         }
 

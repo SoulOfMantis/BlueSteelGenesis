@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ namespace BlueSteelGenesis.Character_Modules
         public int range = 0;
         protected List<Vector3Int> getAvailableCells(int n, Vector3Int start)
         {
-            List<Vector3Int> res = new List<Vector3Int>();
+            var res = new HashSet<Vector3Int>();
             HashSet<Vector3Int> toAdd = new HashSet<Vector3Int>();
             res.Add(start);
             for (int i = 1; i <= n; i++)
@@ -32,13 +33,14 @@ namespace BlueSteelGenesis.Character_Modules
                 }
                 foreach (var cell in toAdd)
                 {
-                    if (!res.Contains(cell))
+                    if (checkIntermediatePosition(cell))
                         res.Add(cell);
                 }
                 toAdd.Clear();
             }
-            return res;
+            return res.Where(c => checkFinalPosition(c)).ToList();
         }
+        public virtual List<Vector3Int> getCellsInRange(Character user) => getCellsInRange(user.Position);
         public virtual List<Vector3Int> getCellsInRange(Vector3Int start)
         {
             return getAvailableCells(range, start);
@@ -51,9 +53,17 @@ namespace BlueSteelGenesis.Character_Modules
         {
             Debug.Log($"Module {GetType().Name} initialized");
         }
-        public virtual bool checkPosition(Vector3Int pos, Character user)
+        protected virtual bool checkFinalPosition(Vector3Int pos)
         {
-            return !Character.tracker.OutOfBounds(pos) && getCellsInRange(user.Position).Contains(pos);
+            return true;
+        }
+        protected virtual bool checkIntermediatePosition(Vector3Int pos)
+        {
+            return !Character.tracker.OutOfBounds(pos);
+        }
+        public virtual bool checkPosition(Character user, Vector3Int pos)
+        {
+            return getCellsInRange(user).Contains(pos);
         }
     }
 }
