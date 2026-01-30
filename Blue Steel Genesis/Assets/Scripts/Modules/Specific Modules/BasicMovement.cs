@@ -22,4 +22,8 @@ public class BasicMovement : ActiveModule
     {
         return base.checkIntermediatePosition(pos) && !Character.tracker.IsOccupied(pos);
     }
+    //public override List<Vector3Int> getCellsInRange(Vector3Int start)
+    //{
+    //return Navigation.Dijkstra.listReachable(start, p => start.ManhattanDistance(p) <= range && !Character.tracker.IsOccupied(p), range);
+    //}
 }
