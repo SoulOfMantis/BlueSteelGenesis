@@ -1832,7 +1832,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneTracker
   tl: {fileID: 173677968}
-  tiles: []
+  tiles:
+  - BaseTile: {fileID: 11400000, guid: b6503ebdd25f0df4885c462f983579ff, type: 2}
+    HighlightedTile: {fileID: 11400000, guid: b4da69aa541548443ad8d7098a20bc49, type: 2}
+  - BaseTile: {fileID: 11400000, guid: 2e3c147cb5e040d44a8ab00f77a518ca, type: 2}
+    HighlightedTile: {fileID: 11400000, guid: 331cde8a204fa904cab0ed38c7c875a9, type: 2}
+  - BaseTile: {fileID: 11400000, guid: 61a7ee2e42beb2c42a880decd289b7f4, type: 2}
+    HighlightedTile: {fileID: 11400000, guid: b13548269394ce341945c654e1a9bc88, type: 2}
+  - BaseTile: {fileID: 11400000, guid: c527d93eeb799da42879f6224f383cf9, type: 2}
+    HighlightedTile: {fileID: 11400000, guid: 96772d0b9399221488d623f0502141b9, type: 2}
 --- !u!212 &559753037
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2654,7 +2662,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 847329471}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25f5789592123334dbf3b3df7ded0adc, type: 3}
+  m_Script: {fileID: 11500000, guid: 7579a1b80c7ce944085e6ed1f6f7cbc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
 --- !u!114 &847329474
@@ -2950,7 +2958,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 972652689}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25f5789592123334dbf3b3df7ded0adc, type: 3}
+  m_Script: {fileID: 11500000, guid: 7579a1b80c7ce944085e6ed1f6f7cbc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
 --- !u!114 &972652692
@@ -3868,7 +3876,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1351056326}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25f5789592123334dbf3b3df7ded0adc, type: 3}
+  m_Script: {fileID: 11500000, guid: 7579a1b80c7ce944085e6ed1f6f7cbc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
 --- !u!114 &1351056329
@@ -5641,7 +5649,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1962244300}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25f5789592123334dbf3b3df7ded0adc, type: 3}
+  m_Script: {fileID: 11500000, guid: 7579a1b80c7ce944085e6ed1f6f7cbc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
 --- !u!114 &1962244303
