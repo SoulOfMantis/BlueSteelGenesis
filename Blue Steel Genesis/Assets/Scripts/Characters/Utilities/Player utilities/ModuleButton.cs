@@ -37,12 +37,12 @@ using UnityEngine.UI;
         private void OnDestroy() =>
             resetSelection.RemoveListener(deselect);
 
-        public void handleGridClick(InputAction.CallbackContext _) {
+        public async void handleGridClick(InputAction.CallbackContext _) {
             Vector3Int cell = Character.tracker.GetCellByScreenPosition(Input.mousePosition);
             if (!inUse || cell == new Vector3Int(-1, -1, -1) || !player.GetModulePositions(connectedModuleIndex).Contains(cell))
                 return;
             toggleSkill();
-            player.useActiveModule(connectedModuleIndex, cell);
+            await player.useActiveModule(connectedModuleIndex, cell);
         }
 
         public void deselect() {
