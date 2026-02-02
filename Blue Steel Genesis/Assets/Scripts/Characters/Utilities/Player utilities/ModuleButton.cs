@@ -14,6 +14,9 @@ using UnityEngine.UI;
         private bool inUse = false;
         
         private static UnityEvent resetSelection = new();
+
+        private static bool isModuleBeingUsed = false;
+        private static UnityEvent updateInteractable = new();
         
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -32,17 +35,27 @@ using UnityEngine.UI;
             gridClickAction.Enable();
 
             resetSelection.AddListener(deselect);
+            updateInteractable.AddListener(buttonInteractableManaging);
         }
 
-        private void OnDestroy() =>
+        private void OnDestroy() {
             resetSelection.RemoveListener(deselect);
+            updateInteractable.RemoveListener(buttonInteractableManaging);
+        }
 
         public async void handleGridClick(InputAction.CallbackContext _) {
             Vector3Int cell = Character.tracker.GetCellByScreenPosition(Input.mousePosition);
             if (!inUse || cell == new Vector3Int(-1, -1, -1) || !player.GetModulePositions(connectedModuleIndex).Contains(cell))
                 return;
             toggleSkill();
+
+            isModuleBeingUsed = true;
+            updateInteractable.Invoke();
+            
             await player.useActiveModule(connectedModuleIndex, cell);
+            
+            isModuleBeingUsed = false;
+            updateInteractable.Invoke();
         }
 
         public void deselect() {
@@ -51,12 +64,8 @@ using UnityEngine.UI;
 
         public void buttonInteractableManaging()
         {
-            if (player.myTurn) button.interactable = true;            
-            else
-            {
-                button.interactable = false;
-                if (inUse) toggleSkill();
-            }
+            button.interactable = player.myTurn && !isModuleBeingUsed;
+            if (!player.myTurn) deselect();
         }
         
         public void toggleSkill()
