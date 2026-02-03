@@ -621,7 +621,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1461569302}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25f5789592123334dbf3b3df7ded0adc, type: 3}
+  m_Script: {fileID: 11500000, guid: 7579a1b80c7ce944085e6ed1f6f7cbc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
 --- !u!114 &1461569305
@@ -669,7 +669,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1461569304}
-        m_TargetAssemblyTypeName: PlayButton, Assembly-CSharp
+        m_TargetAssemblyTypeName: MenuButtons, Assembly-CSharp
         m_MethodName: Play
         m_Mode: 1
         m_Arguments:
@@ -981,7 +981,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1962397510}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25f5789592123334dbf3b3df7ded0adc, type: 3}
+  m_Script: {fileID: 11500000, guid: 7579a1b80c7ce944085e6ed1f6f7cbc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
 --- !u!114 &1962397513

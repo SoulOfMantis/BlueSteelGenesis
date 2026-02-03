@@ -1,0 +1,18 @@
+public enum TriggerType
+{
+    OnBattleStart,
+    OnBattleEnd,
+    OnTurnStart,
+    OnTurnEnd,
+    OnHealthDamage,
+    OnDamageShielded,
+    OnShieldBroken,
+    OnShieldGiven,
+    OnHeal,
+    OnDeath,
+    OnMove,
+    OnStrike,
+    OnApply,
+    OnEnergyRestore,
+    OnEnergyDrain
+}
