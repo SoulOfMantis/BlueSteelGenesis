@@ -142,7 +142,10 @@ public abstract class Character : MonoBehaviour
     protected async Task triggerModules(TriggerType triggerType, Vector3Int pos)
     {
         foreach (var pm in listModules<PassiveModule>().Where(pm => pm.triggerType == triggerType))
-            await usePassiveModule_internal(pm, pos);
+        {
+            if (isCorrectPosition(pm, pos))
+                await usePassiveModule_internal(pm, pos);            
+        }
         await processStatusModules(triggerType);
     }
     protected async Task processStatusModules(TriggerType triggerType)
@@ -164,12 +167,15 @@ public abstract class Character : MonoBehaviour
         var module = modules_.ElementAtOrDefault(module_index);
         return module as ModuleT;
     }
-
+    protected GameModule getModule(int module_index)
+    {
+        return getModule<GameModule>(module_index);
+    }
 
     public bool isPassive(int module_index) => getModule<PassiveModule>(module_index) != null;
     public bool isActive(int module_index) => getModule<ActiveModule>(module_index) != null;
     public bool doesModuleExist(int module_index) => getModule<GameModule>(module_index) != null;
-    protected virtual bool isCorrectPosition(ActiveModule module, Vector3Int pos) => module.checkPosition(this, pos);
+    protected virtual bool isCorrectPosition(GameModule module, Vector3Int pos) => module.checkPosition(this, pos);
     protected virtual bool hasEnoughEnergy(ActiveModule module) => module != null && currentEnergy >= module.energyCost;
     protected virtual Task useActiveModule_internal(ActiveModule m, Vector3Int pos) => m.Effect(this, pos);
     protected virtual Task usePassiveModule_internal(PassiveModule m, Vector3Int pos) => m.Effect(this, pos);

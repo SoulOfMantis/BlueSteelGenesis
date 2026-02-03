@@ -22,4 +22,9 @@ public class BasicMovement : ActiveModule
     {
         return base.checkIntermediatePosition(pos) && !Character.tracker.IsOccupied(pos);
     }
+    protected override bool checkFinalPosition(Vector3Int pos)
+    {
+        return !Character.tracker.IsOccupied(pos);
+    }
+
 }
