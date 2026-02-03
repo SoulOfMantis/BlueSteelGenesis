@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -35,7 +36,7 @@ public class PlayerCharacter : Character
 
     }
 
-    public List<Vector3Int> GetModulePositions(int n) => modules_[n].getCellsInRange(Position);
+    public List<Vector3Int> GetModulePositions(int n) => getModule(n).getCellsInRange(Position).Where(c => isCorrectPosition(getModule(n), c)).ToList();
 
     void updateHealth()
     {
@@ -77,7 +78,7 @@ public class PlayerCharacter : Character
         await base.useStatusModule_internal(m);
     }
 
-    protected override bool isCorrectPosition(ActiveModule module, Vector3Int pos)
+    protected override bool isCorrectPosition(GameModule module, Vector3Int pos)
     {
         var flag = base.isCorrectPosition(module, pos);
         if (!flag)

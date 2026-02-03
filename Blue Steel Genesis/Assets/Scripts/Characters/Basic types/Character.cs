@@ -18,17 +18,40 @@ public abstract class Character : MonoBehaviour
 
     public virtual async Task damage(int dmg, ActionContext prevAction = null)
     {
-        currentHealth -= Math.Max(dmg, 1);
-        ActionContext action = new ActionContext(null, "takeDamage", prevAction, this);
+        dmg = Math.Max(dmg, 1);
+        var action = new ActionContext(null, "takeDamage", prevAction, this);
+        if (currentShield > 0)
+        {
+            int shield_dmg = Math.Min(currentShield, dmg);
+            currentShield -= shield_dmg;
+            dmg -= shield_dmg;
+            await triggerModules(TriggerType.OnDamageShielded, action);
+            Debug.Log($"{shield_dmg} урона поглощено щитом");
+            if (currentShield == 0)
+                await triggerModules(TriggerType.OnShieldBroken, action);
+        }
+        if (dmg > 0)
+        {
+            currentHealth -= dmg;
+            await triggerModules(TriggerType.OnHealthDamage, action);
+            if (currentHealth == 0)
+              await die();
+        }
         await triggerModules(TriggerType.OnDamage, action);
-        if (currentHealth == 0)
-            await die();
     }
+
     public virtual async Task heal(int hp, ActionContext prevAction = null)
     {
         currentHealth += Math.Max(hp, 1);
         ActionContext action = new ActionContext(null, "heal", prevAction, this);
         await triggerModules(TriggerType.OnHeal, action);
+    }
+
+    public virtual async Task giveShield(int amount)
+    {
+        currentShield += Math.Max(amount, 1);
+        await triggerModules(TriggerType.OnShieldGiven);
+        Debug.Log($"Выдан щит: {amount}; Всего: {currentShield}");
     }
     abstract protected Task die();
 
@@ -60,6 +83,7 @@ public abstract class Character : MonoBehaviour
     {
         Debug.Log($"turn started");
         myTurn = true;
+        currentShield = 0;
         await restoreEnergy(maxEnergy);
         await triggerModules(TriggerType.OnTurnStart);
     }
@@ -158,8 +182,11 @@ public abstract class Character : MonoBehaviour
     {
         foreach (var pm in listModules<PassiveModule>().Where(pm => pm.triggerType == triggerType))
         {
-            pm.loadContext(context);
-            await usePassiveModule_internal(pm, pos);
+            if (isCorrectPosition(pm, pos))
+            {
+                pm.loadContext(context);
+                await usePassiveModule_internal(pm, pos);
+            }
         }
         await processStatusModules(triggerType, context);
     }
@@ -185,12 +212,15 @@ public abstract class Character : MonoBehaviour
         var module = modules_.ElementAtOrDefault(module_index);
         return module as ModuleT;
     }
-
+    protected GameModule getModule(int module_index)
+    {
+        return getModule<GameModule>(module_index);
+    }
 
     public bool isPassive(int module_index) => getModule<PassiveModule>(module_index) != null;
     public bool isActive(int module_index) => getModule<ActiveModule>(module_index) != null;
     public bool doesModuleExist(int module_index) => getModule<GameModule>(module_index) != null;
-    protected virtual bool isCorrectPosition(ActiveModule module, Vector3Int pos) => module.checkPosition(this, pos);
+    protected virtual bool isCorrectPosition(GameModule module, Vector3Int pos) => module.checkPosition(this, pos);
     protected virtual bool hasEnoughEnergy(ActiveModule module) => module != null && currentEnergy >= module.energyCost;
     protected virtual Task useActiveModule_internal(ActiveModule m, Vector3Int pos) => m.Effect(this, pos);
     protected virtual Task usePassiveModule_internal(PassiveModule m, Vector3Int pos) => m.Effect(this, pos);
@@ -203,6 +233,8 @@ public abstract class Character : MonoBehaviour
         protected set => current_health_ = Math.Clamp(value, 0, maxHealth);
     }
     public int maxHealth { get; protected set; }
+    public int currentShield { get; protected set; }
+
 
     public int currentEnergy
     {
