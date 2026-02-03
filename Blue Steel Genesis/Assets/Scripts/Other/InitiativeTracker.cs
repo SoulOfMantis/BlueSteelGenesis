@@ -8,7 +8,7 @@ public class InitiativeTracker : MonoBehaviour
     int currentCharacterIndex = -1;
     public void AddCharacter(Character charact)
     {
-        if ((charact != null) && !(characters.Contains(charact)))
+        if (charact != null)
         {
             Debug.Log($"Added {charact.name}");
             characters.Add(charact);
@@ -18,7 +18,9 @@ public class InitiativeTracker : MonoBehaviour
     {
         if (characters.Contains(charact))
         {
+            if (characters[currentCharacterIndex] == charact) --currentCharacterIndex; //to not skip next character's turn, if someone dies during own turn
             characters.Remove(charact);
+            Debug.Log($"Removed {charact.name}");
         }
     }
     public bool CheckVictory()

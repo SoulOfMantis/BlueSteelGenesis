@@ -16,6 +16,7 @@ public class PlayerCharacter : Character
         //modules hardcoded for now
         addModule(new PoisonStinger());
         addModule(new BasicMovement());
+        addModule(new CounterAttack());
         modules_.ForEach(m => m.changeName(m.GetType().Name));
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created

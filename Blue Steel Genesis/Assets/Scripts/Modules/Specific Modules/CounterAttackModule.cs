@@ -7,7 +7,7 @@ using UnityEngine;
 public class CounterAttack : PassiveModule
 {
     public int damage;
-    public CounterAttack(int dmg)
+    public CounterAttack(int dmg = 3)
     {
         damage = dmg;
         range = 1;
@@ -17,14 +17,17 @@ public class CounterAttack : PassiveModule
     {
         if (context == null) throw new ArgumentNullException();
         if (context.prevActionContext == null) return;
-        if (context.prevActionContext.actionName == "strike" && Character.tracker.isAlive(context.prevActionContext.acting))
+        if (context.prevActionContext.actionName != "strike" || context.prevActionContext.prevActionContext != null) return;
+        if (Character.tracker.isAlive(context.prevActionContext.acting))
         {
             var target = context.prevActionContext.acting;
             if (getCellsInRange(user.Position).Contains(target.Position))
             {
-                await user.strike(target.Position, damage, context);
+                ActionContext action = new ActionContext(user, "counterattack", context, target);
+                await user.strike(target.Position, damage, action);                
             }
         }
     }
+
 }
 

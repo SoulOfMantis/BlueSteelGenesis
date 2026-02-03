@@ -47,10 +47,11 @@ public abstract class Character : MonoBehaviour
         await triggerModules(TriggerType.OnHeal, action);
     }
 
-    public virtual async Task giveShield(int amount)
+    public virtual async Task giveShield(int amount, ActionContext prevAction = null)
     {
         currentShield += Math.Max(amount, 1);
-        await triggerModules(TriggerType.OnShieldGiven);
+        ActionContext action = new ActionContext(null, "shielding", prevAction, this);
+        await triggerModules(TriggerType.OnShieldGiven, action);
         Debug.Log($"Выдан щит: {amount}; Всего: {currentShield}");
     }
     abstract protected Task die();
@@ -102,7 +103,7 @@ public abstract class Character : MonoBehaviour
 
         foreach (var step in path)
             await moveStep(step);
-        ActionContext action = new ActionContext(null, "move", prevAction, this);
+        ActionContext action = new ActionContext(this, "move", prevAction);
         await triggerModules(TriggerType.OnMove, Position, action);
     }
     protected virtual async Task moveStep(Vector3Int dir)
@@ -121,8 +122,8 @@ public abstract class Character : MonoBehaviour
         Character target = tracker.FindCharacterAtPosition(pos);
         if (target == null)
             return;
-        await target.damage(dmg);
-        ActionContext action = new ActionContext(null, "strike", prevAction, this);
+        ActionContext action = new ActionContext(this, "strike", prevAction, target);
+        await target.damage(dmg, action);
         await triggerModules(TriggerType.OnStrike, pos, action);
         Debug.Log($"Strike at {pos} for {dmg} damage");
     }
@@ -132,8 +133,8 @@ public abstract class Character : MonoBehaviour
         Character target = tracker.FindCharacterAtPosition(pos);
         if (target == null)
             return;
-        await target.addStatusModule(status);
-        ActionContext action = new ActionContext(null, "apply", prevAction, this);
+        ActionContext action = new ActionContext(this, "apply", prevAction, target);
+        await target.addStatusModule(status, action);
         await triggerModules(TriggerType.OnApply, pos, action);
         Debug.Log($"Apply {status.GetType().Name} at {pos}");
     }
@@ -182,10 +183,12 @@ public abstract class Character : MonoBehaviour
     {
         foreach (var pm in listModules<PassiveModule>().Where(pm => pm.triggerType == triggerType))
         {
+            Debug.Log(pm.Name + " triggering");
             if (isCorrectPosition(pm, pos))
             {
                 pm.loadContext(context);
                 await usePassiveModule_internal(pm, pos);
+                Debug.Log(pm.Name + " triggered");
             }
         }
         await processStatusModules(triggerType, context);
