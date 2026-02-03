@@ -9,7 +9,7 @@ public class BasicShield : ActiveModule
 {
     private int shieldGiven;
 
-    public BasicAttack(int shield = 1)
+    public BasicShield(int shield = 1)
     {
         this.shieldGiven = shield;
         energyCost = 1;

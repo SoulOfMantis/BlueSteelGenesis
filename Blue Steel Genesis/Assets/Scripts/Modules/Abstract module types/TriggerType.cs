@@ -7,6 +7,7 @@ public enum TriggerType
     OnHealthDamage,
     OnDamageShielded,
     OnShieldBroken,
+    OnShieldGiven,
     OnHeal,
     OnDeath,
     OnMove,
