@@ -121,21 +121,10 @@ public class SceneTracker : MonoBehaviour
     {
         init = gameObject.AddComponent(typeof(InitiativeTracker)) as InitiativeTracker;
         Character.tracker = this;
-        map.Add(new Vector3Int(0, 0, 0));
-        map.Add(new Vector3Int(0, 1, 0));
-        //tiles.Add(new HighlightableTile(tl.GetTile(map[0]), tl.GetTile(map[1])));
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            HighlightCells(map);
-        }
-        else if (Input.GetKeyDown(KeyCode.U))
-        {
-            ClearHighlights(map);
-        }
 
     }
 }
