@@ -18,15 +18,36 @@ public abstract class Character : MonoBehaviour
 
     public virtual async Task damage(int dmg)
     {
-        currentHealth -= Math.Max(dmg, 1);
-        await triggerModules(TriggerType.OnDamage);
-        if (currentHealth == 0)
-            await die();
+        dmg = Math.Max(dmg, 1);
+        if (currentShield > 0)
+        {
+            int shield_dmg = Math.Min(currentShield, dmg);
+            currentShield -= shield_dmg;
+            dmg -= shield_dmg;
+            await triggerModules(TriggerType.OnDamageShielded);
+            Debug.Log($"{shield_dmg} урона поглощено щитом");
+            if (currentShield == 0)
+                await triggerModules(TriggerType.OnShieldBroken);
+        }
+        if (dmg > 0)
+        {
+            currentHealth -= dmg;
+            await triggerModules(TriggerType.OnHealthDamage);
+            if (currentHealth == 0)
+              await  die();
+        }
     }
     public virtual async Task heal(int hp)
     {
         currentHealth += Math.Max(hp, 1);
         await triggerModules(TriggerType.OnHeal);
+    }
+
+    public virtual async Task giveShield(int amount)
+    {
+        currentShield += Math.Max(amount, 1);
+        await triggerModules(TriggerType.OnShieldGiven);
+        Debug.Log($"Выдан щит: {amount}; Всего: {currentShield}");
     }
     abstract protected Task die();
 
@@ -56,6 +77,7 @@ public abstract class Character : MonoBehaviour
     {
         Debug.Log($"turn started");
         myTurn = true;
+        currentShield = 0;
         await restoreEnergy(maxEnergy);
         await triggerModules(TriggerType.OnTurnStart);
     }
@@ -188,6 +210,8 @@ public abstract class Character : MonoBehaviour
         protected set => current_health_ = Math.Clamp(value, 0, maxHealth);
     }
     public int maxHealth { get; protected set; }
+    public int currentShield { get; protected set; }
+
 
     public int currentEnergy
     {
