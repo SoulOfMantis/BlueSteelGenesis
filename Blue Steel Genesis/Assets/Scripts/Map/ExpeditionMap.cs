@@ -1,0 +1,142 @@
+using System;
+using UnityEngine;
+
+using HKDF = HKDF<System.Security.Cryptography.HMACSHA1>;
+namespace Map
+{
+    // Placholder type
+    public class BiomeInfo
+    {
+        public uint id;
+        public float missing_node_rate = .3f;
+    }
+
+    public class ExpeditionMap : MonoBehaviour
+    {
+        public void generate(uint width, uint height, byte[] global_seed, BiomeInfo biome, uint biome_stage, uint lives_count, byte[] ship_parts_data)
+        {
+            var biome_map = generateBiomeMap(width, height, global_seed, biome);
+            var type_map = generateNodeTypeMap(width, height, global_seed, biome, biome_stage, lives_count, ship_parts_data);
+
+            map = new Node[height, width];
+            for (int line = 0; line < height; ++line)
+                for (int x = 0; x < width; ++x)
+                    map[line, x] = biome_map[line, x] & type_map[line, x];
+        }
+
+
+        private static Node[,] generateNodeTypeMap(uint width, uint height, byte[] global_seed, BiomeInfo biome, uint biome_stage, uint lives_count, byte[] ship_parts_data)
+        {
+            var map = new Node[height + 2, width + 2];
+            for (int x = 1; x <= width; ++x) {
+                map[1, x] = Node.REGULAR_ENEMY;
+                map[1 + height/2, x] = Node.TREASURE;
+                map[height, x] = Node.REST;
+            }
+
+            
+            var prng = getNodeTypePRNG(global_seed, biome.id, biome_stage, lives_count, ship_parts_data);
+            Node getRandomNode(byte allowed_mask) {
+                int popcnt(byte b) {
+                    int cnt = 0;
+                    while (b > 0) {
+                        if ((b & 1) != 0) ++cnt;
+                        b >>= 1;
+                    }
+                    return cnt;
+                }
+
+                int target_idx = prng.Next(popcnt((byte)allowed_mask) + 1);
+                byte node = 1;
+                for (int cur_idx = node & allowed_mask; cur_idx < target_idx;) {
+                    node <<= 1;
+                    if ((node & allowed_mask) != 0)
+                        ++cur_idx;
+                }
+                return (Node)node;
+            }
+            
+            int first_third = 1 + Mathf.CeilToInt(height / 3);
+            for (int line = 1; line <= height; ++line)
+                for (int x = 1; x <= width; ++x)
+                    if (map[line, x] == Node.DISABLED) {
+                        Node mask;
+                        Node progress_limit =
+                            line <= first_third ? (Node.ELITE_ENEMY | Node.REST) : Node.DISABLED;
+                        Node link_limit =
+                            (map[line-1, x-1] | map[line-1, x] | map[line-1, x+1] |
+                             map[line+1, x-1] | map[line+1, x] | map[line+1, x+1])
+                            & (Node.REST | Node.ELITE_ENEMY);
+
+                        if (x == 1) {
+                            mask = ~(progress_limit | link_limit) & Node.ALL_REGULAR;
+                            map[line, x] = getRandomNode((byte)mask);
+                            continue;
+                        }
+                        Node group_limit = map[line, x-2] | map[line, x-1];
+                        mask = ~(progress_limit | link_limit | group_limit) & Node.ALL_REGULAR;
+                        map[line, x] = getRandomNode((byte)mask);
+                    }
+
+            var final_map = new Node[height, width];
+            for (int line = 0; line < height; ++line)
+                for (int x = 0; x < width; ++x)
+                    final_map[line, x] = map[line + 1, x + 1];
+            return final_map;
+        }
+        private static System.Random getNodeTypePRNG(byte[] global_seed, uint biome_id, uint biome_stage, uint lives_count, byte[] ship_parts_data)
+        {
+            HKDF hkdf = new();
+            hkdf.extract(null, global_seed);
+            int seed = BitConverter.ToInt32(
+                hkdf.expand(ArrayUtil.join(
+                    BitConverter.GetBytes(biome_id),
+                    BitConverter.GetBytes(biome_stage),
+                    BitConverter.GetBytes(lives_count),
+                    ship_parts_data
+                ),
+                sizeof(int)));
+            return new(seed);
+        }
+
+
+        private static Node[,] generateBiomeMap(uint width, uint height, byte[] global_seed, BiomeInfo biome)
+        {
+            var map = new Node[height, width];
+
+            var prng = getBiomePRNG(global_seed, biome.id);
+            var line_gen = new Node[width + 2];
+            void generateLine() {
+                Array.Fill(line_gen, Node.DISABLED);
+                for (int x = 1; x < width + 1; ++x)
+                    line_gen[x] = prng.NextDouble() < biome.missing_node_rate ?
+                        Node.DISABLED : Node.ALL_REGULAR;
+
+                for (int x = (int)width / 2 + 1; x < width + 1; ++x)
+                    if ((line_gen[x - 1] | line_gen[x] | line_gen[x + 1]) == Node.DISABLED)
+                        line_gen[x] = Node.ALL_REGULAR;
+                for (int x = (int)width / 2 + 1; --x != 0;)
+                    if ((line_gen[x - 1] | line_gen[x] | line_gen[x + 1]) == Node.DISABLED)
+                        line_gen[x] = Node.ALL_REGULAR;
+            }
+
+            for (int line = 0; line < height; ++line) {
+                generateLine();
+                for (int x = 0; x < width; ++x)
+                    map[line, x] = line_gen[x + 1];
+            }
+
+            return map;
+        }
+        private static System.Random getBiomePRNG(byte[] global_seed, uint biome_id)
+        {
+            HKDF hkdf = new();
+            hkdf.extract(null, global_seed);
+            int seed = BitConverter.ToInt32(
+                hkdf.expand(BitConverter.GetBytes(biome_id), sizeof(int)));
+            return new(seed);
+        }
+
+        public Node[,] map { get; private set; }
+    }
+}
