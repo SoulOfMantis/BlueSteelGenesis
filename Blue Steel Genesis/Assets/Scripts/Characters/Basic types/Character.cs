@@ -64,7 +64,7 @@ public abstract class Character : MonoBehaviour
     private void CharacterInfoTooltipSetup()
     {
         gameObject.AddComponent<CharacterTooltipTrigger>().character = this;
-        gameObject.AddComponent<BoxCollider>();
+        gameObject.AddComponent<BoxCollider2D>();
     }
     public virtual async Task startBattle()
     {

@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEditor;
 
 public class CharacterInfoTooltip : MonoBehaviour
 {
@@ -26,13 +27,33 @@ public class CharacterInfoTooltip : MonoBehaviour
         health.text = $"{c.currentHealth}/{c.maxHealth}";
         energy.text = $"{c.currentEnergy}/{c.maxEnergy}";
     }
-    // Update is called once per frame
-    void Update()
+
+    void OnEnable()
     {
         Vector2 position = Input.mousePosition;
-        var pivX = position.x / Screen.width;
-        var pivY = position.y / Screen.height;
-        rectTransform.pivot = new(pivX, pivY);
         transform.position = position;
+        if (transform.position.x >= Screen.width / 2) //x в правой половине экрана
+            SetPivotRight();
+        else SetPivotLeft();
+        if (transform.position.y >= Screen.height / 2) //y в верхней половине экрана
+            SetPivotUp();
+        else SetPivotDown();
     }
+    void SetPivotLeft()
+    {
+        rectTransform.pivot = new(0, rectTransform.pivot.y);
+    }
+    void SetPivotRight()
+    {
+        rectTransform.pivot = new(1, rectTransform.pivot.y);
+    }
+    void SetPivotUp()
+    {
+        rectTransform.pivot = new(rectTransform.pivot.x, 1);
+    }
+    void SetPivotDown()
+    {
+        rectTransform.pivot = new(rectTransform.pivot.x, 0);
+    }
+
 }

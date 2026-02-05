@@ -10,19 +10,17 @@ public class TooltipSystem : MonoBehaviour
         current = this;
     }
 
-    public static void Show(Character c)
+    public static void Load(Character c)
+    {
+        current.tooltip.updateText(c);
+    }
+    public static void Show()
     {
         current.tooltip.gameObject.SetActive(true);
-        current.tooltip.updateText(c);
     }
     public static void Hide()
     {
         current.tooltip.gameObject.SetActive(false);
-    }
-    public static void Toggle()
-    {
-        var g = current.tooltip.gameObject;
-        g.SetActive(!g.activeSelf);
     }
     void Start()
     {

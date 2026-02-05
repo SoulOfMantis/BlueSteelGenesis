@@ -13,6 +13,15 @@ public class SceneTracker : MonoBehaviour
     private float CameraDistance = 10;
     public List<HighlightableTile> tiles;
 
+    public void HighlightCharacterInInitiative(Character c, Color color)
+    {
+        init.HighlightCharacterInInitiative(c, color);
+    }
+    public void HighlightCharacterInInitiative(Character c) => HighlightCharacterInInitiative(c, Color.yellow);
+    public void UnhighlightCharacterInInitiative(Character c)
+    {
+        init.UnhighlightCharacterInInitiative(c);
+    }
     public Character FindCharacterAtPosition(Vector3Int pos)
     {
         return init.characters.Find(c => c.Position == pos);
@@ -87,29 +96,27 @@ public class SceneTracker : MonoBehaviour
     public void HighlightCells(List<Vector3Int> cells)
     {
         foreach (var cell in cells)
-        {
-            var m = tiles.FindIndex(t => tl.GetTile(cell) == t.BaseTile);
-            if (m >= 0)
-            {
-                tl.SetTile(cell, tiles[m].HighlightedTile);
-            }
-        }
+            HighlightCell(cell);
+    }
+    public void HighlightCell(Vector3Int cell)
+    {
+        var m = tiles.FindIndex(t => tl.GetTile(cell) == t.BaseTile);
+        if (m >= 0)
+            tl.SetTile(cell, tiles[m].HighlightedTile);
     }
 
     // Clears the highlighted cells
     public void ClearHighlights(List<Vector3Int> cells)
     {
         foreach (var cell in cells)
-        {
-            var n = tiles.FindIndex(t => tl.GetTile(cell) == t.HighlightedTile);
-            if (n >= 0)
-            {
-                tl.SetTile(cell, tiles[n].BaseTile);
-            }
-        }
-
+            UnhighlightCell(cell);
     }
-
+    public void UnhighlightCell(Vector3Int cell)
+    {
+        var n = tiles.FindIndex(t => tl.GetTile(cell) == t.HighlightedTile);
+        if (n >= 0)
+            tl.SetTile(cell, tiles[n].BaseTile);
+    }
     public void NextTurn()
     {
         init.StartNextTurn();
