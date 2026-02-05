@@ -18,13 +18,13 @@ public class BasicAttack : ActiveModule
 
     public override async Task Effect(Character user, Vector3Int pos)
     {
-        await user.strike(pos, hitDamage); //пока 1 урон
+        await user.strike(pos, hitDamage);
         Debug.Log("BAM executed");
     }
 
     protected override bool checkFinalPosition(Vector3Int pos)
     {
-        return base.checkFinalPosition(pos) && Character.tracker.IsOccupiedByCharacter(pos);
+        return Character.tracker.IsOccupiedByCharacter(pos);
     }
     public override bool checkPosition(Character user, Vector3Int pos)
     {
