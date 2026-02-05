@@ -28,7 +28,7 @@ using UnityEngine.UI;
             button.interactable = false;
             enabled = player.isActive(connectedModuleIndex);
             PlayerCharacter.activeModuleButtons.Add(this);
-            button.GetComponentInChildren<TMP_Text>().text = player.getmoduleName(connectedModuleIndex);
+            button.GetComponentInChildren<TMP_Text>().text = player.getModuleName(connectedModuleIndex);
 
             gridClickAction = new InputAction(binding: "<Mouse>/leftButton");
             gridClickAction.started += handleGridClick;

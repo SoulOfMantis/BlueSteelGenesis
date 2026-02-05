@@ -14,6 +14,9 @@ public class BasicShield : ActiveModule
         this.shieldGiven = shield;
         energyCost = 1;
         range = 0;
+        Name = "BasicShield";
+        Description = "The most basic defense there is.";
+
     }
 
     public override async Task Effect(Character user, Vector3Int pos)

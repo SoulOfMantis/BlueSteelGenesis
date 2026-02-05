@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 public class InitiativeTracker : MonoBehaviour
 {
+    private TMP_Text initiativeOrder;
     public List<Character> characters = new();
 
     int currentCharacterIndex = -1;
@@ -40,12 +43,24 @@ public class InitiativeTracker : MonoBehaviour
         else if (!CheckDefeat())
         {
             currentCharacterIndex = (currentCharacterIndex + 1) % characters.Count;
+            updateInitiativeOrder();
 
             Debug.Log($"Сейчас ход {characters[currentCharacterIndex].GetType().Name}");
             StartCoroutine(TaskCoro.Make(characters[currentCharacterIndex].startTurn()));
         }
     }
-
+    private void updateInitiativeOrder()
+    {
+        initiativeOrder.text = "";
+        for (int i = 0; i < characters.Count; i++)
+        {
+            string line = (characters[i].Name + " " + characters[i].Initiative);
+            if (i == currentCharacterIndex)
+                line = "<color=yellow>" + line + "<color=white>";
+            line += "\n";
+            initiativeOrder.text += line;
+        }
+    }
     public void StartBattle()
     {
         characters.Sort((c1, c2) => (c2.Initiative.CompareTo(c1.Initiative)));
@@ -55,6 +70,7 @@ public class InitiativeTracker : MonoBehaviour
 
     void Start()
     {
+        initiativeOrder = GetComponentInChildren<TMP_Text>();
         StartBattle();
     }
 

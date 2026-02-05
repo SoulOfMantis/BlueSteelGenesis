@@ -12,7 +12,6 @@ public class SceneTracker : MonoBehaviour
     public int max_x { get; private set; } = 17;
     private float CameraDistance = 10;
     public List<HighlightableTile> tiles;
-    private List<Vector3Int> map = new List<Vector3Int>();
 
     public Character FindCharacterAtPosition(Vector3Int pos)
     {

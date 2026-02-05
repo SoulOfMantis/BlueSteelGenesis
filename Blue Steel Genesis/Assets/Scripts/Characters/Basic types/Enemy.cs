@@ -3,7 +3,11 @@ using UnityEngine;
 
 public class Enemy : Character
 {
-    public Enemy(int maxHealth, int maxEnergy, int initiative) : base(maxHealth, maxEnergy, initiative) { }
+    public Enemy(int maxHealth, int maxEnergy, int initiative) : base(maxHealth, maxEnergy, initiative) 
+    {
+        Name = "Default enemy name";
+        Description = "Default enemy description. If you see this, something went wrong.";
+    }
 
     protected override Task die()
     {

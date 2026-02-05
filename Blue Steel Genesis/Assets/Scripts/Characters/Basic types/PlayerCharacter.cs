@@ -14,9 +14,11 @@ public class PlayerCharacter : Character
     PlayerCharacter() : base(10, 3, 10)
     {
         //modules hardcoded for now
-        addModule(new PoisonStinger());
+        addModule(new MechanicStinger());
         addModule(new BasicMovement());
-        modules_.ForEach(m => m.changeName(m.GetType().Name));
+        //modules_.ForEach(m => m.changeName(m.GetType().Name));
+        Name = "You";
+        Description = "It's you! Robot, sent by humans to find and retrieve materials to repair their spaceship.";
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -51,16 +53,6 @@ public class PlayerCharacter : Character
     void updateButtons()
     {
         activeModuleButtons.ForEach(mb => mb.buttonInteractableManaging());
-    }
-    public string getmoduleName(int index)
-    {
-        if (!doesModuleExist(index)) return null;
-        return modules_[index].Name;
-    }
-    public string getmoduleDescription(int index)
-    {
-        if (!doesModuleExist(index)) return null;
-        return modules_[index].Description;
     }
     protected override async Task useActiveModule_internal(ActiveModule m, Vector3Int pos)
     {

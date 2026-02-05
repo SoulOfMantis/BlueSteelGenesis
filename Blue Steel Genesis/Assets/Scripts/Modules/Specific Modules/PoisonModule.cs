@@ -13,6 +13,8 @@ public class PoisonModule : StatusModule
         triggerType = TriggerType.OnTurnStart;
         poisonDamage = damage;
         turnsLeft = duration;
+        Name = "Poison";
+        Description = "One of the most known ways to kill something living.";
     }
 
     public override async Task Effect(Character user, Vector3Int pos)

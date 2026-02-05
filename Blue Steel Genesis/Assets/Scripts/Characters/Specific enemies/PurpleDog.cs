@@ -6,18 +6,20 @@ using UnityEngine;
 
 public class PurpleDog : Enemy
 {
-    public TMP_Text healthDisplay;
+    //public TMP_Text healthDisplay;
 
     // Purple Dog enemy constructor
     public PurpleDog() : base(5, 3, 60)
     {
+        Name = "Purple Dog";
+        Description = "The first enemy. Will move closer to you and bite, if it has an opportunity!";
         addModule(new BasicAttack());
         addModule(new BasicMovement());
     }
 
     void updateHealth()
     {
-        healthDisplay.text = $"{currentHealth}/{maxHealth}";
+        //healthDisplay.text = $"{currentHealth}/{maxHealth}";
     }
 
     void Start()
@@ -87,7 +89,7 @@ public class PurpleDog : Enemy
 
         // Get modules
 
-        while (modules_.Any(m => hasEnoughEnergy((ActiveModule)m)))
+        while (Modules.Any(m => hasEnoughEnergy((ActiveModule)m)))
         {
             //  Try attacking player
             if (CanAttack(player.Position) && await useActiveModule(0, player.Position))

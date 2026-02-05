@@ -11,6 +11,8 @@ public class BasicMovement : ActiveModule
     {
         range = 3;
         energyCost = 1;
+        Name = "BasicMovement";
+        Description = "The most basic movement there is.";
     }
 
     public override async Task Effect(Character user, Vector3Int pos)

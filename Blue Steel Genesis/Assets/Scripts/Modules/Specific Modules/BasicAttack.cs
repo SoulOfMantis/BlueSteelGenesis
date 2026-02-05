@@ -14,6 +14,8 @@ public class BasicAttack : ActiveModule
         this.hitDamage = hitDamage;
         energyCost = 1;
         range = 1;
+        Name = "BasicAttack";
+        Description = "The most basic attack there is.";
     }
 
     public override async Task Effect(Character user, Vector3Int pos)

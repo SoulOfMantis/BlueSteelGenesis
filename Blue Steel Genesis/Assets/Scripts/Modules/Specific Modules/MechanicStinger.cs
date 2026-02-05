@@ -4,15 +4,17 @@ using UnityEngine;
 /// <summary>
 /// Активный модуль ядовитого жала - наносит урон и накладывает отравление
 /// </summary>
-public class PoisonStinger : BasicAttack
+public class MechanicStinger : BasicAttack
 {
     private int poisonDamage;
     private int duration;
 
-    public PoisonStinger(int damage = 1, int duration = 3, int hitDamage = 1) : base(hitDamage)
+    public MechanicStinger(int damage = 1, int duration = 3, int hitDamage = 1) : base(hitDamage)
     {
         poisonDamage = damage;
         this.duration = duration;
+        Name = "MechanicStinger";
+        Description = "A mechanic weapon modeled after scorpion's stinger. Imbues target with deadly poison.";
     }
 
     public override async Task Effect(Character user, Vector3Int pos)
