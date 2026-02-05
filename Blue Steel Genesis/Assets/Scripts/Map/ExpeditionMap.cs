@@ -28,7 +28,7 @@ namespace Map
             };
 
             var biome_map = generateBiomeMap(width, height, biome, map.biome_seed);
-            var type_map = generateNodeTypeMap(width, height, map.local_seed);
+            var type_map = generateNodeTypeMap(width, height, biome_stage % 2 == 1, map.local_seed);
 
             for (int line = 0; line < height; ++line)
                 for (int x = 0; x < width; ++x)
@@ -37,13 +37,13 @@ namespace Map
         }
 
 
-        private static Node[,] generateNodeTypeMap(uint width, uint height, int local_seed)
+        private static Node[,] generateNodeTypeMap(uint width, uint height, bool upside_down, int local_seed)
         {
             var map = new Node[height + 2, width + 2];
             for (int x = 1; x <= width; ++x) {
-                map[1, x] = Node.REGULAR_ENEMY;
+                map[1, x] = upside_down ? Node.REST : Node.REGULAR_ENEMY;
                 map[1 + height/2, x] = Node.TREASURE;
-                map[height, x] = Node.REST;
+                map[height, x] = upside_down ? Node.REGULAR_ENEMY : Node.REST;
             }
 
             

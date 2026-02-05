@@ -489,7 +489,6 @@ MonoBehaviour:
   biome_stage: 1
   lives_left: 2
   parts_info: 1d2c3b4a59
-  upside_down: 0
 --- !u!1 &1157094768
 GameObject:
   m_ObjectHideFlags: 0
