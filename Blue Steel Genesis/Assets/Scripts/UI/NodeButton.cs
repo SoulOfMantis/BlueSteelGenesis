@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class NodeButton : MonoBehaviour
 {
-    public UnityEvent<Vector2Int, Map.Node> clicked;
+    public UnityEvent<Vector2Int, Map.Node> clicked = new();
 
     public void setInfo(Vector2Int pos, Map.Node type) {
         position_ = pos;
@@ -14,6 +14,8 @@ public class NodeButton : MonoBehaviour
 
     private void updateVisuals() {
         Color col = Color.white;
+        Vector2 scale = new(1, 1);
+
         switch (type_) {
             case Map.Node.REGULAR_ENEMY:
                 col = Color.gray;
@@ -35,31 +37,58 @@ public class NodeButton : MonoBehaviour
                 break;
             case Map.Node.START:
                 col = Color.blue;
+                scale *= 2f;
                 break;
             case Map.Node.BOSS:
                 col = Color.red;
+                scale *= 2f;
+                break;
+        }
+
+        switch (selection_status_) {
+            case SelectionStatus.Selected:
+                scale *= 1.1f;
+                break;
+            case SelectionStatus.Selectable:
+                col = Color.green;
                 break;
         }
 
         setButton();
         button.GetComponent<Image>().color = col;
+        button.GetComponent<RectTransform>().localScale = scale;
     }
 
-    [ExecuteAlways]
     public void Start() {
         setButton();
-        if (Application.isPlaying)
-            button.onClick.AddListener(
-                () => clicked.Invoke(position_, type_)
-            );
+        button.onClick.AddListener(
+            () => clicked.Invoke(position_, type_)
+        );
     }
 
     private void setButton() =>
-        button = transform.Find("Button").GetComponent<Button>();
+        button ??= transform.Find("Button").GetComponent<Button>();
 
     public static Vector2 size => new(30, 30);
 
-    public Button button { get; private set; }
-    private Vector2Int position_;
-    private Map.Node type_;
+    public Button button { get; private set; } = null;
+    [SerializeField] private Vector2Int position_;
+    [SerializeField] private Map.Node type_;
+
+    public SelectionStatus selectionStatus {
+        get => selection_status_;
+        set {
+            selection_status_ = value;
+            button.interactable =
+                selection_status_ == SelectionStatus.Selectable;
+            updateVisuals();
+        }
+    }
+    private SelectionStatus selection_status_;
+
+    public enum SelectionStatus {
+        Normal,
+        Selectable,
+        Selected
+    }
 }

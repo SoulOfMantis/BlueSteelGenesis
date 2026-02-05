@@ -483,7 +483,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: BlueSteelGenesis::Debug_ExpeditionMapView
   width: 4
   height: 7
-  global_seed: f1f2f3f4
+  global_seed: f1f2f3f5
   biome_id: 1
   missing_node_rate: 0.5
   biome_stage: 1

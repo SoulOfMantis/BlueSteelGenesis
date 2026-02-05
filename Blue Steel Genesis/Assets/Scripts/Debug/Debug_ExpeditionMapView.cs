@@ -24,7 +24,7 @@ public class Debug_ExpeditionMapView : MonoBehaviour
             new() { id = biome_id, missing_node_rate = missing_node_rate },
             biome_stage, lives_left, parts_info);
 
-        view.make(map.map, biome_stage % 2 == 1);
+        view.make(map);
 
 
 
@@ -37,6 +37,10 @@ public class Debug_ExpeditionMapView : MonoBehaviour
         getView().clear();
         transform.parent.Find("BiomeSeed").GetComponent<TMPro.TMP_Text>().text = string.Empty;
         transform.parent.Find("LocalSeed").GetComponent<TMPro.TMP_Text>().text = string.Empty;
+    }
+
+    private void Start() {
+        build();
     }
 
     ExpeditionMapView getView() =>

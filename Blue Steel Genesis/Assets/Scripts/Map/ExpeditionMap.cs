@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 using HKDF = HKDF<System.Security.Cryptography.HMACSHA1>;
@@ -13,10 +14,29 @@ namespace Map
 
     public class ExpeditionMap
     {
+        public IEnumerable<Vector2Int> listTargets(Vector2Int from) {
+            int target_y = from.y + (upside_down ? -1 : 1);
+            if (target_y < -1 || target_y > map.GetLength(0))
+                yield break;
+            if (target_y == -1 || target_y == map.GetLength(0)) {
+                yield return new(-1, target_y);
+                yield break;
+            }
+
+            int min_x = Math.Max(from.x - 1, 0);
+            int max_x = from.x == -1 ?
+                map.GetLength(1) :
+                Math.Min(map.GetLength(1), from.x + 2);
+            for (int x = min_x; x < max_x; ++x)
+                if (map[target_y, x] != Node.DISABLED)
+                    yield return new(x, target_y);
+        }
+
         public Node[,] map { get; private set; }
         public int biome_seed { get; private set; }
         public int local_seed { get; private set; }
-        
+        public bool upside_down { get; private set; }
+
 
 
         public static ExpeditionMap generate(uint width, uint height, byte[] global_seed, BiomeInfo biome, uint biome_stage, uint lives_count, byte[] ship_parts_data)
@@ -24,11 +44,12 @@ namespace Map
             ExpeditionMap map = new() {
                 map = new Node[height, width],
                 biome_seed = generateBiomeSeed(global_seed, biome.id),
-                local_seed = generateLocalSeed(global_seed, biome.id, biome_stage, lives_count, ship_parts_data)
+                local_seed = generateLocalSeed(global_seed, biome.id, biome_stage, lives_count, ship_parts_data),
+                upside_down = biome_stage % 2 == 1
             };
 
             var biome_map = generateBiomeMap(width, height, biome, map.biome_seed);
-            var type_map = generateNodeTypeMap(width, height, biome_stage % 2 == 1, map.local_seed);
+            var type_map = generateNodeTypeMap(width, height, map.upside_down, map.local_seed);
 
             for (int line = 0; line < height; ++line)
                 for (int x = 0; x < width; ++x)

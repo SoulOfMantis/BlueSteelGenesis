@@ -12,17 +12,17 @@ public class ExpeditionMapView : MonoBehaviour
                 Destroy(panel.transform.GetChild(i).gameObject);
     }
 
-    public void make(Map.Node[,] map, bool upside_down)
+    public void make(Map.ExpeditionMap map)
     {
         if (map == null) return;
-
+        
         setPanel();
+        map_ = map;
 
-        float node_gap;
         var effective_rect = calculateEffectiveRect(
-            new(map.GetLength(1), map.GetLength(0)),
+            new(map_.map.GetLength(1), map_.map.GetLength(0)),
             NodeButton.size,
-            out node_gap
+            out float node_gap
         );
 
         void addButton(Vector2Int position, Map.Node type) {
@@ -39,17 +39,71 @@ public class ExpeditionMapView : MonoBehaviour
 
             var button = button_obj.GetComponent<NodeButton>();
             button.setInfo(position, type);
+            getButtonRef(position) = button;
+        }
+        buttons_ = new NodeButton[map_.map.GetLength(0), map_.map.GetLength(1)];
+        for (int line = 0; line < map_.map.GetLength(0); ++line)
+            for (int x = 0; x < map_.map.GetLength(1); ++x)
+                if (map_.map[line, x] != Map.Node.DISABLED)
+                    addButton(new Vector2Int(x, line), map_.map[line, x]);
+        addButton(new Vector2Int(-1, -1), map.upside_down ? Map.Node.BOSS : Map.Node.START);
+        addButton(new Vector2Int(-1, map_.map.GetLength(0)), map.upside_down ? Map.Node.START : Map.Node.BOSS);
+
+        connectButtons();
+    }
+
+    private void Start() {
+        setPanel();
+    }
+
+    private void connectButtons() {
+        foreach (Transform button_transform in panel.transform) {
+            var button = button_transform.gameObject.GetComponent<NodeButton>();
+            
             button.clicked.AddListener((pos, type) => {
                 lastSelection = new(pos, type);
-                //TODO: highlight selection
+                
+                // For debug purposes only
+                currentNode = pos;
+                //
             });
         }
-        for (int line = 0; line < map.GetLength(0); ++line)
-            for (int x = 0; x < map.GetLength(1); ++x)
-                if (map[line, x] != Map.Node.DISABLED)
-                    addButton(new Vector2Int(x, line), map[line, x]);
-        addButton(new Vector2Int(-1, -1), upside_down ? Map.Node.BOSS : Map.Node.START);
-        addButton(new Vector2Int(-1, map.GetLength(0)), upside_down ? Map.Node.START : Map.Node.BOSS);
+    }
+
+    private void updateSelectionStatus() {
+        resetSelectionStatus();
+        getButton(currentNode).selectionStatus = NodeButton.SelectionStatus.Selected;
+        foreach (Vector2Int target in map_.listTargets(currentNode))
+            getButton(target).selectionStatus = NodeButton.SelectionStatus.Selectable;
+    }
+    private void resetSelectionStatus() {
+        for (int line = 0; line < buttons_.GetLength(0); ++line)
+            for (int x = 0; x < buttons_.GetLength(1); ++x)
+                if (buttons_[line, x] != null)
+                    buttons_[line, x].selectionStatus = NodeButton.SelectionStatus.Normal;
+        upper_end_button_.selectionStatus = NodeButton.SelectionStatus.Normal;
+        lower_end_button_.selectionStatus = NodeButton.SelectionStatus.Normal;
+    }
+
+    private NodeButton getButton(Vector2Int pos) {
+        if (pos.x == -1) {
+            if (pos.y == -1)
+                return upper_end_button_;
+            if (pos.y == map_.map.GetLength(0))
+                return lower_end_button_;
+            throw new ArgumentOutOfRangeException();
+        }
+        return buttons_[pos.y, pos.x];
+    }
+    private ref NodeButton getButtonRef(Vector2Int pos) {
+        if (pos.x == -1) {
+            if (pos.y == -1)
+                return ref upper_end_button_;
+            if (pos.y == map_.map.GetLength(0))
+                return ref lower_end_button_;
+            throw new ArgumentOutOfRangeException();
+        }
+        return ref buttons_[pos.y, pos.x];
     }
 
     private Rect calculateEffectiveRect(Vector2Int graph_dimensions, Vector2 node_button_size, out float node_gap) {
@@ -84,5 +138,18 @@ public class ExpeditionMapView : MonoBehaviour
     private GameObject panel;
     [Range(0f, .4f)] public float margin = 0.05f;
 
+    private Map.ExpeditionMap map_;
+    private NodeButton[,] buttons_;
+    private NodeButton upper_end_button_, lower_end_button_;
+
     public (Vector2Int pos, Map.Node type)? lastSelection { get; private set; } = null;
+    public Vector2Int currentNode {
+        get => current_node_;
+        set {
+            current_node_ = value;
+            lastSelection = null;
+            updateSelectionStatus();
+        }
+    }
+    private Vector2Int current_node_;
 }
