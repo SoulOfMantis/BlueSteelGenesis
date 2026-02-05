@@ -11,21 +11,33 @@ namespace Map
         public float missing_node_rate = .3f;
     }
 
-    public class ExpeditionMap : MonoBehaviour
+    public class ExpeditionMap
     {
-        public void generate(uint width, uint height, byte[] global_seed, BiomeInfo biome, uint biome_stage, uint lives_count, byte[] ship_parts_data)
-        {
-            var biome_map = generateBiomeMap(width, height, global_seed, biome);
-            var type_map = generateNodeTypeMap(width, height, global_seed, biome, biome_stage, lives_count, ship_parts_data);
+        public Node[,] map { get; private set; }
+        public int biome_seed { get; private set; }
+        public int local_seed { get; private set; }
+        
 
-            map = new Node[height, width];
+
+        public static ExpeditionMap generate(uint width, uint height, byte[] global_seed, BiomeInfo biome, uint biome_stage, uint lives_count, byte[] ship_parts_data)
+        {
+            ExpeditionMap map = new() {
+                map = new Node[height, width],
+                biome_seed = generateBiomeSeed(global_seed, biome.id),
+                local_seed = generateLocalSeed(global_seed, biome.id, biome_stage, lives_count, ship_parts_data)
+            };
+
+            var biome_map = generateBiomeMap(width, height, biome, map.biome_seed);
+            var type_map = generateNodeTypeMap(width, height, map.local_seed);
+
             for (int line = 0; line < height; ++line)
                 for (int x = 0; x < width; ++x)
-                    map[line, x] = biome_map[line, x] & type_map[line, x];
+                    map.map[line, x] = biome_map[line, x] & type_map[line, x];
+            return map;
         }
 
 
-        private static Node[,] generateNodeTypeMap(uint width, uint height, byte[] global_seed, BiomeInfo biome, uint biome_stage, uint lives_count, byte[] ship_parts_data)
+        private static Node[,] generateNodeTypeMap(uint width, uint height, int local_seed)
         {
             var map = new Node[height + 2, width + 2];
             for (int x = 1; x <= width; ++x) {
@@ -35,7 +47,7 @@ namespace Map
             }
 
             
-            var prng = getNodeTypePRNG(global_seed, biome.id, biome_stage, lives_count, ship_parts_data);
+            System.Random prng = new(local_seed);
             Node getRandomNode(byte allowed_mask) {
                 int popcnt(byte b) {
                     int cnt = 0;
@@ -84,7 +96,7 @@ namespace Map
                     final_map[line, x] = map[line + 1, x + 1];
             return final_map;
         }
-        private static System.Random getNodeTypePRNG(byte[] global_seed, uint biome_id, uint biome_stage, uint lives_count, byte[] ship_parts_data)
+        private static int generateLocalSeed(byte[] global_seed, uint biome_id, uint biome_stage, uint lives_count, byte[] ship_parts_data)
         {
             HKDF hkdf = new();
             hkdf.extract(null, global_seed);
@@ -96,15 +108,15 @@ namespace Map
                     ship_parts_data
                 ),
                 sizeof(int)));
-            return new(seed);
+            return seed;
         }
 
 
-        private static Node[,] generateBiomeMap(uint width, uint height, byte[] global_seed, BiomeInfo biome)
+        private static Node[,] generateBiomeMap(uint width, uint height, BiomeInfo biome, int biome_seed)
         {
             var map = new Node[height, width];
 
-            var prng = getBiomePRNG(global_seed, biome.id);
+            System.Random prng = new(biome_seed);
             var line_gen = new Node[width + 2];
             void generateLine() {
                 Array.Fill(line_gen, Node.DISABLED);
@@ -128,15 +140,13 @@ namespace Map
 
             return map;
         }
-        private static System.Random getBiomePRNG(byte[] global_seed, uint biome_id)
+        private static int generateBiomeSeed(byte[] global_seed, uint biome_id)
         {
             HKDF hkdf = new();
             hkdf.extract(null, global_seed);
             int seed = BitConverter.ToInt32(
                 hkdf.expand(BitConverter.GetBytes(biome_id), sizeof(int)));
-            return new(seed);
+            return seed;
         }
-
-        public Node[,] map { get; private set; }
     }
 }

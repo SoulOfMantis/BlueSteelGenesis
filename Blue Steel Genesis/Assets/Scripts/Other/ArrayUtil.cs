@@ -18,4 +18,8 @@ public class ArrayUtil
             res[i] = Convert.ToByte(str.Substring(i * 2, 2), 16);
         return res;
     }
+
+    public static string toHexString(byte[] data) {
+        return BitConverter.ToString(data).Replace("-", "");
+    }
 }

@@ -1,3 +1,4 @@
+using Codice.Client.BaseCommands;
 using Map;
 using System;
 using UnityEngine;
@@ -18,20 +19,26 @@ public class Debug_ExpeditionMapView : MonoBehaviour
     public void build() {
         clear();
 
-        var map_builder = GetComponent<ExpeditionMap>();
         var view = getView();
-        map_builder.generate(
+        var map = ExpeditionMap.generate(
             width, height,
             ArrayUtil.fromHexString(global_seed),
             new() { id = biome_id, missing_node_rate = missing_node_rate },
             biome_stage, lives_left, parts_info);
 
-        view.make(map_builder.map, upside_down);
+        view.make(map.map, upside_down);
+
+
+
+        transform.parent.Find("BiomeSeed").GetComponent<TMPro.TMP_Text>().text = "Biome seed: " + ArrayUtil.toHexString(BitConverter.GetBytes(map.biome_seed));
+        transform.parent.Find("LocalSeed").GetComponent<TMPro.TMP_Text>().text = "Local seed: " + ArrayUtil.toHexString(BitConverter.GetBytes(map.local_seed));
     }
 
     [ContextMenu("Debug: clear")]
     public void clear() {
         getView().clear();
+        transform.parent.Find("BiomeSeed").GetComponent<TMPro.TMP_Text>().text = string.Empty;
+        transform.parent.Find("LocalSeed").GetComponent<TMPro.TMP_Text>().text = string.Empty;
     }
 
     ExpeditionMapView getView() =>
