@@ -140,7 +140,7 @@ public class ExpeditionMapView : MonoBehaviour
     }
 
     private void setPanel() =>
-        panel ??= transform.Find("Panel").gameObject;
+        panel = transform.Find("Panel").gameObject;
 
     public GameObject button_prefab;
     private GameObject panel = null;

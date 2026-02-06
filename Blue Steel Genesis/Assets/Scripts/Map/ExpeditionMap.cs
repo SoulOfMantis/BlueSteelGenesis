@@ -82,7 +82,7 @@ namespace Map
                     return cnt;
                 }
 
-                int target_idx = prng.Next(popcnt((byte)allowed_mask) + 1);
+                int target_idx = prng.Next(popcnt((byte)allowed_mask)) + 1;
                 byte node = 1;
                 for (int cur_idx = node & allowed_mask; cur_idx < target_idx;) {
                     node <<= 1;
@@ -105,12 +105,12 @@ namespace Map
                             & (Node.REST | Node.ELITE_ENEMY);
 
                         if (x == 1) {
-                            mask = ~(progress_limit | link_limit) & Node.ALL_REGULAR;
+                            mask = ~(progress_limit | link_limit) & Node.RANDOMLY_GENERATABLE;
                             map[line, x] = getRandomNode((byte)mask);
                             continue;
                         }
                         Node group_limit = map[line, x-2] | map[line, x-1];
-                        mask = ~(progress_limit | link_limit | group_limit) & Node.ALL_REGULAR;
+                        mask = ~(progress_limit | link_limit | group_limit) & Node.RANDOMLY_GENERATABLE;
                         map[line, x] = getRandomNode((byte)mask);
                     }
 
