@@ -34,6 +34,8 @@ namespace Map
 
         public int width => map?.GetLength(1) ?? 0;
         public int height => map?.GetLength(0) ?? 0;
+        public Vector2Int start_node_pos => new(-1, upside_down ? height : -1);
+        public Vector2Int boss_node_pos => new(-1, upside_down ? -1 : height);
 
         public Node[,] map { get; private set; }
         public int biome_seed { get; private set; }

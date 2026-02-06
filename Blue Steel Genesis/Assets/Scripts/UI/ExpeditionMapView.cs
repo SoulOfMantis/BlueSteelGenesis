@@ -21,7 +21,7 @@ public class ExpeditionMapView : MonoBehaviour
         map_ = map;
 
         var effective_rect = calculateEffectiveRect(
-            new(map_.map.GetLength(1), map_.map.GetLength(0)),
+            new(map_.width, map_.height),
             NodeButton.size,
             out float node_gap
         );
@@ -42,23 +42,14 @@ public class ExpeditionMapView : MonoBehaviour
             button.setInfo(position, type);
             getButtonRef(position) = button;
         }
-        buttons_ = new NodeButton[map_.map.GetLength(0), map_.map.GetLength(1)];
-        for (int line = 0; line < map_.map.GetLength(0); ++line)
-            for (int x = 0; x < map_.map.GetLength(1); ++x)
+        buttons_ = new NodeButton[map_.height, map_.width];
+        for (int line = 0; line < map_.height; ++line)
+            for (int x = 0; x < map_.width; ++x)
                 if (map_.map[line, x] != Map.Node.DISABLED)
                     addButton(new Vector2Int(x, line), map_.map[line, x]);
-        addButton(new Vector2Int(-1, -1), map.upside_down ? Map.Node.BOSS : Map.Node.START);
-        addButton(new Vector2Int(-1, map_.map.GetLength(0)), map.upside_down ? Map.Node.START : Map.Node.BOSS);
+        addButton(map.start_node_pos, Map.Node.START);
+        addButton(map.boss_node_pos, Map.Node.BOSS);
 
-        connectButtons();
-    }
-
-    private void Start() {
-        setPanel();
-        confirmSelectionButton = confirm_selection_button_;
-    }
-
-    private void connectButtons() {
         foreach (Transform button_transform in panel.transform) {
             var button = button_transform.gameObject.GetComponent<NodeButton>();
             
@@ -66,6 +57,11 @@ public class ExpeditionMapView : MonoBehaviour
                 lastSelection = new(pos, type);
             });
         }
+    }
+
+    private void Start() {
+        setPanel();
+        confirmSelectionButton = confirm_selection_button_;
     }
 
     private void updateSelectionStatus() {
@@ -97,7 +93,7 @@ public class ExpeditionMapView : MonoBehaviour
         if (pos.x == -1) {
             if (pos.y == -1)
                 return upper_end_button_;
-            if (pos.y == map_.map.GetLength(0))
+            if (pos.y == map_.height)
                 return lower_end_button_;
             throw new ArgumentOutOfRangeException();
         }
@@ -107,7 +103,7 @@ public class ExpeditionMapView : MonoBehaviour
         if (pos.x == -1) {
             if (pos.y == -1)
                 return ref upper_end_button_;
-            if (pos.y == map_.map.GetLength(0))
+            if (pos.y == map_.height)
                 return ref lower_end_button_;
             throw new ArgumentOutOfRangeException();
         }
