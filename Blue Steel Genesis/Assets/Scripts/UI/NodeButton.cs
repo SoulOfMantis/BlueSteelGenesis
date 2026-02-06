@@ -46,8 +46,12 @@ public class NodeButton : MonoBehaviour
         }
 
         switch (selection_status_) {
+            case SelectionStatus.Current:
+                scale *= 1.2f;
+                break;
             case SelectionStatus.Selected:
-                scale *= 1.1f;
+                scale *= 1.2f;
+                col = Color.green;
                 break;
             case SelectionStatus.Selectable:
                 col = Color.green;
@@ -88,6 +92,7 @@ public class NodeButton : MonoBehaviour
 
     public enum SelectionStatus {
         Normal,
+        Current,
         Selectable,
         Selected
     }

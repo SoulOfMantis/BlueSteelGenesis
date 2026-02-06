@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ExpeditionMapView : MonoBehaviour
 {
@@ -54,6 +55,7 @@ public class ExpeditionMapView : MonoBehaviour
 
     private void Start() {
         setPanel();
+        confirmSelectionButton = confirm_selection_button_;
     }
 
     private void connectButtons() {
@@ -62,17 +64,13 @@ public class ExpeditionMapView : MonoBehaviour
             
             button.clicked.AddListener((pos, type) => {
                 lastSelection = new(pos, type);
-                
-                // For debug purposes only
-                currentNode = pos;
-                //
             });
         }
     }
 
     private void updateSelectionStatus() {
         resetSelectionStatus();
-        getButton(currentNode).selectionStatus = NodeButton.SelectionStatus.Selected;
+        getButton(currentNode).selectionStatus = NodeButton.SelectionStatus.Current;
         foreach (Vector2Int target in map_.listTargets(currentNode))
             getButton(target).selectionStatus = NodeButton.SelectionStatus.Selectable;
     }
@@ -83,6 +81,16 @@ public class ExpeditionMapView : MonoBehaviour
                     buttons_[line, x].selectionStatus = NodeButton.SelectionStatus.Normal;
         upper_end_button_.selectionStatus = NodeButton.SelectionStatus.Normal;
         lower_end_button_.selectionStatus = NodeButton.SelectionStatus.Normal;
+    }
+    public void confirmSelection() {
+        if (last_selection_ == null)
+            return;
+        triggerSubsystem();
+        currentNode = last_selection_.Value.pos;
+    }
+    private void triggerSubsystem() {
+        Debug.Log($"Player selected: {last_selection_?.type} at {last_selection_?.pos}");
+        //TODO: implement
     }
 
     private NodeButton getButton(Vector2Int pos) {
@@ -132,17 +140,44 @@ public class ExpeditionMapView : MonoBehaviour
     }
 
     private void setPanel() =>
-        panel = transform.Find("Panel").gameObject;
+        panel ??= transform.Find("Panel").gameObject;
 
     public GameObject button_prefab;
-    private GameObject panel;
+    private GameObject panel = null;
     [Range(0f, .4f)] public float margin = 0.05f;
 
     private Map.ExpeditionMap map_;
     private NodeButton[,] buttons_;
     private NodeButton upper_end_button_, lower_end_button_;
 
-    public (Vector2Int pos, Map.Node type)? lastSelection { get; private set; } = null;
+    public Button confirmSelectionButton {
+        get => confirm_selection_button_;
+        set {
+            if (confirm_selection_button_ != null) {
+                confirm_selection_button_.onClick.RemoveListener(confirmSelection);
+            }
+            confirm_selection_button_ = value;
+            confirm_selection_button_?.onClick.AddListener(confirmSelection);
+        }
+    }
+    [SerializeField]
+    private Button confirm_selection_button_;
+
+    public (Vector2Int pos, Map.Node type)? lastSelection {
+        get => last_selection_;
+        private set {
+            if (last_selection_ != null)
+                getButton(last_selection_.Value.pos).selectionStatus = NodeButton.SelectionStatus.Selectable;
+            if (value != null)
+                getButton(value.Value.pos).selectionStatus = NodeButton.SelectionStatus.Selected;
+
+            last_selection_ = value;
+            if (confirm_selection_button_ != null)
+                confirm_selection_button_.interactable = last_selection_ != null;
+        }
+    }
+    private (Vector2Int pos, Map.Node type)? last_selection_ = null;
+
     public Vector2Int currentNode {
         get => current_node_;
         set {

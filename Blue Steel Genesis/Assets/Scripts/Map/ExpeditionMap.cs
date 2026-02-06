@@ -32,6 +32,9 @@ namespace Map
                     yield return new(x, target_y);
         }
 
+        public int width => map?.GetLength(1) ?? 0;
+        public int height => map?.GetLength(0) ?? 0;
+
         public Node[,] map { get; private set; }
         public int biome_seed { get; private set; }
         public int local_seed { get; private set; }

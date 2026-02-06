@@ -30,6 +30,8 @@ public class Debug_ExpeditionMapView : MonoBehaviour
 
         transform.parent.Find("BiomeSeed").GetComponent<TMPro.TMP_Text>().text = "Biome seed: " + ArrayUtil.toHexString(BitConverter.GetBytes(map.biome_seed));
         transform.parent.Find("LocalSeed").GetComponent<TMPro.TMP_Text>().text = "Local seed: " + ArrayUtil.toHexString(BitConverter.GetBytes(map.local_seed));
+        if (Application.isPlaying)
+            view.currentNode = map.upside_down ? new(-1, map.height) : new(-1, -1);
     }
 
     [ContextMenu("Debug: clear")]
