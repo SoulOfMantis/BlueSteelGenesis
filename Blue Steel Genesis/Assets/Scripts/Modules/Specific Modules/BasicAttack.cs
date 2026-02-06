@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class BasicAttack : ActiveModule
 {
-    private int hitDamage;
+    protected int hitDamage;
 
     public BasicAttack(int hitDamage = 1)
     {
@@ -15,9 +15,12 @@ public class BasicAttack : ActiveModule
         energyCost = 1;
         range = 1;
         Name = "BasicAttack";
-        Description = "The most basic attack there is.";
+        //Icon_name = "...";
     }
-
+    public override string Description()
+    {
+        return $"Basic melee attack: deal {hitDamage} to the adjacent creature.";
+    }
     public override async Task Effect(Character user, Vector3Int pos)
     {
         await user.strike(pos, hitDamage);

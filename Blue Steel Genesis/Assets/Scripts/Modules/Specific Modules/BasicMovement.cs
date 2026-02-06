@@ -12,9 +12,11 @@ public class BasicMovement : ActiveModule
         range = 3;
         energyCost = 1;
         Name = "BasicMovement";
-        Description = "The most basic movement there is.";
     }
-
+    public override string Description()
+    {
+        return $"Basic movement: move to an unoccupied space within {range} cells. Can't jump over creatures or obstacles.";
+    }
     public override async Task Effect(Character user, Vector3Int pos)
     {
         await user.move(pos, getCellsInRange(user.Position));

@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class BasicShield : ActiveModule
 {
-    private int shieldGiven;
+    protected int shieldGiven;
 
     public BasicShield(int shield = 1)
     {
@@ -15,10 +15,11 @@ public class BasicShield : ActiveModule
         energyCost = 1;
         range = 0;
         Name = "BasicShield";
-        Description = "The most basic defense there is.";
-
     }
-
+    public override string Description()
+    {
+        return $"Basic defense: give {shieldGiven} shield to yourself.";
+    }
     public override async Task Effect(Character user, Vector3Int pos)
     {
         await user.giveShield(shieldGiven);

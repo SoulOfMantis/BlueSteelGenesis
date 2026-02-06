@@ -6,17 +6,21 @@ using UnityEngine;
 /// </summary>
 public class MechanicStinger : BasicAttack
 {
-    private int poisonDamage;
-    private int duration;
+    protected int poisonDamage;
+    protected int duration;
 
     public MechanicStinger(int damage = 1, int duration = 3, int hitDamage = 1) : base(hitDamage)
     {
         poisonDamage = damage;
         this.duration = duration;
         Name = "MechanicStinger";
-        Description = "A mechanic weapon modeled after scorpion's stinger. Imbues target with deadly poison.";
     }
-
+    public override string Description()
+    {
+        return $"A mechanic weapon modeled after scorpion's stinger.\n" +
+            $"Deals {hitDamage} damage to adjacent creature and inflicts poison, \n" +
+            $"that deals {poisonDamage} damage at the start of it's turn for {duration} turns.";
+    }
     public override async Task Effect(Character user, Vector3Int pos)
     {
         await base.Effect(user, pos);

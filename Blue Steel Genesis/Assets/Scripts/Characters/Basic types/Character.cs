@@ -218,7 +218,7 @@ public abstract class Character : MonoBehaviour
     public string getModuleDescription(int index)
     {
         if (!doesModuleExist(index)) return null;
-        return getModule(index).Description;
+        return getModule(index).Description();
     }
     public int currentHealth
     {

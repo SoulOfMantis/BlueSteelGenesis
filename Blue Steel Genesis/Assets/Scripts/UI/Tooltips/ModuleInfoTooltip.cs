@@ -1,14 +1,13 @@
 using UnityEngine;
 using TMPro;
 using UnityEditor;
+using UnityEngine.UI;
 
-public class CharacterInfoTooltip : MonoBehaviour
+public class ModuleInfoTooltip : MonoBehaviour
 {
-    public TMP_Text header;
-    public TMP_Text description;
-    public TMP_Text health;
-    public TMP_Text shield;
-    public TMP_Text energy;
+    public TMP_Text Name;
+    public TMP_Text Description;
+    public Image Icon;
 
     private RectTransform rectTransform;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -19,13 +18,12 @@ public class CharacterInfoTooltip : MonoBehaviour
     void Start()
     {
     }
-    public void updateText(Character c)
+    public void updateInfo(GameModule g)
     {
-        header.text = c.Name;
-        description.text = c.Description;
-        shield.text = $"{c.currentShield}";
-        health.text = $"{c.currentHealth}/{c.maxHealth}";
-        energy.text = $"{c.currentEnergy}/{c.maxEnergy}";
+        if (g == null) return;
+        Name.text = g.Name;
+        Description.text = g.Description();
+        //Icon.
     }
 
     void OnEnable()

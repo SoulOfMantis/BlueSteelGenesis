@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class PoisonModule : StatusModule
 {
-    private int poisonDamage;
+    protected int poisonDamage;
 
     public PoisonModule(int damage = 1, int duration = 3)
     {
@@ -14,9 +14,12 @@ public class PoisonModule : StatusModule
         poisonDamage = damage;
         turnsLeft = duration;
         Name = "Poison";
-        Description = "One of the most known ways to kill something living.";
     }
-
+    public override string Description()
+    {
+        return $"One of the most infamous ways to kill.\n" +
+            $"You will take {poisonDamage} damage at the start of your turn for another {turnsLeft} turns.";
+    }
     public override async Task Effect(Character user, Vector3Int pos)
     {
         await user.damage(poisonDamage);
