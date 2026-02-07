@@ -17,8 +17,8 @@ public class MechanicStinger : BasicAttack
     }
     public override string Description()
     {
-        return $"A mechanic weapon modeled after scorpion's stinger.\n" +
-            $"Deals {hitDamage} damage to adjacent creature and inflicts poison, \n" +
+        return $"A mechanic weapon modeled after scorpion's stinger." +
+            $"Deals {hitDamage} damage to adjacent creature and inflicts poison " +
             $"that deals {poisonDamage} damage at the start of it's turn for {duration} turns.";
     }
     public override async Task Effect(Character user, Vector3Int pos)

@@ -13,7 +13,7 @@ public class TooltipSystem : MonoBehaviour
 
     public static void Load(Character c)
     {
-        current.characterTooltip.updateText(c);
+        current.characterTooltip.updateInfo(c);
     }
     public static void Load(GameModule g)
     {

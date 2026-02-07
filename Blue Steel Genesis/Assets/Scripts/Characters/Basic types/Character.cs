@@ -254,7 +254,7 @@ public abstract class Character : MonoBehaviour
 
     public static SceneTracker tracker;
 
-    public IReadOnlyCollection<GameModule> Modules { get => modules_.AsReadOnly(); }
+    public IReadOnlyList<GameModule> Modules { get => modules_.AsReadOnly(); }
     private List<GameModule> modules_ = new();
     private List<StatusModule> status_modules_ = new();
 

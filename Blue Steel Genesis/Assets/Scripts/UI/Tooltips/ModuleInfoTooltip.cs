@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class ModuleInfoTooltip : MonoBehaviour
 {
     public TMP_Text Name;
+    public TMP_Text Type;
     public TMP_Text Description;
-    public Image Icon;
+    //public Image Icon;
 
     private RectTransform rectTransform;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -23,7 +24,10 @@ public class ModuleInfoTooltip : MonoBehaviour
         if (g == null) return;
         Name.text = g.Name;
         Description.text = g.Description();
-        //Icon.
+        if (g is ActiveModule a) Type.text = $"Active: {a.energyCost} energy";
+        else if (g is StatusModule) Type.text = "Status";
+        else if (g is PassiveModule) Type.text = "Passive";
+        //Icon.overrideSprite = Resources.Load<Sprite>($"ModuleIcons/{g.Icon_name}");
     }
 
     void OnEnable()

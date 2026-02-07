@@ -1,6 +1,9 @@
 using UnityEngine;
 using TMPro;
-using UnityEditor;
+using System.Collections.Generic;
+using UnityEngine.UI;
+using System.Linq;
+using Unity.VisualScripting;
 
 public class CharacterInfoTooltip : MonoBehaviour
 {
@@ -9,6 +12,7 @@ public class CharacterInfoTooltip : MonoBehaviour
     public TMP_Text health;
     public TMP_Text shield;
     public TMP_Text energy;
+    public List<ModuleTooltipTrigger> module_icons;
 
     private RectTransform rectTransform;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -19,7 +23,7 @@ public class CharacterInfoTooltip : MonoBehaviour
     void Start()
     {
     }
-    public void updateText(Character c)
+    public void updateInfo(Character c)
     {
         if (c != null)
         {
@@ -28,6 +32,16 @@ public class CharacterInfoTooltip : MonoBehaviour
             shield.text = $"{c.currentShield}"; 
             health.text = $"{c.currentHealth}/{c.maxHealth}";
             energy.text = $"{c.currentEnergy}/{c.maxEnergy}";
+            for (int i = 0; i < module_icons.Count; i++)
+            {
+                Debug.Log($"Updating module trigger {i}");
+                if (i >= c.Modules.Count) module_icons[i].gameObject.SetActive(false);
+                else
+                {
+                    module_icons[i].gameObject.SetActive(true);
+                    module_icons[i].updateModuleTrigger(c.Modules[i]);
+                }
+            }
         }
     }
 

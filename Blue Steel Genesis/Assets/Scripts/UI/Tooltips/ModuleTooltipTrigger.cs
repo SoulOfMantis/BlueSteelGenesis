@@ -1,11 +1,13 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
+[RequireComponent(typeof(Image))]
 public class ModuleTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public GameModule module;
-
+    public Image icon;
     IEnumerator ShowingTooltip()
     {
         TooltipSystem.Load(module);           
@@ -38,10 +40,16 @@ public class ModuleTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointe
         StopCoroutine("ShowingTooltip");
         StartCoroutine("HidingTooltip");
     }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void updateModuleTrigger(GameModule module)
     {
+        this.module = module;
+        updateIcon();
+    }
+    public void updateIcon() =>  icon.overrideSprite = Resources.Load<Sprite>($"ModuleIcons/{module.Icon_name}");
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Awake()
+    {
+        //icon = GetComponent<Image>();
     }
 
     // Update is called once per frame

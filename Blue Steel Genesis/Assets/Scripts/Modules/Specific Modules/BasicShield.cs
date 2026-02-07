@@ -18,7 +18,7 @@ public class BasicShield : ActiveModule
     }
     public override string Description()
     {
-        return $"Basic defense: give {shieldGiven} shield to yourself.";
+        return $"Give {shieldGiven} shield to yourself.";
     }
     public override async Task Effect(Character user, Vector3Int pos)
     {

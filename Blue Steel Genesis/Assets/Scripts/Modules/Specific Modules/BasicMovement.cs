@@ -15,7 +15,7 @@ public class BasicMovement : ActiveModule
     }
     public override string Description()
     {
-        return $"Basic movement: move to an unoccupied space within {range} cells. Can't jump over creatures or obstacles.";
+        return $"Move to an unoccupied space within {range} cells. Can't jump over creatures or obstacles.";
     }
     public override async Task Effect(Character user, Vector3Int pos)
     {

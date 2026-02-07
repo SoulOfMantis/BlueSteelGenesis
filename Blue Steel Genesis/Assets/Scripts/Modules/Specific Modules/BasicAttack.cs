@@ -19,7 +19,7 @@ public class BasicAttack : ActiveModule
     }
     public override string Description()
     {
-        return $"Basic melee attack: deal {hitDamage} to the adjacent creature.";
+        return $"Deal {hitDamage} to the adjacent creature.";
     }
     public override async Task Effect(Character user, Vector3Int pos)
     {

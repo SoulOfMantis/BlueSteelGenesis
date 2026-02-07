@@ -10,7 +10,7 @@ public abstract class GameModule
 
 {
     public string Name { get; protected set; }
-    private string icon_name = "default_default.bmp";
+    private string icon_name = "default_default.png";
     public string Icon_name { get => icon_name; protected set => icon_name = value; }
     public int range = 0;
     public abstract string Description(); 
