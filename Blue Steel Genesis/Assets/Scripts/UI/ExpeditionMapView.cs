@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,11 +7,15 @@ public class ExpeditionMapView : MonoBehaviour
 {
     public void clear() {
         setPanel();
+        Action<GameObject> destroy = Application.isEditor ?
+            o => DestroyImmediate(o) :
+            o => Destroy(o);
+
         for (int i = panel.transform.childCount; i-- != 0;)
-            if (Application.isEditor)
-                DestroyImmediate(panel.transform.GetChild(i).gameObject);
+            if (panel.transform.GetChild(i).GetComponent<MultilineRenderer2D>() is MultilineRenderer2D renderer)
+                renderer.clear();
             else
-                Destroy(panel.transform.GetChild(i).gameObject);
+                destroy(panel.transform.GetChild(i).gameObject);
     }
 
     public void make(Map.ExpeditionMap map)
@@ -50,9 +55,27 @@ public class ExpeditionMapView : MonoBehaviour
         addButton(map.start_node_pos, Map.Node.START);
         addButton(map.boss_node_pos, Map.Node.BOSS);
 
+        var line_renderer = panel.transform.Find("MultilineRenderer").gameObject.GetComponent<MultilineRenderer2D>();
+        void linkButtons(NodeButton b1, NodeButton b2) {
+            var line = new MultilineRenderer2D.Line() {
+                from = b1.GetComponent<Transform>().localPosition,
+                to = b2.GetComponent<Transform>().localPosition,
+                color = Color.darkCyan,
+                width = 6
+            };
+            line_renderer.addLine(line);
+        }
+
+        foreach (var button in  buttons_) if (button)
+            foreach (var target in map.listTargets(button.position))
+                linkButtons(button, getButton(target));
+        foreach (var target in map.listTargets(map_.start_node_pos))
+            linkButtons(getButton(map_.start_node_pos), getButton(target));
+
         foreach (Transform button_transform in panel.transform) {
             var button = button_transform.gameObject.GetComponent<NodeButton>();
-            
+            if (!button) continue;
+
             button.clicked.AddListener((pos, type) => {
                 lastSelection = new(pos, type);
             });

@@ -1056,45 +1056,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4085576681152455012, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
-      propertyPath: panel
-      value: 
-      objectReference: {fileID: 1658939727}
-    - target: {fileID: 4085576681152455012, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
       propertyPath: margin
       value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 4085576681152455012, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
-      propertyPath: test_button
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4085576681152455012, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
       propertyPath: button_prefab
       value: 
       objectReference: {fileID: 4571100596203718107, guid: ffc664131bf43874cb312cf9987ab1b6, type: 3}
     - target: {fileID: 4085576681152455012, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
-      propertyPath: max_rect_width
-      value: 1080
-      objectReference: {fileID: 0}
-    - target: {fileID: 4085576681152455012, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
-      propertyPath: max_rect_height
-      value: 1280
-      objectReference: {fileID: 0}
-    - target: {fileID: 4085576681152455012, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
-      propertyPath: effective_rect.x
-      value: 54
-      objectReference: {fileID: 0}
-    - target: {fileID: 4085576681152455012, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
-      propertyPath: effective_rect.y
-      value: 64
-      objectReference: {fileID: 0}
-    - target: {fileID: 4085576681152455012, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
-      propertyPath: effective_rect.width
-      value: 972
-      objectReference: {fileID: 0}
-    - target: {fileID: 4085576681152455012, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
-      propertyPath: effective_rect.height
-      value: 1152
-      objectReference: {fileID: 0}
+      propertyPath: line_material
+      value: 
+      objectReference: {fileID: 2100000, guid: 22a36787d73b5ee47a7344114e378458, type: 2}
     - target: {fileID: 4085576681152455012, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
       propertyPath: confirm_selection_button_
       value: 
@@ -1104,18 +1076,14 @@ PrefabInstance:
       value: ExpeditionMapView
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4460427556796192617, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
 --- !u!224 &1658939726 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1754261769803301167, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
-  m_PrefabInstance: {fileID: 1658939725}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1658939727 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8411841371880183373, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
   m_PrefabInstance: {fileID: 1658939725}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1810190473

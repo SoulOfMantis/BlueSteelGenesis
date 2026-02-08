@@ -76,6 +76,7 @@ public class NodeButton : MonoBehaviour
     public static Vector2 size => new(30, 30);
 
     public Button button { get; private set; } = null;
+    public Vector2Int position => position_;
     [SerializeField] private Vector2Int position_;
     [SerializeField] private Map.Node type_;
 
