@@ -28,8 +28,8 @@ public class Debug_ExpeditionMapView : MonoBehaviour
 
 
 
-        transform.parent.Find("BiomeSeed").GetComponent<TMPro.TMP_Text>().text = "Biome seed: " + ArrayUtil.toHexString(BitConverter.GetBytes(map.biome_seed));
-        transform.parent.Find("LocalSeed").GetComponent<TMPro.TMP_Text>().text = "Local seed: " + ArrayUtil.toHexString(BitConverter.GetBytes(map.local_seed));
+        biome_seed_obj.GetComponent<TMPro.TMP_Text>().text = "Biome seed: " + ArrayUtil.toHexString(BitConverter.GetBytes(map.biome_seed));
+        local_seed_obj.GetComponent<TMPro.TMP_Text>().text = "Local seed: " + ArrayUtil.toHexString(BitConverter.GetBytes(map.local_seed));
         if (Application.isPlaying)
             view.currentNode = map.upside_down ? new(-1, map.height) : new(-1, -1);
     }
@@ -37,8 +37,8 @@ public class Debug_ExpeditionMapView : MonoBehaviour
     [ContextMenu("Debug: clear")]
     public void clear() {
         getView().clear();
-        transform.parent.Find("BiomeSeed").GetComponent<TMPro.TMP_Text>().text = string.Empty;
-        transform.parent.Find("LocalSeed").GetComponent<TMPro.TMP_Text>().text = string.Empty;
+        biome_seed_obj.GetComponent<TMPro.TMP_Text>().text = string.Empty;
+        local_seed_obj.GetComponent<TMPro.TMP_Text>().text = string.Empty;
     }
 
     private void Start() {
@@ -47,4 +47,7 @@ public class Debug_ExpeditionMapView : MonoBehaviour
 
     ExpeditionMapView getView() =>
         transform.Find("ExpeditionMapView").GetComponent<ExpeditionMapView>();
+
+    public GameObject biome_seed_obj;
+    public GameObject local_seed_obj;
 }
