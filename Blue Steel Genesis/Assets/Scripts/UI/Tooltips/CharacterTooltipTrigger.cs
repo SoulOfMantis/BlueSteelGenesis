@@ -6,12 +6,11 @@ public class CharacterTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPoi
 {
     public Character character = null;
     private Color baseCharacterColor;
-
     IEnumerator ShowingTooltip()
     {
         TooltipSystem.Load(character);           
         yield return new WaitForSeconds(2f);
-        TooltipSystem.Show(TooltipSystem.TooltipType.characterTooltip);
+        TooltipSystem.Show(TooltipSystem.TooltipType.characterTooltip, this);
         if (character != null)  
         { 
             character.gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
@@ -19,7 +18,7 @@ public class CharacterTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPoi
         }
     }
     IEnumerator HidingTooltip()
-    {
+    {    
         yield return new WaitForSeconds(.5f);
         if (character != null)  
         {

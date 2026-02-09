@@ -2,22 +2,23 @@ using UnityEngine;
 
 public class TooltipSystem : MonoBehaviour
 {
-    private static TooltipSystem current;
+    private static TooltipSystem instance;
     public CharacterInfoTooltip characterTooltip;
     public ModuleInfoTooltip moduleTooltip;
+    public CharacterTooltipTrigger current;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void Awake()
     {
-        current = this;
+        instance = this;
     }
 
     public static void Load(Character c)
     {
-        current.characterTooltip.updateInfo(c);
+        instance.characterTooltip.updateInfo(c);
     }
     public static void Load(GameModule g)
     {
-        current.moduleTooltip.updateInfo(g);
+        instance.moduleTooltip.updateInfo(g);
     }
 
     public static void Show(TooltipType type)
@@ -26,28 +27,43 @@ public class TooltipSystem : MonoBehaviour
         {
             case TooltipType.characterTooltip:
                 {
-                    current.characterTooltip.gameObject.SetActive(true);
+                    instance.characterTooltip.gameObject.SetActive(true);
                     break;
                 }
             case TooltipType.moduleTooltip:
                 {
-                    current.moduleTooltip.gameObject.SetActive(true);
+                    instance.moduleTooltip.gameObject.SetActive(true);
                     break;
                 }
         }
     }
+    public static void Show(TooltipType type, CharacterTooltipTrigger trigger)
+    {
+        instance.current = trigger;
+        Show(type);
+    }
+    public static void Delay()
+    {
+        instance.current.StopCoroutine("HidingTooltip");
+    }
+    public static void ResumeHiding()
+    {
+        instance.current.StopCoroutine("HidingTooltip");
+        instance.current.StartCoroutine("HidingTooltip");
+    }
+
     public static void Hide(TooltipType type)
     {
         switch (type)
         {
             case TooltipType.characterTooltip:
                 {
-                    current.characterTooltip.gameObject.SetActive(false);
+                    instance.characterTooltip.gameObject.SetActive(false);
                     break;
                 }
             case TooltipType.moduleTooltip:
                 {
-                    current.moduleTooltip.gameObject.SetActive(false);
+                    instance.moduleTooltip.gameObject.SetActive(false);
                     break;
                 }
         }
