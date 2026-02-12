@@ -1,3 +1,4 @@
+using NUnit.Framework.Constraints;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,13 @@ public class MultilineRenderer2D : Graphic
         public Vector2 from, to;
         public float width;
         public Color color;
+        public Type type;
+        
+        public enum Type {
+            NORMAL,
+            DASHED,
+            DISABLED
+        }
     }
 
     public void addLine(Line line) {
@@ -24,8 +32,37 @@ public class MultilineRenderer2D : Graphic
     protected override void OnPopulateMesh(VertexHelper vh) {
         vh.Clear();
         foreach (var line in lines_)
-            vh.AddUIVertexQuad(toPoints(line));
+            foreach (var subline in toPrimitiveLines(line))
+                vh.AddUIVertexQuad(toPoints(subline));
     }
+
+    private IEnumerable<Line> toPrimitiveLines(Line line) {
+        switch (line.type) {
+            case Line.Type.NORMAL:
+                yield return line;
+                yield break;
+            case Line.Type.DISABLED:
+                yield break;
+        }
+
+        const float gap = 8, target_len = 50;
+        float len = (line.to - line.from).magnitude;
+
+        int segment_count = (int)Math.Round(len / target_len);
+        float segment_len = (len + gap) / segment_count;
+        Vector2 segment = (line.to - line.from).normalized * segment_len;
+        Vector2 subline = (line.to - line.from).normalized * (segment_len - gap);
+
+        for (int i = 0; i < segment_count; ++i)
+            yield return new() {
+                from = line.from + segment * i,
+                to = line.from + segment * i + subline,
+                width = line.width,
+                color = line.color,
+                type = Line.Type.NORMAL
+            };
+    }
+
     private UIVertex[] toPoints(Line line) {
         var quad = new UIVertex[4];
         var vtx = UIVertex.simpleVert;
