@@ -13,6 +13,7 @@ public class PurpleDog : Enemy
     {
         addModule(new BasicAttack());
         addModule(new BasicMovement());
+        modulePriority = new List<int> { 0, 1 };
     }
 
     void updateHealth()
@@ -30,14 +31,12 @@ public class PurpleDog : Enemy
     // Begins PDs turn
     public override void startTurn()
     {
-        base.startTurn();
-
-        MainLogic();
-
-        endTurn();
+        base.startTurn();   
+        PerformTurn();     
+        endTurn();          
     }
 
-    
+
 
     // Check if PD can attack player
     private bool CanAttack(Vector3Int playerPosition)
@@ -129,4 +128,51 @@ public class PurpleDog : Enemy
         updateHealth();
     }
 
+
+    protected override bool TryGetTargetForModule(int moduleIndex, out Vector3Int target)
+    {
+        target = Position;
+        PlayerCharacter player = tracker.getPlayer();
+        if (player == null) return false;
+
+        switch (moduleIndex)
+        {
+            case 0: 
+                BasicAttack attack = getModule<BasicAttack>(0);
+                if (attack == null) return false;
+                var attackRange = attack.getCellsInRange(Position);
+                if (attackRange.Contains(player.Position))
+                {
+                    target = player.Position;
+                    return true;
+                }
+                break;
+
+            case 1: 
+                BasicMovement move = getModule<BasicMovement>(1);
+                if (move == null) return false;
+                var moveRange = move.getCellsInRange(Position);
+                int minDist = int.MaxValue;
+                Vector3Int best = Position;
+                foreach (var cell in moveRange)
+                {
+                    if (cell == Position) continue;
+                    if (tracker.OutOfBounds(cell) || tracker.IsOccupied(cell)) continue;
+                    int dist = Mathf.Abs(player.Position.x - cell.x) + Mathf.Abs(player.Position.y - cell.y);
+                    if (dist < minDist)
+                    {
+                        minDist = dist;
+                        best = cell;
+                    }
+                }
+                if (best != Position)
+                {
+                    target = best;
+                    return true;
+                }
+                break;
+        }
+        return false;
     }
+
+}
