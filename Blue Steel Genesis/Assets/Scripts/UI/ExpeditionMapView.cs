@@ -89,6 +89,8 @@ public class ExpeditionMapView : MonoBehaviour
     private void updateSelectionStatus() {
         resetSelectionStatus();
         getButton(currentNode).selectionStatus = NodeButton.SelectionStatus.Current;
+        foreach (Vector2Int reachable in map_.listReachable(currentNode))
+            getButton(reachable).selectionStatus = NodeButton.SelectionStatus.Normal;
         foreach (Vector2Int target in map_.listTargets(currentNode))
             getButton(target).selectionStatus = NodeButton.SelectionStatus.Selectable;
     }
@@ -96,9 +98,9 @@ public class ExpeditionMapView : MonoBehaviour
         for (int line = 0; line < buttons_.GetLength(0); ++line)
             for (int x = 0; x < buttons_.GetLength(1); ++x)
                 if (buttons_[line, x] != null)
-                    buttons_[line, x].selectionStatus = NodeButton.SelectionStatus.Normal;
-        upper_end_button_.selectionStatus = NodeButton.SelectionStatus.Normal;
-        lower_end_button_.selectionStatus = NodeButton.SelectionStatus.Normal;
+                    buttons_[line, x].selectionStatus = NodeButton.SelectionStatus.Inactive;
+        upper_end_button_.selectionStatus = NodeButton.SelectionStatus.Inactive;
+        lower_end_button_.selectionStatus = NodeButton.SelectionStatus.Inactive;
     }
     public void confirmSelection() {
         if (last_selection_ == null)

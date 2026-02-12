@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 using HKDF = HKDF<System.Security.Cryptography.HMACSHA1>;
@@ -30,6 +31,22 @@ namespace Map
             for (int x = min_x; x < max_x; ++x)
                 if (map[target_y, x] != Node.DISABLED)
                     yield return new(x, target_y);
+        }
+        public HashSet<Vector2Int> listReachable(Vector2Int from) {
+            HashSet<Vector2Int> reachable = listTargets(from).ToHashSet();
+            HashSet<Vector2Int> to_handle_cur = new(), to_handle_next = new(reachable);
+            while (to_handle_next.Count > 0) {
+                (to_handle_cur, to_handle_next) = (to_handle_next, to_handle_cur);
+                to_handle_next.Clear();
+
+                foreach (var pos in to_handle_cur)
+                    foreach (var target in listTargets(pos)) {
+                        to_handle_next.Add(target);
+                        reachable.Add(target);
+                    }
+            }
+            
+            return reachable;
         }
 
         public int width => map?.GetLength(1) ?? 0;
