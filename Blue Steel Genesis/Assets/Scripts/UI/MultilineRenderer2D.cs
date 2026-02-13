@@ -1,4 +1,3 @@
-using NUnit.Framework.Constraints;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,8 +18,15 @@ public class MultilineRenderer2D : Graphic
         }
     }
 
-    public void addLine(Line line) {
-        lines_.Add(line);
+    public void addLine(Vector2Int from, Vector2Int to, Line line) {
+        lines_.Add((from, to), line);
+        SetVerticesDirty();
+    }
+    public void updateLineType(Vector2Int from, Vector2Int to, Line.Type type) {
+        if (lines_.TryGetValue((from, to), out Line line)) {
+            line.type = type;
+            lines_[(from, to)] = line;
+        }
         SetVerticesDirty();
     }
     public void clear() {
@@ -31,7 +37,7 @@ public class MultilineRenderer2D : Graphic
     [ExecuteAlways]
     protected override void OnPopulateMesh(VertexHelper vh) {
         vh.Clear();
-        foreach (var line in lines_)
+        foreach (var line in lines_.Values)
             foreach (var subline in toPrimitiveLines(line))
                 vh.AddUIVertexQuad(toPoints(subline));
     }
@@ -84,5 +90,5 @@ public class MultilineRenderer2D : Graphic
         return quad;
     }
 
-    private List<Line> lines_ = new();
+    private Dictionary<(Vector2Int, Vector2Int), Line> lines_ = new();
 }

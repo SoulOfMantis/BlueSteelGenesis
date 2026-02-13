@@ -1,11 +1,12 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ExpeditionMapView : MonoBehaviour
 {
     public void clear() {
-        setPanel();
+        initUIComponentRefs();
         Action<GameObject> destroy = Application.isEditor ?
             o => DestroyImmediate(o) :
             o => Destroy(o);
@@ -21,7 +22,7 @@ public class ExpeditionMapView : MonoBehaviour
     {
         if (map == null) return;
         
-        setPanel();
+        initUIComponentRefs();
         map_ = map;
 
         var effective_rect = calculateEffectiveRect(
@@ -54,7 +55,6 @@ public class ExpeditionMapView : MonoBehaviour
         addButton(map.start_node_pos, Map.Node.START);
         addButton(map.boss_node_pos, Map.Node.BOSS);
 
-        var line_renderer = panel.transform.Find("MultilineRenderer").gameObject.GetComponent<MultilineRenderer2D>();
         void linkButtons(NodeButton b1, NodeButton b2) {
             var line = new MultilineRenderer2D.Line() {
                 from = b1.GetComponent<Transform>().localPosition,
@@ -62,7 +62,7 @@ public class ExpeditionMapView : MonoBehaviour
                 color = Color.darkCyan,
                 width = 6
             };
-            line_renderer.addLine(line);
+            line_renderer.addLine(b1.position, b2.position, line);
         }
 
         foreach (var button in  buttons_) if (button)
@@ -82,8 +82,28 @@ public class ExpeditionMapView : MonoBehaviour
     }
 
     private void Start() {
-        setPanel();
+        initUIComponentRefs();
         confirmSelectionButton = confirm_selection_button_;
+    }
+
+    private void updateNodeLinks() {
+        foreach (var src_node in Enumerable.Repeat(map_.start_node_pos, 1).Concat(map_.listReachable(map_.start_node_pos)))
+            foreach (var target in map_.listTargets(src_node)) {
+                NodeButton.SelectionStatus src_selection_status = getButton(src_node).selectionStatus,
+                                           target_selection_status = getButton(target).selectionStatus;
+                MultilineRenderer2D.Line.Type line_type;
+
+                if (src_selection_status == NodeButton.SelectionStatus.Inactive ||
+                    target_selection_status == NodeButton.SelectionStatus.Inactive)
+                    line_type = MultilineRenderer2D.Line.Type.DISABLED;
+                else if (target_selection_status == NodeButton.SelectionStatus.Selectable ||
+                         target_selection_status == NodeButton.SelectionStatus.Selected)
+                    line_type = MultilineRenderer2D.Line.Type.NORMAL;
+                else
+                    line_type = MultilineRenderer2D.Line.Type.DASHED;
+                
+                line_renderer.updateLineType(src_node, target, line_type);
+            }
     }
 
     private void updateSelectionStatus() {
@@ -159,11 +179,14 @@ public class ExpeditionMapView : MonoBehaviour
         return effective_rect;
     }
 
-    private void setPanel() =>
+    private void initUIComponentRefs() {
         panel = transform.Find("Panel").gameObject;
+        line_renderer = panel.transform.Find("MultilineRenderer").gameObject.GetComponent<MultilineRenderer2D>();
+    }
 
     public GameObject button_prefab;
     private GameObject panel = null;
+    private MultilineRenderer2D line_renderer = null;
     [Range(0f, .4f)] public float margin = 0.05f;
 
     private Map.ExpeditionMap map_;
@@ -204,6 +227,7 @@ public class ExpeditionMapView : MonoBehaviour
             current_node_ = value;
             lastSelection = null;
             updateSelectionStatus();
+            updateNodeLinks();
         }
     }
     private Vector2Int current_node_;
