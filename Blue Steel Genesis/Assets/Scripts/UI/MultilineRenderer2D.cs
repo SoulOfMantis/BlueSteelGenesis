@@ -46,7 +46,7 @@ public class MultilineRenderer2D : Graphic
         switch (line.type) {
             case Line.Type.INACTIVE:
                 line.type = Line.Type.NORMAL;
-                line.color = Color.gray;
+                line.color = Color.gray3;
                 goto case Line.Type.NORMAL;
             case Line.Type.NORMAL:
                 yield return line;

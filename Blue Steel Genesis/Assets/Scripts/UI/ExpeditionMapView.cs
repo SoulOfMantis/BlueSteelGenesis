@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,12 +19,14 @@ public class ExpeditionMapView : MonoBehaviour
                 destroy(panel.transform.GetChild(i).gameObject);
     }
 
-    public void make(Map.ExpeditionMap map)
+    public void make(Map.ExpeditionMap map, ExpeditionMapProgressInfo progress_info = null)
     {
         if (map == null) return;
+        progress_info ??= new(map);
         
         initUIComponentRefs();
         map_ = map;
+        progress_ = progress_info;
 
         var effective_rect = calculateEffectiveRect(
             new(map_.width, map_.height),
@@ -104,11 +107,18 @@ public class ExpeditionMapView : MonoBehaviour
                 
                 line_renderer.updateLineType(src_node, target, line_type);
             }
+
+        foreach (var path_link in progress_.pathLinks())
+            line_renderer.updateLineType(path_link.Item1, path_link.Item2, MultilineRenderer2D.Line.Type.NORMAL);
     }
 
     private void updateSelectionStatus() {
         resetSelectionStatus();
+
+        foreach (var path_node in progress_.path)
+            getButton(path_node).selectionStatus = NodeButton.SelectionStatus.Normal;
         getButton(currentNode).selectionStatus = NodeButton.SelectionStatus.Current;
+        
         foreach (Vector2Int reachable in map_.listReachable(currentNode))
             getButton(reachable).selectionStatus = NodeButton.SelectionStatus.Normal;
         foreach (Vector2Int target in map_.listTargets(currentNode))
@@ -192,6 +202,7 @@ public class ExpeditionMapView : MonoBehaviour
     private Map.ExpeditionMap map_;
     private NodeButton[,] buttons_;
     private NodeButton upper_end_button_, lower_end_button_;
+    private ExpeditionMapProgressInfo progress_;
 
     public Button confirmSelectionButton {
         get => confirm_selection_button_;
@@ -222,13 +233,29 @@ public class ExpeditionMapView : MonoBehaviour
     private (Vector2Int pos, Map.Node type)? last_selection_ = null;
 
     public Vector2Int currentNode {
-        get => current_node_;
+        get => progress_.currentNode;
         set {
-            current_node_ = value;
-            lastSelection = null;
+            if (value != progress_.currentNode) {
+                progress_.path.Add(value);
+                lastSelection = null;
+            }
             updateSelectionStatus();
             updateNodeLinks();
         }
     }
-    private Vector2Int current_node_;
+}
+
+public class ExpeditionMapProgressInfo {
+    public ExpeditionMapProgressInfo(Map.ExpeditionMap map) {
+        path = new(map.height + 2);
+        path.Add(map.start_node_pos);
+    }
+    
+    public IEnumerable<(Vector2Int, Vector2Int)> pathLinks() {
+        for (int i = 1; i < path.Count; ++i)
+            yield return (path[i - 1], path[i]);
+    }
+    
+    public List<Vector2Int> path;
+    public Vector2Int currentNode => path[^1];
 }
