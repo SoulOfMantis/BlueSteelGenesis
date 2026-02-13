@@ -14,7 +14,7 @@ public class MultilineRenderer2D : Graphic
         public enum Type {
             NORMAL,
             DASHED,
-            DISABLED
+            INACTIVE
         }
     }
 
@@ -44,10 +44,12 @@ public class MultilineRenderer2D : Graphic
 
     private IEnumerable<Line> toPrimitiveLines(Line line) {
         switch (line.type) {
+            case Line.Type.INACTIVE:
+                line.type = Line.Type.NORMAL;
+                line.color = Color.gray;
+                goto case Line.Type.NORMAL;
             case Line.Type.NORMAL:
                 yield return line;
-                yield break;
-            case Line.Type.DISABLED:
                 yield break;
         }
 

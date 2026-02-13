@@ -95,7 +95,7 @@ public class ExpeditionMapView : MonoBehaviour
 
                 if (src_selection_status == NodeButton.SelectionStatus.Inactive ||
                     target_selection_status == NodeButton.SelectionStatus.Inactive)
-                    line_type = MultilineRenderer2D.Line.Type.DISABLED;
+                    line_type = MultilineRenderer2D.Line.Type.INACTIVE;
                 else if (target_selection_status == NodeButton.SelectionStatus.Selectable ||
                          target_selection_status == NodeButton.SelectionStatus.Selected)
                     line_type = MultilineRenderer2D.Line.Type.NORMAL;
