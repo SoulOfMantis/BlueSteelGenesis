@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -12,6 +12,9 @@ public class NodeButton : MonoBehaviour
         updateVisuals();
     }
 
+    /// <summary>
+    /// Вызывается при необходимости обновить внешний вид кнопки
+    /// </summary>
     private void updateVisuals() {
         Color col = Color.white;
         Vector2 scale = new(1, 1);
@@ -76,6 +79,9 @@ public class NodeButton : MonoBehaviour
     private void setButton() =>
         button ??= transform.Find("Button").GetComponent<Button>();
 
+    /// <summary>
+    /// Размер кнопки в обычном состоянии (используется ExpeditionMapView для рассчета позиций)
+    /// </summary>
     public static Vector2 size => new(30, 30);
 
     public Button button { get; private set; } = null;

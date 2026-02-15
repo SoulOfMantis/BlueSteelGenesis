@@ -13,6 +13,9 @@ public class ArrayUtil
     }
 
     public static byte[] fromHexString(string str) {
+        if (str == null || str.Length % 2 != 0)
+            throw new ArgumentException();
+
         byte[] res = new byte[str.Length / 2];
         for (int i = 0; i < str.Length / 2; ++i)
             res[i] = Convert.ToByte(str.Substring(i * 2, 2), 16);

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -15,8 +15,11 @@ namespace Map
 
     public class ExpeditionMap
     {
-        public IEnumerable<Vector2Int> listTargets(Vector2Int from) {
-            int target_y = from.y + (upside_down ? -1 : 1);
+        /// <summary>
+        /// Перечисляет вершины, достижимые непосредственно из pos
+        /// </summary>
+        public IEnumerable<Vector2Int> listTargets(Vector2Int pos) {
+            int target_y = pos.y + (upside_down ? -1 : 1);
             if (target_y < -1 || target_y > map.GetLength(0))
                 yield break;
             if (target_y == -1 || target_y == map.GetLength(0)) {
@@ -24,23 +27,26 @@ namespace Map
                 yield break;
             }
 
-            int min_x = Math.Max(from.x - 1, 0);
-            int max_x = from.x == -1 ?
+            int min_x = Math.Max(pos.x - 1, 0);
+            int max_x = pos.x == -1 ?
                 map.GetLength(1) :
-                Math.Min(map.GetLength(1), from.x + 2);
+                Math.Min(map.GetLength(1), pos.x + 2);
             for (int x = min_x; x < max_x; ++x)
                 if (map[target_y, x] != Node.DISABLED)
                     yield return new(x, target_y);
         }
-        public HashSet<Vector2Int> listReachable(Vector2Int from) {
-            HashSet<Vector2Int> reachable = listTargets(from).ToHashSet();
+        /// <summary>
+        /// Возвращает множество вершин, достижимых из pos
+        /// </summary>
+        public HashSet<Vector2Int> listReachable(Vector2Int pos) {
+            HashSet<Vector2Int> reachable = listTargets(pos).ToHashSet();
             HashSet<Vector2Int> to_handle_cur = new(), to_handle_next = new(reachable);
             while (to_handle_next.Count > 0) {
                 (to_handle_cur, to_handle_next) = (to_handle_next, to_handle_cur);
                 to_handle_next.Clear();
 
-                foreach (var pos in to_handle_cur)
-                    foreach (var target in listTargets(pos)) {
+                foreach (var cur_pos in to_handle_cur)
+                    foreach (var target in listTargets(cur_pos)) {
                         to_handle_next.Add(target);
                         reachable.Add(target);
                     }
@@ -50,8 +56,17 @@ namespace Map
         }
 
         public int width => map?.GetLength(1) ?? 0;
+        /// <summary>
+        /// Высота карты без начального узла и босса
+        /// </summary>
         public int height => map?.GetLength(0) ?? 0;
+        /// <summary>
+        /// Специальная позиция, соответствующая начальному узлу (не содержится в map)
+        /// </summary>
         public Vector2Int start_node_pos => new(-1, upside_down ? height : -1);
+        /// <summary>
+        /// Специальная позиция, соответствующая узлу босса (не содержится в map)
+        /// </summary>
         public Vector2Int boss_node_pos => new(-1, upside_down ? -1 : height);
 
         public Node[,] map { get; private set; }
@@ -89,7 +104,6 @@ namespace Map
                 map[height, x] = upside_down ? Node.REGULAR_ENEMY : Node.REST;
             }
 
-            
             System.Random prng = new(local_seed);
             Node getRandomNode(byte allowed_mask) {
                 int popcnt(byte b) {
@@ -102,7 +116,7 @@ namespace Map
                 }
 
                 allowed_mask = Math.Max(allowed_mask, (byte)Node.REGULAR_ENEMY);
-                int target_idx = prng.Next(popcnt((byte)allowed_mask)) + 1;
+                int target_idx = prng.Next(popcnt(allowed_mask)) + 1;
                 byte node = 1;
                 for (int cur_idx = node & allowed_mask; cur_idx < target_idx;) {
                     node <<= 1;
@@ -112,27 +126,30 @@ namespace Map
                 return (Node)node;
             }
             
+
             int progress_limit_distance = Mathf.CeilToInt(height / 3),
                 start_y = upside_down ? (int)height : 1;
+            // Запрещает раннее появление элиток и мест отдыха
+            Node progress_limit(int line) =>
+                Math.Abs(line - start_y) < progress_limit_distance ? (Node.ELITE_ENEMY | Node.REST) : 0;
+
+            // Запрещает появление магазинов, элиток, мест отдыха несколько раз подряд
+            Node link_limit(int line, int x) =>
+                (map[line-1, x-1] | map[line-1, x] | map[line-1, x+1] |
+                 map[line+1, x-1] | map[line+1, x] | map[line+1, x+1])
+                & (Node.SHOP | Node.REST | Node.ELITE_ENEMY);
+
+            // Запрещает соседним по горизонтали узлам иметь один тип
+            Node group_limit(int line, int x) =>
+                x == 1 ? 0 : map[line, x-2] | map[line, x-1];
+
 
             for (int line = 1; line <= height; ++line)
                 for (int x = 1; x <= width; ++x)
                     if (map[line, x] == Node.DISABLED) {
-                        Node mask;
-                        Node progress_limit =
-                            Math.Abs(line - start_y) < progress_limit_distance ? (Node.ELITE_ENEMY | Node.REST) : Node.DISABLED;
-                        Node link_limit =
-                            (map[line-1, x-1] | map[line-1, x] | map[line-1, x+1] |
-                             map[line+1, x-1] | map[line+1, x] | map[line+1, x+1])
-                            & (Node.SHOP | Node.REST | Node.ELITE_ENEMY);
-
-                        if (x == 1) {
-                            mask = ~(progress_limit | link_limit) & Node.RANDOMLY_GENERATABLE;
-                            map[line, x] = getRandomNode((byte)mask);
-                            continue;
-                        }
-                        Node group_limit = map[line, x-2] | map[line, x-1];
-                        mask = ~(progress_limit | link_limit | group_limit) & Node.RANDOMLY_GENERATABLE;
+                        Node mask =
+                            ~(progress_limit(line) | link_limit(line, x) | group_limit(line, x))
+                            & Node.RANDOMLY_GENERATABLE;
                         map[line, x] = getRandomNode((byte)mask);
                     }
 
@@ -170,6 +187,9 @@ namespace Map
                     line_gen[x] = prng.NextDouble() < biome.missing_node_rate ?
                         Node.DISABLED : Node.ALL_REGULAR;
 
+                // В каждой тройке по горизонтали есть хотя бы один узел:
+                // гарантирует проходимость карты и достижимость всех узлов.
+                // Принудительная вставка начинается из центра во избежание "перекоса" карты в одну сторону
                 for (int x = (int)width / 2 + 1; x < width + 1; ++x)
                     if ((line_gen[x - 1] | line_gen[x] | line_gen[x + 1]) == Node.DISABLED)
                         line_gen[x] = Node.ALL_REGULAR;

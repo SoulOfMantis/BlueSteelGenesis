@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -19,6 +19,10 @@ public class ExpeditionMapView : MonoBehaviour
                 destroy(panel.transform.GetChild(i).gameObject);
     }
 
+    /// <summary>
+    /// Создает отображаемую карту
+    /// </summary>
+    /// <param name="progress_info">Данные о прохождении (объект будет обновлен)</param>
     public void make(Map.ExpeditionMap map, ExpeditionMapProgressInfo progress_info = null)
     {
         if (map == null) return;
@@ -82,6 +86,9 @@ public class ExpeditionMapView : MonoBehaviour
                 lastSelection = new(pos, type);
             });
         }
+
+        updateSelectionStatus();
+        updateNodeLinks();
     }
 
     private void Start() {
@@ -164,6 +171,12 @@ public class ExpeditionMapView : MonoBehaviour
         return ref buttons_[pos.y, pos.x];
     }
 
+    /// <summary>
+    /// Рассчитывает размеры прямоугольника для размещения карты
+    /// </summary>
+    /// <param name="graph_dimensions">Размеры карты (кол-во узлов)</param>
+    /// <param name="node_button_size">Размеры кнопки</param>
+    /// <param name="node_gap">Рекомендуемое расстояние между центрами соседних вершин</param>
     private Rect calculateEffectiveRect(Vector2Int graph_dimensions, Vector2 node_button_size, out float node_gap) {
         Rect full_rect =
             (transform.parent is RectTransform parent_transform) ? parent_transform.rect : new();
@@ -189,6 +202,9 @@ public class ExpeditionMapView : MonoBehaviour
         return effective_rect;
     }
 
+    /// <summary>
+    /// Устанавливает ссылки на дочерние элементы
+    /// </summary>
     private void initUIComponentRefs() {
         panel = transform.Find("Panel").gameObject;
         line_renderer = panel.transform.Find("MultilineRenderer").gameObject.GetComponent<MultilineRenderer2D>();
@@ -197,7 +213,8 @@ public class ExpeditionMapView : MonoBehaviour
     public GameObject button_prefab;
     private GameObject panel = null;
     private MultilineRenderer2D line_renderer = null;
-    [Range(0f, .4f)] public float margin = 0.05f;
+    [Range(0f, .4f), Tooltip("Отступ с каждой стороны родительского элемента")]
+    public float margin = 0.05f;
 
     private Map.ExpeditionMap map_;
     private NodeButton[,] buttons_;
