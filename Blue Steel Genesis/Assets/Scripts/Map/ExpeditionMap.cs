@@ -112,13 +112,15 @@ namespace Map
                 return (Node)node;
             }
             
-            int first_third = 1 + Mathf.CeilToInt(height / 3);
+            int progress_limit_distance = Mathf.CeilToInt(height / 3),
+                start_y = upside_down ? (int)height : 1;
+
             for (int line = 1; line <= height; ++line)
                 for (int x = 1; x <= width; ++x)
                     if (map[line, x] == Node.DISABLED) {
                         Node mask;
                         Node progress_limit =
-                            line <= first_third ? (Node.ELITE_ENEMY | Node.REST) : Node.DISABLED;
+                            Math.Abs(line - start_y) < progress_limit_distance ? (Node.ELITE_ENEMY | Node.REST) : Node.DISABLED;
                         Node link_limit =
                             (map[line-1, x-1] | map[line-1, x] | map[line-1, x+1] |
                              map[line+1, x-1] | map[line+1, x] | map[line+1, x+1])
