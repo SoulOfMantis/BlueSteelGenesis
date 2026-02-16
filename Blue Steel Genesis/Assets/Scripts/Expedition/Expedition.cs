@@ -1,9 +1,17 @@
 public class Expedition
 {
+    static Expedition instance;
+    static void CreateInstance()
+    {
+        instance = new Expedition();
+    }
+    static GameModule DrawNextModule()
+    {
+        instance.moduleGeneration.DrawNextModule();
+    }
     internal class ModuleGeneration
     {
         private Random gen;
-        private int seed;
         public ModuleGeneration(int Seed)
         {
             seed = Seed;

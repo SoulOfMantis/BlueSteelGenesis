@@ -11,6 +11,7 @@ public class PlayerCharacter : Character
     public TMP_Text healthDisplay;
     public GameObject VictoryScreen;
     public GameObject DefeatScreen;
+    private int playerMoney;
     PlayerCharacter() : base(10, 3, 10)
     {
         //modules hardcoded for now
@@ -184,6 +185,15 @@ public class PlayerCharacter : Character
         updateButtons();
         DefeatScreen.SetActive(true);
     }
+
+    public int playerMoney
+    {
+        get => playerMoney;
+        protected set => playerMoney = Math.Clamp(value, 0,1000);// Max?
+    }
+
+    public void GaveMoney(int value)=> playerMoney += value;
+    public void LoseMoney(int value)=>playerMoney -= value;
 
 }
 

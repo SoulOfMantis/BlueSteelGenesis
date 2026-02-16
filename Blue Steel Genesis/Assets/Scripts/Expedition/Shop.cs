@@ -4,12 +4,7 @@ using System.Linq;
 public class Shop
 {
     List<GameModule> OnSale;
-    PlayerCharacter Player;
-    int PlayerMoney;
-    /*public Shop()
-    {
-
-    }*/
+    PlayerCharacter player;
     void Refresh()
     {
         //TODO
@@ -22,21 +17,20 @@ public class Shop
         //TODO
         if (!OnSale.Contains(module))
         {
-            // What in this case?
+            return;
         }
-        if (PlayerMoney >= module.Price)
+        if (player.playerMoney >= module.price)
         {
-            PlayerMoney -= module.Price;
+            player.LoseMoney(module.Price);
             OnSale.Remove(module);
-            Player.addModule(module);
+            player.addModule(module);
         }
-        return;
     }
     void Sell(GameModule module)
     {
-        PlayerMoney += module.Price;
+        //≈сть ли у игрока этот модуль проверка
+        player.GaveMoney(module.Price);
         //Remove modele?
-        return;
     }
 
 }
