@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using System;
 
 public class PlayerCharacter : Character
 {
@@ -11,7 +12,6 @@ public class PlayerCharacter : Character
     public TMP_Text healthDisplay;
     public GameObject VictoryScreen;
     public GameObject DefeatScreen;
-    private int playerMoney;
     PlayerCharacter() : base(10, 3, 10)
     {
         //modules hardcoded for now
