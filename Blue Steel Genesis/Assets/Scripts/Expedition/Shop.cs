@@ -21,7 +21,7 @@ public class Shop
         }
         if (player.playerMoney >= module.price)
         {
-            player.LoseMoney(module.Price);
+            player.LoseMoney(module.price);
             OnSale.Remove(module);
             player.addModule(module);
         }
@@ -29,7 +29,7 @@ public class Shop
     void Sell(GameModule module)
     {
         //≈сть ли у игрока этот модуль проверка
-        player.GaveMoney(module.Price);
+        player.GaveMoney(module.price);
         //Remove modele?
     }
 

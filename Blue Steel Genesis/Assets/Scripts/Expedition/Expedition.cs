@@ -11,20 +11,19 @@ public class Expedition
     }
     static GameModule DrawNextModule()
     {
-        instance.moduleGeneration.DrawNextModule();
+        return instance.moduleGeneration.DrawNextModule();
     }
     internal class ModuleGeneration
     {
         private Random gen;
-        public ModuleGeneration(int Seed)
+        public ModuleGeneration(int seed)
         {
-            seed = Seed;
             gen = new Random(seed);
         }
         public GameModule DrawNextModule()
         {
             //TODO
-            return new GameModule();
+            return null;
         }
     }
 
@@ -48,7 +47,7 @@ public class Expedition
             }
             if (player.playerMoney >= module.price)
             {
-                player.LoseMoney(module.Price);
+                player.LoseMoney(module.price);
                 OnSale.Remove(module);
                 player.addModule(module);
             }
@@ -56,7 +55,7 @@ public class Expedition
         void Sell(GameModule module)
         {
             //≈сть ли у игрока этот модуль проверка
-            player.GaveMoney(module.Price);
+            player.GaveMoney(module.price);
             //Wait Remove modele
         }
     }
