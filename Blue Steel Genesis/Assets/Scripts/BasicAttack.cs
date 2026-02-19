@@ -21,6 +21,21 @@ namespace BlueSteelGenesis.Character_Modules
              user.strike(pos,1); //пока 1 урон
              Debug.Log("BAM executed");
         }
+
+        public override bool TryGetTarget(Character user, out Vector3Int targetPos)
+        {
+            targetPos = user.Position;
+            PlayerCharacter player = Character.tracker.getPlayer();
+            if (player == null) return false;
+
+            if (getCellsInRange(user.Position).Contains(player.Position))
+            {
+                targetPos = player.Position;
+                return true;
+            }
+            return false;
+        }
+
     }
 }
 

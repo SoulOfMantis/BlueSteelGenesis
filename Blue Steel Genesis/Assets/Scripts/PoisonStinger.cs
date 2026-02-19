@@ -25,5 +25,10 @@ namespace BlueSteelGenesis.Character_Modules
             user.apply(pos, poison);
         }
 
+        public override bool TryGetTarget(Character user, out Vector3Int targetPos)
+        {
+            return base.TryGetTarget(user, out targetPos);
+        }
+
     }
 }

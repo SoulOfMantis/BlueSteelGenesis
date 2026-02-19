@@ -1,5 +1,6 @@
-using UnityEngine;
 using BlueSteelGenesis.Character_Modules;
+using System.Collections.Generic;
+using UnityEngine;
 
     public class Enemy : Character
     {
@@ -12,12 +13,32 @@ using BlueSteelGenesis.Character_Modules;
         Destroy(gameObject);
     }
 
+    protected List<int> modulePriority;
+
+
+    protected virtual bool TryGetTargetForModule(int moduleIndex, out Vector3Int target)
+    {
+        target = Position;
+        if (tracker == null) return false;
+        if (tracker.getPlayer() == null) return false;
+        return false;
+    }
+
     /// <summary>
-    /// Определяет, можно ли использовать модуль с индексом moduleIndex,
-    /// и возвращает подходящую цель.
-    /// Наследники реализуют через switch-case.
+    /// есть ли энергия для любого модуля
     /// </summary>
-    protected abstract bool TryGetTargetForModule(int moduleIndex, out Vector3Int target);
+    /// <returns></returns>
+    protected bool HasEnergyForAnyModule()
+    {
+        foreach (int idx in modulePriority)
+        {
+            if (!isActive(idx)) continue;
+            ActiveModule module = getModule<ActiveModule>(idx);
+            if (module != null && hasEnoughEnergy(module))
+                return true;
+        }
+        return false;
+    }
 
     /// <summary>
     /// Основная логика хода врага.
@@ -28,35 +49,25 @@ using BlueSteelGenesis.Character_Modules;
         PlayerCharacter player = tracker.getPlayer();
         if (player == null) return;
 
-        while (true)
+        while (HasEnergyForAnyModule())
         {
             bool actionDone = false;
-
             foreach (int idx in modulePriority)
             {
-    
                 if (!isActive(idx)) continue;
-
                 ActiveModule module = getModule<ActiveModule>(idx);
-                if (module == null) continue;
+                if (module == null || !hasEnoughEnergy(module)) continue;
 
-             
-                if (!hasEnoughEnergy(module)) continue;
-
-
-                if (TryGetTargetForModule(idx, out Vector3Int target))
+                if (module.TryGetTarget(this, out Vector3Int targetPos))
                 {
-
-                    if (useActiveModule(idx, target))
+                    if (useActiveModule(idx, targetPos))
                     {
                         actionDone = true;
-                        break; 
+                        break;
                     }
                 }
             }
-
-            if (!actionDone)
-                break; 
+            if (!actionDone) break;
         }
     }
 }
