@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+/*using System.Collections.Generic;
 using System.Linq;
 
 public class Shop
@@ -33,4 +33,4 @@ public class Shop
         //Remove modele?
     }
 
-}
+}*/

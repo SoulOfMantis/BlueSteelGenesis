@@ -242,4 +242,9 @@ public abstract class Character : MonoBehaviour
     private int current_health_;
     private int current_energy_;
     private Vector3Int position_;
+
+    public void removeModule(GameModule module)
+    {
+        //TODO
+    }
 }

@@ -1,13 +1,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using UnityEngine;
 
-public class Expedition
+public class Expedition: MonoBehaviour
 {
+    
     static Expedition instance;
     static void CreateInstance()
     {
         instance = new Expedition();
+    }
+    void Start()
+    {
+        CreateInstance();
     }
     static GameModule DrawNextModule()
     {
@@ -15,10 +21,10 @@ public class Expedition
     }
     internal class ModuleGeneration
     {
-        private Random gen;
+        private System.Random gen;
         public ModuleGeneration(int seed)
         {
-            gen = new Random(seed);
+            gen = new System.Random(seed);
         }
         public GameModule DrawNextModule()
         {
@@ -31,16 +37,18 @@ public class Expedition
     {
         List<GameModule> OnSale;
         PlayerCharacter player;
-        void Refresh()
+        OnSaleModuleName OnSaleName;
+       public void Refresh()
         {
-            //TODO
             OnSale.Clear();
-            //What module add
+            OnSale.Add(DrawNextModule());
+            OnSale.Add(DrawNextModule());
+            OnSale.Add(DrawNextModule());
             return;
         }
+        
         void Buy(GameModule module)
         {
-            //TODO
             if (!OnSale.Contains(module))
             {
                 return;
@@ -54,11 +62,17 @@ public class Expedition
         }
         void Sell(GameModule module)
         {
-            //≈сть ли у игрока этот модуль проверка
+            //≈сть ли у игрока этот модуль проверь
             player.GaveMoney(module.price);
             //Wait Remove modele
         }
     }
+    
 
+    Shop shop;
+    public void ReFreshShop()
+    {
+        shop.Refresh();
+    }
     ModuleGeneration moduleGeneration;
 }
