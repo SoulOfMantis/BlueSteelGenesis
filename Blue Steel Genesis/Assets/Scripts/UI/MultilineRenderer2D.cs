@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -53,13 +53,12 @@ public class MultilineRenderer2D : Graphic
                 yield break;
         }
 
-        const float gap = 8, target_len = 50;
         float len = (line.to - line.from).magnitude;
 
-        int segment_count = (int)Math.Round(len / target_len);
-        float segment_len = (len + gap) / segment_count;
+        int segment_count = (int)Math.Round(len / target_length);
+        float segment_len = (len + target_gap) / segment_count;
         Vector2 segment = (line.to - line.from).normalized * segment_len;
-        Vector2 subline = (line.to - line.from).normalized * (segment_len - gap);
+        Vector2 subline = (line.to - line.from).normalized * (segment_len - target_gap);
 
         for (int i = 0; i < segment_count; ++i)
             yield return new() {
@@ -93,4 +92,9 @@ public class MultilineRenderer2D : Graphic
     }
 
     private Dictionary<(Vector2Int, Vector2Int), Line> lines_ = new();
+
+    [SerializeField, Tooltip("Целевой отступ между штрихами")]
+    float target_gap = 8;
+    [SerializeField, Tooltip("Целевая длина штриха")]
+    float target_length = 50;
 }
