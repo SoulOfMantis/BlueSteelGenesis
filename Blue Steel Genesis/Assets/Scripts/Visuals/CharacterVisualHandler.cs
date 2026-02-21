@@ -1,0 +1,101 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using UnityEngine;
+
+public class CharacterVisualHandler : VisualHandlerBase
+{
+    [System.Serializable]
+    public struct AnimationClipRef
+    {
+        public string animationName;
+        public AnimationClip clip;
+        public float transitionDuration;
+    }
+
+    [Header("Character animations")]
+    [SerializeField] private AnimationClipRef idleAnimation;
+    [SerializeField] private AnimationClipRef walkAnimation;
+    [SerializeField] private AnimationClipRef attackAnimation;
+    [SerializeField] private AnimationClipRef hurtAnimation;
+    [SerializeField] private AnimationClipRef deathAnimation;
+
+    [Header("Effect")]
+    [SerializeField] private AnimationClipRef healEffect;
+
+    [Header("Floating text")]
+    [SerializeField] private GameObject floatingTextPrefab;
+    [SerializeField] private Transform floatingTextSpawnPoint;
+
+    private string currentAnimation;
+
+    public async Task PlayWalkAnimation(Vector3Int direction)
+    {
+        PlayAnimation(walkAnimation.animationName);
+
+        await Task.Delay((int)(walkAnimation.transitionDuration * 1000));
+    }
+
+    public async Task PlayAttackAnimation(Vector3Int target)
+    {
+        PlayAnimation(attackAnimation.animationName);
+        LookAt(target);
+
+        await Task.Delay((int)(attackAnimation.transitionDuration * 1000));
+    }
+
+    public async Task PlayHurtAnimation(int amount)
+    {
+        PlayAnimation(hurtAnimation.animationName);
+         
+        await Task.Delay((int)(hurtAnimation.transitionDuration * 1000));
+
+        ShowFloatingText($"-{amount}", Color.red);
+    }
+
+    public async Task PlayDeathAnimation()
+    {
+        PlayAnimation(deathAnimation.animationName);
+
+        await Task.Delay((int)(deathAnimation.transitionDuration * 1000));
+        gameObject.SetActive(false);
+    }
+
+    public async Task ShowHealingAnimation(int amount)
+    {
+        PlayAnimation(healEffect.animationName);
+
+        await Task.Delay((int)(walkAnimation.transitionDuration * 1000));
+        ShowFloatingText($"+{amount}", Color.green);
+    }
+
+    // Заставить персонажа смотреть в направление клетки
+    private void LookAt(Vector3Int target)
+    {
+        Vector3 direction = (Character.tracker.CellToWorld(target) - transform.position).normalized;
+
+        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+        {
+            if (direction.x > 0)
+                spriteRenderer.flipX = false;
+            else 
+                spriteRenderer.flipX = true;
+        }
+    }
+
+    private void ShowFloatingText(string text, Color color)
+    {
+        if (floatingTextPrefab == null) return;
+
+        Vector3 spawn = floatingTextSpawnPoint != null ? floatingTextSpawnPoint.position : transform.position + Vector3.up * 2;
+
+        var textObj = Instantiate(floatingTextPrefab, spawn, Quaternion.identity);
+        var tmp = textObj.GetComponent<TMPro.TMP_Text>();
+
+        tmp.text = text;
+        tmp.color = color;
+
+        Destroy(tmp, 1.5f);
+    }
+}
