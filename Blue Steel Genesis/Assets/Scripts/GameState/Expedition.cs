@@ -18,6 +18,9 @@ public class Expedition
             Array.Empty<byte>() //TODO: pass actual data
         );
         map_progress_ = new(Map);
+
+        int local_seed = 0; //TODO: Add local seed
+        combat_system = new CombatSystem(Biome.id, BiomeStage, local_seed);
     }
 
     public void displayMap(ExpeditionMapView view)
@@ -33,4 +36,8 @@ public class Expedition
 
     private ExpeditionMapProgressInfo map_progress_ = null;
     public int BiomeStage { get; private set; } = -1;
+
+    CombatSystem combat_system;
+
+
 }
