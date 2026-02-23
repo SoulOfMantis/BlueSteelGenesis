@@ -896,7 +896,7 @@ MonoBehaviour:
   missing_node_rate: 0.5
   biome_stage: 1
   lives_left: 2
-  parts_info: 1d2c3b4a59
+  parts_info: "\x1D,;JY"
   biome_seed_obj: {fileID: 312929855}
   local_seed_obj: {fileID: 1157094768}
   button_rebuild_save_progress: {fileID: 1994733576}
@@ -1645,23 +1645,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1158189924775547330, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1158189924775547330, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1158189924775547330, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 1040
       objectReference: {fileID: 0}
     - target: {fileID: 1158189924775547330, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 1280
       objectReference: {fileID: 0}
     - target: {fileID: 1158189924775547330, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -1280
       objectReference: {fileID: 0}
     - target: {fileID: 1754261769803301167, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
       propertyPath: m_LocalPosition.x

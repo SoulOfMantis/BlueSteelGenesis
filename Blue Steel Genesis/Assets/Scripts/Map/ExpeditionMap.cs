@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-using HKDF = HKDF<System.Security.Cryptography.HMACSHA1>;
 namespace Map
 {
-    // Placholder type
     public class BiomeInfo
     {
         public uint id;
@@ -55,11 +53,8 @@ namespace Map
             return reachable;
         }
 
-        public int width => map?.GetLength(1) ?? 0;
-        /// <summary>
-        /// Высота карты без начального узла и босса
-        /// </summary>
-        public int height => map?.GetLength(0) ?? 0;
+        public const int width = 5;
+        public const int height = 9;
         /// <summary>
         /// Специальная позиция, соответствующая начальному узлу (не содержится в map)
         /// </summary>
@@ -70,23 +65,19 @@ namespace Map
         public Vector2Int boss_node_pos => new(-1, upside_down ? -1 : height);
 
         public Node[,] map { get; private set; }
-        public int biome_seed { get; private set; }
-        public int local_seed { get; private set; }
         public bool upside_down { get; private set; }
 
 
 
-        public static ExpeditionMap generate(uint width, uint height, byte[] global_seed, BiomeInfo biome, uint biome_stage, uint lives_count, byte[] ship_parts_data)
+        public static ExpeditionMap generate(int biome_seed, int local_seed, BiomeInfo biome, uint biome_stage)
         {
             ExpeditionMap map = new() {
                 map = new Node[height, width],
-                biome_seed = generateBiomeSeed(global_seed, biome.id),
-                local_seed = generateLocalSeed(global_seed, biome.id, biome_stage, lives_count, ship_parts_data),
                 upside_down = biome_stage % 2 == 1
             };
 
-            var biome_map = generateBiomeMap(width, height, biome, map.biome_seed);
-            var type_map = generateNodeTypeMap(width, height, map.upside_down, map.local_seed);
+            var biome_map = generateBiomeMap(width, height, biome, biome_seed);
+            var type_map = generateNodeTypeMap(width, height, map.upside_down, local_seed);
 
             for (int line = 0; line < height; ++line)
                 for (int x = 0; x < width; ++x)
@@ -159,20 +150,6 @@ namespace Map
                     final_map[line, x] = map[line + 1, x + 1];
             return final_map;
         }
-        private static int generateLocalSeed(byte[] global_seed, uint biome_id, uint biome_stage, uint lives_count, byte[] ship_parts_data)
-        {
-            HKDF hkdf = new();
-            hkdf.extract(null, global_seed);
-            int seed = BitConverter.ToInt32(
-                hkdf.expand(ArrayUtil.join(
-                    BitConverter.GetBytes(biome_id),
-                    BitConverter.GetBytes(biome_stage),
-                    BitConverter.GetBytes(lives_count),
-                    ship_parts_data
-                ),
-                sizeof(int)));
-            return seed;
-        }
 
 
         private static Node[,] generateBiomeMap(uint width, uint height, BiomeInfo biome, int biome_seed)
@@ -205,14 +182,6 @@ namespace Map
             }
 
             return map;
-        }
-        private static int generateBiomeSeed(byte[] global_seed, uint biome_id)
-        {
-            HKDF hkdf = new();
-            hkdf.extract(null, global_seed);
-            int seed = BitConverter.ToInt32(
-                hkdf.expand(BitConverter.GetBytes(biome_id), sizeof(int)));
-            return seed;
         }
     }
 }
