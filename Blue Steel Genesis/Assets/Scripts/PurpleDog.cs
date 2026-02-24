@@ -1,6 +1,5 @@
 using BlueSteelGenesis.Character_Modules;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -9,15 +8,12 @@ public class PurpleDog : Enemy
 {
     public TMP_Text healthDisplay;
 
-    private const int ATTACK_INDEX = 0;
-    private const int MOVE_INDEX = 1;
-
     // Purple Dog enemy constructor
     public PurpleDog() : base(5, 3, 60)
     {
         addModule(new BasicAttack());
         addModule(new BasicMovement());
-        modulePriority = new List<int> { ATTACK_INDEX, MOVE_INDEX };
+        modulePriority = new List<int> { 0, 1 };
     }
 
     void updateHealth()

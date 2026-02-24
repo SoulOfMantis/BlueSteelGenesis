@@ -1,6 +1,5 @@
-using BlueSteelGenesis.Character_Modules;
-using System.Collections.Generic;
 using UnityEngine;
+using BlueSteelGenesis.Character_Modules;
 
     public class Enemy : Character
     {
@@ -13,32 +12,12 @@ using UnityEngine;
         Destroy(gameObject);
     }
 
-    protected List<int> modulePriority;
-
-
-    protected virtual bool TryGetTargetForModule(int moduleIndex, out Vector3Int target)
-    {
-        target = Position;
-        if (tracker == null) return false;
-        if (tracker.getPlayer() == null) return false;
-        return false;
-    }
-
     /// <summary>
-    /// есть ли энергия для любого модуля
+    /// Определяет, можно ли использовать модуль с индексом moduleIndex,
+    /// и возвращает подходящую цель.
+    /// Наследники реализуют через switch-case.
     /// </summary>
-    /// <returns></returns>
-    protected bool HasEnergyForAnyModule()
-    {
-        foreach (int idx in modulePriority)
-        {
-            if (!isActive(idx)) continue;
-            ActiveModule module = getModule<ActiveModule>(idx);
-            if (module != null && hasEnoughEnergy(module))
-                return true;
-        }
-        return false;
-    }
+    protected abstract bool TryGetTargetForModule(int moduleIndex, out Vector3Int target);
 
     /// <summary>
     /// Основная логика хода врага.
@@ -49,25 +28,35 @@ using UnityEngine;
         PlayerCharacter player = tracker.getPlayer();
         if (player == null) return;
 
-        while (HasEnergyForAnyModule())
+        while (true)
         {
             bool actionDone = false;
+
             foreach (int idx in modulePriority)
             {
+    
                 if (!isActive(idx)) continue;
-                ActiveModule module = getModule<ActiveModule>(idx);
-                if (module == null || !hasEnoughEnergy(module)) continue;
 
-                if (module.TryGetTarget(this, out Vector3Int targetPos))
+                ActiveModule module = getModule<ActiveModule>(idx);
+                if (module == null) continue;
+
+             
+                if (!hasEnoughEnergy(module)) continue;
+
+
+                if (TryGetTargetForModule(idx, out Vector3Int target))
                 {
-                    if (useActiveModule(idx, targetPos))
+
+                    if (useActiveModule(idx, target))
                     {
                         actionDone = true;
-                        break;
+                        break; 
                     }
                 }
             }
-            if (!actionDone) break;
+
+            if (!actionDone)
+                break; 
         }
     }
 }
