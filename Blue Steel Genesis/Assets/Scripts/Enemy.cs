@@ -11,52 +11,19 @@ using BlueSteelGenesis.Character_Modules;
         tracker.RemoveCharacter(this);
         Destroy(gameObject);
     }
-
-    /// <summary>
-    /// Определяет, можно ли использовать модуль с индексом moduleIndex,
-    /// и возвращает подходящую цель.
-    /// Наследники реализуют через switch-case.
-    /// </summary>
-    protected abstract bool TryGetTargetForModule(int moduleIndex, out Vector3Int target);
-
-    /// <summary>
-    /// Основная логика хода врага.
-    /// Пытается использовать модули в порядке приоритета, пока есть энергия и доступные действия.
-    /// </summary>
-    public virtual void PerformTurn()
-    {
-        PlayerCharacter player = tracker.getPlayer();
-        if (player == null) return;
-
-        while (true)
-        {
-            bool actionDone = false;
-
-            foreach (int idx in modulePriority)
-            {
     
-                if (!isActive(idx)) continue;
-
-                ActiveModule module = getModule<ActiveModule>(idx);
-                if (module == null) continue;
-
-             
-                if (!hasEnoughEnergy(module)) continue;
-
-
-                if (TryGetTargetForModule(idx, out Vector3Int target))
-                {
-
-                    if (useActiveModule(idx, target))
-                    {
-                        actionDone = true;
-                        break; 
-                    }
-                }
-            }
-
-            if (!actionDone)
-                break; 
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+        {
+               
+            
+        
         }
-    }
+
+        // Update is called once per frame
+        void Update()
+        
+        {
+
+        }
 }
