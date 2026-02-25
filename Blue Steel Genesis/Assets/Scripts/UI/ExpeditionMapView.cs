@@ -148,6 +148,16 @@ public class ExpeditionMapView : MonoBehaviour
     }
     private void triggerSubsystem() {
         Debug.Log($"Player selected: {last_selection_?.type} at {last_selection_?.pos}");
+        switch (last_selection_?.type)
+        {
+            case Node.TREASURE:
+                {
+                    GameState.Run.Expedition.TreasureSubsystem.Trigger();
+                    break;
+                }
+            default:
+                break;
+        }
         //TODO: implement
     }
 
