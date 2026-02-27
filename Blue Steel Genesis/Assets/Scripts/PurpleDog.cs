@@ -4,15 +4,18 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class PurpleDog : Enemy 
+public class PurpleDog : Enemy
 {
     public TMP_Text healthDisplay;
 
-    // Purple Dog enemy constructor
+
     public PurpleDog() : base(5, 3, 60)
     {
+
         addModule(new BasicAttack());
         addModule(new BasicMovement());
+
+        SetPriorityModules(modules_);
     }
 
     void updateHealth()
@@ -26,87 +29,61 @@ public class PurpleDog : Enemy
         Debug.Log("Dog added");
     }
 
-
-    // Begins PDs turn
     public override void startTurn()
     {
-        base.startTurn();
 
-        MainLogic();
-
-        endTurn();
+        ExecuteTurn();
     }
 
-    
 
-    // Check if PD can attack player
-    private bool CanAttack(Vector3Int playerPosition)
-    {
+    //private bool CanAttack(Vector3Int playerPosition)
+    //{
+    //    BasicAttack attack = getModule<BasicAttack>(0);
+    //    Debug.Log($"Cost {attack.energyCost} {currentEnergy}");
+    //    var attackRange = attack.getCellsInRange(Position);
+    //    return attackRange.Contains(playerPosition);
+    //}
 
-        BasicAttack attack = getModule<BasicAttack>(0);
-        Debug.Log($"Cost {attack.energyCost} {currentEnergy}");
-        // Available cells
-        var attackRange = attack.getCellsInRange(Position);
+    //private Vector3Int FindBestPosition(Vector3Int playerPosition)
+    //{
+    //    BasicMovement move = getModule<BasicMovement>(1);
+    //    var moveRange = move.getCellsInRange(Position);
+    //    int distance = Math.Abs(playerPosition.x - Position.x) + Math.Abs(playerPosition.y - Position.y);
+    //    Vector3Int bestPosition = Position;
 
+    //    if (distance == 1)
+    //        return bestPosition;
 
-        return attackRange.Contains(playerPosition);
-    }
+    //    foreach (var cell in moveRange)
+    //    {
+    //        int temp = Math.Abs(playerPosition.x - cell.x) + Math.Abs(playerPosition.y - cell.y);
+    //        if (temp < distance && !tracker.IsOccupied(cell) && !tracker.OutOfBounds(cell))
+    //        {
+    //            distance = temp;
+    //            bestPosition = cell;
+    //        }
+    //    }
 
-    // Finds best position to get to player
-    private Vector3Int FindBestPosition(Vector3Int playerPosition)
-    {   
+    //    return bestPosition;
+    //}
 
-        BasicMovement move = getModule<BasicMovement>(1);
+    //private void MainLogic()
+    //{
+    //    PlayerCharacter player = tracker.getPlayer();
+    //    while (modules_.Any(m => hasEnoughEnergy((ActiveModule)m)))
+    //    {
+    //        if (CanAttack(player.Position) && useActiveModule(0, player.Position))
+    //            Debug.Log("PD attacks the player");
+    //        else if (useActiveModule(1, FindBestPosition(player.Position)))
+    //            Debug.Log("PD moves closer to player");
+    //        else
+    //        {
+    //            Debug.Log("Ran out of energy");
+    //            break;
+    //        }
+    //    }
+    //}
 
-        // Available cells
-        var moveRange = move.getCellsInRange(Position);
-
-        int distance = Math.Abs(playerPosition.x - Position.x) + Math.Abs(playerPosition.y - Position.y);
-        Vector3Int bestPosition = Position;
-        
-        if (distance == 1)
-            return bestPosition;
-
-        // Finding closest available cell
-        foreach (var cell in moveRange)
-        {
-            int temp = Math.Abs(playerPosition.x - cell.x) + Math.Abs(playerPosition.y - cell.y);
-            if (temp < distance && !tracker.IsOccupied(cell) && !tracker.OutOfBounds(cell))
-            {
-                distance = temp;
-                bestPosition = cell;
-            }
-        }
-        
-        return bestPosition;
-    }
-
-    // Function of main logic
-    private void MainLogic()
-    {
-        // Object of player
-        PlayerCharacter player = tracker.getPlayer();
-
-        // Get modules
-
-        while (modules_.Any(m => hasEnoughEnergy((ActiveModule)m)))
-        {
-            //  Try attacking player
-            if (CanAttack(player.Position) && useActiveModule(0, player.Position))
-                Debug.Log("PD attacks the player");
-
-            // Get closer to player
-            else if (useActiveModule(1, FindBestPosition(player.Position)))
-                Debug.Log("PD moves closer to player");
-
-            // No available modules
-            else
-            {
-                Debug.Log("Ran out of energy");
-                break;
-            }
-        }
-    }
 
     public override void damage(int dmg)
     {
@@ -123,10 +100,10 @@ public class PurpleDog : Enemy
         updateHealth();
         //play healing animation
     }
+
     public override void startBattle()
     {
         base.startBattle();
         updateHealth();
     }
-
-    }
+}

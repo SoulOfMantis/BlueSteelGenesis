@@ -44,6 +44,7 @@ namespace BlueSteelGenesis.Character_Modules
         }
 
         public void changeName(string newName) => Name = newName;
+
         public abstract void Effect(Character user, Vector3Int pos);
 
         public virtual void Initialize()
