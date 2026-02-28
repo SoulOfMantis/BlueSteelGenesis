@@ -13,6 +13,10 @@ public class TreasureSubsystem
     {
         UpdateInfo(b, st);
     }
+    public void RerollTreasure()
+    {
+        Treasure = GameState.Run.Expedition.GetNextModule();
+    }
     public void UpdateInfo(uint new_biome, uint new_stage)
     {
         biomeId = new_biome;
@@ -25,9 +29,7 @@ public class TreasureSubsystem
     }
     public void Trigger()
     {
-        Treasure = GameState.Run.Expedition.GetNextModule();
+        RerollTreasure();
         LoadTreasureScene();
-        GameObject.Find("Exit").GetComponent<Button>().onClick.AddListener(() => Expedition.GoToMap_test());
-
     }
 }
