@@ -69,9 +69,7 @@ public class Expedition
             hkdf.expand(BitConverter.GetBytes(biome_id), sizeof(int)));
         return seed;
     }
-    public static void GoToMap_test() => UnityEngine.SceneManagement.SceneManager.LoadScene("ExpeditionMapTest_usingGameState");
-    public GameModule GetNextModule() => ModuleGen.GetNextModule();
-
     public TreasureSubsystem TreasureSubsystem;
+    public GameModule GetNextModule() => ModuleGen.GetNextModule();
     ModuleGenerator ModuleGen;
 }
