@@ -5,118 +5,72 @@ using UnityEngine;
 
 public abstract class Enemy : Character
 {
-    private List<ActiveModule> priorityModules;
-
+    protected List<ActiveModule> priorityModules;
     public Enemy(int maxHealth, int maxEnergy, int initiative) : base(maxHealth, maxEnergy, initiative) { }
-
-    /// <summary> устанавливает порядок модулей </summary>
-    protected void SetPriorityModules(List<GameModule> allModules)
-    {
-        priorityModules = allModules.OfType<ActiveModule>().ToList();
-    }
-
+    protected void SetPriorityModules() => priorityModules = listModules<ActiveModule>().ToList();
     /// <summary> метод выполнения хода </summary>
-    protected void ExecuteTurn()
+    public override async Task startTurn()
     {
-        base.startTurn(); 
-
-        bool actionTaken;
-        do
+        await base.startTurn();
+        await TurnLogic();
+        await endTurn();
+    }
+    protected async Task TurnLogic()
+    {
+        if (priorityModules == null) SetPriorityModules();
+        bool actionTaken = false;
+        while (actionTaken && CanUseAnyPriorityModule())
         {
             actionTaken = false;
-
             foreach (var module in priorityModules)
-            {
                 if (currentEnergy >= module.energyCost)
                 {
-                    if (TryGetTargetForModule(module, out Vector3Int target))
+                    int index = priorityModules.FindIndex(m => m == module);
+                    if (TryGetTargetForModule(index, out Vector3Int target))
                     {
-                        int index = GetModuleIndex(module);
-                        if (index != -1 && useActiveModule(index, target))
+                        index = modules_.FindIndex(m => m == module);
+                        if (await useActiveModule(index, target))
                         {
                             actionTaken = true;
-                            break; 
+                            break;
                         }
                     }
                 }
-            }
-        } while (actionTaken && HasEnergyForAnyModule());
-
-        base.endTurn(); 
-    }
-
-
-
-    protected virtual bool TryGetTargetForModule(ActiveModule module, out Vector3Int target)
-    {
-        target = default;
-
-        if (module is BasicAttack attack)
-            return TryGetAttackTarget(attack, out target);
-        if (module is BasicMovement movement)
-            return TryGetMovementTarget(movement, out target);
-
-        return false;
-    }
-
- 
-    protected virtual bool TryGetAttackTarget(BasicAttack attack, out Vector3Int target)
-    {
-        target = default;
-        PlayerCharacter player = tracker.getPlayer();
-        var attackRange = attack.getCellsInRange(Position);
-        if (attackRange.Contains(player.Position))
-        {
-            target = player.Position;
-            return true;
         }
-        return false;
     }
 
-
-    protected virtual bool TryGetMovementTarget(BasicMovement movement, out Vector3Int target)
+    protected bool TryGetTargetForModule(int index, out Vector3Int targetPos)
     {
-        target = default;
-        PlayerCharacter player = tracker.getPlayer();
-        var moveRange = movement.getCellsInRange(Position);
-        int currentDist = Mathf.Abs(player.Position.x - Position.x) + Mathf.Abs(player.Position.y - Position.y);
-        Vector3Int best = Position;
-        if (currentDist <= 1) return false; 
-        foreach (var cell in moveRange)
+        targetPos = default;
+        return index switch
         {
-            int dist = Mathf.Abs(player.Position.x - cell.x) + Mathf.Abs(player.Position.y - cell.y);
-            if (dist < currentDist && !tracker.IsOccupied(cell) && !tracker.OutOfBounds(cell))
-            {
-                currentDist = dist;
-                best = cell;
-            }
-        }
-        if (best != Position)
-        {
-            target = best;
-            return true;
-        }
+            0 => TryGetTargetForOne(out targetPos),
+            1 => TryGetTargetForOne(out targetPos),
+            2 => TryGetTargetForTwo(out targetPos),
+            3 => TryGetTargetForThree(out targetPos),
+            _ => false,
+        };
+    }
+
+    protected abstract bool TryGetTargetForZero(out Vector3Int targetPos);
+    protected abstract bool TryGetTargetForOne(out Vector3Int targetPos);
+    protected virtual bool TryGetTargetForTwo(out Vector3Int targetPos)
+    {
+        targetPos = default;
+        return false;
+    }
+    protected virtual bool TryGetTargetForThree(out Vector3Int targetPos)
+    {
+        targetPos = default;
         return false;
     }
 
-
-    private int GetModuleIndex(ActiveModule module)
+    private bool CanUseAnyPriorityModule()
     {
-        for (int i = 0; i < modules_.Count; i++)
-            if (modules_[i] == module) return i;
-        return -1;
+        return priorityModules.Any(m => currentEnergy >= m.energyCost && m.CanBeUsed());
     }
 
-
-    private bool HasEnergyForAnyModule()
-    {
-        foreach (var m in modules_)
-            if (m is ActiveModule module && currentEnergy >= module.energyCost)
-                return true;
-        return false;
-    }
-
-    protected override void die()
+    protected override Task die()
     {
         Debug.Log($"{name} умер");
         tracker.RemoveCharacter(this);

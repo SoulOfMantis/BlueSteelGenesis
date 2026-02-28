@@ -50,7 +50,6 @@ public abstract class Character : MonoBehaviour
         Debug.Log($"Выдан щит: {amount}; Всего: {currentShield}");
     }
     abstract protected Task die();
-
     public virtual async Task drainEnergy(int amount)
     {
         currentEnergy -= Math.Max(amount, 1);
