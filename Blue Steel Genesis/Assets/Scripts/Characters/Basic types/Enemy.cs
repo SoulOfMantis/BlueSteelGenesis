@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class Enemy : Character
 {
-    public List<ActiveModule> priorityModules;
+    protected List<ActiveModule> priorityModules;
     public Enemy(int maxHealth, int maxEnergy, int initiative) : base(maxHealth, maxEnergy, initiative) { }
     protected void SetPriorityModules() => priorityModules = listModules<ActiveModule>().ToList();
     /// <summary> метод выполнения хода </summary>
