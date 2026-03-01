@@ -11,6 +11,7 @@ public class PoisonStinger : ActiveModule
     private int duration;
     public PoisonStinger()
     {
+        range = 1;
         hitDamage = 1;
         poisonDamage = 1;
         duration = 3;
@@ -29,4 +30,14 @@ public class PoisonStinger : ActiveModule
         PoisonModule poison = new PoisonModule(poisonDamage, duration);
         await user.apply(pos, poison);
     }
+
+    protected override bool checkFinalPosition(Vector3Int pos)
+    {
+        return Character.tracker.IsOccupiedByCharacter(pos);
+    }
+    public override bool checkPosition(Character user, Vector3Int pos)
+    {
+        return base.checkPosition(user, pos) && (pos != user.Position);
+    }
+
 }
