@@ -24,6 +24,7 @@ public class Expedition
             Biome, (uint)BiomeStage
         );
         map_progress_ = new(Map);
+        ModuleGen = new(LocalSeed);
     }
 
     public void displayMap(ExpeditionMapView view)
@@ -67,4 +68,6 @@ public class Expedition
             hkdf.expand(BitConverter.GetBytes(biome_id), sizeof(int)));
         return seed;
     }
+    public GameModule GetNextModule() => ModuleGen.GetNextModule();
+    ModuleGenerator ModuleGen;
 }

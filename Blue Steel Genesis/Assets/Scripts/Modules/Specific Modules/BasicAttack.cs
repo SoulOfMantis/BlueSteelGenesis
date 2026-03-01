@@ -9,11 +9,17 @@ public class BasicAttack : ActiveModule
 {
     private int hitDamage;
 
-    public BasicAttack(int hitDamage = 1)
+    public BasicAttack()
     {
-        this.hitDamage = hitDamage;
+        hitDamage = 1;
         energyCost = 1;
         range = 1;
+        changeName("BasicAttack");
+    }
+
+    public BasicAttack(int hitDamage) : this()
+    {
+        this.hitDamage = hitDamage;
     }
 
     public override async Task Effect(Character user, Vector3Int pos)

@@ -9,6 +9,7 @@ using UnityEngine;
 public abstract class GameModule
 
 {
+    public List<string> Keywords { get; protected set; }
     public string Name { get; protected set; }
     public string Description { get; protected set; }
     public int range = 0;
