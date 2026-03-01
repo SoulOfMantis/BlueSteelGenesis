@@ -4,16 +4,24 @@ using UnityEngine;
 /// <summary>
 /// Активный модуль ядовитого жала - наносит урон и накладывает отравление
 /// </summary>
-public class MechanicStinger : BasicAttack
+public class MechanicStinger : ActiveModule
 {
-    protected int poisonDamage;
-    protected int duration;
+    private int hitDamage;
+    private int poisonDamage;
+    private int duration;
 
-    public MechanicStinger(int damage = 1, int duration = 3, int hitDamage = 1) : base(hitDamage)
+    public MechanicStinger()
     {
+        hitDamage = 1;
+        duration = 3;
+        poisonDamage = 1;
+        changeName("MechanicStinger");
+    }
+    public MechanicStinger(int damage, int duration, int hitDamage) : this()
+    {
+        this.hitDamage = hitDamage;
         poisonDamage = damage;
         this.duration = duration;
-        Name = "MechanicStinger";
     }
     public override string Description()
     {
@@ -23,7 +31,7 @@ public class MechanicStinger : BasicAttack
     }
     public override async Task Effect(Character user, Vector3Int pos)
     {
-        await base.Effect(user, pos);
+        await user.strike(pos, hitDamage);
         PoisonModule poison = new PoisonModule(poisonDamage, duration);
         await user.apply(pos, poison);
     }
