@@ -16,7 +16,7 @@ public class Expedition
         LocalSeed = generateLocalSeed(
             GameState.Run.GlobalSeed,
             Biome.id, (uint)BiomeStage,
-            GameState.Run.PlayerLivesCount,
+            GameState.Run.Player.livesCount,
             Array.Empty<byte>() //TODO: pass actual data
         );
         Map = global::Map.ExpeditionMap.generate(

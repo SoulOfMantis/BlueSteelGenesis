@@ -159,6 +159,11 @@ public class ExpeditionMapView : MonoBehaviour
                 break;
         }
         //TODO: implement
+        switch (last_selection_?.type) {
+            case Node.REGULAR_ENEMY:
+                UnityEngine.SceneManagement.SceneManager.LoadScene("testing_withMap"); //for testing only
+                break;
+        }
     }
 
     private NodeButton getButton(Vector2Int pos) {

@@ -15,8 +15,8 @@ EditorBuildSettings:
     path: Assets/Scenes/ExpeditionMapTest_usingGameState.unity
     guid: 481fd94d86cfd764b8a4086fb24859b8
   - enabled: 1
-    path: Assets/Scenes/treasure_room_b1st0.unity
-    guid: 8c4b629b24396b842b25508398fcd09c
+    path: Assets/Scenes/testing_withMap.unity
+    guid: cc1c649a953a7cf42b5ddb62f1055b94
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
