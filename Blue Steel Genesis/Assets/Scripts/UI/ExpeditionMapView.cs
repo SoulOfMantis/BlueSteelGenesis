@@ -149,6 +149,11 @@ public class ExpeditionMapView : MonoBehaviour
     private void triggerSubsystem() {
         Debug.Log($"Player selected: {last_selection_?.type} at {last_selection_?.pos}");
         //TODO: implement
+        switch (last_selection_?.type) {
+            case Node.REGULAR_ENEMY:
+                UnityEngine.SceneManagement.SceneManager.LoadScene("testing_withMap"); //for testing only
+                break;
+        }
     }
 
     private NodeButton getButton(Vector2Int pos) {

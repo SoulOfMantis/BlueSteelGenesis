@@ -6,16 +6,6 @@ using UnityEngine;
 
 public abstract class Character : MonoBehaviour
 {
-    public Character(int maxHealth, int maxEnergy, int initiative)
-    {
-        this.maxHealth = maxHealth;
-        this.maxEnergy = maxEnergy;
-        currentHealth = maxHealth;
-        currentEnergy = maxEnergy;
-        Initiative = initiative;
-    }
-
-
     public virtual async Task damage(int dmg)
     {
         dmg = Math.Max(dmg, 1);
@@ -203,12 +193,8 @@ public abstract class Character : MonoBehaviour
     protected virtual Task useStatusModule_internal(StatusModule m) => m.Effect(this, Position);
 
 
-    public int currentHealth
-    {
-        get => current_health_;
-        protected set => current_health_ = Math.Clamp(value, 0, maxHealth);
-    }
-    public int maxHealth { get; protected set; }
+    public abstract int currentHealth { get; protected set; }
+    public abstract int maxHealth { get; protected set; }
     public int currentShield { get; protected set; }
 
 
@@ -217,7 +203,7 @@ public abstract class Character : MonoBehaviour
         get => current_energy_;
         protected set => current_energy_ = Math.Clamp(value, 0, maxEnergy);
     }
-    public int maxEnergy { get; protected set; }
+    public abstract int maxEnergy { get; protected set; }
     public int Initiative { get; protected set; }
 
     public bool myTurn { get; protected set; }
@@ -235,10 +221,9 @@ public abstract class Character : MonoBehaviour
 
     public static SceneTracker tracker;
 
-    protected List<GameModule> modules_ = new();
+    protected abstract List<GameModule> modules_ { get; set; }
     protected List<StatusModule> status_modules_ = new();
 
-    private int current_health_;
     private int current_energy_;
     private Vector3Int position_;
 }

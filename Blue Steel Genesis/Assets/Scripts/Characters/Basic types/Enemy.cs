@@ -5,8 +5,15 @@ using UnityEngine;
 
 public abstract class Enemy : Character
 {
+    public Enemy(int maxHealth, int maxEnergy, int initiative)
+    {
+        this.maxHealth = maxHealth;
+        this.maxEnergy = maxEnergy;
+        currentHealth = maxHealth;
+        currentEnergy = maxEnergy;
+        Initiative = initiative;
+    }
     protected List<ActiveModule> priorityModules;
-    public Enemy(int maxHealth, int maxEnergy, int initiative) : base(maxHealth, maxEnergy, initiative) { }
     protected void SetPriorityModules() => priorityModules = listModules<ActiveModule>().ToList();
     /// <summary> метод выполнения хода </summary>
     public override async Task startTurn()
@@ -78,5 +85,10 @@ public abstract class Enemy : Character
         Destroy(gameObject);
         return Task.CompletedTask;
     }
+
+    public override int currentHealth { get; protected set; }
+    public override int maxHealth { get; protected set; }
+    public override int maxEnergy { get; protected set; }
+    protected override List<GameModule> modules_ { get; set; } = new();
 }
 
