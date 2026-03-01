@@ -3,6 +3,12 @@ using System.Collections.Generic;
 
 public class PlayerData
 {
+    public int PlayerMoney
+    {
+        get => playerMoney;
+        protected set => playerMoney = Math.Max(value, 0);
+    }
+    private int playerMoney = 0;
     public int currentHealth
     {
         get => current_health_;
