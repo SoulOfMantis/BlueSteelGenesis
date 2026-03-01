@@ -41,6 +41,7 @@ using UnityEngine.UI;
         private void OnDestroy() {
             resetSelection.RemoveListener(deselect);
             updateInteractable.RemoveListener(buttonInteractableManaging);
+            gridClickAction.Dispose();
         }
 
         public async void handleGridClick(InputAction.CallbackContext _) {

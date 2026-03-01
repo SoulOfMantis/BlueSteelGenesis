@@ -4,15 +4,21 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 /// <summary>
-/// класс модуля
+/// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 /// </summary>
 public abstract class GameModule
-
 {
+    public List<string> Keywords { get; protected set; }
     public string Name { get; protected set; }
     public string Description { get; protected set; }
     public int range = 0;
     public int price;
+
+    public GameModule()
+    {
+        changeName(GetType().Name);
+    }
+
     protected List<Vector3Int> getAvailableCells(int n, Vector3Int start)
     {
         var res = new HashSet<Vector3Int>();

@@ -12,12 +12,9 @@ public class PlayerCharacter : Character
     public TMP_Text healthDisplay;
     public GameObject VictoryScreen;
     public GameObject DefeatScreen;
-    PlayerCharacter() : base(10, 3, 10)
+    PlayerCharacter()
     {
-        //modules hardcoded for now
-        addModule(new PoisonStinger());
-        addModule(new BasicMovement());
-        modules_.ForEach(m => m.changeName(m.GetType().Name));
+        Initiative = 10;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -136,7 +133,7 @@ public class PlayerCharacter : Character
 
     public override async Task damage(int dmg)
     {
-        Debug.Log($"Игрок получил {dmg} урона!");
+        Debug.Log($"пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ {dmg} пїЅпїЅпїЅпїЅпїЅ!");
         await base.damage(dmg);
         updateHealth();
         //play taking damage animation
@@ -144,7 +141,7 @@ public class PlayerCharacter : Character
 
     public override async Task heal(int hp)
     {
-        Debug.Log($"Игрок восстановил {hp} здоровья!");
+        Debug.Log($"пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ {hp} пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!");
         await base.heal(hp);
         updateHealth();
         //play healing animation
@@ -167,7 +164,7 @@ public class PlayerCharacter : Character
 
     override protected async Task die()
     {
-        Debug.Log("Игрок умер!");
+        Debug.Log("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ!");
         tracker.RemoveCharacter(this);
         Defeat();
         //TODO: player loss
@@ -195,6 +192,24 @@ public class PlayerCharacter : Character
     public void GaveMoney(int value)=> playerMoney += value;
     public void LoseMoney(int value)=>playerMoney -= value;
 
+
+
+    public override int currentHealth {
+        get => GameState.Run.Player.currentHealth;
+        protected set => GameState.Run.Player.currentHealth = value;
+    }
+    public override int maxHealth {
+        get => GameState.Run.Player.maxHealth;
+        protected set => GameState.Run.Player.maxHealth = value;
+    }
+    public override int maxEnergy {
+        get => GameState.Run.Player.maxEnergy;
+        protected set => GameState.Run.Player.maxEnergy = value;
+    }
+    protected override List<GameModule> modules_ {
+        get => GameState.Run.Player.modules;
+        set => GameState.Run.Player.modules = value;
+    }
 }
 
 
