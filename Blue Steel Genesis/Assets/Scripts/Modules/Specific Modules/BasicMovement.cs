@@ -11,7 +11,7 @@ public class BasicMovement : ActiveModule
     {
         range = 3;
         energyCost = 1;
-        Name = "BasicMovement";
+        changeName("BasicMovement");
     }
     public override string Description()
     {

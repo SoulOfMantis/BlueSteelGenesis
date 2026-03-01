@@ -9,17 +9,22 @@ public class BasicAttack : ActiveModule
 {
     protected int hitDamage;
 
-    public BasicAttack(int hitDamage = 1)
+    public BasicAttack()
     {
-        this.hitDamage = hitDamage;
+        hitDamage = 1;
         energyCost = 1;
         range = 1;
-        Name = "BasicAttack";
+        changeName("BasicAttack");
         //Icon_name = "...";
     }
     public override string Description()
     {
         return $"Deal {hitDamage} to the adjacent creature.";
+    }
+
+    public BasicAttack(int hitDamage) : this()
+    {
+        this.hitDamage = hitDamage;
     }
     public override async Task Effect(Character user, Vector3Int pos)
     {

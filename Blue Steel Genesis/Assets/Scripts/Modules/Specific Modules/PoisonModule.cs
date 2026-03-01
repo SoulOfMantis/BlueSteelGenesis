@@ -19,6 +19,7 @@ public class PoisonModule : StatusModule
     {
         return $"One of the most infamous ways to kill. " +
             $"You will take {poisonDamage} damage at the start of your turn for another {turnsLeft} turns.";
+        changeName("PoisonModule");
     }
     public override async Task Effect(Character user, Vector3Int pos)
     {

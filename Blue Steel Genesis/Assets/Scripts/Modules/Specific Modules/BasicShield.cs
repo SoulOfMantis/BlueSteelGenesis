@@ -7,11 +7,11 @@ using UnityEngine;
 /// </summary>
 public class BasicShield : ActiveModule
 {
-    protected int shieldGiven;
-
-    public BasicShield(int shield = 1)
+    private int shieldGiven;
+    public BasicShield()
     {
-        this.shieldGiven = shield;
+        changeName("BasicShield");
+        shieldGiven = 3;
         energyCost = 1;
         range = 0;
         Name = "BasicShield";
@@ -19,6 +19,11 @@ public class BasicShield : ActiveModule
     public override string Description()
     {
         return $"Give {shieldGiven} shield to yourself.";
+    }
+
+    public BasicShield(int shield) : this()
+    {
+        shieldGiven = shield;
     }
     public override async Task Effect(Character user, Vector3Int pos)
     {

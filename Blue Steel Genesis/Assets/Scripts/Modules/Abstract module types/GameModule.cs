@@ -9,6 +9,7 @@ using UnityEngine;
 public abstract class GameModule
 
 {
+    public List<string> Keywords { get; protected set; }
     public string Name { get; protected set; }
     private string icon_name = "default_default.png";
     public string Icon_name { get => icon_name; protected set => icon_name = value; }
