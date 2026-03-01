@@ -1,9 +1,17 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
 public class Enemy : Character
 {
-    public Enemy(int maxHealth, int maxEnergy, int initiative) : base(maxHealth, maxEnergy, initiative) { }
+    public Enemy(int maxHealth, int maxEnergy, int initiative)
+    {
+        this.maxHealth = maxHealth;
+        this.maxEnergy = maxEnergy;
+        currentHealth = maxHealth;
+        currentEnergy = maxEnergy;
+        Initiative = initiative;
+    }
 
     protected override Task die()
     {
@@ -23,8 +31,12 @@ public class Enemy : Character
 
     // Update is called once per frame
     void Update()
-
     {
 
     }
+
+    public override int currentHealth { get; protected set; }
+    public override int maxHealth { get; protected set; }
+    public override int maxEnergy { get; protected set; }
+    protected override List<GameModule> modules_ { get; set; } = new();
 }

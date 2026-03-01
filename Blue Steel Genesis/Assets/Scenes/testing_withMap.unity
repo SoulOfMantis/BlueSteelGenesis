@@ -2243,50 +2243,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: -8435245712485981826, guid: 8fcad41a29dda544d91d34066e48a89c, type: 3}
---- !u!1 &681914373
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 681914374}
-  - component: {fileID: 681914375}
-  m_Layer: 0
-  m_Name: AutostartExpedition
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &681914374
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 681914373}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &681914375
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 681914373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ca5e3e4dbd50e142952032064c856e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: BlueSteelGenesis::Debug_AutoStartExpedition
 --- !u!1 &713850396
 GameObject:
   m_ObjectHideFlags: 0
@@ -2686,6 +2642,7 @@ GameObject:
   - component: {fileID: 847329475}
   - component: {fileID: 847329474}
   - component: {fileID: 847329473}
+  - component: {fileID: 847329477}
   m_Layer: 5
   m_Name: Exit
   m_TagString: Untagged
@@ -2720,7 +2677,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 847329471}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7579a1b80c7ce944085e6ed1f6f7cbc7, type: 3}
   m_Name: 
@@ -2769,9 +2726,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 847329473}
-        m_TargetAssemblyTypeName: MenuButtons, Assembly-CSharp
-        m_MethodName: Exit
+      - m_Target: {fileID: 847329477}
+        m_TargetAssemblyTypeName: Debug_MenuButtonsForFightTest, BlueSteelGenesis
+        m_MethodName: returnToMap
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2819,6 +2776,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 847329471}
   m_CullTransparentMesh: 1
+--- !u!114 &847329477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847329471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d810522f98e29b4a8ad0d68320bb6d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BlueSteelGenesis::Debug_MenuButtonsForFightTest
 --- !u!1 &907883944
 GameObject:
   m_ObjectHideFlags: 0
@@ -2982,6 +2951,7 @@ GameObject:
   - component: {fileID: 972652693}
   - component: {fileID: 972652692}
   - component: {fileID: 972652691}
+  - component: {fileID: 972652695}
   m_Layer: 5
   m_Name: RestartButton
   m_TagString: Untagged
@@ -3016,7 +2986,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 972652689}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7579a1b80c7ce944085e6ed1f6f7cbc7, type: 3}
   m_Name: 
@@ -3060,7 +3030,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 972652693}
   m_OnClick:
     m_PersistentCalls:
@@ -3115,6 +3085,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 972652689}
   m_CullTransparentMesh: 1
+--- !u!114 &972652695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 972652689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d810522f98e29b4a8ad0d68320bb6d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BlueSteelGenesis::Debug_MenuButtonsForFightTest
 --- !u!1 &1006223259
 GameObject:
   m_ObjectHideFlags: 0
@@ -3900,6 +3882,7 @@ GameObject:
   - component: {fileID: 1351056330}
   - component: {fileID: 1351056329}
   - component: {fileID: 1351056328}
+  - component: {fileID: 1351056332}
   m_Layer: 5
   m_Name: Exit
   m_TagString: Untagged
@@ -3934,7 +3917,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1351056326}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7579a1b80c7ce944085e6ed1f6f7cbc7, type: 3}
   m_Name: 
@@ -3983,9 +3966,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1351056328}
-        m_TargetAssemblyTypeName: MenuButtons, Assembly-CSharp
-        m_MethodName: Exit
+      - m_Target: {fileID: 1351056332}
+        m_TargetAssemblyTypeName: Debug_MenuButtonsForFightTest, BlueSteelGenesis
+        m_MethodName: returnToMap
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4033,6 +4016,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1351056326}
   m_CullTransparentMesh: 1
+--- !u!114 &1351056332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351056326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d810522f98e29b4a8ad0d68320bb6d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BlueSteelGenesis::Debug_MenuButtonsForFightTest
 --- !u!1 &1369200435
 GameObject:
   m_ObjectHideFlags: 0
@@ -5795,7 +5790,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1962244304}
   m_OnClick:
     m_PersistentCalls:
@@ -6352,7 +6347,6 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 681914374}
   - {fileID: 190888016}
   - {fileID: 1664654373}
   - {fileID: 574385467}
