@@ -45,7 +45,6 @@ public class GameRun
     public Expedition Expedition { get; private set; } = null;
     
     public PlayerData Player { get; private set; } = new();
-    public uint PlayerLivesCount { get; private set; } = 3; // TODO: move to player data
     // ship data
     // player data
     // available biomes
