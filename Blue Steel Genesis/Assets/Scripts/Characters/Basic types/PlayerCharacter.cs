@@ -11,13 +11,9 @@ public class PlayerCharacter : Character
     public TMP_Text healthDisplay;
     public GameObject VictoryScreen;
     public GameObject DefeatScreen;
-    PlayerCharacter() : base(10, 3, 10)
+    PlayerCharacter()
     {
-        //modules hardcoded for now
-        addModule(new PoisonStinger());
-        addModule(new BasicMovement());
-        addModule(new CounterAttack());
-        modules_.ForEach(m => m.changeName(m.GetType().Name));
+        Initiative = 10;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -186,6 +182,24 @@ public class PlayerCharacter : Character
         DefeatScreen.SetActive(true);
     }
 
+
+
+    public override int currentHealth {
+        get => GameState.Run.Player.currentHealth;
+        protected set => GameState.Run.Player.currentHealth = value;
+    }
+    public override int maxHealth {
+        get => GameState.Run.Player.maxHealth;
+        protected set => GameState.Run.Player.maxHealth = value;
+    }
+    public override int maxEnergy {
+        get => GameState.Run.Player.maxEnergy;
+        protected set => GameState.Run.Player.maxEnergy = value;
+    }
+    protected override List<GameModule> modules_ {
+        get => GameState.Run.Player.modules;
+        set => GameState.Run.Player.modules = value;
+    }
 }
 
 

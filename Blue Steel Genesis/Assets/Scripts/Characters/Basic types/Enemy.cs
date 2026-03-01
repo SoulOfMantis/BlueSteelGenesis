@@ -5,8 +5,15 @@ using UnityEngine;
 
 public abstract class Enemy : Character
 {
+    public Enemy(int maxHealth, int maxEnergy, int initiative)
+    {
+        this.maxHealth = maxHealth;
+        this.maxEnergy = maxEnergy;
+        currentHealth = maxHealth;
+        currentEnergy = maxEnergy;
+        Initiative = initiative;
+    }
     protected List<ActiveModule> priorityModules;
-    public Enemy(int maxHealth, int maxEnergy, int initiative) : base(maxHealth, maxEnergy, initiative) { }
     protected void SetPriorityModules() => priorityModules = listModules<ActiveModule>().ToList();
     /// <summary> метод выполнения хода </summary>
     public override async Task startTurn()
@@ -18,12 +25,12 @@ public abstract class Enemy : Character
     protected async Task TurnLogic()
     {
         if (priorityModules == null) SetPriorityModules();
-        bool actionTaken = false;
+        bool actionTaken = true;
         while (actionTaken && CanUseAnyPriorityModule())
         {
             actionTaken = false;
             foreach (var module in priorityModules)
-                if (currentEnergy >= module.energyCost)
+                if (currentEnergy >= module.energyCost && module.CanBeUsed())
                 {
                     int index = priorityModules.FindIndex(m => m == module);
                     if (TryGetTargetForModule(index, out Vector3Int target))
@@ -44,7 +51,7 @@ public abstract class Enemy : Character
         targetPos = default;
         return index switch
         {
-            0 => TryGetTargetForOne(out targetPos),
+            0 => TryGetTargetForZero(out targetPos),
             1 => TryGetTargetForOne(out targetPos),
             2 => TryGetTargetForTwo(out targetPos),
             3 => TryGetTargetForThree(out targetPos),
@@ -72,10 +79,16 @@ public abstract class Enemy : Character
 
     protected override Task die()
     {
+        if (myTurn) endTurn();
         Debug.Log($"{name} умер");
         tracker.RemoveCharacter(this);
         Destroy(gameObject);
         return Task.CompletedTask;
     }
+
+    public override int currentHealth { get; protected set; }
+    public override int maxHealth { get; protected set; }
+    public override int maxEnergy { get; protected set; }
+    protected override List<GameModule> modules_ { get; set; } = new();
 }
 
