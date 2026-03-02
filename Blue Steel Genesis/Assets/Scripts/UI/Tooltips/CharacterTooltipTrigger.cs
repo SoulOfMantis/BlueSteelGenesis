@@ -8,8 +8,9 @@ public class CharacterTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPoi
     private Color baseCharacterColor;
     IEnumerator ShowingTooltip()
     {
+        if (TooltipSystem.IsCharTooltipActive) yield return new WaitForSeconds(0.5f);
         TooltipSystem.Load(character);           
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.5f);
         TooltipSystem.Show(TooltipSystem.TooltipType.characterTooltip, this);
         if (character != null)  
         { 

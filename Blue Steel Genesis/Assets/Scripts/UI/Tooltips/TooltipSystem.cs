@@ -6,6 +6,9 @@ public class TooltipSystem : MonoBehaviour
     public CharacterInfoTooltip characterTooltip;
     public ModuleInfoTooltip moduleTooltip;
     public CharacterTooltipTrigger current;
+
+    public static bool IsCharTooltipActive => instance.characterTooltip.enabled;
+    public static bool IsModuleTooltipActive => instance.moduleTooltip.enabled;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void Awake()
     {
