@@ -57,7 +57,7 @@ public abstract class Character : MonoBehaviour
         await triggerModules(TriggerType.OnShieldGiven);
         Debug.Log($"Выдан щит: {amount}; Всего: {currentShield}");
     }
-    public virtual async Task die()
+    protected virtual async Task die()
     {
         if (visualHandler != null)
             await visualHandler.PlayDeathAnimation();
