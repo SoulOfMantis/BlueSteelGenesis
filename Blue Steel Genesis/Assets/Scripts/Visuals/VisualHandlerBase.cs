@@ -9,7 +9,7 @@ public abstract class VisualHandlerBase : MonoBehaviour
     [SerializeField] protected SpriteRenderer spriteRenderer;
 
     // Инициализирует обработчик спрайтов и анимаций
-    protected virtual void Inititate()
+    protected virtual void Initiate()
     {
         if (animator == null)
             animator = GetComponent<Animator>();

@@ -59,14 +59,13 @@ public class CharacterVisualHandler : VisualHandlerBase
         PlayAnimation(deathAnimation.animationName);
 
         await Task.Delay((int)(deathAnimation.transitionDuration * 1000));
-        gameObject.SetActive(false);
     }
 
     public async Task ShowHealingAnimation(int amount)
     {
         PlayAnimation(healEffect.animationName);
 
-        await Task.Delay((int)(walkAnimation.transitionDuration * 1000));
+        await Task.Delay((int)(healEffect.transitionDuration * 1000));
         ShowFloatingText($"+{amount}", Color.green);
     }
 

@@ -6,6 +6,8 @@ using UnityEngine;
 
 public abstract class Character : MonoBehaviour
 {
+    [SerializeField] protected CharacterVisualHandler visualHandler;
+
     public Character(int maxHealth, int maxEnergy, int initiative)
     {
         this.maxHealth = maxHealth;
@@ -18,6 +20,9 @@ public abstract class Character : MonoBehaviour
 
     public virtual async Task damage(int dmg)
     {
+        if (visualHandler != null)
+            await visualHandler.PlayHurtAnimation(dmg);
+
         dmg = Math.Max(dmg, 1);
         if (currentShield > 0)
         {
@@ -39,6 +44,9 @@ public abstract class Character : MonoBehaviour
     }
     public virtual async Task heal(int hp)
     {
+        if (visualHandler != null)
+            await visualHandler.ShowHealingAnimation(hp);
+
         currentHealth += Math.Max(hp, 1);
         await triggerModules(TriggerType.OnHeal);
     }
@@ -49,7 +57,14 @@ public abstract class Character : MonoBehaviour
         await triggerModules(TriggerType.OnShieldGiven);
         Debug.Log($"Выдан щит: {amount}; Всего: {currentShield}");
     }
-    abstract protected Task die();
+    public virtual async Task die()
+    {
+        if (visualHandler != null)
+            await visualHandler.PlayDeathAnimation();
+
+        tracker.RemoveCharacter(this);
+        Destroy(gameObject);
+    }    
 
     public virtual async Task drainEnergy(int amount)
     {
@@ -104,9 +119,11 @@ public abstract class Character : MonoBehaviour
 
         Vector3Int[] valid_moves = { Vector3Int.left, Vector3Int.right, Vector3Int.down, Vector3Int.up };
         if (!valid_moves.Contains(dir) || tracker.OutOfBounds(new_pos) || tracker.IsOccupied(new_pos)) return;
-        Position = new_pos;
 
-        await Awaitable.WaitForSecondsAsync(.2f); //TODO: remove delay; derived classes must await animations
+        if (visualHandler != null)
+            await visualHandler.PlayWalkAnimation(dir);
+     
+        Position = new_pos;
     }
 
     public Task strike(int x, int y, int z, int dmg) => strike(new Vector3Int(x, y, z), dmg);
@@ -115,6 +132,10 @@ public abstract class Character : MonoBehaviour
         Character target = tracker.FindCharacterAtPosition(pos);
         if (target == null)
             return;
+        
+        if (visualHandler != null)
+            await visualHandler.PlayAttackAnimation(pos);
+
         await target.damage(dmg);
         await triggerModules(TriggerType.OnStrike, pos);
         Debug.Log($"Strike at {pos} for {dmg} damage");
