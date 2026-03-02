@@ -17,6 +17,7 @@ public class MechanicStinger : ActiveModule
         duration = 3;
         poisonDamage = 1;
         changeName("MechanicStinger");
+        Icon_name = "Module_mechanical_sting2";
     }
     public MechanicStinger(int damage, int duration, int hitDamage) : this()
     {

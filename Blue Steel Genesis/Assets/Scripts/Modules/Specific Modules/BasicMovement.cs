@@ -12,6 +12,7 @@ public class BasicMovement : ActiveModule
         range = 3;
         energyCost = 1;
         changeName("BasicMovement");
+        Icon_name = "Module_movement";
     }
     public override string Description()
     {
