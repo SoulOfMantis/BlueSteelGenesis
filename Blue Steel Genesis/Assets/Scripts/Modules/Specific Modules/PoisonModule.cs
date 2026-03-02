@@ -13,6 +13,7 @@ public class PoisonModule : StatusModule
         triggerType = TriggerType.OnTurnStart;
         poisonDamage = damage;
         turnsLeft = duration;
+        changeName("PoisonModule");
     }
 
     public override async Task Effect(Character user, Vector3Int pos)

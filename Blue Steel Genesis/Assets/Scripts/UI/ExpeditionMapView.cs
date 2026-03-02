@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Map;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -23,7 +24,7 @@ public class ExpeditionMapView : MonoBehaviour
     /// Создает отображаемую карту
     /// </summary>
     /// <param name="progress_info">Данные о прохождении (объект будет обновлен)</param>
-    public void make(Map.ExpeditionMap map, ExpeditionMapProgressInfo progress_info = null)
+    public void make(ExpeditionMap map, ExpeditionMapProgressInfo progress_info = null)
     {
         if (map == null) return;
         progress_info ??= new(map);
@@ -33,18 +34,18 @@ public class ExpeditionMapView : MonoBehaviour
         progress_ = progress_info;
 
         var effective_rect = calculateEffectiveRect(
-            new(map_.width, map_.height),
+            new(ExpeditionMap.width, ExpeditionMap.height),
             NodeButton.size,
             out float node_gap
         );
 
-        void addButton(Vector2Int position, Map.Node type) {
+        void addButton(Vector2Int position, Node type) {
             Vector2 local_position = new(
                 NodeButton.size.x/2 + node_gap * position.x,
                 NodeButton.size.y/2 + node_gap * (position.y + 1));
             local_position.y = effective_rect.height - local_position.y;
 
-            if (type == Map.Node.START || type == Map.Node.BOSS)
+            if (type == Node.START || type == Node.BOSS)
                 local_position.x = effective_rect.width / 2;
 
             var button_obj = Instantiate(button_prefab, panel.transform);
@@ -54,13 +55,13 @@ public class ExpeditionMapView : MonoBehaviour
             button.setInfo(position, type);
             getButtonRef(position) = button;
         }
-        buttons_ = new NodeButton[map_.height, map_.width];
-        for (int line = 0; line < map_.height; ++line)
-            for (int x = 0; x < map_.width; ++x)
-                if (map_.map[line, x] != Map.Node.DISABLED)
+        buttons_ = new NodeButton[ExpeditionMap.height, ExpeditionMap.width];
+        for (int line = 0; line < ExpeditionMap.height; ++line)
+            for (int x = 0; x < ExpeditionMap.width; ++x)
+                if (map_.map[line, x] != Node.DISABLED)
                     addButton(new Vector2Int(x, line), map_.map[line, x]);
-        addButton(map.start_node_pos, Map.Node.START);
-        addButton(map.boss_node_pos, Map.Node.BOSS);
+        addButton(map.start_node_pos, Node.START);
+        addButton(map.boss_node_pos, Node.BOSS);
 
         void linkButtons(NodeButton b1, NodeButton b2) {
             var line = new MultilineRenderer2D.Line() {
@@ -148,13 +149,18 @@ public class ExpeditionMapView : MonoBehaviour
     private void triggerSubsystem() {
         Debug.Log($"Player selected: {last_selection_?.type} at {last_selection_?.pos}");
         //TODO: implement
+        switch (last_selection_?.type) {
+            case Node.REGULAR_ENEMY:
+                UnityEngine.SceneManagement.SceneManager.LoadScene("testing_withMap"); //for testing only
+                break;
+        }
     }
 
     private NodeButton getButton(Vector2Int pos) {
         if (pos.x == -1) {
             if (pos.y == -1)
                 return upper_end_button_;
-            if (pos.y == map_.height)
+            if (pos.y == ExpeditionMap.height)
                 return lower_end_button_;
             throw new ArgumentOutOfRangeException();
         }
@@ -164,7 +170,7 @@ public class ExpeditionMapView : MonoBehaviour
         if (pos.x == -1) {
             if (pos.y == -1)
                 return ref upper_end_button_;
-            if (pos.y == map_.height)
+            if (pos.y == ExpeditionMap.height)
                 return ref lower_end_button_;
             throw new ArgumentOutOfRangeException();
         }
@@ -216,7 +222,7 @@ public class ExpeditionMapView : MonoBehaviour
     [Range(0f, .4f), Tooltip("Отступ с каждой стороны родительского элемента")]
     public float margin = 0.05f;
 
-    private Map.ExpeditionMap map_;
+    private ExpeditionMap map_;
     private NodeButton[,] buttons_;
     private NodeButton upper_end_button_, lower_end_button_;
     private ExpeditionMapProgressInfo progress_;
@@ -234,7 +240,7 @@ public class ExpeditionMapView : MonoBehaviour
     [SerializeField]
     private Button confirm_selection_button_;
 
-    public (Vector2Int pos, Map.Node type)? lastSelection {
+    public (Vector2Int pos, Node type)? lastSelection {
         get => last_selection_;
         private set {
             if (last_selection_ != null)
@@ -247,7 +253,7 @@ public class ExpeditionMapView : MonoBehaviour
                 confirm_selection_button_.interactable = last_selection_ != null;
         }
     }
-    private (Vector2Int pos, Map.Node type)? last_selection_ = null;
+    private (Vector2Int pos, Node type)? last_selection_ = null;
 
     public Vector2Int currentNode {
         get => progress_.currentNode;
@@ -263,8 +269,8 @@ public class ExpeditionMapView : MonoBehaviour
 }
 
 public class ExpeditionMapProgressInfo {
-    public ExpeditionMapProgressInfo(Map.ExpeditionMap map) {
-        path = new(map.height + 2);
+    public ExpeditionMapProgressInfo(ExpeditionMap map) {
+        path = new(ExpeditionMap.height + 2);
         path.Add(map.start_node_pos);
     }
     

@@ -1,26 +1,32 @@
 ﻿using System;
+using HKDF = HKDF<System.Security.Cryptography.HMACSHA1>;
 
 public class Expedition
 {
     public Expedition(Map.BiomeInfo biome)
     {
         Biome = biome;
+        BiomeSeed = generateBiomeSeed(GameState.Run.GlobalSeed, biome.id);
     }
 
     public void startNextStage()
     {
         ++BiomeStage;
-        Map = global::Map.ExpeditionMap.generate(
-            5, 9,
-            BitConverter.GetBytes(GameState.Run.GlobalSeed),
-            Biome, (uint)BiomeStage,
-            GameState.Run.PlayerLivesCount,
+
+        LocalSeed = generateLocalSeed(
+            GameState.Run.GlobalSeed,
+            Biome.id, (uint)BiomeStage,
+            GameState.Run.Player.livesCount,
             Array.Empty<byte>() //TODO: pass actual data
+        );
+        Map = global::Map.ExpeditionMap.generate(
+            BiomeSeed, LocalSeed,
+            Biome, (uint)BiomeStage
         );
         map_progress_ = new(Map);
 
-        int local_seed = 0; //TODO: Add local seed
-        combat_system = new CombatSystem(Biome.id, BiomeStage, local_seed);
+        combatSystem = new CombatSystem(Biome.id, BiomeStage, LocalSeed);
+        ModuleGen = new(LocalSeed);
     }
 
     public void displayMap(ExpeditionMapView view)
@@ -31,13 +37,39 @@ public class Expedition
             view.make(Map, map_progress_);
     }
 
+    public int LocalSeed { get; private set; }
+    public int BiomeSeed { get; private set; }
+
     public Map.ExpeditionMap Map { get; private set; } = null;
     public Map.BiomeInfo Biome { get; private set; }
 
     private ExpeditionMapProgressInfo map_progress_ = null;
     public int BiomeStage { get; private set; } = -1;
 
-    CombatSystem combat_system;
 
-
+    private static int generateLocalSeed(int global_seed, uint biome_id, uint biome_stage, uint lives_count, byte[] ship_parts_data)
+    {
+        HKDF hkdf = new();
+        hkdf.extract(null, BitConverter.GetBytes(global_seed));
+        int seed = BitConverter.ToInt32(
+            hkdf.expand(ArrayUtil.join(
+                BitConverter.GetBytes(biome_id),
+                BitConverter.GetBytes(biome_stage),
+                BitConverter.GetBytes(lives_count),
+                ship_parts_data
+            ),
+            sizeof(int)));
+        return seed;
+    }
+    private static int generateBiomeSeed(int global_seed, uint biome_id)
+    {
+        HKDF hkdf = new();
+        hkdf.extract(null, BitConverter.GetBytes(global_seed));
+        int seed = BitConverter.ToInt32(
+            hkdf.expand(BitConverter.GetBytes(biome_id), sizeof(int)));
+        return seed;
+    }
+    public GameModule GetNextModule() => ModuleGen.GetNextModule();
+    ModuleGenerator ModuleGen;
+    CombatSystem combatSystem;
 }
