@@ -242,7 +242,9 @@ public abstract class Character : MonoBehaviour
     public static SceneTracker tracker;
 
     protected abstract List<GameModule> modules_ { get; set; }
+    public IReadOnlyList<GameModule> Modules { get => modules_.AsReadOnly();}
     protected List<StatusModule> status_modules_ = new();
+    public IReadOnlyList<GameModule> Statuses { get => status_modules_.AsReadOnly(); }
 
     private int current_energy_;
     private Vector3Int position_;

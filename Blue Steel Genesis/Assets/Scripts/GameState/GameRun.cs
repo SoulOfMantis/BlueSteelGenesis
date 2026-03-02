@@ -12,7 +12,7 @@ public class GameRun
     {
         // TODO: handle player creation properly
         Player.modules = new List<GameModule>{
-            new PoisonStinger(),
+            new MechanicStinger(),
             new BasicMovement()
         };
         Player.livesCount = 3;
