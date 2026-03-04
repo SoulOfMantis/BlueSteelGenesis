@@ -20,8 +20,8 @@ public class Expedition
         Player.maxHealth = 10;
         Player.maxEnergy = 3;
         Player.currentHealth = Player.maxHealth;
-        Player.materials = 3;
-        Player.money = 10;
+        Player.GiveMaterials(3);
+        Player.GiveMoney(10);
 
         startNextStage();
     }
