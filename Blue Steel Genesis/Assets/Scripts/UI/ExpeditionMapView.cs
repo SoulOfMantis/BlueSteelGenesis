@@ -151,7 +151,8 @@ public class ExpeditionMapView : MonoBehaviour
         //TODO: implement
         switch (last_selection_?.type) {
             case Node.REGULAR_ENEMY:
-                UnityEngine.SceneManagement.SceneManager.LoadScene("testing_withMap"); //for testing only
+                GameState.Run.Expedition.CombatSystem.TriggerNormalEncounter();
+                // UnityEngine.SceneManagement.SceneManager.LoadScene("testing_withMap"); //for testing only
                 break;
         }
     }

@@ -2,22 +2,41 @@ using System;
 
 public class CombatSystem
 {
-    int biome_id, stage_id;
+    uint biome_id, stage_id;
 
     Random gen;
 
-    static const int max_enc_id = 11;
+    const int max_enc_id = 3;
+    const int materials_given = 1;
+    const int money_given = 1;
 
-    public CombatSystem(int biome, int stage, int local_seed)
+    public CombatSystem(uint biome, uint stage, int local_seed)
     {
         biome_id = biome;
         stage_id = stage;
         gen = new Random(local_seed);
     }
 
-    public string NextNormalEncounter(int biome_id, int stage_id)
+    string NextNormalEncounter()
     {
         int enc_id = gen.Next(max_enc_id);
-        return $"Biome{biome_id}Stage{stage_id}Normal_{enc_id}";
+        return $"b{biome_id}_st{stage_id}_Normal{enc_id}";
     }
-}
+
+    public void TriggerNormalEncounter()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(NextNormalEncounter());
+    }
+
+    public void Defeat()
+    {
+        GameState.Run.endExpedition();
+    }
+
+    public void Victory()
+    {
+        GameState.Run.Player.GiveMaterials(materials_given);
+        GameState.Run.Player.GiveMoney(money_given);
+        UnityEngine.SceneManagement.SceneManager.LoadScene("ExpeditionMapTest_usingGameState");
+    }
+}   

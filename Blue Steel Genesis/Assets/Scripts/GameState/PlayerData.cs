@@ -14,9 +14,25 @@ public class PlayerData
     public int maxHealth { get; set; }
     public int maxEnergy { get; set; }
 
+    public void GiveMoney(int value) => PlayerMoney += value;
+    public void LoseMoney(int value) => PlayerMoney -= value;
+    public void GiveMaterials(int value) => PlayerMaterials += value;
+    public void LoseMaterials(int value) => PlayerMaterials -= value;
 
-    public uint money { get; set; }
-    public uint materials { get; set; }
+    public int PlayerMoney
+    {
+        get => playerMoney;
+        protected set => playerMoney = Math.Max(value, 0);
+    }
+    private int playerMoney = 0;
+
+    public int PlayerMaterials
+    {
+        get => playerMaterials;
+        protected set => playerMaterials = Math.Max(value, 0);
+    }
+    private int playerMaterials = 0;
+
     public uint livesCount { get; set; }
 
 

@@ -25,7 +25,7 @@ public class Expedition
         );
         map_progress_ = new(Map);
 
-        combatSystem = new CombatSystem(Biome.id, BiomeStage, LocalSeed);
+        CombatSystem = new CombatSystem(Biome.id, (uint)BiomeStage, LocalSeed);
         ModuleGen = new(LocalSeed);
     }
 
@@ -71,5 +71,6 @@ public class Expedition
     }
     public GameModule GetNextModule() => ModuleGen.GetNextModule();
     ModuleGenerator ModuleGen;
-    CombatSystem combatSystem;
+    public CombatSystem CombatSystem;
+
 }

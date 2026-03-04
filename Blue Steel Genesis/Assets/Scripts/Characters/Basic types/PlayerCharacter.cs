@@ -175,13 +175,13 @@ public class PlayerCharacter : Character
         updateButtons();
         await endBattle();
         VictoryScreen.SetActive(true);
+        GameState.Run.Expedition.CombatSystem.Victory();
     }
     public void Defeat()
     {
         updateButtons();
         DefeatScreen.SetActive(true);
     }
-
 
 
     public override int currentHealth {
