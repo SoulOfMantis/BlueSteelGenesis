@@ -33,7 +33,7 @@ public class PlayerData
     }
     private int playerMaterials = 0;
 
-    public uint livesCount { get; set; }
+    
 
 
     public List<GameModule> modules = new();
