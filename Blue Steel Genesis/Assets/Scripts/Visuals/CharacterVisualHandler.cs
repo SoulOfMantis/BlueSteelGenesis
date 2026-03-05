@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 
 public class CharacterVisualHandler : VisualHandlerBase
@@ -48,10 +49,11 @@ public class CharacterVisualHandler : VisualHandlerBase
     public async Task PlayHurtAnimation(int amount)
     {
         PlayAnimation(hurtAnimation.animationName);
-         
-        await Task.Delay((int)(hurtAnimation.transitionDuration * 1000));
 
         ShowFloatingText($"-{amount}", Color.red);
+
+        await Task.Delay((int)(hurtAnimation.transitionDuration * 1000));
+
     }
 
     public async Task PlayDeathAnimation()
@@ -87,14 +89,19 @@ public class CharacterVisualHandler : VisualHandlerBase
     {
         if (floatingTextPrefab == null) return;
 
-        Vector3 spawn = floatingTextSpawnPoint != null ? floatingTextSpawnPoint.position : transform.position + Vector3.up * 2;
+        Vector3 spawnPos = floatingTextSpawnPoint != null
+            ? floatingTextSpawnPoint.position : transform.position;
 
-        var textObj = Instantiate(floatingTextPrefab, spawn, Quaternion.identity);
-        var tmp = textObj.GetComponent<TMPro.TMP_Text>();
+        GameObject textObj = Instantiate(floatingTextPrefab, spawnPos, Quaternion.identity);
 
-        tmp.text = text;
-        tmp.color = color;
+        TMP_Text tmp = textObj.GetComponent<TMP_Text>();
+        if (tmp != null)
+        {
+            tmp.text = text;
+            tmp.color = color;
+        }
 
-        Destroy(tmp, 1.5f);
+        Destroy(textObj, 1.5f);
+        Destroy(textObj, 1.5f);
     }
 }

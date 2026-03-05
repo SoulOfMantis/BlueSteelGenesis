@@ -8,6 +8,11 @@ public abstract class VisualHandlerBase : MonoBehaviour
     [SerializeField] protected Animator animator;
     [SerializeField] protected SpriteRenderer spriteRenderer;
 
+    protected virtual void Awake()
+    {
+        Initiate();
+    }
+
     // Инициализирует обработчик спрайтов и анимаций
     protected virtual void Initiate()
     {
