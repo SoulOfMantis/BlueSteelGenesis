@@ -193,20 +193,20 @@ public class PlayerCharacter : Character
         protected set => GameState.Run.Player.PlayerMoney = value;
     }
     public override int currentHealth {
-        get => GameState.Run.Player.currentHealth;
-        protected set => GameState.Run.Player.currentHealth = value;
+        get => GameState.Run.Expedition.Player.currentHealth;
+        protected set => GameState.Run.Expedition.Player.currentHealth = value;
     }
     public override int maxHealth {
-        get => GameState.Run.Player.maxHealth;
-        protected set => GameState.Run.Player.maxHealth = value;
+        get => GameState.Run.Expedition.Player.maxHealth;
+        protected set => GameState.Run.Expedition.Player.maxHealth = value;
     }
     public override int maxEnergy {
-        get => GameState.Run.Player.maxEnergy;
-        protected set => GameState.Run.Player.maxEnergy = value;
+        get => GameState.Run.Expedition.Player.maxEnergy;
+        protected set => GameState.Run.Expedition.Player.maxEnergy = value;
     }
     protected override List<GameModule> modules_ {
-        get => GameState.Run.Player.modules;
-        set => GameState.Run.Player.modules = value;
+        get => GameState.Run.Expedition.Player.modules;
+        set => GameState.Run.Expedition.Player.modules = value;
     }
 }
 

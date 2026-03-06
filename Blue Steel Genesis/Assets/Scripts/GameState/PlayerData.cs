@@ -23,7 +23,6 @@ public class PlayerData
 
     public uint money { get; set; }
     public uint materials { get; set; }
-    public uint livesCount { get; set; }
 
 
     public List<GameModule> modules = new();
