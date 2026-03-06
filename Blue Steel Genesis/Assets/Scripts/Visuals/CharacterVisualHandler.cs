@@ -25,9 +25,9 @@ public class CharacterVisualHandler : VisualHandlerBase
     [Header("Effect")]
     [SerializeField] private AnimationClipRef healEffect;
 
-    [Header("Floating text")]
-    [SerializeField] private GameObject floatingTextPrefab;
-    [SerializeField] private Transform floatingTextSpawnPoint;
+    //[Header("Floating text")]
+    //[SerializeField] private GameObject floatingTextPrefab;
+    //[SerializeField] private Transform floatingTextSpawnPoint;
 
     private string currentAnimation;
 
@@ -50,7 +50,7 @@ public class CharacterVisualHandler : VisualHandlerBase
     {
         PlayAnimation(hurtAnimation.animationName);
 
-        ShowFloatingText($"-{amount}", Color.red);
+        //ShowFloatingText($"-{amount}", Color.red);
 
         await Task.Delay((int)(hurtAnimation.transitionDuration * 1000));
 
@@ -68,7 +68,7 @@ public class CharacterVisualHandler : VisualHandlerBase
         PlayAnimation(healEffect.animationName);
 
         await Task.Delay((int)(healEffect.transitionDuration * 1000));
-        ShowFloatingText($"+{amount}", Color.green);
+        //ShowFloatingText($"+{amount}", Color.green);
     }
 
     // Заставить персонажа смотреть в направление клетки
@@ -85,7 +85,9 @@ public class CharacterVisualHandler : VisualHandlerBase
         }
     }
 
-    private void ShowFloatingText(string text, Color color)
+
+    // Частично работает, пока закомментировано
+/*    private void ShowFloatingText(string text, Color color)
     {
         if (floatingTextPrefab == null) return;
 
@@ -103,5 +105,5 @@ public class CharacterVisualHandler : VisualHandlerBase
 
         Destroy(textObj, 1.5f);
         Destroy(textObj, 1.5f);
-    }
+    }*/
 }
