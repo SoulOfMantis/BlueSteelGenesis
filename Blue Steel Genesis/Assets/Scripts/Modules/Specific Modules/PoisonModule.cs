@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -7,13 +8,17 @@ using UnityEngine;
 public class PoisonModule : StatusModule
 {
     private int poisonDamage;
-
-    public PoisonModule(int damage = 1, int duration = 3)
+    public PoisonModule() :base()
     {
         triggerType = TriggerType.OnTurnStart;
+        poisonDamage = 1;
+        turnsLeft = 3;
+        AddKeywords(new List<string> { "Poison", "Negative" });
+    }
+    public PoisonModule(int damage, int duration) : this()
+    {
         poisonDamage = damage;
         turnsLeft = duration;
-        changeName("PoisonModule");
     }
 
     public override async Task Effect(Character user, Vector3Int pos)
