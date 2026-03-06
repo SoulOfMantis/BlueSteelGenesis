@@ -153,6 +153,9 @@ public class ExpeditionMapView : MonoBehaviour
             case Node.REGULAR_ENEMY:
                 UnityEngine.SceneManagement.SceneManager.LoadScene("testing_withMap"); //for testing only
                 break;
+            case Node.SHOP:
+                GameState.Run.Expedition.Shop.TriggerShop();
+                break;
         }
     }
 

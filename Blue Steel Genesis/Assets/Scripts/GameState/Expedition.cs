@@ -43,9 +43,10 @@ public class Expedition
         );
         map_progress_ = new(Map);
         ModuleGen = new(LocalSeed);
-}
+        Shop = new();
+    }
 
-public void displayMap(ExpeditionMapView view)
+    public void displayMap(ExpeditionMapView view)
     {
         if (Map == null || map_progress_ == null)
             throw new InvalidOperationException("Невозможно отобразить карту до начала этапа");
@@ -90,4 +91,5 @@ public void displayMap(ExpeditionMapView view)
     public GameModule GetNextCommonModule(List<GameModule> forbidden = null) => ModuleGen.GetNextCommonModule(forbidden);
     public GameModule GetNextBossModule(List<GameModule> forbidden = null) => ModuleGen.GetNextBossModule(forbidden);
     ModuleGenerator ModuleGen;
+    public Shop Shop;
 }

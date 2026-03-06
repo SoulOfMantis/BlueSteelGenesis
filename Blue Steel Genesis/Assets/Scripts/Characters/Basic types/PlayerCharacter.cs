@@ -183,15 +183,6 @@ public class PlayerCharacter : Character
         DefeatScreen.SetActive(true);
     }
 
-
-    public void GiveMoney(int value)=> PlayerMoney += value;
-    public void LoseMoney(int value)=>PlayerMoney -= value;
-
-    public int PlayerMoney
-    {
-        get => GameState.Run.Player.PlayerMoney;
-        protected set => GameState.Run.Player.PlayerMoney = value;
-    }
     public override int currentHealth {
         get => GameState.Run.Expedition.Player.currentHealth;
         protected set => GameState.Run.Expedition.Player.currentHealth = value;

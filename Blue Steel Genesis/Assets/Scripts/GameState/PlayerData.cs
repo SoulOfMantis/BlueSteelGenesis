@@ -9,6 +9,19 @@ public class PlayerData
         protected set => playerMoney = Math.Max(value, 0);
     }
     private int playerMoney = 0;
+    public int PlayerMaterials
+    {
+        get => playerMaterials;
+        protected set => playerMaterials = Math.Max(value, 0);
+    }
+    private int playerMaterials = 0;
+
+    public void GiveMoney(int value) => PlayerMoney += value;
+    public void LoseMoney(int value) => PlayerMoney -= value;
+
+    public void GiveMaterials(int value) => PlayerMaterials += value;
+    public void LoseMaterials(int value) => PlayerMaterials -= value;
+
     public int currentHealth
     {
         get => current_health_;
@@ -20,10 +33,18 @@ public class PlayerData
     public int maxHealth { get; set; }
     public int maxEnergy { get; set; }
 
-
-    public uint money { get; set; }
-    public uint materials { get; set; }
-
-
     public List<GameModule> modules = new();
+
+    public void AddModule(GameModule module)
+    {
+        if (modules.Count > 5) modules.RemoveRange(5, modules.Count - 5);
+        //TODO: give player choice of which to throw away
+        if (modules.Count == 5)
+            modules[4] = module;
+        else modules.Add(module);
+    }
+    public bool RemoveModule(GameModule module)
+    {
+        return modules.Remove(module);
+    }
 }

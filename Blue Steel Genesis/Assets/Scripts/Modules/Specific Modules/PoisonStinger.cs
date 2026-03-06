@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -9,13 +10,13 @@ public class PoisonStinger : ActiveModule
     private int hitDamage;
     private int poisonDamage;
     private int duration;
-    public PoisonStinger()
+    public PoisonStinger() : base()
     {
         range = 1;
         hitDamage = 1;
         poisonDamage = 1;
         duration = 3;
-        changeName("PoisonStinger");
+        AddKeywords(new List<string> { "Offense", "Common" });
     }
     public PoisonStinger(int damage, int duration, int hitDamage) : this()
     {
