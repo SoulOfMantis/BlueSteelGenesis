@@ -15,6 +15,8 @@ public abstract class Character : MonoBehaviour
         currentHealth = maxHealth;
         currentEnergy = maxEnergy;
         Initiative = initiative;
+        if (visualHandler == null)
+            visualHandler = GetComponent<CharacterVisualHandler>();
     }
 
 
@@ -24,6 +26,9 @@ public abstract class Character : MonoBehaviour
             await visualHandler.PlayHurtAnimation(dmg);
 
         dmg = Math.Max(dmg, 1);
+        if (visualHandler != null)
+            await visualHandler.PlayHurtAnimation(dmg);
+
         if (currentShield > 0)
         {
             int shield_dmg = Math.Min(currentShield, dmg);
@@ -44,10 +49,10 @@ public abstract class Character : MonoBehaviour
     }
     public virtual async Task heal(int hp)
     {
+        int to_heal = Math.Max(hp, 1);
         if (visualHandler != null)
-            await visualHandler.ShowHealingAnimation(hp);
-
-        currentHealth += Math.Max(hp, 1);
+            await visualHandler.PlayHealingAnimation(hp);
+        currentHealth += to_heal;
         await triggerModules(TriggerType.OnHeal);
     }
 

@@ -63,7 +63,7 @@ public class CharacterVisualHandler : VisualHandlerBase
         await Task.Delay((int)(deathAnimation.transitionDuration * 1000));
     }
 
-    public async Task ShowHealingAnimation(int amount)
+    public async Task PlayHealingAnimation(int amount)
     {
         PlayAnimation(healEffect.animationName);
 
