@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameRun
 {
@@ -33,7 +32,7 @@ public class GameRun
             id = biome_id,
             missing_node_rate = .3f
         });
-        Expedition.startNextStage();
+        Expedition.start();
     }
 
     public void endExpedition()
@@ -44,9 +43,9 @@ public class GameRun
     public int GlobalSeed { get; private set; }
     public Expedition Expedition { get; private set; } = null;
     
-    public PlayerData Player { get; private set; } = new();
+    public uint playerLivesCount { get; set; }
+
     // ship data
-    // player data
     // available biomes
     // ...
 }
