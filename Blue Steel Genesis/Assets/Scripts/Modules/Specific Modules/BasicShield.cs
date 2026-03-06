@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -8,13 +9,12 @@ using UnityEngine;
 public class BasicShield : ActiveModule
 {
     private int shieldGiven;
-    public BasicShield()
+    public BasicShield() : base()
     {
-        changeName("BasicShield");
         shieldGiven = 3;
         energyCost = 1;
         range = 0;
-        Name = "BasicShield";
+        AddKeywords(new List<string> { "Defense", "Basic", "Common" });
     }
     public override string Description()
     {

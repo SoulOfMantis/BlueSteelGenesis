@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public abstract class GameModule
 {
-    public List<string> Keywords { get; protected set; }
+    public List<string> Keywords { get; private set; }
     public string Name { get; protected set; }
     private string icon_name = "default_default.png";
     public string Icon_name { get => icon_name; protected set => icon_name = value; }
@@ -17,6 +17,7 @@ public abstract class GameModule
     public GameModule()
     {
         changeName(GetType().Name);
+        Keywords = new();
     }
     protected List<Vector3Int> getAvailableCells(int n, Vector3Int start)
     {
@@ -42,29 +43,21 @@ public abstract class GameModule
         return res.Where(c => checkFinalPosition(c)).ToList();
     }
     public virtual List<Vector3Int> getCellsInRange(Character user) => getCellsInRange(user.Position);
-    public virtual List<Vector3Int> getCellsInRange(Vector3Int start)
-    {
-        return getAvailableCells(range, start);
-    }
+    public virtual List<Vector3Int> getCellsInRange(Vector3Int start) => getAvailableCells(range, start);
 
     public void changeName(string newName) => Name = newName;
     public abstract Task Effect(Character user, Vector3Int pos);
 
     public virtual void Initialize()
     {
-        Debug.Log($"Module {GetType().Name} initialized");
+        Debug.Log($"Module {Name} initialized");
     }
-    protected virtual bool checkFinalPosition(Vector3Int pos)
-    {
-        return true;
-    }
-    protected virtual bool checkIntermediatePosition(Vector3Int pos)
-    {
-        return !Character.tracker.OutOfBounds(pos);
-    }
-    public virtual bool checkPosition(Character user, Vector3Int pos)
-    {
-        return getCellsInRange(user).Contains(pos);
-    }
+    protected virtual bool checkFinalPosition(Vector3Int pos) => true;
+    protected virtual bool checkIntermediatePosition(Vector3Int pos) => !Character.tracker.OutOfBounds(pos);
+    public virtual bool checkPosition(Character user, Vector3Int pos) => getCellsInRange(user).Contains(pos);
+    public void AddKeyword(string keyword) =>
+        Keywords.Add(keyword);
+    public void AddKeywords(List<string> keywords) => keywords.ForEach(k => AddKeyword(k));
+
 }
 

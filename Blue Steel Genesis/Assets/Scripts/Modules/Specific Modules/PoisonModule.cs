@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -6,15 +7,19 @@ using UnityEngine;
 /// </summary>
 public class PoisonModule : StatusModule
 {
-    protected int poisonDamage;
-
-    public PoisonModule(int damage = 1, int duration = 3)
+    private int poisonDamage;
+    public PoisonModule() :base()
     {
         triggerType = TriggerType.OnTurnStart;
+        poisonDamage = 1;
+        turnsLeft = 3;
+        AddKeywords(new List<string> { "Poison", "Negative" });
+        Icon_name = "Module_poison";
+    }
+    public PoisonModule(int damage, int duration) : this()
+    {
         poisonDamage = damage;
         turnsLeft = duration;
-        changeName("PoisonModule");
-        Icon_name = "Module_poison";
     }
     public override string Description()
     {

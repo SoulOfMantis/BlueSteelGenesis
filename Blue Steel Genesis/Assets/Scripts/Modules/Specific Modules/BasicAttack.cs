@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using UnityEngine;
-
+using System.Collections.Generic;
 
 /// <summary>
 /// Базовый модуль атаки (BAM сокращение)
@@ -9,13 +9,13 @@ public class BasicAttack : ActiveModule
 {
     protected int hitDamage;
 
-    public BasicAttack()
+    public BasicAttack() : base()
     {
         hitDamage = 1;
         energyCost = 1;
         range = 1;
-        changeName("BasicAttack");
         //Icon_name = "...";
+        AddKeywords(new List<string> { "Offense", "Basic", "Common" });
     }
     public override string Description()
     {

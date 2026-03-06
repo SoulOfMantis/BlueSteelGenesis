@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -7,11 +8,11 @@ using UnityEngine;
 /// </summary>
 public class BasicMovement : ActiveModule
 {
-    public BasicMovement()
+    public BasicMovement() : base()
     {
         range = 3;
         energyCost = 1;
-        changeName("BasicMovement");
+        AddKeywords(new List<string> { "Movement", "Basic", "Common" });
         Icon_name = "Module_movement";
     }
     public override string Description()

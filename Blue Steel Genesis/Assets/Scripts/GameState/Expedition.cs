@@ -14,6 +14,7 @@ public class Expedition
     {
         // TODO: handle player creation properly
         Player.modules = new List<GameModule>{
+            new DefaultAdaptiveTEST_ONLY(),
             new PoisonStinger(),
             new BasicMovement()
         };
@@ -42,9 +43,9 @@ public class Expedition
         );
         map_progress_ = new(Map);
         ModuleGen = new(LocalSeed);
-    }
+}
 
-    public void displayMap(ExpeditionMapView view)
+public void displayMap(ExpeditionMapView view)
     {
         if (Map == null || map_progress_ == null)
             throw new InvalidOperationException("Невозможно отобразить карту до начала этапа");
@@ -86,6 +87,7 @@ public class Expedition
             hkdf.expand(BitConverter.GetBytes(biome_id), sizeof(int)));
         return seed;
     }
-    public GameModule GetNextModule() => ModuleGen.GetNextModule();
+    public GameModule GetNextCommonModule(List<GameModule> forbidden = null) => ModuleGen.GetNextCommonModule(forbidden);
+    public GameModule GetNextBossModule(List<GameModule> forbidden = null) => ModuleGen.GetNextBossModule(forbidden);
     ModuleGenerator ModuleGen;
 }
