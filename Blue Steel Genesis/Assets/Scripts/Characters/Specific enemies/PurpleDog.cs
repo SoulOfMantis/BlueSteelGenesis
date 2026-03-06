@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class PurpleDog : Enemy
 {
-    public TMP_Text healthDisplay;
+    //public TMP_Text healthDisplay;
 
 
     public PurpleDog() : base(5, 3, 60)
     {
-
+        Name = "Purple Dog";
+        Description = "The first enemy. Will move closer to you and bite, if it has an opportunity!";
         addModule(new BasicAttack());
         addModule(new BasicMovement());
 
@@ -19,7 +20,7 @@ public class PurpleDog : Enemy
 
     void updateHealth()
     {
-        healthDisplay.text = $"{currentHealth}/{maxHealth}";
+        //healthDisplay.text = $"{currentHealth}/{maxHealth}";
     }
 
     void Start()
