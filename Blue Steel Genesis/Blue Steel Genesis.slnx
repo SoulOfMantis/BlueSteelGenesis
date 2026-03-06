@@ -1,6 +1,0 @@
-﻿<Solution>
-  <Project Path="BlueSteelGenesis.csproj" />
-  <Project Path="Assembly-CSharp-Editor.csproj" />
-  <Project Path="Test.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
-</Solution>

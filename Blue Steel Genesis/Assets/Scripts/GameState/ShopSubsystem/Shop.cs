@@ -4,13 +4,12 @@ using System.Linq;
 public class Shop
 {
     List<GameModule> OnSale;
-    PlayerCharacter player;
     void Refresh()
     {
-        //TODO
         OnSale.Clear();
-        //What module add
-        return;
+        OnSale.Add(GameState.Run.Expedition.GetNextModule());
+        OnSale.Add(GameState.Run.Expedition.GetNextModule());
+        OnSale.Add(GameState.Run.Expedition.GetNextModule());
     }
     void Buy(GameModule module)
     {
@@ -19,17 +18,17 @@ public class Shop
         {
             return;
         }
-        if (player.playerMoney >= module.price)
+        if (GameState.Run.Expedition.Player.PlayerMoney >= module.price)
         {
-            player.LoseMoney(module.price);
+            GameState.Run.Expedition.Player.LoseMoney(module.price);
             OnSale.Remove(module);
-            player.addModule(module);
+            GameState.Run.Expedition.Player.addModule(module);
         }
     }
     void Sell(GameModule module)
     {
         //≈сть ли у игрока этот модуль проверка
-        player.GaveMoney(module.price);
+        GameState.Run.Expedition.Player.GaveMoney(module.price);
         //Remove modele?
     }
 
