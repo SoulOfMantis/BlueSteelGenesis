@@ -1,23 +1,26 @@
-using System;
-using System.Linq;
 using System.Threading.Tasks;
+using System;
 using TMPro;
 using UnityEngine;
 
 public class PurpleDog : Enemy
 {
-    public TMP_Text healthDisplay;
+    //public TMP_Text healthDisplay;
 
-    // Purple Dog enemy constructor
+
     public PurpleDog() : base(5, 3, 60)
     {
+        Name = "Purple Dog";
+        Description = "The first enemy. Will move closer to you and bite, if it has an opportunity!";
         addModule(new BasicAttack());
         addModule(new BasicMovement());
+
+        SetPriorityModules();
     }
 
     void updateHealth()
     {
-        healthDisplay.text = $"{currentHealth}/{maxHealth}";
+        //healthDisplay.text = $"{currentHealth}/{maxHealth}";
     }
 
     void Start()
@@ -26,86 +29,30 @@ public class PurpleDog : Enemy
         Debug.Log("Dog added");
     }
 
-
-    // Begins PDs turn
-    public override async Task startTurn()
+    protected override bool TryGetTargetForZero(out Vector3Int targetPos)
     {
-        await base.startTurn();
-
-        if (currentHealth > 0)
-            await MainLogic();
-
-        await endTurn();
+        targetPos = tracker.getPlayer().Position;
+        return priorityModules[0].getCellsInRange(Position).Contains(targetPos);
     }
-
-
-
-    // Check if PD can attack player
-    private bool CanAttack(Vector3Int playerPosition)
+    protected override bool TryGetTargetForOne(out Vector3Int targetPos)
     {
-
-        BasicAttack attack = getModule<BasicAttack>(0);
-        // Available cells
-        var attackRange = attack.getCellsInRange(Position);
-        return attackRange.Contains(playerPosition);
-    }
-
-    // Finds best position to get to player
-    private Vector3Int FindBestPosition(Vector3Int playerPosition)
-    {
-
-        BasicMovement move = getModule<BasicMovement>(1);
-
-        // Available cells
-        var moveRange = move.getCellsInRange(Position);
-
+        var playerPosition = tracker.getPlayer().Position;
+        var moveRange = priorityModules[1].getCellsInRange(Position);
         int distance = Math.Abs(playerPosition.x - Position.x) + Math.Abs(playerPosition.y - Position.y);
-        Vector3Int bestPosition = Position;
+        targetPos = Position;
+        if (distance == 1) return false; //Нет смысла двигаться!
 
-        if (distance == 1)
-            return bestPosition;
-
-        // Finding closest available cell
         foreach (var cell in moveRange)
         {
             int temp = Math.Abs(playerPosition.x - cell.x) + Math.Abs(playerPosition.y - cell.y);
             if (temp < distance && !tracker.IsOccupied(cell) && !tracker.OutOfBounds(cell))
             {
                 distance = temp;
-                bestPosition = cell;
+                targetPos = cell;
             }
         }
-
-        return bestPosition;
+        return true;
     }
-
-    // Function of main logic
-    private async Task MainLogic()
-    {
-        // Object of player
-        PlayerCharacter player = tracker.getPlayer();
-
-        // Get modules
-
-        while (modules_.Any(m => hasEnoughEnergy((ActiveModule)m)))
-        {
-            //  Try attacking player
-            if (CanAttack(player.Position) && await useActiveModule(0, player.Position))
-                Debug.Log("PD attacks the player");
-
-            // Get closer to player
-            else if (await useActiveModule(1, FindBestPosition(player.Position)))
-                Debug.Log("PD moves closer to player");
-
-            // No available modules
-            else
-            {
-                Debug.Log("Ran out of energy");
-                break;
-            }
-        }
-    }
-
     public override async Task damage(int dmg)
     {
         Debug.Log($"Собака получила {dmg} урона!");
@@ -121,10 +68,10 @@ public class PurpleDog : Enemy
         updateHealth();
         //play healing animation
     }
+
     public override async Task startBattle()
     {
         await base.startBattle();
         updateHealth();
     }
-
 }

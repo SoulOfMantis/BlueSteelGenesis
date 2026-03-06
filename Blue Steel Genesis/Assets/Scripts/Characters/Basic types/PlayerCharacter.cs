@@ -11,12 +11,11 @@ public class PlayerCharacter : Character
     public TMP_Text healthDisplay;
     public GameObject VictoryScreen;
     public GameObject DefeatScreen;
-    PlayerCharacter() : base(10, 3, 10)
+    PlayerCharacter()
     {
-        //modules hardcoded for now
-        addModule(new PoisonStinger());
-        addModule(new BasicMovement());
-        modules_.ForEach(m => m.changeName(m.GetType().Name));
+        Name = "You";
+        Description = "It's you! Robot, sent by humans to find and retrieve materials to repair their spaceship.";
+        Initiative = 10;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -51,16 +50,6 @@ public class PlayerCharacter : Character
     void updateButtons()
     {
         activeModuleButtons.ForEach(mb => mb.buttonInteractableManaging());
-    }
-    public string getmoduleName(int index)
-    {
-        if (!doesModuleExist(index)) return null;
-        return modules_[index].Name;
-    }
-    public string getmoduleDescription(int index)
-    {
-        if (!doesModuleExist(index)) return null;
-        return modules_[index].Description;
     }
     protected override async Task useActiveModule_internal(ActiveModule m, Vector3Int pos)
     {
@@ -185,6 +174,24 @@ public class PlayerCharacter : Character
         DefeatScreen.SetActive(true);
     }
 
+
+
+    public override int currentHealth {
+        get => GameState.Run.Expedition.Player.currentHealth;
+        protected set => GameState.Run.Expedition.Player.currentHealth = value;
+    }
+    public override int maxHealth {
+        get => GameState.Run.Expedition.Player.maxHealth;
+        protected set => GameState.Run.Expedition.Player.maxHealth = value;
+    }
+    public override int maxEnergy {
+        get => GameState.Run.Expedition.Player.maxEnergy;
+        protected set => GameState.Run.Expedition.Player.maxEnergy = value;
+    }
+    protected override List<GameModule> modules_ {
+        get => GameState.Run.Expedition.Player.modules;
+        set => GameState.Run.Expedition.Player.modules = value;
+    }
 }
 
 
