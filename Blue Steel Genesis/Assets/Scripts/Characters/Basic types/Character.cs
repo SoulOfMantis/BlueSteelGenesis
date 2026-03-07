@@ -15,8 +15,8 @@ public abstract class Character : MonoBehaviour
         currentHealth = maxHealth;
         currentEnergy = maxEnergy;
         Initiative = initiative;
-        if (visualHandler == null)
-            visualHandler = GetComponent<CharacterVisualHandler>();
+        //if (visualHandler == null)
+        //    visualHandler = GetComponent<CharacterVisualHandler>();
     }
 
 

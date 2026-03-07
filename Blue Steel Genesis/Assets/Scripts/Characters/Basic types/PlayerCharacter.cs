@@ -11,7 +11,7 @@ public class PlayerCharacter : Character
     public TMP_Text healthDisplay;
     public GameObject VictoryScreen;
     public GameObject DefeatScreen;
-    PlayerCharacter()
+    PlayerCharacter() : base(1, 1, 1)
     {
         Name = "You";
         Description = "It's you! Robot, sent by humans to find and retrieve materials to repair their spaceship.";
