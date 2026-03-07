@@ -21,6 +21,8 @@ public abstract class Enemy : Character
     public override async Task startTurn()
     {
         await base.startTurn();
+        if (currentHealth == 0)
+            return;
         await TurnLogic();
         await endTurn();
     }

@@ -34,9 +34,9 @@ using UnityEngine.UI;
             PlayerCharacter.activeModuleButtons.Add(this);
             button.GetComponentInChildren<TMP_Text>().text = player.getModuleName(connectedModuleIndex);
 
-        GetComponent<ModuleTooltipTrigger>().updateModuleTrigger(player.Modules[connectedModuleIndex]);
+            GetComponent<ModuleTooltipTrigger>().updateModuleTrigger(player.Modules[connectedModuleIndex]);
 
-        gridClickAction = new InputAction(binding: "<Mouse>/leftButton");
+            gridClickAction = new InputAction(binding: "<Mouse>/leftButton");
             gridClickAction.started += handleGridClick;
             gridClickAction.Enable();
 
@@ -47,7 +47,7 @@ using UnityEngine.UI;
         private void OnDestroy() {
             resetSelection.RemoveListener(deselect);
             updateInteractable.RemoveListener(buttonInteractableManaging);
-            gridClickAction.Dispose();
+            gridClickAction?.Dispose();
         }
 
         public async void handleGridClick(InputAction.CallbackContext _) {

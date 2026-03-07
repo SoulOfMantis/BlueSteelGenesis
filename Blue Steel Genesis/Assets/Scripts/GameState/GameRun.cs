@@ -9,17 +9,7 @@ public class GameRun
 
     public void start()
     {
-        // TODO: handle player creation properly
-        Player.modules = new List<GameModule>{
-            new MechanicStinger(),
-            new BasicMovement()
-        };
-        Player.livesCount = 3;
-        Player.maxHealth = 10;
-        Player.maxEnergy = 3;
-        Player.currentHealth = Player.maxHealth;
-        Player.materials = 3;
-        Player.money = 10;
+        playerLivesCount = 3;
     }
 
     public void startExpedition(uint biome_id)
