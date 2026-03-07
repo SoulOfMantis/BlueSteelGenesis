@@ -5,12 +5,15 @@ using UnityEngine;
 
 public abstract class Enemy : Character
 {
-    public Enemy(int maxHealth, int maxEnergy, int initiative) : base(maxHealth, maxEnergy, initiative)
+    public Enemy(int maxHealth, int maxEnergy, int initiative)
     {
         Name = "Default enemy name";
         Description = "Default enemy description. If you see this, something went wrong.";
+        this.maxHealth = maxHealth;
+        this.maxEnergy = maxEnergy;
         currentHealth = maxHealth;
         currentEnergy = maxEnergy;
+        Initiative = initiative;
     }
     protected List<ActiveModule> priorityModules;
     protected void SetPriorityModules() => priorityModules = listModules<ActiveModule>().ToList();
