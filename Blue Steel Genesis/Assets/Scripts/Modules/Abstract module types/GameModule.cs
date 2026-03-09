@@ -2,13 +2,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
-
 /// <summary>
 /// класс модуля
 /// </summary>
 public abstract class GameModule
 {
-    public List<string> Keywords { get; private set; }
+    public HashSet<string> Keywords { get; private set; }
     public string Name { get; protected set; }
     private string icon_name = "default_default.png";
     public string Icon_name { get => icon_name; protected set => icon_name = value; }
