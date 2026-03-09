@@ -14,7 +14,7 @@ public class BasicShield : ActiveModule
         shieldGiven = 3;
         energyCost = 1;
         range = 0;
-        AddKeywords(new List<string> { "Defense", "Basic", "Common" });
+        AddKeywords("Defense", "Basic", "Common");
     }
     public override string Description()
     {

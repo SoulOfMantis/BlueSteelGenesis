@@ -57,7 +57,11 @@ public abstract class GameModule
     public virtual bool checkPosition(Character user, Vector3Int pos) => getCellsInRange(user).Contains(pos);
     public void AddKeyword(string keyword) =>
         Keywords.Add(keyword);
-    public void AddKeywords(List<string> keywords) => keywords.ForEach(k => AddKeyword(k));
+    public void AddKeywords(params string[] keywords)
+    {
+        foreach (var k in keywords)
+            AddKeyword(k);
+    }
 
 }
 

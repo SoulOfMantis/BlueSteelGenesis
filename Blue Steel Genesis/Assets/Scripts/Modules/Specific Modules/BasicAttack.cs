@@ -15,7 +15,7 @@ public class BasicAttack : ActiveModule
         energyCost = 1;
         range = 1;
         //Icon_name = "...";
-        AddKeywords(new List<string> { "Offense", "Basic", "Common" });
+        AddKeywords("Offense", "Basic", "Common");
     }
     public override string Description()
     {

@@ -13,7 +13,7 @@ public class PoisonModule : StatusModule
         triggerType = TriggerType.OnTurnStart;
         poisonDamage = 1;
         turnsLeft = 3;
-        AddKeywords(new List<string> { "Poison", "Negative" });
+        AddKeywords("Poison", "Negative");
         Icon_name = "Module_poison";
     }
     public PoisonModule(int damage, int duration) : this()
