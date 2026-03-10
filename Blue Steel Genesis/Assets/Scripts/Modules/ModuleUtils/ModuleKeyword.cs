@@ -13,33 +13,3 @@ public abstract class ModuleKeyword
     }
     protected void changeName(string value) => Name = value;
 }
-public class DefenseKeyword : ModuleKeyword
-{
-    public DefenseKeyword() : base()
-    {
-        Name = "Defense";
-        Description = "Intended to protect user of harm.";
-    }
-}
-public class OffenseKeyword : ModuleKeyword
-{
-    //TODO: finish the keyword
-}
-public class CommonKeyword : ModuleKeyword
-{
-    //TODO: finish the keyword
-}
-public class BossKeyword : ModuleKeyword
-{
-    //TODO: finish the keyword
-}
-//TODO: create more keywords
-
-/// <summary>
-/// Класс ключевых слов, показываемых игроку
-/// </summary>
-public abstract class VisibleKeyword : ModuleKeyword { }
-public class ShieldKeyword : VisibleKeyword
-{
-    //TODO: finish the keyword
-}
