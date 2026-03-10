@@ -10,20 +10,20 @@ public class Debug_ModuleGeneration : MonoBehaviour
     [SerializeField] TMP_Text Keywords;
     public void DrawNextCommonModule()
     {
-        var module = GameState.Run.Expedition.GetNextCommonModule();
+        var module = GameState.Run.Expedition.ModuleGen.GetNextCommonModule();
         Name.text = module?.Name;
         Description.text = module?.Description();
         Keywords.text = "";
         foreach (var k in module?.Keywords)
-            Keywords.text += $"{k}; ";
+            Keywords.text += $"{k.Name}; ";
     }
     public void DrawNextBossModule()
     {
-        var module = GameState.Run.Expedition.GetNextBossModule();
+        var module = GameState.Run.Expedition.ModuleGen.GetNextBossModule();
         Name.text = module?.Name;
         Description.text = module?.Description();
         Keywords.text = "";
         foreach (var k in module?.Keywords)
-            Keywords.text += $"{k}; ";
+            Keywords.text += $"{k.Name}; ";
     }
 }

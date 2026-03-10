@@ -87,7 +87,5 @@ public void displayMap(ExpeditionMapView view)
             hkdf.expand(BitConverter.GetBytes(biome_id), sizeof(int)));
         return seed;
     }
-    public GameModule GetNextCommonModule(IEnumerable<GameModule> forbidden = null) => ModuleGen.GetNextCommonModule(forbidden);
-    public GameModule GetNextBossModule(IEnumerable<GameModule> forbidden = null) => ModuleGen.GetNextBossModule(forbidden);
-    ModuleGenerator ModuleGen;
+    public ModuleGenerator ModuleGen;
 }
