@@ -4,6 +4,6 @@ public abstract class ActiveModule : GameModule
     public virtual bool CanBeUsed() => true;
     public ActiveModule() : base()
     {
-        AddKeyword("Active");
+        //AddKeyword(new ActiveKeyword());
     }
 }

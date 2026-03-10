@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public abstract class GameModule
 {
-    public HashSet<string> Keywords { get; private set; }
+    public HashSet<ModuleKeyword> Keywords { get; private set; }
     public string Name { get; protected set; }
     private string icon_name = "default_default.png";
     public string Icon_name { get => icon_name; protected set => icon_name = value; }
@@ -54,13 +55,14 @@ public abstract class GameModule
     protected virtual bool checkFinalPosition(Vector3Int pos) => true;
     protected virtual bool checkIntermediatePosition(Vector3Int pos) => !Character.tracker.OutOfBounds(pos);
     public virtual bool checkPosition(Character user, Vector3Int pos) => getCellsInRange(user).Contains(pos);
-    public void AddKeyword(string keyword) =>
+    public void AddKeyword(ModuleKeyword keyword) =>
         Keywords.Add(keyword);
-    public void AddKeywords(params string[] keywords)
+    public void AddKeywords(params ModuleKeyword[] keywords)
     {
         foreach (var k in keywords)
             AddKeyword(k);
     }
+    public bool HasKeywords(params ModuleKeyword[] keywords) => keywords.All(k => Keywords.Any(kw => kw.GetType() == k.GetType()));
 
 }
 

@@ -7,6 +7,11 @@ public class ModuleGenerator
     static List<Type> commonModuleTypes = null;
     static List<Type> bossModuleTypes = null;
     public ModuleGenerator(int seed) => UpdateSeed(seed);
+    public static GameModule CreateModuleByType(Type type)
+    {
+        if (!type.IsSubclassOf(typeof(GameModule)) || type.IsAbstract) throw new ArgumentException();
+        return Activator.CreateInstance(type) as GameModule;
+    }
     public GameModule GetNextCommonModule(IEnumerable<GameModule> forbidden = null) => GetNextCommonModule(GetForbiddenTypes(forbidden));
     public GameModule GetNextCommonModule(IEnumerable<Type> forbidden = null)
     {
@@ -19,7 +24,7 @@ public class ModuleGenerator
                 id = gen.Next(commonModuleTypes.Count);
                 moduleType = commonModuleTypes[id];
             }
-        return Activator.CreateInstance(moduleType) as GameModule;
+        return CreateModuleByType(moduleType);
     }
     public GameModule GetNextBossModule(IEnumerable<GameModule> forbidden = null) => GetNextBossModule(GetForbiddenTypes(forbidden));
     public GameModule GetNextBossModule(IEnumerable<Type> forbidden = null)
@@ -33,15 +38,15 @@ public class ModuleGenerator
                 id = gen.Next(bossModuleTypes.Count);
                 moduleType = bossModuleTypes[id];
             }
-        return Activator.CreateInstance(moduleType) as GameModule;
+        return CreateModuleByType(moduleType);
     }
     static List<Type> GetForbiddenTypes(IEnumerable<GameModule> forbidden) => forbidden?.Select(m => m.GetType()).Distinct().ToList();
-    static bool isCommon(Type moduleType) => hasKeywords(moduleType, "Common");
-    static bool isCommon(GameModule module) => hasKeywords(module, "Common");
-    static bool isBoss(Type moduleType) => hasKeywords(moduleType, "Boss");
-    static bool isBoss(GameModule module) => hasKeywords(module, "Boss");
-    static bool hasKeywords(Type moduleType, params string[] keywords) =>!moduleType.IsAbstract && hasKeywords((Activator.CreateInstance(moduleType) as GameModule), keywords);
-    static bool hasKeywords(GameModule module, params string[] keywords) =>  keywords.All(k => module.Keywords.Contains(k));
+    static bool isCommon(Type moduleType) => isCommon(CreateModuleByType(moduleType));
+    static bool isCommon(GameModule module) => hasKeywords(module, new CommonKeyword());
+    static bool isBoss(Type moduleType) => isBoss(CreateModuleByType(moduleType));
+    static bool isBoss(GameModule module) => hasKeywords(module, new BossKeyword());
+    static bool hasKeywords(Type moduleType, params ModuleKeyword[] keywords) =>!moduleType.IsAbstract && hasKeywords(CreateModuleByType(moduleType), keywords);
+    static bool hasKeywords(GameModule module, params ModuleKeyword[] keywords) =>  module.HasKeywords(keywords);
 
     static void getModuleTypes()
     {

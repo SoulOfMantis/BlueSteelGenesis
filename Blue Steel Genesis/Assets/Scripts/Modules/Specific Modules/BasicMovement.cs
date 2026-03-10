@@ -12,7 +12,7 @@ public class BasicMovement : ActiveModule
     {
         range = 3;
         energyCost = 1;
-        AddKeywords("Movement", "Basic", "Common");
+        //AddKeywords(new CommonKeyword(), new MobilityKeyword());
         Icon_name = "Module_movement";
     }
     public override string Description()

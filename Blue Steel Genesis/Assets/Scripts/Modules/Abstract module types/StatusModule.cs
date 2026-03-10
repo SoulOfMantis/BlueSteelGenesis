@@ -4,7 +4,7 @@ public abstract class StatusModule : PassiveModule
 
     public StatusModule() : base()
     {
-        AddKeyword("Status");
+        //AddKeyword(new StatusKeyword());
     }
     protected void turnTick()
     {

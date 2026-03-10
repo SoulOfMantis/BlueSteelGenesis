@@ -6,7 +6,7 @@ public class DefaultAdaptiveTEST_ONLY : PassiveModule
 {
     public DefaultAdaptiveTEST_ONLY():base()
     {
-        AddKeywords("Special", "Adaptive", "Useless");
+        //AddKeywords(new AdaptiveKeyword());
     }
     public override Task Effect(Character user, Vector3Int pos)
     {

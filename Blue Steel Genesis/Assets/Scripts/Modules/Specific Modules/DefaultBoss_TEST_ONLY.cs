@@ -9,7 +9,7 @@ public class DefaultBoss_TEST_ONLY : ActiveModule
     bool usedThisBattle = false;
     public DefaultBoss_TEST_ONLY():base()
     {
-        AddKeywords("Boss", "Offense", "Self-damage", "Once per battle");
+        //AddKeywords(new BossKeyword(), new OffenseKeyword(), new OncePerBattle());
     }
     public override async Task Effect(Character user, Vector3Int pos)
     {
