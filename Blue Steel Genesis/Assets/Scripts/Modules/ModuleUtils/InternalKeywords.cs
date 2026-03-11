@@ -5,31 +5,17 @@ using System.Text;
 /// <summary>
 /// Класс ключевых слов исключительно для внутреннего использования
 /// </summary>
-public abstract class InternalKeyword : ModuleKeyword
-{
-    public InternalKeyword() : base() { }
-}
+public abstract class InternalKeyword : ModuleKeyword {}
 /// <summary>
 /// Класс ключевых слов, показываемых игроку
 /// </summary>
-public class DefenseKeyword : InternalKeyword
-{
-    public DefenseKeyword() : base()
-    {
-        Name = "Defense";
-        Description = "Intended to protect user of harm.";
-    }
-}
-public class OffenseKeyword : InternalKeyword
-{
-    //TODO: finish the keyword
-}
-public class CommonKeyword : InternalKeyword
-{
-    //TODO: finish the keyword
-}
-public class BossKeyword : InternalKeyword
-{
-    //TODO: finish the keyword
-}
+public class DefenseKeyword : InternalKeyword {}
+public class OffenseKeyword : InternalKeyword {}
+public class MobilityKeyword : InternalKeyword { }
+public class CommonKeyword : InternalKeyword {}
+public class BossKeyword : InternalKeyword {}
+public class AdaptiveKeyword : InternalKeyword {}
+public class ActiveKeyword : InternalKeyword {}
+public class PassiveKeyword : InternalKeyword {}
+public class StatusKeyword : InternalKeyword { }
 //TODO: create more keywords

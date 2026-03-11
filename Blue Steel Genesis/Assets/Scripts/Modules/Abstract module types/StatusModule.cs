@@ -1,10 +1,12 @@
+using System.Collections.Generic;
+
 public abstract class StatusModule : PassiveModule
 {
     protected int turnsLeft;
 
     public StatusModule() : base()
     {
-        //AddKeyword(new StatusKeyword());
+        AddConstKeyword(new StatusKeyword());
     }
     protected void turnTick()
     {
@@ -14,4 +16,5 @@ public abstract class StatusModule : PassiveModule
     public abstract void Refresh(StatusModule other);
 
     public abstract bool IsExpired();
+
 }

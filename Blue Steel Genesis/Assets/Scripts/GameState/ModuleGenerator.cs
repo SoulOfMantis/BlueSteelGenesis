@@ -12,6 +12,11 @@ public class ModuleGenerator
         if (!type.IsSubclassOf(typeof(GameModule)) || type.IsAbstract) throw new ArgumentException();
         return Activator.CreateInstance(type) as GameModule;
     }
+    public static GameModule CreateModuleByType(Type type, params Object[] parameters)
+    {
+        if (!type.IsSubclassOf(typeof(GameModule)) || type.IsAbstract) throw new ArgumentException();
+        return Activator.CreateInstance(type, parameters) as GameModule;
+    }
     public GameModule GetNextCommonModule() => GetNextCommonModule((IEnumerable<Type>)null);
     public GameModule GetNextCommonModule(IEnumerable<GameModule> forbidden = null) => GetNextCommonModule(GetForbiddenTypes(forbidden));
     public GameModule GetNextCommonModule(IEnumerable<Type> forbidden = null)

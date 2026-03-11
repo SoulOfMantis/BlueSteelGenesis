@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -17,8 +18,7 @@ public class MechanicStinger : ActiveModule
         duration = 3;
         poisonDamage = 1;
         Icon_name = "Module_mechanical_sting2";
-        AddKeywords(new OffenseKeyword(), new CommonKeyword());
-        //AddKeywords(new InflictsKeyword());
+        AddConstKeywords(new OffenseKeyword(), new CommonKeyword());
     }
     public MechanicStinger(int damage, int duration, int hitDamage) : this()
     {
@@ -26,11 +26,17 @@ public class MechanicStinger : ActiveModule
         poisonDamage = damage;
         this.duration = duration;
     }
+    public override HashSet<ModuleKeyword> renewableKeywords()
+    {
+        var rk = base.renewableKeywords();
+        rk.Add(new InflictKeyword<PoisonModule>(poisonDamage, duration));
+        return rk;
+    }
     public override string Description()
     {
         return $"A mechanic weapon modeled after scorpion's stinger." +
             $"Deals {hitDamage} damage to adjacent creature and inflicts poison " +
-            $"that deals {poisonDamage} damage at the start of it's turn for {duration} turns.";
+            $"({poisonDamage} damage for {duration} turns).";
     }
     public override async Task Effect(Character user, Vector3Int pos)
     {

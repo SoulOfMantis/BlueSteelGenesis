@@ -8,16 +8,14 @@ using UnityEngine;
 /// </summary>
 public abstract class GameModule
 {
-    public HashSet<ModuleKeyword> Keywords { get; private set; }
     public string Name { get; protected set; }
     private string icon_name = "default_default.png";
     public string Icon_name { get => icon_name; protected set => icon_name = value; }
     public int range = 0;
-    public abstract string Description(); 
+    public abstract string Description();
     public GameModule()
     {
         changeName(GetType().Name);
-        Keywords = new();
     }
     protected List<Vector3Int> getAvailableCells(int n, Vector3Int start)
     {
@@ -47,6 +45,12 @@ public abstract class GameModule
 
     public void changeName(string newName) => Name = newName;
     public abstract Task Effect(Character user, Vector3Int pos);
+    public Task Use(Character user, Vector3Int pos)
+    {
+        if (!CanBeUsed()) return Task.CompletedTask;
+        SpendUse();
+        return Effect(user, pos);
+    }
 
     public virtual void Initialize()
     {
@@ -55,14 +59,45 @@ public abstract class GameModule
     protected virtual bool checkFinalPosition(Vector3Int pos) => true;
     protected virtual bool checkIntermediatePosition(Vector3Int pos) => !Character.tracker.OutOfBounds(pos);
     public virtual bool checkPosition(Character user, Vector3Int pos) => getCellsInRange(user).Contains(pos);
-    public void AddKeyword(ModuleKeyword keyword) =>
-        Keywords.Add(keyword);
-    public void AddKeywords(params ModuleKeyword[] keywords)
+    public virtual HashSet<ModuleKeyword> renewableKeywords() => new();
+    public HashSet<ModuleKeyword> tempKeywords { get; private set; }
+    public void AddTemporaryKeyword(ModuleKeyword keyword) =>
+        tempKeywords.Add(keyword);
+    public void AddTemporaryKeywords(params ModuleKeyword[] keywords)
     {
         foreach (var k in keywords)
-            AddKeyword(k);
+            AddTemporaryKeyword(k);
     }
-    public bool HasKeywords(params ModuleKeyword[] keywords) => keywords.All(k => Keywords.Any(kw => kw.GetType() == k.GetType()));
+    public void ClearTemporaryKeywords() => tempKeywords.Clear(
+    public HashSet<ModuleKeyword> constKeywords { get; private set; }
+    public void AddConstKeyword(ModuleKeyword keyword) =>
+        constKeywords.Add(keyword);
+    public void AddConstKeywords(params ModuleKeyword[] keywords)
+    {
+        foreach (var k in keywords)
+            AddConstKeyword(k);
+    }
+    public HashSet<ModuleKeyword> GetKeywords()
+    {
+        var res = constKeywords;
+        res.UnionWith(renewableKeywords());
+        res.UnionWith(tempKeywords);
+        return res;
+    }
+    public bool HasKeywords(params ModuleKeyword[] keywords) => keywords.All(k => GetKeywords().Any(kw => kw.GetType() == k.GetType()));
+    private HashSet<FrequencyLimiterKeyword> GetFrequencyLimiterKeywords() =>
+        constKeywords.Union(tempKeywords).Where(k => k is FrequencyLimiterKeyword).Select(k => k as FrequencyLimiterKeyword).ToHashSet();
+    public virtual bool CanBeUsed() => GetFrequencyLimiterKeywords().All(k => k.CanBeUsed());
+    public void SpendUse()
+    {
+        foreach (var freq in GetFrequencyLimiterKeywords())
+            freq.SpendUseLeft();
+    }
+    public void Recharge(TriggerType trigger)
+    {
+        foreach (var freq in GetFrequencyLimiterKeywords().Where(f => f.rechargeTime == trigger))
+            freq.Recharge();
+    }
 
 }
 

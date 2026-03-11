@@ -15,7 +15,7 @@ public class BasicAttack : ActiveModule
         energyCost = 1;
         range = 1;
         //Icon_name = "...";
-        AddKeywords(new OffenseKeyword(), new CommonKeyword());
+        AddConstKeywords(new CommonKeyword(), new OffenseKeyword());
     }
     public override string Description()
     {
@@ -40,7 +40,6 @@ public class BasicAttack : ActiveModule
     {
         return base.checkPosition(user, pos) && (pos != user.Position);
     }
-
 }
 
 
