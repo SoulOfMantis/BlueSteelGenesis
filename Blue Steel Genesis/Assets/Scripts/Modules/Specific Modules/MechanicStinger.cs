@@ -10,9 +10,8 @@ public class MechanicStinger : ActiveModule
     private int hitDamage;
     private int poisonDamage;
     private int duration;
-    public PoisonStinger() : base()
 
-    public MechanicStinger()
+    public MechanicStinger() : base()
     {
         range = 1;
         hitDamage = 1;

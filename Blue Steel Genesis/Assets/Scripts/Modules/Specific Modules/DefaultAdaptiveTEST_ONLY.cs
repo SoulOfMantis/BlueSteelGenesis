@@ -12,5 +12,10 @@ public class DefaultAdaptiveTEST_ONLY : PassiveModule
     {
         return Task.CompletedTask;
     }
+
+    public override string Description()
+    {
+        return "DefaultAdaptiveTEST_ONLY";
+    }
 }
 
