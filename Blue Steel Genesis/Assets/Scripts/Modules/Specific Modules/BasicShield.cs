@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 /// <summary>
-/// Базовый модуль щита (BSM сокращение)
+/// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ (BSM пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 /// </summary>
 public class BasicShield : ActiveModule
 {
@@ -15,12 +15,17 @@ public class BasicShield : ActiveModule
         energyCost = 1;
         range = 0;
         AddKeywords(new List<string> { "Defense", "Basic", "Common" });
+        Name = "BasicShield";
     }
+    public override string Description()
+    {
+        return $"Give {shieldGiven} shield to yourself.";
+    }
+
     public BasicShield(int shield) : this()
     {
         shieldGiven = shield;
     }
-
     public override async Task Effect(Character user, Vector3Int pos)
     {
         await user.giveShield(shieldGiven);

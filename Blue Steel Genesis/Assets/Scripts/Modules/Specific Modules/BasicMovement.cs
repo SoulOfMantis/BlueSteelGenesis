@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 /// <summary>
-/// Базовый модуль движения (BMM сокращение)
+/// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (BMM пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 /// </summary>
 public class BasicMovement : ActiveModule
 {
@@ -13,8 +13,13 @@ public class BasicMovement : ActiveModule
         range = 3;
         energyCost = 1;
         AddKeywords(new List<string> { "Movement", "Basic", "Common"});
+        changeName("BasicMovement");
+        Icon_name = "Module_movement";
     }
-
+    public override string Description()
+    {
+        return $"Move to an unoccupied space within {range} cells. Can't jump over creatures or obstacles.";
+    }
     public override async Task Effect(Character user, Vector3Int pos)
     {
         await user.move(pos, getCellsInRange(user.Position));

@@ -3,28 +3,37 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 /// <summary>
-/// Активный модуль ядовитого жала - наносит урон и накладывает отравление
+/// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 /// </summary>
-public class PoisonStinger : ActiveModule
+public class MechanicStinger : ActiveModule
 {
     private int hitDamage;
     private int poisonDamage;
     private int duration;
     public PoisonStinger() : base()
+
+    public MechanicStinger()
     {
         range = 1;
         hitDamage = 1;
-        poisonDamage = 1;
         duration = 3;
         AddKeywords(new List<string> { "Offense", "Common" });
+        poisonDamage = 1;
+        changeName("MechanicStinger");
+        Icon_name = "Module_mechanical_sting2";
     }
-    public PoisonStinger(int damage, int duration, int hitDamage) : this()
+    public MechanicStinger(int damage, int duration, int hitDamage) : this()
     {
+        this.hitDamage = hitDamage;
         poisonDamage = damage;
         this.duration = duration;
-        this.hitDamage = hitDamage;
     }
-
+    public override string Description()
+    {
+        return $"A mechanic weapon modeled after scorpion's stinger." +
+            $"Deals {hitDamage} damage to adjacent creature and inflicts poison " +
+            $"that deals {poisonDamage} damage at the start of it's turn for {duration} turns.";
+    }
     public override async Task Effect(Character user, Vector3Int pos)
     {
         await user.strike(pos, hitDamage);

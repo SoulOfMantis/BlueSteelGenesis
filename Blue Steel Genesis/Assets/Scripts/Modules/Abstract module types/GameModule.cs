@@ -10,16 +10,17 @@ public abstract class GameModule
 {
     public List<string> Keywords { get; private set; }
     public string Name { get; protected set; }
-    public string Description { get; protected set; }
+    private string icon_name = "default_default.png";
+    public string Icon_name { get => icon_name; protected set => icon_name = value; }
     public int range = 0;
     public int price;
 
+    public abstract string Description(); 
     public GameModule()
     {
         changeName(GetType().Name);
         Keywords = new();
     }
-
     protected List<Vector3Int> getAvailableCells(int n, Vector3Int start)
     {
         var res = new HashSet<Vector3Int>();

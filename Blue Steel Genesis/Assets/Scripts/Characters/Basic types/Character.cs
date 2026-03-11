@@ -24,7 +24,7 @@ public abstract class Character : MonoBehaviour
             currentHealth -= dmg;
             await triggerModules(TriggerType.OnHealthDamage);
             if (currentHealth == 0)
-              await  die();
+                await die();
         }
     }
     public virtual async Task heal(int hp)
@@ -51,9 +51,14 @@ public abstract class Character : MonoBehaviour
         await triggerModules(TriggerType.OnEnergyRestore);
     }
 
-
+    private void CharacterInfoTooltipSetup()
+    {
+        gameObject.AddComponent<CharacterTooltipTrigger>().character = this;
+        gameObject.AddComponent<BoxCollider2D>();
+    }
     public virtual async Task startBattle()
     {
+        CharacterInfoTooltipSetup();
         Position = tracker.WorldToCell(transform.position);
         await triggerModules(TriggerType.OnBattleStart);
     }
@@ -126,6 +131,10 @@ public abstract class Character : MonoBehaviour
         modules_.Add(module);
         module.Initialize();
     }
+    public bool removeModule(GameModule module)
+    {
+        return modules_.Remove(module);
+    }
     public void addStatusModule(StatusModule status)
     {
         var module = status_modules_.Find(m => m.GetType() == status.GetType());
@@ -155,7 +164,7 @@ public abstract class Character : MonoBehaviour
         foreach (var pm in listModules<PassiveModule>().Where(pm => pm.triggerType == triggerType))
         {
             if (isCorrectPosition(pm, pos))
-                await usePassiveModule_internal(pm, pos);            
+                await usePassiveModule_internal(pm, pos);
         }
         await processStatusModules(triggerType);
     }
@@ -192,7 +201,16 @@ public abstract class Character : MonoBehaviour
     protected virtual Task usePassiveModule_internal(PassiveModule m, Vector3Int pos) => m.Effect(this, pos);
     protected virtual Task useStatusModule_internal(StatusModule m) => m.Effect(this, Position);
 
-
+    public string getModuleName(int index)
+    {
+        if (!doesModuleExist(index)) return null;
+        return getModule(index).Name;
+    }
+    public string getModuleDescription(int index)
+    {
+        if (!doesModuleExist(index)) return null;
+        return getModule(index).Description();
+    }
     public abstract int currentHealth { get; protected set; }
     public abstract int maxHealth { get; protected set; }
     public int currentShield { get; protected set; }
@@ -218,11 +236,15 @@ public abstract class Character : MonoBehaviour
         }
     }
 
+    public string Name { get; protected set; }
+    public string Description { get; protected set; }
 
     public static SceneTracker tracker;
 
     protected abstract List<GameModule> modules_ { get; set; }
+    public IReadOnlyList<GameModule> Modules { get => modules_.AsReadOnly();}
     protected List<StatusModule> status_modules_ = new();
+    public IReadOnlyList<GameModule> Statuses { get => status_modules_.AsReadOnly(); }
 
     private int current_energy_;
     private Vector3Int position_;
