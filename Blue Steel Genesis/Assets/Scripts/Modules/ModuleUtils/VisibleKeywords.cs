@@ -15,23 +15,24 @@ public abstract class VisibleKeyword : ModuleKeyword
     }
     public string Description { get; private set; }
     protected void ChangeDescription(string value) => Description = value;
-
 }
 public class ShieldKeyword : VisibleKeyword
 {
     public ShieldKeyword(int? shield = null) : base()
     {
-        ChangeName("Shield");
+        ChangeName($"Shield {shield}");
         ChangeDescription($"Protects from {shield.ToString() ?? "#error"} damage. Resets at the start of turn.");
     }
 }
+//public class 
 public class InflictKeyword<T> : VisibleKeyword where T:StatusModule
 {
+    public T Status { get; }
     public InflictKeyword(params object[] args) : base()
     {
-        var st = ModuleGenerator.CreateModuleByType(typeof(T), args);
-        ChangeName($"Inflict {st.Name}");
-        ChangeDescription($"Apply status {st.Name} to the target.");
+        Status = ModuleGenerator.CreateModuleByType(typeof(T), args) as T;
+        ChangeName($"Inflict {Status.Name}");
+        ChangeDescription($"Apply status {Status.Name} to the target.");
     }
 }
 //TODO: create more keywords

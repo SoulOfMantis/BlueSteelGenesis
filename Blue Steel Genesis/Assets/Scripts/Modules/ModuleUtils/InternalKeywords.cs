@@ -6,9 +6,6 @@ using System.Text;
 /// Класс ключевых слов исключительно для внутреннего использования
 /// </summary>
 public abstract class InternalKeyword : ModuleKeyword {}
-/// <summary>
-/// Класс ключевых слов, показываемых игроку
-/// </summary>
 public class DefenseKeyword : InternalKeyword {}
 public class OffenseKeyword : InternalKeyword {}
 public class MobilityKeyword : InternalKeyword { }

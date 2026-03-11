@@ -34,7 +34,7 @@ public class MechanicStinger : ActiveModule
     }
     public override string Description()
     {
-        return $"A mechanic weapon modeled after scorpion's stinger." +
+        return $"A mechanic weapon modeled after scorpion's stinger. " +
             $"Deals {hitDamage} damage to adjacent creature and inflicts poison " +
             $"({poisonDamage} damage for {duration} turns).";
     }

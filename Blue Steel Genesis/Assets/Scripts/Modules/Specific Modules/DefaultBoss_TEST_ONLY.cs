@@ -20,7 +20,7 @@ public class DefaultBoss_TEST_ONLY : ActiveModule
     public override string Description()
     {
         var keyword = constKeywords.First(k => k.GetType() == typeof(LimitedPerBattleKeyword)) as LimitedPerBattleKeyword;
-        return $"Deal {damageDealt} damage. Take {damageTaken} damage. {keyword.Name} {keyword.MaxUses}.";
+        return $"Deal {damageDealt} damage. Take {damageTaken} damage. {keyword.Name}.";
     }
     
 }

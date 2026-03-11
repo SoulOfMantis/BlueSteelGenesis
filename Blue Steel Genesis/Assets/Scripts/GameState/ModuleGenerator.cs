@@ -48,9 +48,9 @@ public class ModuleGenerator
         return CreateModuleByType(moduleType);
     }
     static List<Type> GetForbiddenTypes(IEnumerable<GameModule> forbidden) => forbidden?.Select(m => m.GetType()).Distinct().ToList();
-    static bool isCommon(Type moduleType) => isCommon(CreateModuleByType(moduleType));
+    static bool isCommon(Type moduleType) => !moduleType.IsAbstract && isCommon(CreateModuleByType(moduleType));
     static bool isCommon(GameModule module) => hasKeywords(module, new CommonKeyword());
-    static bool isBoss(Type moduleType) => isBoss(CreateModuleByType(moduleType));
+    static bool isBoss(Type moduleType) => !moduleType.IsAbstract && isBoss(CreateModuleByType(moduleType));
     static bool isBoss(GameModule module) => hasKeywords(module, new BossKeyword());
     static bool hasKeywords(Type moduleType, params ModuleKeyword[] keywords) =>!moduleType.IsAbstract && hasKeywords(CreateModuleByType(moduleType), keywords);
     static bool hasKeywords(GameModule module, params ModuleKeyword[] keywords) =>  module.HasKeywords(keywords);

@@ -16,6 +16,8 @@ public abstract class GameModule
     public GameModule()
     {
         changeName(GetType().Name);
+        constKeywords = new();
+        tempKeywords = new();
     }
     protected List<Vector3Int> getAvailableCells(int n, Vector3Int start)
     {
@@ -68,7 +70,7 @@ public abstract class GameModule
         foreach (var k in keywords)
             AddTemporaryKeyword(k);
     }
-    public void ClearTemporaryKeywords() => tempKeywords.Clear(
+    public void ClearTemporaryKeywords() => tempKeywords.Clear();
     public HashSet<ModuleKeyword> constKeywords { get; private set; }
     public void AddConstKeyword(ModuleKeyword keyword) =>
         constKeywords.Add(keyword);

@@ -14,7 +14,7 @@ public class Debug_ModuleGeneration : MonoBehaviour
         Name.text = module?.Name;
         Description.text = module?.Description();
         Keywords.text = "";
-        foreach (var k in module?.Keywords)
+        foreach (var k in module?.GetKeywords().Where(kw => kw is VisibleKeyword).Select(kw => kw as VisibleKeyword))
             Keywords.text += $"{k.Name}; ";
     }
     public void DrawNextBossModule()
@@ -23,7 +23,7 @@ public class Debug_ModuleGeneration : MonoBehaviour
         Name.text = module?.Name;
         Description.text = module?.Description();
         Keywords.text = "";
-        foreach (var k in module?.Keywords)
+        foreach (var k in module?.GetKeywords().Where(kw => kw is VisibleKeyword).Select(kw => kw as VisibleKeyword))
             Keywords.text += $"{k.Name}; ";
     }
 }

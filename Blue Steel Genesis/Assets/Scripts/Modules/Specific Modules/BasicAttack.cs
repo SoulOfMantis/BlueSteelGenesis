@@ -19,7 +19,7 @@ public class BasicAttack : ActiveModule
     }
     public override string Description()
     {
-        return $"Deal {hitDamage} to the adjacent creature.";
+        return $"Deal {hitDamage} damage to the adjacent creature.";
     }
 
     public BasicAttack(int hitDamage) : this()
