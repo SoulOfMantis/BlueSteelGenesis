@@ -9,7 +9,7 @@ public class testShopManager : MonoBehaviour
     [SerializeField] List<GameObject> shopModuleIcons;
     private void Awake()
     {
-        UpdateShop();
+        RefreshShop();
     }
     void updatePlayerModuleIcons()
     {
