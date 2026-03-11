@@ -5,9 +5,9 @@ using System.Collections.Generic;
 public class testShopManager : MonoBehaviour
 {
     [SerializeField] GameObject sellMenu;
-    [SerializeField] List<GameObject> playerModuleIcons;
-    [SerializeField] List<GameObject> shopModuleIcons;
-    private void Awake()
+    [SerializeField] List<ModuleTooltipTrigger> playerModuleIcons;
+    [SerializeField] List<ModuleTooltipTrigger> shopModuleIcons;
+    private void Start()
     {
         RefreshShop();
     }
@@ -15,16 +15,16 @@ public class testShopManager : MonoBehaviour
     {
         for (int i = 0; i < playerModuleIcons.Count; i++)
         {
-            playerModuleIcons[i].SetActive((i+1 < GameState.Run.Expedition.Player.modules.Count) && GameState.Run.Expedition.Player.modules[i+1] != null);
-            //TODO: update icons!
+            playerModuleIcons[i].gameObject.SetActive((i + 1 < GameState.Run.Expedition.Player.modules.Count) && GameState.Run.Expedition.Player.modules[i + 1] != null);
+            if (playerModuleIcons[i].gameObject.activeSelf) playerModuleIcons[i].updateModuleTrigger(GameState.Run.Expedition.Player.modules[i + 1]);
         }
     }
     void updateShopModuleIcons()
     {
         for (int i = 0; i < shopModuleIcons.Count; i++)
         {
-            shopModuleIcons[i].SetActive(i < GameState.Run.Expedition.Shop.OnSale.Count);
-            //TODO: update icons!
+            shopModuleIcons[i].gameObject.SetActive(i < GameState.Run.Expedition.Shop.OnSale.Count);
+            if (shopModuleIcons[i].gameObject.activeSelf) shopModuleIcons[i].updateModuleTrigger(GameState.Run.Expedition.Shop.OnSale[i]);
         }
     }
     void UpdateShop()
