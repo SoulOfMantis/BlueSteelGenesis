@@ -10,9 +10,9 @@ public class ModuleTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointe
     public Image icon;
     IEnumerator ShowingTooltip()
     {
-        if (TooltipSystem.IsModuleTooltipActive) yield return new WaitForSeconds(0.5f);
+        if (TooltipSystem.IsModuleTooltipActive) yield return new WaitForSeconds(0.2f);
         TooltipSystem.Load(module);           
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         TooltipSystem.Show(TooltipSystem.TooltipType.moduleTooltip);
     }
     IEnumerator HidingTooltip()
@@ -46,7 +46,11 @@ public class ModuleTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointe
         this.module = module;
         updateIcon();
     }
-    public void updateIcon() =>  icon.overrideSprite = Resources.Load<Sprite>($"ModuleIcons/{module.Icon_name}");
+    public void updateIcon()
+    {
+        if (module == null) return;
+        icon.overrideSprite = Resources.Load<Sprite>($"ModuleIcons/{module.Icon_name}");
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
