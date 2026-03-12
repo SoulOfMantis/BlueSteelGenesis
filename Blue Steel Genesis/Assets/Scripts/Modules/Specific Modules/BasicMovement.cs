@@ -12,8 +12,8 @@ public class BasicMovement : ActiveModule
     {
         range = 3;
         energyCost = 1;
-        AddKeywords(new List<string> { "Movement", "Basic", "Common"});
         Icon_name = "Module_movement";
+        AddConstKeywords(new MobilityKeyword(), new CommonKeyword());
     }
     public override string Description()
     {
@@ -32,5 +32,4 @@ public class BasicMovement : ActiveModule
     {
         return !Character.tracker.IsOccupied(pos);
     }
-
 }

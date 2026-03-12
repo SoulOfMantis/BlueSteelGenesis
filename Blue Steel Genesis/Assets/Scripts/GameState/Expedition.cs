@@ -46,7 +46,7 @@ public class Expedition
         Shop = new(Biome.id);
     }
 
-    public void displayMap(ExpeditionMapView view)
+public void displayMap(ExpeditionMapView view)
     {
         if (Map == null || map_progress_ == null)
             throw new InvalidOperationException("Невозможно отобразить карту до начала этапа");
@@ -88,8 +88,6 @@ public class Expedition
             hkdf.expand(BitConverter.GetBytes(biome_id), sizeof(int)));
         return seed;
     }
-    public GameModule GetNextCommonModule(List<GameModule> forbidden = null) => ModuleGen.GetNextCommonModule(forbidden);
-    public GameModule GetNextBossModule(List<GameModule> forbidden = null) => ModuleGen.GetNextBossModule(forbidden);
-    ModuleGenerator ModuleGen;
     public Shop Shop;
+    public ModuleGenerator ModuleGen;
 }

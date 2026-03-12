@@ -14,12 +14,12 @@ public class BasicAttack : ActiveModule
         hitDamage = 1;
         energyCost = 1;
         range = 1;
-        AddKeywords(new List<string>{"Offense", "Basic", "Common"});
         //Icon_name = "...";
+        AddConstKeywords(new CommonKeyword(), new OffenseKeyword());
     }
     public override string Description()
     {
-        return $"Deal {hitDamage} to the adjacent creature.";
+        return $"Deal {hitDamage} damage to the adjacent creature.";
     }
 
     public BasicAttack(int hitDamage) : this()
@@ -40,7 +40,6 @@ public class BasicAttack : ActiveModule
     {
         return base.checkPosition(user, pos) && (pos != user.Position);
     }
-
 }
 
 
