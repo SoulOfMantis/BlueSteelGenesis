@@ -18,3 +18,18 @@ public abstract class StatusModule : PassiveModule
     public abstract bool IsExpired();
 
 }
+public abstract class NegativeStatusModule : StatusModule
+{
+    public NegativeStatusModule() :base()
+    {
+        AddConstKeyword(new NegativeStatusKeyword());
+    }
+}
+public abstract class PositiveStatusModule : StatusModule
+{
+    public PositiveStatusModule() : base()
+    {
+        AddConstKeyword(new PositiveStatusKeyword());
+    }
+}
+
