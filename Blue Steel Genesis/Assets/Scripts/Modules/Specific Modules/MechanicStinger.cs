@@ -13,12 +13,12 @@ public class MechanicStinger : ActiveModule
 
     public MechanicStinger() : base()
     {
+        energyCost = 1;
         range = 1;
         hitDamage = 1;
         duration = 3;
         AddKeywords(new List<string> { "Offense", "Common" });
         poisonDamage = 1;
-        changeName("MechanicStinger");
         Icon_name = "Module_mechanical_sting2";
     }
     public MechanicStinger(int damage, int duration, int hitDamage) : this()
