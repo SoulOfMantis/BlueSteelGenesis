@@ -46,7 +46,11 @@ public class ModuleTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointe
         this.module = module;
         updateIcon();
     }
-    public void updateIcon() =>  icon.overrideSprite = Resources.Load<Sprite>($"ModuleIcons/{module.Icon_name}");
+    public void updateIcon()
+    {
+        if (module == null) return;
+        icon.overrideSprite = Resources.Load<Sprite>($"ModuleIcons/{module.Icon_name}");
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
