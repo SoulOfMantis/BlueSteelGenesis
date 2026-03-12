@@ -13,7 +13,6 @@ public class BasicMovement : ActiveModule
         range = 3;
         energyCost = 1;
         AddKeywords(new List<string> { "Movement", "Basic", "Common"});
-        changeName("BasicMovement");
         Icon_name = "Module_movement";
     }
     public override string Description()

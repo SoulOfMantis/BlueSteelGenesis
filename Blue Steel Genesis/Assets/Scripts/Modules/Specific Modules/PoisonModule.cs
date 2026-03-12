@@ -19,7 +19,6 @@ public class PoisonModule : StatusModule
     {
         poisonDamage = damage;
         turnsLeft = duration;
-        changeName("PoisonModule");
         Icon_name = "Module_poison";
     }
     public override string Description()

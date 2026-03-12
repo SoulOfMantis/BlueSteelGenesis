@@ -2,17 +2,14 @@ using System.Threading.Tasks;
 using UnityEngine;
 using System.Collections.Generic;
 
-/// <summary>
-/// ������� ������ ����� (BAM ����������)
-/// </summary>
-public class BasicAttack : ActiveModule
+public class BasicStrongAttack : ActiveModule
 {
     protected int hitDamage;
 
-    public BasicAttack() : base()
+    public BasicStrongAttack() : base()
     {
-        hitDamage = 1;
-        energyCost = 1;
+        hitDamage = 5;
+        energyCost = 3;
         range = 1;
         AddKeywords(new List<string>{"Offense", "Basic", "Common"});
         //Icon_name = "...";
@@ -22,7 +19,7 @@ public class BasicAttack : ActiveModule
         return $"Deal {hitDamage} to the adjacent creature.";
     }
 
-    public BasicAttack(int hitDamage) : this()
+    public BasicStrongAttack(int hitDamage) : this()
     {
         this.hitDamage = hitDamage;
     }
