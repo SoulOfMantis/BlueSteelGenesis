@@ -42,30 +42,50 @@ public class Shop
     void CommonRefresh()
     {
         OnSale = new ();
-        OnSale.Add(GameState.Run.Expedition.GetNextCommonModule(GameState.Run.Expedition.Player.modules));
-        OnSale.Add(GameState.Run.Expedition.GetNextCommonModule(GameState.Run.Expedition.Player.modules.Union(OnSale).ToList()));
-        OnSale.Add(GameState.Run.Expedition.GetNextCommonModule(GameState.Run.Expedition.Player.modules.Union(OnSale).ToList()));
+        OnSale.Add(GameState.Run.Expedition.ModuleGen.GetNextCommonModule(GameState.Run.Expedition.Player.modules));
+        OnSale.Add(GameState.Run.Expedition.ModuleGen.GetNextCommonModule(GameState.Run.Expedition.Player.modules.Union(OnSale)));
+        OnSale.Add(GameState.Run.Expedition.ModuleGen.GetNextCommonModule(GameState.Run.Expedition.Player.modules.Union(OnSale)));
     }
     void BossRefresh()
     {
         OnSale = new();
-        OnSale.Add(GameState.Run.Expedition.GetNextBossModule(GameState.Run.Expedition.Player.modules));
-        OnSale.Add(GameState.Run.Expedition.GetNextBossModule(GameState.Run.Expedition.Player.modules.Union(OnSale).ToList()));
-        OnSale.Add(GameState.Run.Expedition.GetNextBossModule(GameState.Run.Expedition.Player.modules.Union(OnSale).ToList()));
+        OnSale.Add(GameState.Run.Expedition.ModuleGen.GetNextBossModule(GameState.Run.Expedition.Player.modules));
+        OnSale.Add(GameState.Run.Expedition.ModuleGen.GetNextBossModule(GameState.Run.Expedition.Player.modules.Union(OnSale)));
+        OnSale.Add(GameState.Run.Expedition.ModuleGen.GetNextBossModule(GameState.Run.Expedition.Player.modules.Union(OnSale)));
     }
     public void Buy(GameModule module)
     {
         if (!OnSale.Contains(module)) return;
-        if (GameState.Run.Expedition.Player.HasEnoughMoney(module.price))
+        switch (ModuleGenerator.isBoss(module))
         {
-            GameState.Run.Expedition.Player.LoseMoney(module.price);
-            OnSale.Remove(module);
-            GameState.Run.Expedition.Player.AddModule(module);
-            Debug.Log($"Player bought {module.Name} for {module.price} gold");
+            case true:
+                if (GameState.Run.Expedition.Player.HasGoldenTickets())
+                {
+                    GameState.Run.Expedition.Player.SpendGoldenTicket();
+                    OnSale.Remove(module);
+                    GameState.Run.Expedition.Player.AddModule(module);
+                    Debug.Log($"Player bought {module.Name} for a golden ticket");
+                }
+                break;
+
+            case false:
+                if (GameState.Run.Expedition.Player.HasEnoughMoney(module.price))
+                {
+                    GameState.Run.Expedition.Player.LoseMoney(module.price);
+                    OnSale.Remove(module);
+                    GameState.Run.Expedition.Player.AddModule(module);
+                    Debug.Log($"Player bought {module.Name} for {module.price} gold");
+                }
+                break;
         }
     }
     public void Sell(GameModule module)
     {
+        if (ModuleGenerator.isBoss(module))
+        {
+            Debug.Log("Player tried to sell a boss module");
+            return;
+        }
         if (GameState.Run.Expedition.Player.RemoveModule(module))
         {
             GameState.Run.Expedition.Player.GiveMoney(module.price/2);
