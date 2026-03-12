@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// ѕассивный модуль €да  - наносит урон при начале хода
 /// </summary>
-public class PoisonModule : StatusModule
+public class PoisonModule : NegativeStatusModule
 {
     private int poisonDamage;
     public PoisonModule() :base()
@@ -13,7 +13,7 @@ public class PoisonModule : StatusModule
         triggerType = TriggerType.OnTurnStart;
         poisonDamage = 1;
         turnsLeft = 3;
-        //AddKeywords(new PoisonKeyword(), new NegativeStatusKeyword());
+        AddConstKeyword(new PoisonKeyword());
         Icon_name = "Module_poison";
     }
     public PoisonModule(int damage, int duration) : this()
@@ -23,8 +23,7 @@ public class PoisonModule : StatusModule
     }
     public override string Description()
     {
-        return $"One of the most infamous ways to kill. " +
-            $"You will take {poisonDamage} damage at the start of your turn for another {turnsLeft} turns.";
+        return $"Target takes {poisonDamage} damage at the start of the turn for another {turnsLeft} turns." + base.Description();
     }
     public override async Task Effect(Character user, Vector3Int pos)
     {

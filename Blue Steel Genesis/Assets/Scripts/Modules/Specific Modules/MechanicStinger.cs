@@ -29,14 +29,12 @@ public class MechanicStinger : ActiveModule
     public override HashSet<ModuleKeyword> renewableKeywords()
     {
         var rk = base.renewableKeywords();
-        rk.Add(new InflictKeyword<PoisonModule>(poisonDamage, duration));
+        rk.Add(new InflictKeyword<PoisonModule>(PossibleTargets.Target, poisonDamage, duration));
         return rk;
     }
     public override string Description()
     {
-        return $"A mechanic weapon modeled after scorpion's stinger. " +
-            $"Deals {hitDamage} damage to adjacent creature and inflicts poison " +
-            $"({poisonDamage} damage for {duration} turns).";
+        return $"Deals {hitDamage} damage to the adjacent creature.\n" + base.Description();
     }
     public override async Task Effect(Character user, Vector3Int pos)
     {

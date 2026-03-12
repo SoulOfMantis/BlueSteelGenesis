@@ -16,23 +16,78 @@ public abstract class VisibleKeyword : ModuleKeyword
     public string Description { get; private set; }
     protected void ChangeDescription(string value) => Description = value;
 }
-public class ShieldKeyword : VisibleKeyword
+public class PoisonKeyword : VisibleKeyword
 {
-    public ShieldKeyword(int shield) : base()
+    public PoisonKeyword():base()
+    {
+        ChangeName("Poison");
+        ChangeDescription("Some creatures may have resistance or immunity to this.");
+    }
+}
+public enum PossibleTargets
+{
+    Self,
+    Target,
+    AllAdjacent
+}
+public abstract class TargetedVisibleKeyword : VisibleKeyword
+{
+    public PossibleTargets Target { get; }
+    public TargetedVisibleKeyword(PossibleTargets target) : base()
+    {
+        Target = target;
+    }
+    public override bool Equals(object obj)
+    {
+        return base.Equals(obj) && obj is TargetedVisibleKeyword t && t.Target == Target;
+    }
+    public override int GetHashCode()
+    {
+        return base.GetHashCode() & Target.GetHashCode();
+    }
+    public static string TargetDescription(PossibleTargets target)
+    {
+        switch (target)
+        {
+            case PossibleTargets.Self:
+                return "to yourself";
+            case PossibleTargets.Target:
+                return "to the target";
+            case PossibleTargets.AllAdjacent:
+                return "to all adjacent creatures";
+            default:
+                return "";
+        }
+    }
+}
+public class ShieldKeyword : TargetedVisibleKeyword
+{
+    public ShieldKeyword(int shield, PossibleTargets target) : base(target)
     {
         ChangeName($"Shield {shield}");
         ChangeDescription($"Protects from {shield} damage. Resets at the start of turn.");
     }
 }
-//public class 
-public class InflictKeyword<T> : VisibleKeyword where T:StatusModule
+public class EnhanceKeyword<T> : TargetedVisibleKeyword where T : PositiveStatusModule
 {
     public T Status { get; }
-    public InflictKeyword(params object[] args) : base()
+    public EnhanceKeyword(PossibleTargets target, params object[] args) : base(target)
+    {
+        Status = ModuleGenerator.CreateModuleByType(typeof(T), args) as T;
+        ChangeName($"Enhance {Status.Name}");
+        string desc = $"Apply status {Status.Name} " + TargetDescription(Target) + ".";
+        ChangeDescription(desc);
+    }
+}
+public class InflictKeyword<T> : TargetedVisibleKeyword where T:NegativeStatusModule
+{
+    public T Status { get; }
+    public InflictKeyword(PossibleTargets target, params object[] args) : base(target)
     {
         Status = ModuleGenerator.CreateModuleByType(typeof(T), args) as T;
         ChangeName($"Inflict {Status.Name}");
-        ChangeDescription($"Apply status {Status.Name} to the target.");
+        string desc = $"Apply status {Status.Name} " + TargetDescription(Target) + ".";
+        ChangeDescription(desc);
     }
 }
 //TODO: create more keywords

@@ -12,7 +12,18 @@ public abstract class GameModule
     private string icon_name = "default_default.png";
     public string Icon_name { get => icon_name; protected set => icon_name = value; }
     public int range = 0;
-    public abstract string Description();
+    public virtual string Description()
+    {
+        string res = "";
+        foreach (var k in GetVisibleKeywords())
+        {
+            res += $"{k.Name}";
+            if (k is TargetedVisibleKeyword t)
+                res += $" {TargetedVisibleKeyword.TargetDescription(t.Target)}";
+            res += ".\n";
+        }
+        return res;
+    }
     public GameModule()
     {
         changeName(GetType().Name);
@@ -74,10 +85,17 @@ public abstract class GameModule
     public HashSet<ModuleKeyword> constKeywords { get; private set; }
     public void AddConstKeyword(ModuleKeyword keyword) =>
         constKeywords.Add(keyword);
+    public void RemoveConstKeyword(ModuleKeyword keyword) =>
+        constKeywords.Remove(keyword);
     public void AddConstKeywords(params ModuleKeyword[] keywords)
     {
         foreach (var k in keywords)
             AddConstKeyword(k);
+    }
+    public void ReplaceConstKeyword(ModuleKeyword toDelete, ModuleKeyword replacement)
+    {
+        RemoveConstKeyword(toDelete);
+        AddConstKeyword(replacement);
     }
     public HashSet<ModuleKeyword> GetKeywords()
     {
@@ -86,6 +104,7 @@ public abstract class GameModule
         res.UnionWith(tempKeywords);
         return res;
     }
+    public HashSet<VisibleKeyword> GetVisibleKeywords() => GetKeywords().Where(k => k is VisibleKeyword).Select(k => k as VisibleKeyword).ToHashSet();
     public bool HasKeywords(params ModuleKeyword[] keywords) => keywords.All(k => GetKeywords().Any(kw => kw.GetType() == k.GetType()));
     private HashSet<FrequencyLimiterKeyword> GetFrequencyLimiterKeywords() =>
         constKeywords.Union(tempKeywords).Where(k => k is FrequencyLimiterKeyword).Select(k => k as FrequencyLimiterKeyword).ToHashSet();
