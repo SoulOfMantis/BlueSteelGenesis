@@ -22,14 +22,10 @@ public class ModuleGenerator
     public GameModule GetNextCommonModule(IEnumerable<Type> forbidden = null)
     {
         if (commonModuleTypes == null) getModuleTypes();
-        int id = gen.Next(commonModuleTypes.Count);
-        Type moduleType = commonModuleTypes[id];
-        if (forbidden != null)
-            while (forbidden.Contains(moduleType))
-            {
-                id = gen.Next(commonModuleTypes.Count);
-                moduleType = commonModuleTypes[id];
-            }
+        var types = commonModuleTypes.Except(forbidden).ToList();
+        if (types.Count == 0) return null;
+        int id = gen.Next(types.Count);
+        Type moduleType = types[id];
         return CreateModuleByType(moduleType);
     }
     public GameModule GetNextBossModule() => GetNextBossModule((IEnumerable<Type>)null);
@@ -37,17 +33,13 @@ public class ModuleGenerator
     public GameModule GetNextBossModule(IEnumerable<Type> forbidden = null)
     {
         if (bossModuleTypes == null) getModuleTypes();
-        int id = gen.Next(bossModuleTypes.Count);
-        Type moduleType = bossModuleTypes[id];
-        if (forbidden != null)
-            while (forbidden.Contains(moduleType))
-            {
-                id = gen.Next(bossModuleTypes.Count);
-                moduleType = bossModuleTypes[id];
-            }
+        var types = bossModuleTypes.Except(forbidden).ToList();
+        if (types.Count == 0) return null;
+        int id = gen.Next(types.Count);
+        Type moduleType = types[id];
         return CreateModuleByType(moduleType);
     }
-    static List<Type> GetForbiddenTypes(IEnumerable<GameModule> forbidden) => forbidden?.Select(m => m.GetType()).Distinct().ToList();
+    static List<Type> GetForbiddenTypes(IEnumerable<GameModule> forbidden) => forbidden?.Where(m => m != null)?.Select(m => m.GetType())?.Distinct()?.ToList();
     static bool isCommon(Type moduleType) => !moduleType.IsAbstract && isCommon(CreateModuleByType(moduleType));
     static bool isCommon(GameModule module) => hasKeywords(module, new CommonKeyword());
     static bool isBoss(Type moduleType) => !moduleType.IsAbstract && isBoss(CreateModuleByType(moduleType));
