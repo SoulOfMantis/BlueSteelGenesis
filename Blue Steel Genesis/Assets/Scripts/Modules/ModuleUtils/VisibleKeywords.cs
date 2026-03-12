@@ -18,10 +18,10 @@ public abstract class VisibleKeyword : ModuleKeyword
 }
 public class ShieldKeyword : VisibleKeyword
 {
-    public ShieldKeyword(int? shield = null) : base()
+    public ShieldKeyword(int shield) : base()
     {
         ChangeName($"Shield {shield}");
-        ChangeDescription($"Protects from {shield.ToString() ?? "#error"} damage. Resets at the start of turn.");
+        ChangeDescription($"Protects from {shield} damage. Resets at the start of turn.");
     }
 }
 //public class 
