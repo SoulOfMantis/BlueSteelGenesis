@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 using System.Collections.Generic;
 
 
@@ -7,6 +8,8 @@ public class testShopManager : MonoBehaviour
     [SerializeField] GameObject sellMenu;
     [SerializeField] List<ModuleTooltipTrigger> playerModuleIcons;
     [SerializeField] List<ModuleTooltipTrigger> shopModuleIcons;
+    [SerializeField] TMP_Text rerollPrice;
+    [SerializeField] RerollOptions ShopMode;
     private void Start()
     {
         RerollShop();
@@ -23,7 +26,7 @@ public class testShopManager : MonoBehaviour
     {
         for (int i = 0; i < shopModuleIcons.Count; i++)
         {
-            shopModuleIcons[i].gameObject.SetActive(i < GameState.Run.Expedition.Shop.OnSale.Count);
+            shopModuleIcons[i].gameObject.SetActive(i < GameState.Run.Expedition.Shop.OnSale.Count && GameState.Run.Expedition.Shop.OnSale[i] != null);
             if (shopModuleIcons[i].gameObject.activeSelf) shopModuleIcons[i].updateModuleTrigger(GameState.Run.Expedition.Shop.OnSale[i]);
         }
     }
@@ -36,7 +39,8 @@ public class testShopManager : MonoBehaviour
     public void ExitToMap() => UnityEngine.SceneManagement.SceneManager.LoadScene("ExpeditionMapTest_usingGameState");
     public void RerollShop()
     {
-        GameState.Run.Expedition.Shop.Reroll();
+        GameState.Run.Expedition.Shop.Reroll(ShopMode);
+        rerollPrice.text = $"Price: {GameState.Run.Expedition.Shop.RerollCost}";
         UpdateShop();
     }    
     public void BuyModuleNumber(int index)
