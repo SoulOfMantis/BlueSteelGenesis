@@ -7,6 +7,8 @@ public abstract class Enemy : Character
 {
     public Enemy(int maxHealth, int maxEnergy, int initiative)
     {
+        Name = "Default enemy name";
+        Description = "Default enemy description. If you see this, something went wrong.";
         this.maxHealth = maxHealth;
         this.maxEnergy = maxEnergy;
         currentHealth = maxHealth;
@@ -19,6 +21,8 @@ public abstract class Enemy : Character
     public override async Task startTurn()
     {
         await base.startTurn();
+        if (currentHealth == 0)
+            return;
         await TurnLogic();
         await endTurn();
     }

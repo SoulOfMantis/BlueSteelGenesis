@@ -1,29 +1,43 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
 /// <summary>
 /// Активный модуль ядовитого жала - наносит урон и накладывает отравление
 /// </summary>
-public class PoisonStinger : ActiveModule
+public class MechanicStinger : ActiveModule
 {
     private int hitDamage;
     private int poisonDamage;
     private int duration;
-    public PoisonStinger()
+
+    public MechanicStinger() : base()
     {
         range = 1;
         hitDamage = 1;
-        poisonDamage = 1;
         duration = 3;
-        changeName("PoisonStinger");
+        poisonDamage = 1;
+        Icon_name = "Module_mechanical_sting2";
+        AddConstKeywords(new OffenseKeyword(), new CommonKeyword());
     }
-    public PoisonStinger(int damage, int duration, int hitDamage) : this()
+    public MechanicStinger(int damage, int duration, int hitDamage) : this()
     {
+        this.hitDamage = hitDamage;
         poisonDamage = damage;
         this.duration = duration;
-        this.hitDamage = hitDamage;
     }
-
+    public override HashSet<ModuleKeyword> renewableKeywords()
+    {
+        var rk = base.renewableKeywords();
+        rk.Add(new InflictKeyword<PoisonModule>(poisonDamage, duration));
+        return rk;
+    }
+    public override string Description()
+    {
+        return $"A mechanic weapon modeled after scorpion's stinger. " +
+            $"Deals {hitDamage} damage to adjacent creature and inflicts poison " +
+            $"({poisonDamage} damage for {duration} turns).";
+    }
     public override async Task Effect(Character user, Vector3Int pos)
     {
         await user.strike(pos, hitDamage);

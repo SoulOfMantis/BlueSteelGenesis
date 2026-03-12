@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using HKDF = HKDF<System.Security.Cryptography.HMACSHA1>;
 
 public class Expedition
@@ -9,6 +10,23 @@ public class Expedition
         BiomeSeed = generateBiomeSeed(GameState.Run.GlobalSeed, biome.id);
     }
 
+    public void start()
+    {
+        // TODO: handle player creation properly
+        Player.modules = new List<GameModule>{
+            new DefaultAdaptiveTEST_ONLY(),
+            new MechanicStinger(),
+            new BasicMovement()
+        };
+        Player.maxHealth = 10;
+        Player.maxEnergy = 3;
+        Player.currentHealth = Player.maxHealth;
+        Player.materials = 3;
+        Player.money = 10;
+
+        startNextStage();
+    }
+
     public void startNextStage()
     {
         ++BiomeStage;
@@ -16,7 +34,7 @@ public class Expedition
         LocalSeed = generateLocalSeed(
             GameState.Run.GlobalSeed,
             Biome.id, (uint)BiomeStage,
-            GameState.Run.Player.livesCount,
+            GameState.Run.playerLivesCount,
             Array.Empty<byte>() //TODO: pass actual data
         );
         Map = global::Map.ExpeditionMap.generate(
@@ -28,7 +46,8 @@ public class Expedition
         TreasureSubsystem = new(Biome.id, (uint)BiomeStage);
     }
 
-    public void displayMap(ExpeditionMapView view)
+
+public void displayMap(ExpeditionMapView view)
     {
         if (Map == null || map_progress_ == null)
             throw new InvalidOperationException("Невозможно отобразить карту до начала этапа");
@@ -39,6 +58,7 @@ public class Expedition
     public int LocalSeed { get; private set; }
     public int BiomeSeed { get; private set; }
 
+    public PlayerData Player { get; private set; } = new();
     public Map.ExpeditionMap Map { get; private set; } = null;
     public Map.BiomeInfo Biome { get; private set; }
 
@@ -70,6 +90,5 @@ public class Expedition
         return seed;
     }
     public TreasureSubsystem TreasureSubsystem;
-    public GameModule GetNextModule() => ModuleGen.GetNextModule();
-    ModuleGenerator ModuleGen;
+    public ModuleGenerator ModuleGen;
 }

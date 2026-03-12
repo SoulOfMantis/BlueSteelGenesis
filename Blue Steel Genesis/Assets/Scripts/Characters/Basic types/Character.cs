@@ -14,28 +14,35 @@ public abstract class Character : MonoBehaviour
             int shield_dmg = Math.Min(currentShield, dmg);
             currentShield -= shield_dmg;
             dmg -= shield_dmg;
+            RechargeModules(TriggerType.OnDamageShielded);
             await triggerModules(TriggerType.OnDamageShielded);
             Debug.Log($"{shield_dmg} урона поглощено щитом");
             if (currentShield == 0)
+            {
+                RechargeModules(TriggerType.OnShieldBroken);
                 await triggerModules(TriggerType.OnShieldBroken);
+            }
         }
         if (dmg > 0)
         {
             currentHealth -= dmg;
+            RechargeModules(TriggerType.OnHealthDamage);
             await triggerModules(TriggerType.OnHealthDamage);
             if (currentHealth == 0)
-              await  die();
+                await die();
         }
     }
     public virtual async Task heal(int hp)
     {
         currentHealth += Math.Max(hp, 1);
+        RechargeModules(TriggerType.OnHeal);
         await triggerModules(TriggerType.OnHeal);
     }
 
     public virtual async Task giveShield(int amount)
     {
         currentShield += Math.Max(amount, 1);
+        RechargeModules(TriggerType.OnShieldGiven);
         await triggerModules(TriggerType.OnShieldGiven);
         Debug.Log($"Выдан щит: {amount}; Всего: {currentShield}");
     }
@@ -43,23 +50,32 @@ public abstract class Character : MonoBehaviour
     public virtual async Task drainEnergy(int amount)
     {
         currentEnergy -= Math.Max(amount, 1);
+        RechargeModules(TriggerType.OnEnergyDrain);
         await triggerModules(TriggerType.OnEnergyDrain);
     }
     public virtual async Task restoreEnergy(int amount)
     {
         currentEnergy += Math.Max(amount, 1);
+        RechargeModules(TriggerType.OnEnergyRestore);
         await triggerModules(TriggerType.OnEnergyRestore);
     }
 
-
+    private void CharacterInfoTooltipSetup()
+    {
+        gameObject.AddComponent<CharacterTooltipTrigger>().character = this;
+        gameObject.AddComponent<BoxCollider2D>();
+    }
     public virtual async Task startBattle()
     {
+        CharacterInfoTooltipSetup();
         Position = tracker.WorldToCell(transform.position);
+        RechargeModules(TriggerType.OnBattleStart);
         await triggerModules(TriggerType.OnBattleStart);
     }
     public virtual async Task endBattle()
     {
         status_modules_.Clear();
+        RechargeModules(TriggerType.OnBattleEnd);
         await triggerModules(TriggerType.OnBattleEnd);
     }
     public virtual async Task startTurn()
@@ -68,10 +84,12 @@ public abstract class Character : MonoBehaviour
         myTurn = true;
         currentShield = 0;
         await restoreEnergy(maxEnergy);
+        RechargeModules(TriggerType.OnTurnStart);
         await triggerModules(TriggerType.OnTurnStart);
     }
     public virtual async Task endTurn()
     {
+        RechargeModules(TriggerType.OnTurnEnd);
         await triggerModules(TriggerType.OnTurnEnd);
         myTurn = false;
         tracker.NextTurn();
@@ -85,6 +103,7 @@ public abstract class Character : MonoBehaviour
 
         foreach (var step in path)
             await moveStep(step);
+        RechargeModules(TriggerType.OnMove);
         await triggerModules(TriggerType.OnMove, Position);
     }
     protected virtual async Task moveStep(Vector3Int dir)
@@ -105,6 +124,7 @@ public abstract class Character : MonoBehaviour
         if (target == null)
             return;
         await target.damage(dmg);
+        RechargeModules(TriggerType.OnStrike);
         await triggerModules(TriggerType.OnStrike, pos);
         Debug.Log($"Strike at {pos} for {dmg} damage");
     }
@@ -116,6 +136,7 @@ public abstract class Character : MonoBehaviour
         if (target == null)
             return;
         target.addStatusModule(status);
+        RechargeModules(TriggerType.OnApply);
         await triggerModules(TriggerType.OnApply, pos);
         Debug.Log($"Apply {status.GetType().Name} at {pos}");
     }
@@ -125,6 +146,10 @@ public abstract class Character : MonoBehaviour
     {
         modules_.Add(module);
         module.Initialize();
+    }
+    public bool removeModule(GameModule module)
+    {
+        return modules_.Remove(module);
     }
     public void addStatusModule(StatusModule status)
     {
@@ -155,7 +180,7 @@ public abstract class Character : MonoBehaviour
         foreach (var pm in listModules<PassiveModule>().Where(pm => pm.triggerType == triggerType))
         {
             if (isCorrectPosition(pm, pos))
-                await usePassiveModule_internal(pm, pos);            
+                await usePassiveModule_internal(pm, pos);
         }
         await processStatusModules(triggerType);
     }
@@ -165,7 +190,7 @@ public abstract class Character : MonoBehaviour
             await useStatusModule_internal(st);
         status_modules_.RemoveAll(m => m.IsExpired());
     }
-
+    protected void RechargeModules(TriggerType trigger) => modules_.ForEach(m => m.Recharge(trigger));
 
     protected IEnumerable<ModuleT> listModules<ModuleT>()
         where ModuleT : GameModule
@@ -188,11 +213,20 @@ public abstract class Character : MonoBehaviour
     public bool doesModuleExist(int module_index) => getModule<GameModule>(module_index) != null;
     protected virtual bool isCorrectPosition(GameModule module, Vector3Int pos) => module.checkPosition(this, pos);
     protected virtual bool hasEnoughEnergy(ActiveModule module) => module != null && currentEnergy >= module.energyCost;
-    protected virtual Task useActiveModule_internal(ActiveModule m, Vector3Int pos) => m.Effect(this, pos);
-    protected virtual Task usePassiveModule_internal(PassiveModule m, Vector3Int pos) => m.Effect(this, pos);
-    protected virtual Task useStatusModule_internal(StatusModule m) => m.Effect(this, Position);
+    protected virtual Task useActiveModule_internal(ActiveModule m, Vector3Int pos) => m.Use(this, pos);
+    protected virtual Task usePassiveModule_internal(PassiveModule m, Vector3Int pos) => m.Use(this, pos);
+    protected virtual Task useStatusModule_internal(StatusModule m) => m.Use(this, Position);
 
-
+    public string getModuleName(int index)
+    {
+        if (!doesModuleExist(index)) return null;
+        return getModule(index).Name;
+    }
+    public string getModuleDescription(int index)
+    {
+        if (!doesModuleExist(index)) return null;
+        return getModule(index).Description();
+    }
     public abstract int currentHealth { get; protected set; }
     public abstract int maxHealth { get; protected set; }
     public int currentShield { get; protected set; }
@@ -218,11 +252,15 @@ public abstract class Character : MonoBehaviour
         }
     }
 
+    public string Name { get; protected set; }
+    public string Description { get; protected set; }
 
     public static SceneTracker tracker;
 
     protected abstract List<GameModule> modules_ { get; set; }
+    public IReadOnlyList<GameModule> Modules { get => modules_.AsReadOnly();}
     protected List<StatusModule> status_modules_ = new();
+    public IReadOnlyList<GameModule> Statuses { get => status_modules_.AsReadOnly(); }
 
     private int current_energy_;
     private Vector3Int position_;

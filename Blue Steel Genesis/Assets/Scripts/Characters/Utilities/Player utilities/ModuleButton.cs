@@ -1,3 +1,4 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -24,11 +25,16 @@ using UnityEngine.UI;
             player = GameObject.FindWithTag("Player").GetComponent<PlayerCharacter>(); //Will cause a crash if there's no active player game object, shouldn't let this happen
             button = gameObject.GetComponent<Button>();
             if (!player.doesModuleExist(connectedModuleIndex))
+            {
                 gameObject.SetActive(false);
+            return;
+            }
             button.interactable = false;
             enabled = player.isActive(connectedModuleIndex);
             PlayerCharacter.activeModuleButtons.Add(this);
-            button.GetComponentInChildren<TMP_Text>().text = player.getmoduleName(connectedModuleIndex);
+            button.GetComponentInChildren<TMP_Text>().text = player.getModuleName(connectedModuleIndex);
+
+            GetComponent<ModuleTooltipTrigger>().updateModuleTrigger(player.Modules[connectedModuleIndex]);
 
             gridClickAction = new InputAction(binding: "<Mouse>/leftButton");
             gridClickAction.started += handleGridClick;
@@ -41,7 +47,7 @@ using UnityEngine.UI;
         private void OnDestroy() {
             resetSelection.RemoveListener(deselect);
             updateInteractable.RemoveListener(buttonInteractableManaging);
-            gridClickAction.Dispose();
+            gridClickAction?.Dispose();
         }
 
         public async void handleGridClick(InputAction.CallbackContext _) {

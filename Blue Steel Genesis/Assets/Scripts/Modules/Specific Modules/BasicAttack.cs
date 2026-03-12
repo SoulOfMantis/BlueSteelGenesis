@@ -1,27 +1,31 @@
 using System.Threading.Tasks;
 using UnityEngine;
-
+using System.Collections.Generic;
 
 /// <summary>
 /// Базовый модуль атаки (BAM сокращение)
 /// </summary>
 public class BasicAttack : ActiveModule
 {
-    private int hitDamage;
+    protected int hitDamage;
 
-    public BasicAttack()
+    public BasicAttack() : base()
     {
         hitDamage = 1;
         energyCost = 1;
         range = 1;
-        changeName("BasicAttack");
+        //Icon_name = "...";
+        AddConstKeywords(new CommonKeyword(), new OffenseKeyword());
+    }
+    public override string Description()
+    {
+        return $"Deal {hitDamage} damage to the adjacent creature.";
     }
 
     public BasicAttack(int hitDamage) : this()
     {
         this.hitDamage = hitDamage;
     }
-
     public override async Task Effect(Character user, Vector3Int pos)
     {
         await user.strike(pos, hitDamage);
@@ -36,7 +40,6 @@ public class BasicAttack : ActiveModule
     {
         return base.checkPosition(user, pos) && (pos != user.Position);
     }
-
 }
 
 
