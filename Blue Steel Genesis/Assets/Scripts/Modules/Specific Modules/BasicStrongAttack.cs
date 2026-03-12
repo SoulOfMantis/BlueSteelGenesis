@@ -10,8 +10,8 @@ public class BasicStrongAttack : ActiveModule
     {
         hitDamage = 5;
         energyCost = 3;
-        range = 1;
-        AddKeywords(new List<string>{"Offense", "Basic", "Common"});
+        range = 1; 
+        AddConstKeywords(new CommonKeyword(), new OffenseKeyword());
         //Icon_name = "...";
     }
     public override string Description()
