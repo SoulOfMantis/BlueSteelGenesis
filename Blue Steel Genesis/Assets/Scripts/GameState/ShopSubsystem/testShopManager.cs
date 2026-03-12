@@ -9,7 +9,7 @@ public class testShopManager : MonoBehaviour
     [SerializeField] List<ModuleTooltipTrigger> shopModuleIcons;
     private void Start()
     {
-        RefreshShop();
+        RerollShop();
     }
     void updatePlayerModuleIcons()
     {
@@ -34,9 +34,9 @@ public class testShopManager : MonoBehaviour
         //TODO: update icons and disable unused objects
     }
     public void ExitToMap() => UnityEngine.SceneManagement.SceneManager.LoadScene("ExpeditionMapTest_usingGameState");
-    public void RefreshShop()
+    public void RerollShop()
     {
-        GameState.Run.Expedition.Shop.Refresh();
+        GameState.Run.Expedition.Shop.Reroll();
         UpdateShop();
     }    
     public void BuyModuleNumber(int index)

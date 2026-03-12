@@ -43,7 +43,7 @@ public class Expedition
         );
         map_progress_ = new(Map);
         ModuleGen = new(LocalSeed);
-        Shop = new();
+        Shop = new(Biome.id);
     }
 
     public void displayMap(ExpeditionMapView view)

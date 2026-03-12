@@ -3,6 +3,13 @@ using System.Collections.Generic;
 
 public class PlayerData
 {
+    public uint GoldenTickets { get; private set; }
+    public bool HasGoldenTickets() => GoldenTickets > 0;
+    public void GetGoldenTicket() => GoldenTickets++;
+    public void SpendGoldenTicket()
+    {
+        if (GoldenTickets >= 1) GoldenTickets--;
+    }
     public int PlayerMoney
     {
         get => playerMoney;
@@ -18,9 +25,11 @@ public class PlayerData
 
     public void GiveMoney(int value) => PlayerMoney += value;
     public void LoseMoney(int value) => PlayerMoney -= value;
+    public bool HasEnoughMoney(int value) => PlayerMoney >= value;
 
     public void GiveMaterials(int value) => PlayerMaterials += value;
     public void LoseMaterials(int value) => PlayerMaterials -= value;
+    public bool HasEnoughMaterials(int value) => PlayerMaterials >= value;
 
     public int currentHealth
     {
