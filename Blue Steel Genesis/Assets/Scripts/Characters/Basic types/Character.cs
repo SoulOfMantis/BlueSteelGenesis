@@ -14,20 +14,15 @@ public abstract class Character : MonoBehaviour
             int shield_dmg = Math.Min(currentShield, dmg);
             currentShield -= shield_dmg;
             dmg -= shield_dmg;
-            RechargeModules(TriggerType.OnDamageShielded);
-            await triggerModules(TriggerType.OnDamageShielded);
+            await processTrigger(TriggerType.OnDamageShielded);
             Debug.Log($"{shield_dmg} урона поглощено щитом");
             if (currentShield == 0)
-            {
-                RechargeModules(TriggerType.OnShieldBroken);
-                await triggerModules(TriggerType.OnShieldBroken);
-            }
+                await processTrigger(TriggerType.OnShieldBroken);
         }
         if (dmg > 0)
         {
             currentHealth -= dmg;
-            RechargeModules(TriggerType.OnHealthDamage);
-            await triggerModules(TriggerType.OnHealthDamage);
+            await processTrigger(TriggerType.OnHealthDamage);
             if (currentHealth == 0)
                 await die();
         }
@@ -35,29 +30,25 @@ public abstract class Character : MonoBehaviour
     public virtual async Task heal(int hp)
     {
         currentHealth += Math.Max(hp, 1);
-        RechargeModules(TriggerType.OnHeal);
-        await triggerModules(TriggerType.OnHeal);
+        await processTrigger(TriggerType.OnHeal);
     }
 
     public virtual async Task giveShield(int amount)
     {
         currentShield += Math.Max(amount, 1);
-        RechargeModules(TriggerType.OnShieldGiven);
-        await triggerModules(TriggerType.OnShieldGiven);
+        await processTrigger(TriggerType.OnShieldGiven);
         Debug.Log($"Выдан щит: {amount}; Всего: {currentShield}");
     }
     abstract protected Task die();
     public virtual async Task drainEnergy(int amount)
     {
         currentEnergy -= Math.Max(amount, 1);
-        RechargeModules(TriggerType.OnEnergyDrain);
-        await triggerModules(TriggerType.OnEnergyDrain);
+        await processTrigger(TriggerType.OnEnergyDrain);
     }
     public virtual async Task restoreEnergy(int amount)
     {
         currentEnergy += Math.Max(amount, 1);
-        RechargeModules(TriggerType.OnEnergyRestore);
-        await triggerModules(TriggerType.OnEnergyRestore);
+        await processTrigger(TriggerType.OnEnergyRestore);
     }
 
     private void CharacterInfoTooltipSetup()
@@ -69,14 +60,12 @@ public abstract class Character : MonoBehaviour
     {
         CharacterInfoTooltipSetup();
         Position = tracker.WorldToCell(transform.position);
-        RechargeModules(TriggerType.OnBattleStart);
-        await triggerModules(TriggerType.OnBattleStart);
+        await processTrigger(TriggerType.OnBattleStart);
     }
     public virtual async Task endBattle()
     {
         status_modules_.Clear();
-        RechargeModules(TriggerType.OnBattleEnd);
-        await triggerModules(TriggerType.OnBattleEnd);
+        await processTrigger(TriggerType.OnBattleEnd);
     }
     public virtual async Task startTurn()
     {
@@ -84,13 +73,11 @@ public abstract class Character : MonoBehaviour
         myTurn = true;
         currentShield = 0;
         await restoreEnergy(maxEnergy);
-        RechargeModules(TriggerType.OnTurnStart);
-        await triggerModules(TriggerType.OnTurnStart);
+        await processTrigger(TriggerType.OnTurnStart);
     }
     public virtual async Task endTurn()
     {
-        RechargeModules(TriggerType.OnTurnEnd);
-        await triggerModules(TriggerType.OnTurnEnd);
+        await processTrigger(TriggerType.OnTurnEnd);
         myTurn = false;
         tracker.NextTurn();
     }
@@ -103,8 +90,7 @@ public abstract class Character : MonoBehaviour
 
         foreach (var step in path)
             await moveStep(step);
-        RechargeModules(TriggerType.OnMove);
-        await triggerModules(TriggerType.OnMove, Position);
+        await processTrigger(TriggerType.OnMove, Position);
     }
     protected virtual async Task moveStep(Vector3Int dir)
     {
@@ -124,8 +110,7 @@ public abstract class Character : MonoBehaviour
         if (target == null)
             return;
         await target.damage(dmg);
-        RechargeModules(TriggerType.OnStrike);
-        await triggerModules(TriggerType.OnStrike, pos);
+        await processTrigger(TriggerType.OnStrike, pos);
         Debug.Log($"Strike at {pos} for {dmg} damage");
     }
 
@@ -136,8 +121,7 @@ public abstract class Character : MonoBehaviour
         if (target == null)
             return;
         target.addStatusModule(status);
-        RechargeModules(TriggerType.OnApply);
-        await triggerModules(TriggerType.OnApply, pos);
+        await processTrigger(TriggerType.OnApply, pos);
         Debug.Log($"Apply {status.GetType().Name} at {pos}");
     }
 
@@ -173,6 +157,12 @@ public abstract class Character : MonoBehaviour
             return true;
         }
         return false;
+    }
+    protected Task processTrigger(TriggerType trigger) => processTrigger(trigger, Position);
+    protected Task processTrigger(TriggerType trigger, Vector3Int pos)
+    {
+        RechargeModules(trigger);
+        return triggerModules(trigger, pos);
     }
     protected Task triggerModules(TriggerType triggerType) => triggerModules(triggerType, Position);
     protected async Task triggerModules(TriggerType triggerType, Vector3Int pos)
