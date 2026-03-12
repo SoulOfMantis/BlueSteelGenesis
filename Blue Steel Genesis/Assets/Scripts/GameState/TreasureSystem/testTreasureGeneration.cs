@@ -18,7 +18,7 @@ public class testTreasureGeneration : MonoBehaviour
     {
         exit.onClick.AddListener(Exit);
         reroll.onClick.AddListener(Reroll);
-        UpdateModuleName();
+        Reroll();
     }
     void UpdateModuleName()
     {

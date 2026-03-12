@@ -43,7 +43,7 @@ public class Expedition
         );
         map_progress_ = new(Map);
         ModuleGen = new(LocalSeed);
-        TreasureSubsystem = new(Biome.id, (uint)BiomeStage);
+        TreasureSubsystem = new(Biome.id);
     }
 
 
