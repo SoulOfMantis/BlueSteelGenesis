@@ -6,7 +6,7 @@ public abstract class ModuleKeyword
 {
     public override int GetHashCode()
     {
-        return base.GetHashCode() & GetType().GetHashCode();
+        return GetType().GetHashCode();
     }
     public override bool Equals(object obj)
     {

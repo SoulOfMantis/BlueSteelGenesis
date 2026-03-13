@@ -43,7 +43,7 @@ public abstract class TargetedVisibleKeyword : VisibleKeyword
     }
     public override int GetHashCode()
     {
-        return base.GetHashCode() & Target.GetHashCode();
+        return (GetType(), Target).GetHashCode();
     }
     public static string TargetDescription(PossibleTargets target)
     {
