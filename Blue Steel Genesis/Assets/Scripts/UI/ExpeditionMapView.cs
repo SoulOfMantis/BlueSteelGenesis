@@ -154,6 +154,9 @@ public class ExpeditionMapView : MonoBehaviour
                 GameState.Run.Expedition.CombatSystem.TriggerNormalEncounter();
                 // UnityEngine.SceneManagement.SceneManager.LoadScene("testing_withMap"); //for testing only
                 break;
+            case Node.ELITE_ENEMY:
+                GameState.Run.Expedition.CombatSystem.TriggerEliteEncounter();
+                break;
         }
     }
 

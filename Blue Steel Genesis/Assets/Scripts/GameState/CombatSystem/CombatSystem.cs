@@ -1,9 +1,15 @@
+using Map;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using UnityEditor;
+using UnityEngine;
 
 public class CombatSystem
 {
     uint biome_id, stage_id;
+    Type reward;
     internal enum EncounterType
     {
         Normal,
@@ -12,7 +18,8 @@ public class CombatSystem
     }
     EncounterType current_enc;
 
-    Random gen;
+    Map.BiomeInfo BiomeInfo;
+    System.Random gen;
 
     const uint max_enc_id = 3;
     const uint max_materials_given = 30;
@@ -26,9 +33,8 @@ public class CombatSystem
 
 
 
-    List<uint> elite_list = new List<uint>() { 1, 2, 3 };
     const uint default_elite = 0;
-    const uint elite_variation_count = 3;
+    //const uint elite_variation_count = 3;
 
     List<uint> boss_list = new List<uint>() { 1, 2, 3 };
     const uint default_boss = 0;
@@ -38,7 +44,7 @@ public class CombatSystem
     {
         biome_id = biome;
         stage_id = stage;
-        gen = new Random(local_seed);
+        gen = new System.Random(local_seed);
     }
 
     string NextNormalEncounter()
@@ -50,16 +56,18 @@ public class CombatSystem
     string NextEliteEncounter()
     {
         uint elite_id;
+        List<uint> elite_list = BiomeInfo.elites.Keys.Where(x => x.stage == stage_id).Select(y => y.elite_id).ToList();
+
         if (elite_list.Count != 0)
         {
             int elite_ind = gen.Next(elite_list.Count);
             elite_id = elite_list[elite_ind];
-            elite_list.RemoveAt(elite_ind);
+            BiomeInfo.elites.Remove((stage_id, elite_id));
         }
         else elite_id = default_elite;
+        reward = BiomeInfo.elites[(stage_id, elite_id)];
 
-        uint elite_variation = (uint)gen.Next((int)elite_variation_count);
-        return $"b{biome_id}_st{stage_id}_Elite{elite_id}_{elite_variation}";
+        return $"b{biome_id}_st{stage_id}_Elite{elite_id}"; // Добавить вариации
     }
 
     string NextBossEncounter()
@@ -140,7 +148,7 @@ public class CombatSystem
     void VictoryElite()
     {
         GiveReward(elite_reward_modifier);
-        // TODO Добавить получение модуля
+        UnityEngine.Debug.Log($"Reward: {reward.Name}");
         UnityEngine.SceneManagement.SceneManager.LoadScene("ExpeditionMapTest_usingGameState");
     }
 
