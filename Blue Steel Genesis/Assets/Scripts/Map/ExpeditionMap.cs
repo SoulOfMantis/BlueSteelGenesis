@@ -9,6 +9,11 @@ namespace Map
     {
         public uint id;
         public float missing_node_rate = .3f;
+
+        Dictionary<(uint stage, uint elite_id), Type> elites = new();
+        // (stage, boss_id) => boss_variation_count
+        Dictionary<(uint stage, uint boss_id), uint> bosses = new();
+
     }
 
     public class ExpeditionMap
