@@ -30,6 +30,10 @@ public class CombatSystem
     const uint default_elite = 0;
     const uint elite_variation_count = 3;
 
+    List<uint> boss_list = new List<uint>() { 1, 2, 3 };
+    const uint default_boss = 0;
+    const uint boss_variation_count = 3;
+
     public CombatSystem(uint biome, uint stage, int local_seed)
     {
         biome_id = biome;
@@ -58,6 +62,21 @@ public class CombatSystem
         return $"b{biome_id}_st{stage_id}_Elite{elite_id}_{elite_variation}";
     }
 
+    string NextBossEncounter()
+    {
+        uint boss_id;
+        if (boss_list.Count != 0)
+        {
+            int boss_ind = gen.Next(boss_list.Count);
+            boss_id = boss_list[boss_ind];
+            boss_list.RemoveAt(boss_ind);
+        }
+        else boss_id = default_boss;
+
+        uint boss_variation = (uint)gen.Next((int)boss_variation_count);
+        return $"b{biome_id}_st{stage_id}_Boss{boss_id}_{boss_variation}";
+    }
+
     public void TriggerNormalEncounter()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(NextNormalEncounter());
@@ -68,6 +87,12 @@ public class CombatSystem
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(NextEliteEncounter());
         current_enc = EncounterType.Elite;
+    }
+
+    public void TriggerBossEncounter()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(NextBossEncounter());
+        current_enc = EncounterType.Boss;
     }
 
     void GiveReward(uint modifier)
