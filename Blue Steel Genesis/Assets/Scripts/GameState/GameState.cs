@@ -1,17 +1,49 @@
 ﻿using System;
+using System.IO;
 using UnityEngine;
 
 public static class GameState
 {
+    private static readonly string SeedFilePath = "game_seed.txt";
+
+
     public static void startGameRun(int? seed = null)
     {
-        if (Run != null) {
+        if (Run != null)
+        {
             Debug.LogWarning("Попытка начать новый забег до окончания предыдущего");
             return;
         }
-        Run = new(seed ?? generateRandomSeed());
+
+        int actualSeed;
+        if (seed.HasValue)
+        {
+            actualSeed = seed.Value;
+            File.WriteAllText(SeedFilePath, actualSeed.ToString());
+        }
+        else
+        {
+            if (File.Exists(SeedFilePath))
+            {
+                string content = File.ReadAllText(SeedFilePath);
+                if (int.TryParse(content, out actualSeed))
+                {
+                    Debug.Log($"Загружен сохранённый сид: {actualSeed}");
+                }
+                else
+                {
+                    actualSeed = generateRandomSeed();
+                }
+            }
+            else
+            {
+                actualSeed = generateRandomSeed();
+            }
+        }
+        Run = new(actualSeed);
         Run.start();
     }
+
 
     public static void endGameRun()
     {
@@ -22,9 +54,13 @@ public static class GameState
 
 
 
-    private static int generateRandomSeed() {
+    private static int generateRandomSeed()
+    {
         byte[] seed_bytes = new byte[sizeof(int)];
         System.Security.Cryptography.RandomNumberGenerator.Fill(seed_bytes);
-        return BitConverter.ToInt32(seed_bytes);
+        int seed = BitConverter.ToInt32(seed_bytes);
+
+        File.WriteAllText(SeedFilePath, seed.ToString());
+        return seed;
     }
 }
