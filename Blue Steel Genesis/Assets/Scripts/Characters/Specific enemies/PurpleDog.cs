@@ -53,7 +53,7 @@ public class PurpleDog : Enemy
         }
         return true;
     }
-    public override async Task damage(int dmg)
+    public override async Task damage(uint dmg)
     {
         Debug.Log($"Собака получила {dmg} урона!");
         await base.damage(dmg);
@@ -61,7 +61,7 @@ public class PurpleDog : Enemy
         //play taking damage animation
     }
 
-    public override async Task heal(int hp)
+    public override async Task heal(uint hp)
     {
         Debug.Log($"Собака восстановила {hp} здоровья!");
         await base.heal(hp);

@@ -6,13 +6,13 @@ using UnityEngine;
 /// </summary>
 public class PoisonModule : StatusModule
 {
-    protected int poisonDamage;
+    protected uint poisonDamage;
 
-    public PoisonModule(int damage = 1, int duration = 3)
+    public PoisonModule(uint damage = 1, uint duration = 3)
     {
         triggerType = TriggerType.OnTurnStart;
         poisonDamage = damage;
-        turnsLeft = duration;
+        turnsLeft.Value = duration;
         changeName("PoisonModule");
         Icon_name = "Module_poison";
     }

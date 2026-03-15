@@ -6,9 +6,9 @@ using UnityEngine;
 /// </summary>
 public class MechanicStinger : ActiveModule
 {
-    private int hitDamage;
-    private int poisonDamage;
-    private int duration;
+    private uint hitDamage;
+    private uint poisonDamage;
+    private uint duration;
 
     public MechanicStinger()
     {
@@ -19,7 +19,7 @@ public class MechanicStinger : ActiveModule
         changeName("MechanicStinger");
         Icon_name = "Module_mechanical_sting2";
     }
-    public MechanicStinger(int damage, int duration, int hitDamage) : this()
+    public MechanicStinger(uint damage, uint duration, uint hitDamage) : this()
     {
         this.hitDamage = hitDamage;
         poisonDamage = damage;

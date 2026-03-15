@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class BasicAttack : ActiveModule
 {
-    protected int hitDamage;
+    protected uint hitDamage;
 
     public BasicAttack()
     {
@@ -22,7 +22,7 @@ public class BasicAttack : ActiveModule
         return $"Deal {hitDamage} to the adjacent creature.";
     }
 
-    public BasicAttack(int hitDamage) : this()
+    public BasicAttack(uint hitDamage) : this()
     {
         this.hitDamage = hitDamage;
     }
