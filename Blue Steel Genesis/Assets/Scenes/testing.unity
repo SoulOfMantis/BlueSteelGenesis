@@ -3858,7 +3858,7 @@ GameObject:
   - component: {fileID: 847329476}
   - component: {fileID: 847329475}
   - component: {fileID: 847329474}
-  - component: {fileID: 847329473}
+  - component: {fileID: 847329477}
   m_Layer: 5
   m_Name: Exit
   m_TagString: Untagged
@@ -3886,18 +3886,6 @@ RectTransform:
   m_AnchoredPosition: {x: 400, y: -277}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &847329473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 847329471}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7579a1b80c7ce944085e6ed1f6f7cbc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
 --- !u!114 &847329474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3942,9 +3930,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 847329473}
-        m_TargetAssemblyTypeName: MenuButtons, Assembly-CSharp
-        m_MethodName: Exit
+      - m_Target: {fileID: 847329477}
+        m_TargetAssemblyTypeName: Debug_MenuButtonsForFightTest, BlueSteelGenesis
+        m_MethodName: returnToMap
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3992,6 +3980,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 847329471}
   m_CullTransparentMesh: 1
+--- !u!114 &847329477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847329471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d810522f98e29b4a8ad0d68320bb6d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BlueSteelGenesis::Debug_MenuButtonsForFightTest
 --- !u!1 &855047323
 GameObject:
   m_ObjectHideFlags: 0
@@ -4515,7 +4515,7 @@ GameObject:
   - component: {fileID: 972652694}
   - component: {fileID: 972652693}
   - component: {fileID: 972652692}
-  - component: {fileID: 972652691}
+  - component: {fileID: 972652695}
   m_Layer: 5
   m_Name: RestartButton
   m_TagString: Untagged
@@ -4543,18 +4543,6 @@ RectTransform:
   m_AnchoredPosition: {x: -400, y: -277}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &972652691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 972652689}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7579a1b80c7ce944085e6ed1f6f7cbc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
 --- !u!114 &972652692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4599,9 +4587,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 972652691}
-        m_TargetAssemblyTypeName: MenuButtons, Assembly-CSharp
-        m_MethodName: Restart
+      - m_Target: {fileID: 972652695}
+        m_TargetAssemblyTypeName: Debug_MenuButtonsForFightTest, BlueSteelGenesis
+        m_MethodName: restartExpedition
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4649,6 +4637,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 972652689}
   m_CullTransparentMesh: 1
+--- !u!114 &972652695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 972652689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d810522f98e29b4a8ad0d68320bb6d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BlueSteelGenesis::Debug_MenuButtonsForFightTest
 --- !u!1 &1006223259
 GameObject:
   m_ObjectHideFlags: 0
@@ -5647,7 +5647,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1351056330}
   m_OnClick:
     m_PersistentCalls:
@@ -7763,7 +7763,7 @@ GameObject:
   - component: {fileID: 1962244305}
   - component: {fileID: 1962244304}
   - component: {fileID: 1962244303}
-  - component: {fileID: 1962244302}
+  - component: {fileID: 1962244306}
   m_Layer: 5
   m_Name: RestartButton
   m_TagString: Untagged
@@ -7791,18 +7791,6 @@ RectTransform:
   m_AnchoredPosition: {x: -400, y: -276.99997}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1962244302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1962244300}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7579a1b80c7ce944085e6ed1f6f7cbc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
 --- !u!114 &1962244303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7847,9 +7835,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1962244302}
-        m_TargetAssemblyTypeName: MenuButtons, Assembly-CSharp
-        m_MethodName: Restart
+      - m_Target: {fileID: 1962244306}
+        m_TargetAssemblyTypeName: Debug_MenuButtonsForFightTest, BlueSteelGenesis
+        m_MethodName: restartExpedition
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7897,6 +7885,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1962244300}
   m_CullTransparentMesh: 1
+--- !u!114 &1962244306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1962244300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d810522f98e29b4a8ad0d68320bb6d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BlueSteelGenesis::Debug_MenuButtonsForFightTest
 --- !u!1 &1971517815
 GameObject:
   m_ObjectHideFlags: 0
