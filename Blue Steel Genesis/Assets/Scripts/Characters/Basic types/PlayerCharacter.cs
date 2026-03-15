@@ -21,6 +21,7 @@ public class PlayerCharacter : Character
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        currentEnergy.Max = GameState.Run.Expedition.Player.maxEnergy;
         if (tracker != null)
         {
             tracker.AddCharacter(this);
@@ -123,7 +124,7 @@ public class PlayerCharacter : Character
     public void onEndTurnButtonPressed() =>
         StartCoroutine(TaskCoro.Make(endTurn()));
 
-    public override async Task damage(int dmg)
+    public override async Task damage(uint dmg)
     {
         Debug.Log($"����� ������� {dmg} �����!");
         await base.damage(dmg);
@@ -131,7 +132,7 @@ public class PlayerCharacter : Character
         //play taking damage animation
     }
 
-    public override async Task heal(int hp)
+    public override async Task heal(uint hp)
     {
         Debug.Log($"����� ����������� {hp} ��������!");
         await base.heal(hp);
@@ -139,14 +140,14 @@ public class PlayerCharacter : Character
         //play healing animation
     }
 
-    public override async Task drainEnergy(int amount)
+    public override async Task drainEnergy(uint amount)
     {
         await base.drainEnergy(amount);
         updateButtons();
         updateEnergy();
         //play losing energy animation
     }
-    public override async Task restoreEnergy(int amount)
+    public override async Task restoreEnergy(uint amount)
     {
         await base.restoreEnergy(amount);
         updateButtons();
@@ -175,17 +176,20 @@ public class PlayerCharacter : Character
         DefeatScreen.SetActive(true);
     }
 
-    public override int currentHealth {
+    public override URangeValue currentHealth {
         get => GameState.Run.Expedition.Player.currentHealth;
         protected set => GameState.Run.Expedition.Player.currentHealth = value;
     }
-    public override int maxHealth {
+    public override uint maxHealth {
         get => GameState.Run.Expedition.Player.maxHealth;
         protected set => GameState.Run.Expedition.Player.maxHealth = value;
     }
-    public override int maxEnergy {
+    public override uint maxEnergy {
         get => GameState.Run.Expedition.Player.maxEnergy;
-        protected set => GameState.Run.Expedition.Player.maxEnergy = value;
+        protected set {
+            currentEnergy.Max = value;
+            GameState.Run.Expedition.Player.maxEnergy = value;
+        }
     }
     protected override List<GameModule> modules_ {
         get => GameState.Run.Expedition.Player.modules;

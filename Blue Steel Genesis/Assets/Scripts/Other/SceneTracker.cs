@@ -87,10 +87,10 @@ public class SceneTracker : MonoBehaviour
     }
 
     //                                         
-    public PlayerCharacter getPlayer()
-    {
-        return init.characters.Find(c => c is PlayerCharacter) as PlayerCharacter;
-    }
+    public PlayerCharacter getPlayer() =>
+        init.getPlayer();
+    public bool IsPlayerAlive() =>
+        !init.CheckDefeat();
 
     // Highlights given cells
     public void HighlightCells(List<Vector3Int> cells)

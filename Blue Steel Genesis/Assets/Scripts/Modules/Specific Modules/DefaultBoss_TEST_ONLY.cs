@@ -19,9 +19,15 @@ public class DefaultBoss_TEST_ONLY : ActiveModule
     }
     public override string Description()
     {
-        var keyword = constKeywords.First(k => k.GetType() == typeof(LimitedPerBattleKeyword)) as LimitedPerBattleKeyword;
-        return $"Deal {damageDealt} damage. Take {damageTaken} damage. {keyword.Name}.";
+        return $"Deal {damageDealt} damage. Take {damageTaken} damage.\n" + base.Description();
     }
-    
+    protected override bool checkFinalPosition(Vector3Int pos)
+    {
+        return Character.tracker.IsOccupiedByCharacter(pos);
+    }
+    public override bool checkPosition(Character user, Vector3Int pos)
+    {
+        return base.checkPosition(user, pos) && (pos != user.Position);
+    }
 }
 

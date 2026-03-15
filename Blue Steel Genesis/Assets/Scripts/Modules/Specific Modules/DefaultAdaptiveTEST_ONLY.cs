@@ -15,7 +15,7 @@ public class DefaultAdaptiveTEST_ONLY : PassiveModule
 
     public override string Description()
     {
-        return $"Does nothing. For testing only.";
+        return $"Does nothing. For testing only." + base.Description();
     }
 }
 

@@ -10,37 +10,30 @@ public class PlayerData
     {
         if (GoldenTickets >= 1) GoldenTickets--;
     }
-    public int PlayerMoney
-    {
-        get => playerMoney;
-        protected set => playerMoney = Math.Max(value, 0);
-    }
-    private int playerMoney = 0;
-    public int PlayerMaterials
-    {
-        get => playerMaterials;
-        protected set => playerMaterials = Math.Max(value, 0);
-    }
-    private int playerMaterials = 0;
 
-    public void GiveMoney(int value) => PlayerMoney += value;
-    public void LoseMoney(int value) => PlayerMoney -= value;
-    public bool HasEnoughMoney(int value) => PlayerMoney >= value;
+    public void GiveMoney(uint value) => money += value;
+    public void LoseMoney(uint value) => money -= value;
+    public bool HasEnoughMoney(uint value) => money.Value >= value;
 
-    public void GiveMaterials(int value) => PlayerMaterials += value;
-    public void LoseMaterials(int value) => PlayerMaterials -= value;
-    public bool HasEnoughMaterials(int value) => PlayerMaterials >= value;
+    public void GiveMaterials(uint value) => materials += value;
+    public void LoseMaterials(uint value) => materials -= value;
+    public bool HasEnoughMaterials(uint value) => materials.Value >= value;
 
     public int currentHealth
     {
         get => current_health_;
         set => current_health_ = Math.Clamp(value, 0, maxHealth);
+
+    public URangeValue currentHealth { get; set; } = new();
+
+    public uint maxHealth {
+        get => currentHealth.Max;
+        set => currentHealth.Max = value;
     }
-    private int current_health_;
+    public uint maxEnergy { get; set; }
 
-
-    public int maxHealth { get; set; }
-    public int maxEnergy { get; set; }
+    public URangeValue money { get; set; } = new();
+    public URangeValue materials { get; set; } = new();
 
     public List<GameModule> modules = new();
 
