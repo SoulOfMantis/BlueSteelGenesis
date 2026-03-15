@@ -28,6 +28,10 @@ public class InitiativeTracker : MonoBehaviour
             updateCharacterTooltips();
         }
     }
+
+    public PlayerCharacter getPlayer() =>
+        characters.Find(c => c is PlayerCharacter) as PlayerCharacter;
+
     public bool CheckVictory()
     {
         return characters.All(c => c is PlayerCharacter);

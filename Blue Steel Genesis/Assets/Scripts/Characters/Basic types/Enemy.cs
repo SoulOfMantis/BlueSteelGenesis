@@ -30,7 +30,7 @@ public abstract class Enemy : Character
     {
         if (priorityModules == null) SetPriorityModules();
         bool actionTaken = true;
-        while (actionTaken && CanUseAnyPriorityModule())
+        while (actionTaken && CanUseAnyPriorityModule() && tracker.IsPlayerAlive())
         {
             actionTaken = false;
             foreach (var module in priorityModules)
