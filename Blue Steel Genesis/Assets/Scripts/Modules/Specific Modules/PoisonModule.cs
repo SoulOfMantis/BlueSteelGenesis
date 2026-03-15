@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class PoisonModule : NegativeStatusModule
 {
-    private int poisonDamage;
+    protected uint poisonDamage;
     public PoisonModule() :base()
     {
         triggerType = TriggerType.OnTurnStart;
@@ -16,7 +16,7 @@ public class PoisonModule : NegativeStatusModule
         AddConstKeyword(new PoisonKeyword());
         Icon_name = "Module_poison";
     }
-    public PoisonModule(int damage, int duration) : this()
+    public PoisonModule(uint damage = 1, uint duration = 3) :this()
     {
         poisonDamage = damage;
         turnsLeft = duration;

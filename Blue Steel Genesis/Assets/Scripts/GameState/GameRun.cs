@@ -9,7 +9,7 @@ public class GameRun
 
     public void start()
     {
-        playerLivesCount = 3;
+        playerLivesCount = new(3, 3);
     }
 
     public void startExpedition(uint biome_id)
@@ -33,7 +33,7 @@ public class GameRun
     public int GlobalSeed { get; private set; }
     public Expedition Expedition { get; private set; } = null;
     
-    public uint playerLivesCount { get; set; }
+    public URangeValue playerLivesCount { get; set; }
 
     // ship data
     // available biomes

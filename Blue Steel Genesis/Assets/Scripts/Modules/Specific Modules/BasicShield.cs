@@ -9,7 +9,7 @@ using UnityEngine;
 /// </summary>
 public class BasicShield : ActiveModule
 {
-    private int shieldGiven;
+    private uint shieldGiven;
     public BasicShield() : base()
     {
         shieldGiven = 3;
@@ -17,7 +17,12 @@ public class BasicShield : ActiveModule
         range = 0;
         AddConstKeywords(new CommonKeyword(), new DefenseKeyword());
     }
-    public BasicShield(int shield) : this()
+    public override string Description()
+    {
+        return $"Give {shieldGiven} shield to yourself.";
+    }
+
+    public BasicShield(uint shield) : this()
     {
         shieldGiven = shield;
     }

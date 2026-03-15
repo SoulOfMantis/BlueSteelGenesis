@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 public abstract class StatusModule : PassiveModule
 {
-    protected int turnsLeft;
+    protected URangeValue turnsLeft = new();
 
     public StatusModule() : base()
     {

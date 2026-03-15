@@ -7,7 +7,7 @@ using System.Collections.Generic;
 /// </summary>
 public class BasicAttack : ActiveModule
 {
-    protected int hitDamage;
+    protected uint hitDamage;
 
     public BasicAttack() : base()
     {
@@ -22,7 +22,7 @@ public class BasicAttack : ActiveModule
         return $"Deal {hitDamage} damage to the adjacent creature.\n" + base.Description();
     }
 
-    public BasicAttack(int hitDamage) : this()
+    public BasicAttack(uint hitDamage) : this()
     {
         this.hitDamage = hitDamage;
     }

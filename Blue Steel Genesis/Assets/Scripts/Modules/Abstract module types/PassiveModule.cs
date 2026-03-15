@@ -8,6 +8,3 @@ public abstract class PassiveModule : GameModule
         AddConstKeyword(new PassiveKeyword());
     }
 }
-
-
-
