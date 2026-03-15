@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class BasicShield : ActiveModule
 {
-    private int shieldGiven;
+    private uint shieldGiven;
     public BasicShield()
     {
         changeName("BasicShield");
@@ -21,7 +21,7 @@ public class BasicShield : ActiveModule
         return $"Give {shieldGiven} shield to yourself.";
     }
 
-    public BasicShield(int shield) : this()
+    public BasicShield(uint shield) : this()
     {
         shieldGiven = shield;
     }
