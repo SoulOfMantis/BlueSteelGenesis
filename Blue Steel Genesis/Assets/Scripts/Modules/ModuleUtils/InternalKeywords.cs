@@ -15,4 +15,6 @@ public class AdaptiveKeyword : InternalKeyword {}
 public class ActiveKeyword : InternalKeyword {}
 public class PassiveKeyword : InternalKeyword {}
 public class StatusKeyword : InternalKeyword { }
+public class NegativeStatusKeyword : InternalKeyword { }
+public class PositiveStatusKeyword : InternalKeyword { }
 //TODO: create more keywords

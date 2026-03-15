@@ -161,7 +161,7 @@ public class ExpeditionMapView : MonoBehaviour
         //TODO: implement
         switch (last_selection_?.type) {
             case Node.REGULAR_ENEMY:
-                UnityEngine.SceneManagement.SceneManager.LoadScene("testing_withMap"); //for testing only
+                UnityEngine.SceneManagement.SceneManager.LoadScene("testing"); //for testing only
                 break;
         }
     }

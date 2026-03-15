@@ -9,7 +9,7 @@ using UnityEngine;
 /// </summary>
 public class BasicShield : ActiveModule
 {
-    private int shieldGiven;
+    private uint shieldGiven;
     public BasicShield() : base()
     {
         shieldGiven = 3;
@@ -22,7 +22,7 @@ public class BasicShield : ActiveModule
         return $"Give {shieldGiven} shield to yourself.";
     }
 
-    public BasicShield(int shield) : this()
+    public BasicShield(uint shield) : this()
     {
         shieldGiven = shield;
     }
@@ -34,7 +34,7 @@ public class BasicShield : ActiveModule
     public override HashSet<ModuleKeyword> renewableKeywords()
     {
         var rk = base.renewableKeywords();
-        rk.Add(new ShieldKeyword(shieldGiven));
+        rk.Add(new ShieldKeyword(shieldGiven, PossibleTargets.Self));
         return rk;
     }
 }

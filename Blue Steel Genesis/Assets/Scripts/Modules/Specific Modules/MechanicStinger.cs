@@ -7,9 +7,9 @@ using UnityEngine;
 /// </summary>
 public class MechanicStinger : ActiveModule
 {
-    private int hitDamage;
-    private int poisonDamage;
-    private int duration;
+    private uint hitDamage;
+    private uint poisonDamage;
+    private uint duration;
 
     public MechanicStinger() : base()
     {
@@ -20,7 +20,7 @@ public class MechanicStinger : ActiveModule
         Icon_name = "Module_mechanical_sting2";
         AddConstKeywords(new OffenseKeyword(), new CommonKeyword());
     }
-    public MechanicStinger(int damage, int duration, int hitDamage) : this()
+    public MechanicStinger(uint damage, uint duration, uint hitDamage) : this()
     {
         this.hitDamage = hitDamage;
         poisonDamage = damage;
@@ -29,14 +29,12 @@ public class MechanicStinger : ActiveModule
     public override HashSet<ModuleKeyword> renewableKeywords()
     {
         var rk = base.renewableKeywords();
-        rk.Add(new InflictKeyword<PoisonModule>(poisonDamage, duration));
+        rk.Add(new InflictKeyword<PoisonModule>(PossibleTargets.Target, poisonDamage, duration));
         return rk;
     }
     public override string Description()
     {
-        return $"A mechanic weapon modeled after scorpion's stinger. " +
-            $"Deals {hitDamage} damage to adjacent creature and inflicts poison " +
-            $"({poisonDamage} damage for {duration} turns).";
+        return $"Deals {hitDamage} damage to the adjacent creature.\n" + base.Description();
     }
     public override async Task Effect(Character user, Vector3Int pos)
     {
