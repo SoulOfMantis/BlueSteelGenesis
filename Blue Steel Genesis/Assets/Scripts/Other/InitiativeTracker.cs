@@ -20,7 +20,7 @@ public class InitiativeTracker : MonoBehaviour
     {
         if (characters.Contains(charact))
         {
-            if (charact == characters[currentCharacterIndex])
+            if (characters.IndexOf(charact) <= currentCharacterIndex)
                 currentCharacterIndex = (currentCharacterIndex - 1 + characters.Count) % characters.Count;
             characters.Remove(charact);
             Destroy(characterTooltipsTriggers[charact]);
