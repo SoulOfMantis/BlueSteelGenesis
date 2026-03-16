@@ -198,6 +198,15 @@ public class PlayerCharacter : Character
         RefreshModuleUI();
     }
 
+    // Удаляет модуль
+    public void RemoveModule(int mod)
+    {
+        if (mod < 0 || mod > modules_.Count) return;
+
+        modules_.RemoveAt(mod);
+        RefreshModuleUI();
+    }
+
     // Обновляет видимость кнопок
     public void RefreshModuleUI()
     {
