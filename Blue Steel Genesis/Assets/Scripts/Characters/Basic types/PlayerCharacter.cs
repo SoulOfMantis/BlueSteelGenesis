@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
@@ -11,6 +11,9 @@ public class PlayerCharacter : Character
     public TMP_Text healthDisplay;
     public GameObject VictoryScreen;
     public GameObject DefeatScreen;
+
+    [SerializeField] private ModuleButton[] moduleButtons;
+
     PlayerCharacter()
     {
         Name = "You";
@@ -125,7 +128,7 @@ public class PlayerCharacter : Character
 
     public override async Task damage(uint dmg)
     {
-        Debug.Log($"����� ������� {dmg} �����!");
+        Debug.Log($"Èãðîê ïîëó÷èë {dmg} óðîíà!");
         await base.damage(dmg);
         updateHealth();
         //play taking damage animation
@@ -133,7 +136,7 @@ public class PlayerCharacter : Character
 
     public override async Task heal(uint hp)
     {
-        Debug.Log($"����� ����������� {hp} ��������!");
+        Debug.Log($"Èãðîê âîññòàíîâèë {hp} çäîðîâüÿ!");
         await base.heal(hp);
         updateHealth();
         //play healing animation
@@ -156,7 +159,7 @@ public class PlayerCharacter : Character
 
     override protected async Task die()
     {
-        Debug.Log("����� ����!");
+        Debug.Log("Èãðîê óìåð!");
         tracker.RemoveCharacter(this);
         Defeat();
         //TODO: player loss
@@ -173,6 +176,46 @@ public class PlayerCharacter : Character
     {
         updateButtons();
         DefeatScreen.SetActive(true);
+    }
+
+    // Добавление нового модуля
+    public void AddModule(GameModule module)
+    {
+        // Предотвращает дупликаты модулей
+        if (modules_.Any(m => m.GetType() == module.GetType())) return;
+
+        modules_.Add(module);
+
+    }
+
+    // Поменять два модуля местами
+    public void SwapModules(int mod1, int mod2)
+    {
+        if (mod1 < 0 || mod2 < 0 || mod1 > modules_.Count || mod2 > modules_.Count) return;
+
+        (modules_[mod1], modules_[mod2]) = (modules_[mod2], modules_[mod1]);
+
+        RefreshModuleUI();
+    }
+
+    // Обновляет видимость кнопок
+    public void RefreshModuleUI()
+    {
+        for (int i = 0;  i < moduleButtons.Length; i++)
+        {
+            var btn = moduleButtons[i];
+            if (i < modules_.Count && modules_[i] is ActiveModule)
+            {
+                btn.gameObject.SetActive(true);
+                btn.connectedModuleIndex = i;
+                btn.RefreshDisplay();
+            }
+            else
+            {
+                btn.gameObject.SetActive(false);
+            }
+        }
+        updateButtons();
     }
 
 
