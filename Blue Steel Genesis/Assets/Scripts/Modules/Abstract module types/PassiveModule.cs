@@ -7,6 +7,3 @@ public abstract class PassiveModule : GameModule
         context = c;
     }
 }
-
-
-

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using HKDF = HKDF<System.Security.Cryptography.HMACSHA1>;
 
 public class Expedition
@@ -9,6 +10,22 @@ public class Expedition
         BiomeSeed = generateBiomeSeed(GameState.Run.GlobalSeed, biome.id);
     }
 
+    public void start()
+    {
+        // TODO: handle player creation properly
+        Player.modules = new List<GameModule>{
+            new MechanicStinger(),
+            new BasicMovement()
+        };
+        Player.maxHealth = 10;
+        Player.maxEnergy = 3;
+        Player.currentHealth.Value = Player.maxHealth;
+        Player.materials.Value = 3;
+        Player.money.Value = 10;
+
+        startNextStage();
+    }
+
     public void startNextStage()
     {
         ++BiomeStage;
@@ -16,7 +33,7 @@ public class Expedition
         LocalSeed = generateLocalSeed(
             GameState.Run.GlobalSeed,
             Biome.id, (uint)BiomeStage,
-            GameState.Run.Player.livesCount,
+            GameState.Run.playerLivesCount,
             Array.Empty<byte>() //TODO: pass actual data
         );
         Map = global::Map.ExpeditionMap.generate(
@@ -38,6 +55,7 @@ public class Expedition
     public int LocalSeed { get; private set; }
     public int BiomeSeed { get; private set; }
 
+    public PlayerData Player { get; private set; } = new();
     public Map.ExpeditionMap Map { get; private set; } = null;
     public Map.BiomeInfo Biome { get; private set; }
 

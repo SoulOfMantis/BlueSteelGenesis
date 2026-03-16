@@ -3,21 +3,18 @@ using System.Collections.Generic;
 
 public class PlayerData
 {
-    public int currentHealth
-    {
-        get => current_health_;
-        set => current_health_ = Math.Clamp(value, 0, maxHealth);
+    public URangeValue currentHealth { get; set; } = new();
+
+
+    public uint maxHealth {
+        get => currentHealth.Max;
+        set => currentHealth.Max = value;
     }
-    private int current_health_;
+    public uint maxEnergy { get; set; }
 
 
-    public int maxHealth { get; set; }
-    public int maxEnergy { get; set; }
-
-
-    public uint money { get; set; }
-    public uint materials { get; set; }
-    public uint livesCount { get; set; }
+    public URangeValue money { get; set; } = new();
+    public URangeValue materials { get; set; } = new();
 
 
     public List<GameModule> modules = new();

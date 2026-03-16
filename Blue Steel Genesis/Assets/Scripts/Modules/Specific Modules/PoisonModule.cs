@@ -6,16 +6,21 @@ using UnityEngine;
 /// </summary>
 public class PoisonModule : NegativeStatus
 {
-    private int poisonDamage;
+    protected uint poisonDamage;
 
-    public PoisonModule(int damage = 1, int duration = 3)
+    public PoisonModule(uint damage = 1, uint duration = 3)
     {
         triggerType = TriggerType.OnTurnStart;
         poisonDamage = damage;
-        turnsLeft = duration;
+        turnsLeft.Value = duration;
         changeName("PoisonModule");
+        Icon_name = "Module_poison";
     }
-
+    public override string Description()
+    {
+        return $"One of the most infamous ways to kill. " +
+            $"You will take {poisonDamage} damage at the start of your turn for another {turnsLeft} turns.";
+    }
     public override async Task Effect(Character user, Vector3Int pos)
     {
         await user.damage(poisonDamage);

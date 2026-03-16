@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class PurpleDog : Enemy
 {
-    public TMP_Text healthDisplay;
+    //public TMP_Text healthDisplay;
 
 
     public PurpleDog() : base(5, 3, 60)
     {
-
+        Name = "Purple Dog";
+        Description = "The first enemy. Will move closer to you and bite, if it has an opportunity!";
         addModule(new BasicAttack());
         addModule(new BasicMovement());
 
@@ -19,7 +20,7 @@ public class PurpleDog : Enemy
 
     void updateHealth()
     {
-        healthDisplay.text = $"{currentHealth}/{maxHealth}";
+        //healthDisplay.text = $"{currentHealth}/{maxHealth}";
     }
 
     void Start()
@@ -53,7 +54,7 @@ public class PurpleDog : Enemy
         return true;
     }
 
-    public override async Task damage(int dmg, ActionContext prevAction = null)
+    public override async Task damage(uint dmg, ActionContext prevAction = null)
     {
         Debug.Log($"Собака получила {dmg} урона!");
         await base.damage(dmg, prevAction);
@@ -61,7 +62,7 @@ public class PurpleDog : Enemy
         //play taking damage animation
     }
 
-    public override async Task heal(int hp, ActionContext prevAction = null)
+    public override async Task heal(uint hp, ActionContext prevAction = null)
     {
         Debug.Log($"Собака восстановила {hp} здоровья!");
         await base.heal(hp, prevAction);

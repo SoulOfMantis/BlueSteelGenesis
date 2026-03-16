@@ -12,8 +12,16 @@ public class SceneTracker : MonoBehaviour
     public int max_x { get; private set; } = 17;
     private float CameraDistance = 10;
     public List<HighlightableTile> tiles;
-    private List<Vector3Int> map = new List<Vector3Int>();
 
+    public void HighlightCharacterInInitiative(Character c, Color color)
+    {
+        initiative.HighlightCharacterInInitiative(c, color);
+    }
+    public void HighlightCharacterInInitiative(Character c) => HighlightCharacterInInitiative(c, Color.yellow);
+    public void UnhighlightCharacterInInitiative(Character c)
+    {
+        initiative.UnhighlightCharacterInInitiative(c);
+    }
     public Character FindCharacterAtPosition(Vector3Int pos)
     {
         return initiative.characters.Find(c  => c.Position == pos);
@@ -81,38 +89,36 @@ public class SceneTracker : MonoBehaviour
     }
 
     //                                         
-    public PlayerCharacter getPlayer()
-    {
-        return initiative.characters.Find(c => c is PlayerCharacter) as PlayerCharacter;
-    }
+    public PlayerCharacter getPlayer() =>
+        initiative.getPlayer();
+    public bool IsPlayerAlive() =>
+        !initiative.CheckDefeat();
 
     // Highlights given cells
     public void HighlightCells(List<Vector3Int> cells)
     {
         foreach (var cell in cells)
-        {
-            var m = tiles.FindIndex(t => tl.GetTile(cell) == t.BaseTile);
-            if (m >= 0)
-            {
-                tl.SetTile(cell, tiles[m].HighlightedTile);
-            }
-        }
+            HighlightCell(cell);
+    }
+    public void HighlightCell(Vector3Int cell)
+    {
+        var m = tiles.FindIndex(t => tl.GetTile(cell) == t.BaseTile);
+        if (m >= 0)
+            tl.SetTile(cell, tiles[m].HighlightedTile);
     }
 
     // Clears the highlighted cells
     public void ClearHighlights(List<Vector3Int> cells)
     {
         foreach (var cell in cells)
-        {
-            var n = tiles.FindIndex(t => tl.GetTile(cell) == t.HighlightedTile);
-            if (n >= 0)
-            {
-                tl.SetTile(cell, tiles[n].BaseTile);
-            }
-        }
-
+            UnhighlightCell(cell);
     }
-
+    public void UnhighlightCell(Vector3Int cell)
+    {
+        var n = tiles.FindIndex(t => tl.GetTile(cell) == t.HighlightedTile);
+        if (n >= 0)
+            tl.SetTile(cell, tiles[n].BaseTile);
+    }
     public void NextTurn()
     {
         initiative.StartNextTurn();

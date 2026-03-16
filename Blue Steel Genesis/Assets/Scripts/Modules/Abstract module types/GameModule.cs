@@ -10,20 +10,20 @@ public abstract class GameModule
 {
     public List<string> Keywords { get; protected set; }
     public string Name { get; protected set; }
-    public string Description { get; protected set; }
-    public int range = 0;
-
+    private string icon_name = "default_default.png";
+    public string Icon_name { get => icon_name; protected set => icon_name = value; }
+    public uint range = 0;
+    public abstract string Description(); 
     public GameModule()
     {
         changeName(GetType().Name);
     }
-
-    protected List<Vector3Int> getAvailableCells(int n, Vector3Int start)
+    protected List<Vector3Int> getAvailableCells(uint n, Vector3Int start)
     {
         var res = new HashSet<Vector3Int>();
         HashSet<Vector3Int> toAdd = new HashSet<Vector3Int>();
         res.Add(start);
-        for (int i = 1; i <= n; i++)
+        for (uint i = 1; i <= n; i++)
         {
             foreach (var cell in res)
             {

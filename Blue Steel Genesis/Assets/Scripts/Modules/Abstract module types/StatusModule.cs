@@ -1,6 +1,6 @@
 public abstract class StatusModule : PassiveModule
 {
-    protected int turnsLeft;
+    protected URangeValue turnsLeft = new();
 
     protected void turnTick()
     {

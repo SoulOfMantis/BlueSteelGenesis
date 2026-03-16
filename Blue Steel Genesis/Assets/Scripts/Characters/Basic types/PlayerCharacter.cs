@@ -13,11 +13,14 @@ public class PlayerCharacter : Character
     public GameObject DefeatScreen;
     PlayerCharacter()
     {
+        Name = "You";
+        Description = "It's you! Robot, sent by humans to find and retrieve materials to repair their spaceship.";
         Initiative = 10;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        currentEnergy.Max = GameState.Run.Expedition.Player.maxEnergy;
         if (tracker != null)
         {
             tracker.AddCharacter(this);
@@ -48,16 +51,6 @@ public class PlayerCharacter : Character
     void updateButtons()
     {
         activeModuleButtons.ForEach(mb => mb.buttonInteractableManaging());
-    }
-    public string getmoduleName(int index)
-    {
-        if (!doesModuleExist(index)) return null;
-        return modules_[index].Name;
-    }
-    public string getmoduleDescription(int index)
-    {
-        if (!doesModuleExist(index)) return null;
-        return modules_[index].Description;
     }
     protected override async Task useActiveModule_internal(ActiveModule m, Vector3Int pos)
     {
@@ -130,7 +123,7 @@ public class PlayerCharacter : Character
     public void onEndTurnButtonPressed() =>
         StartCoroutine(TaskCoro.Make(endTurn()));
 
-    public override async Task damage(int dmg, ActionContext prevAction = null)
+    public override async Task damage(uint dmg, ActionContext prevAction = null)
     {
         Debug.Log($"Игрок получил {dmg} урона!");
         await base.damage(dmg, prevAction);
@@ -138,7 +131,7 @@ public class PlayerCharacter : Character
         //play taking damage animation
     }
 
-    public override async Task heal(int hp, ActionContext prevAction = null)
+    public override async Task heal(uint hp, ActionContext prevAction = null)
     {
         Debug.Log($"Игрок восстановил {hp} здоровья!");
         await base.heal(hp, prevAction);
@@ -146,14 +139,14 @@ public class PlayerCharacter : Character
         //play healing animation
     }
 
-    public override async Task drainEnergy(int amount, ActionContext prevAction = null)
+    public override async Task drainEnergy(uint amount, ActionContext prevAction = null)
     {
         await base.drainEnergy(amount, prevAction);
         updateButtons();
         updateEnergy();
         //play losing energy animation
     }
-    public override async Task restoreEnergy(int amount, ActionContext prevAction = null)
+    public override async Task restoreEnergy(uint amount, ActionContext prevAction = null)
     {
         await base.restoreEnergy(amount, prevAction);
         updateButtons();
@@ -184,21 +177,24 @@ public class PlayerCharacter : Character
 
 
 
-    public override int currentHealth {
-        get => GameState.Run.Player.currentHealth;
-        protected set => GameState.Run.Player.currentHealth = value;
+    public override URangeValue currentHealth {
+        get => GameState.Run.Expedition.Player.currentHealth;
+        protected set => GameState.Run.Expedition.Player.currentHealth = value;
     }
-    public override int maxHealth {
-        get => GameState.Run.Player.maxHealth;
-        protected set => GameState.Run.Player.maxHealth = value;
+    public override uint maxHealth {
+        get => GameState.Run.Expedition.Player.maxHealth;
+        protected set => GameState.Run.Expedition.Player.maxHealth = value;
     }
-    public override int maxEnergy {
-        get => GameState.Run.Player.maxEnergy;
-        protected set => GameState.Run.Player.maxEnergy = value;
+    public override uint maxEnergy {
+        get => GameState.Run.Expedition.Player.maxEnergy;
+        protected set {
+            currentEnergy.Max = value;
+            GameState.Run.Expedition.Player.maxEnergy = value;
+        }
     }
     protected override List<GameModule> modules_ {
-        get => GameState.Run.Player.modules;
-        set => GameState.Run.Player.modules = value;
+        get => GameState.Run.Expedition.Player.modules;
+        set => GameState.Run.Expedition.Player.modules = value;
     }
 }
 

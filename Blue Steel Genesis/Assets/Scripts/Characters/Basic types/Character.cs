@@ -6,13 +6,13 @@ using UnityEngine;
 
 public abstract class Character : MonoBehaviour
 {
-    public virtual async Task damage(int dmg, ActionContext prevAction = null)
+    public virtual async Task damage(uint dmg, ActionContext prevAction = null)
     {
         dmg = Math.Max(dmg, 1);
         var action = new ActionContext(null, "takeDamage", prevAction, this);
         if (currentShield > 0)
         {
-            int shield_dmg = Math.Min(currentShield, dmg);
+            uint shield_dmg = Math.Min(currentShield, dmg);
             currentShield -= shield_dmg;
             dmg -= shield_dmg;
             await triggerModules(TriggerType.OnDamageShielded, action);
@@ -25,19 +25,19 @@ public abstract class Character : MonoBehaviour
             currentHealth -= dmg;
             await triggerModules(TriggerType.OnHealthDamage, action);
             if (currentHealth == 0)
-              await die();
+                await die();
         }
         await triggerModules(TriggerType.OnDamage, action);
     }
 
-    public virtual async Task heal(int hp, ActionContext prevAction = null)
+    public virtual async Task heal(uint hp, ActionContext prevAction = null)
     {
         currentHealth += Math.Max(hp, 1);
         ActionContext action = new ActionContext(null, "heal", prevAction, this);
         await triggerModules(TriggerType.OnHeal, action);
     }
 
-    public virtual async Task giveShield(int amount, ActionContext prevAction = null)
+    public virtual async Task giveShield(uint amount, ActionContext prevAction = null)
     {
         currentShield += Math.Max(amount, 1);
         ActionContext action = new ActionContext(null, "shielding", prevAction, this);
@@ -46,22 +46,27 @@ public abstract class Character : MonoBehaviour
     }
     abstract protected Task die();
 
-    public virtual async Task drainEnergy(int amount, ActionContext prevAction = null)
+    public virtual async Task drainEnergy(uint amount, ActionContext prevAction = null)
     {
         currentEnergy -= Math.Max(amount, 1);
         ActionContext action = new ActionContext(null, "drainEnergy", prevAction, this);
         await triggerModules(TriggerType.OnEnergyDrain, action);
     }
-    public virtual async Task restoreEnergy(int amount, ActionContext prevAction = null)
+    public virtual async Task restoreEnergy(uint amount, ActionContext prevAction = null)
     {
         currentEnergy += Math.Max(amount, 1);
         ActionContext action = new ActionContext(null, "restoreEnergy", prevAction, this);
         await triggerModules(TriggerType.OnEnergyRestore, action);
     }
 
-
+    private void CharacterInfoTooltipSetup()
+    {
+        gameObject.AddComponent<CharacterTooltipTrigger>().character = this;
+        gameObject.AddComponent<BoxCollider2D>();
+    }
     public virtual async Task startBattle()
     {
+        CharacterInfoTooltipSetup();
         Position = tracker.WorldToCell(transform.position);
         await triggerModules(TriggerType.OnBattleStart);
     }
@@ -74,7 +79,7 @@ public abstract class Character : MonoBehaviour
     {
         Debug.Log($"turn started");
         myTurn = true;
-        currentShield = 0;
+        currentShield.Value = 0;
         await restoreEnergy(maxEnergy);
         await triggerModules(TriggerType.OnTurnStart);
     }
@@ -107,7 +112,8 @@ public abstract class Character : MonoBehaviour
         await Awaitable.WaitForSecondsAsync(.2f); //TODO: remove delay; derived classes must await animations
     }
 
-    public async Task strike(Vector3Int pos, int dmg, ActionContext prevAction = null)
+    public Task strike(int x, int y, int z, uint dmg) => strike(new Vector3Int(x, y, z), dmg);
+    public async Task strike(Vector3Int pos, uint dmg, ActionContext prevAction = null)
     {
         Character target = tracker.FindCharacterAtPosition(pos);
         if (target == null)
@@ -134,6 +140,10 @@ public abstract class Character : MonoBehaviour
     {
         modules_.Add(module);
         module.Initialize();
+    }
+    public bool removeModule(GameModule module)
+    {
+        return modules_.Remove(module);
     }
     public async Task addStatusModule(StatusModule status, ActionContext prevAction = null)
     {
@@ -219,18 +229,23 @@ public abstract class Character : MonoBehaviour
     protected virtual Task usePassiveModule_internal(PassiveModule m, Vector3Int pos) => m.Effect(this, pos);
     protected virtual Task useStatusModule_internal(StatusModule m) => m.Effect(this, Position);
 
-
-    public abstract int currentHealth { get; protected set; }
-    public abstract int maxHealth { get; protected set; }
-    public int currentShield { get; protected set; }
-
-
-    public int currentEnergy
+    public string getModuleName(int index)
     {
-        get => current_energy_;
-        protected set => current_energy_ = Math.Clamp(value, 0, maxEnergy);
+        if (!doesModuleExist(index)) return null;
+        return getModule(index).Name;
     }
-    public abstract int maxEnergy { get; protected set; }
+    public string getModuleDescription(int index)
+    {
+        if (!doesModuleExist(index)) return null;
+        return getModule(index).Description();
+    }
+    public abstract URangeValue currentHealth { get; protected set; }
+    public abstract uint maxHealth { get; protected set; }
+    public URangeValue currentShield { get; protected set; } = new();
+
+
+    public URangeValue currentEnergy { get; protected set; } = new();
+    public abstract uint maxEnergy { get; protected set; }
     public int Initiative { get; protected set; }
 
     public bool myTurn { get; protected set; }
@@ -245,12 +260,15 @@ public abstract class Character : MonoBehaviour
         }
     }
 
+    public string Name { get; protected set; }
+    public string Description { get; protected set; }
 
     public static SceneTracker tracker;
 
     protected abstract List<GameModule> modules_ { get; set; }
+    public IReadOnlyList<GameModule> Modules { get => modules_.AsReadOnly();}
     protected List<StatusModule> status_modules_ = new();
+    public IReadOnlyList<GameModule> Statuses { get => status_modules_.AsReadOnly(); }
 
-    private int current_energy_;
     private Vector3Int position_;
 }

@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 public class InitiativeTracker : MonoBehaviour
 {
     public List<Character> characters = new();
+    private Dictionary<Character, GameObject> characterTooltipsTriggers = new();
 
     int currentCharacterIndex = -1;
     public void AddCharacter(Character charact)
@@ -18,11 +20,18 @@ public class InitiativeTracker : MonoBehaviour
     {
         if (characters.Contains(charact))
         {
-            if (characters[currentCharacterIndex] == charact) --currentCharacterIndex; //to not skip next character's turn, if someone dies during own turn
+            if (characters.IndexOf(charact) <= currentCharacterIndex)
+                currentCharacterIndex = (currentCharacterIndex - 1 + characters.Count) % characters.Count;
             characters.Remove(charact);
-            Debug.Log($"Removed {charact.name}");
+            Destroy(characterTooltipsTriggers[charact]);
+            characterTooltipsTriggers.Remove(charact);
+            updateCharacterTooltips();
         }
     }
+
+    public PlayerCharacter getPlayer() =>
+        characters.Find(c => c is PlayerCharacter) as PlayerCharacter;
+
     public bool CheckVictory()
     {
         return characters.All(c => c is PlayerCharacter);
@@ -33,8 +42,19 @@ public class InitiativeTracker : MonoBehaviour
         return !characters.Exists(c => c is PlayerCharacter);
     }
 
-    public bool isAlive(Character c)
-    { return characters.Contains(c); }
+    public void HighlightCharacterInInitiative(Character c, Color color)
+    {
+        characterTooltipsTriggers[c].GetComponent<TextMeshProUGUI>().color = color;
+    }
+    public void HighlightCharacterInInitiative(Character c) => HighlightCharacterInInitiative(c, Color.yellow);
+    public void UnhighlightCharacterInInitiative(Character c)
+    {
+        if (characters[currentCharacterIndex] == c)
+            characterTooltipsTriggers[c].GetComponent<TextMeshProUGUI>().color = Color.blue;
+        else characterTooltipsTriggers[c].GetComponent<TextMeshProUGUI>().color = Color.white;
+    }
+    public bool isAlive(Character c) =>
+        characters.Contains(c);
     public void StartNextTurn()
     {
         Debug.Log($"StartNextTurn");
@@ -43,16 +63,42 @@ public class InitiativeTracker : MonoBehaviour
         else if (!CheckDefeat())
         {
             currentCharacterIndex = (currentCharacterIndex + 1) % characters.Count;
-
+            //снимаем выделение с походившего, такой страшный индекс нужен, чтобы не выйти за пределы списка
+            UnhighlightCharacterInInitiative(characters[(currentCharacterIndex-1+characters.Count)%characters.Count]); 
+            HighlightCharacterInInitiative(characters[currentCharacterIndex], Color.blue);
             Debug.Log($"Сейчас ход {characters[currentCharacterIndex].GetType().Name}");
             StartCoroutine(TaskCoro.Make(characters[currentCharacterIndex].startTurn()));
         }
     }
-
+    private void updateCharacterTooltips()
+    {
+        for (int i = 0; i < characters.Count; i++)
+        {
+            var c = characters[i];
+            var ctt = characterTooltipsTriggers[c];
+            ctt.GetComponent<TextMeshProUGUI>().text = $"{i+1}    {c.Name}";
+            ctt.transform.position = transform.position + new Vector3(0, -2 * i - 0.6f); //Hardcoded for now
+        }
+    }
+    void createCharacterTooltipTrigger(Character c)
+    {
+        characterTooltipsTriggers[c] = new GameObject($"{c.Name}");
+        var ctt = characterTooltipsTriggers[c];
+        ctt.AddComponent<CharacterTooltipTrigger>().character = c;
+        ctt.AddComponent<TextMeshProUGUI>().enableAutoSizing = true;
+        ctt.transform.SetParent(transform);
+        ctt.transform.localScale = new(1, 1);
+    }
     public void StartBattle()
     {
         characters.Sort((c1, c2) => (c2.Initiative.CompareTo(c1.Initiative)));
-        characters.ForEach(c => StartCoroutine(TaskCoro.Make(c.startBattle())));
+        for (int i = 0; i < characters.Count; i++)
+        {
+            var c = characters[i];
+            createCharacterTooltipTrigger(c);
+            StartCoroutine(TaskCoro.Make(c.startBattle()));
+        }
+        updateCharacterTooltips();
         StartNextTurn();
     }
 

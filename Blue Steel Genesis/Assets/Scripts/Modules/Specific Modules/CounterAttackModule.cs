@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class CounterAttack : PassiveModule
 {
-    public int damage;
-    public CounterAttack(int dmg = 3)
+    public uint damage;
+    public CounterAttack(uint dmg = 3)
     {
         damage = dmg;
         range = 1;
@@ -28,6 +28,8 @@ public class CounterAttack : PassiveModule
             }
         }
     }
-
+    public override string Description() {
+        return $"Deals {damage} to the attacker";
+    }
 }
 
