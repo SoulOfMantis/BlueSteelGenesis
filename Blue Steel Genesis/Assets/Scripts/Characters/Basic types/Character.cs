@@ -8,18 +8,6 @@ public abstract class Character : MonoBehaviour
 {
     [SerializeField] protected CharacterVisualHandler visualHandler;
 
-    public Character(int maxHealth, int maxEnergy, int initiative)
-    {
-        this.maxHealth = maxHealth;
-        this.maxEnergy = maxEnergy;
-        currentHealth = maxHealth;
-        currentEnergy = maxEnergy;
-        Initiative = initiative;
-        //if (visualHandler == null)
-        //    visualHandler = GetComponent<CharacterVisualHandler>();
-    }
-
-
     public virtual async Task damage(int dmg)
     {
         if (visualHandler != null)
