@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+
 public class InitiativeTracker : MonoBehaviour
 {
     public List<Character> characters = new();
@@ -57,7 +58,7 @@ public class InitiativeTracker : MonoBehaviour
     {
         Debug.Log($"StartNextTurn");
         if (CheckVictory())
-            StartCoroutine(TaskCoro.Make(Character.tracker.getPlayer().Victory()));
+            StartCoroutine(TaskCoro.Make(Entity.tracker.getPlayer().Victory()));
         else if (!CheckDefeat())
         {
             currentCharacterIndex = (currentCharacterIndex + 1) % characters.Count;
@@ -103,11 +104,5 @@ public class InitiativeTracker : MonoBehaviour
     void Start()
     {
         StartBattle();
-    }
-
-    void Update()
-    {
-
-
     }
 }

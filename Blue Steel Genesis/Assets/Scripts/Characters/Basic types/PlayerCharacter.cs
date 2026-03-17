@@ -18,14 +18,10 @@ public class PlayerCharacter : Character
         Initiative = 10;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         currentEnergy.Max = GameState.Run.Expedition.Player.maxEnergy;
-        if (tracker != null)
-        {
-            tracker.AddCharacter(this);
-            Debug.Log("Player added");
-        }
         VictoryScreen.SetActive(false);
         DefeatScreen.SetActive(false);
     }

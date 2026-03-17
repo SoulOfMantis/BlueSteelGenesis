@@ -23,12 +23,6 @@ public class PurpleDog : Enemy
         //healthDisplay.text = $"{currentHealth}/{maxHealth}";
     }
 
-    void Start()
-    {
-        if (tracker != null) tracker.AddCharacter(this);
-        Debug.Log("Dog added");
-    }
-
     protected override bool TryGetTargetForZero(out Vector3Int targetPos)
     {
         targetPos = tracker.getPlayer().Position;

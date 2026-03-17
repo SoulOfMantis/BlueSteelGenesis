@@ -40,7 +40,7 @@ public class MechanicStinger : ActiveModule
 
     protected override bool checkFinalPosition(Vector3Int pos)
     {
-        return Character.tracker.IsOccupiedByCharacter(pos);
+        return Entity.tracker.IsOccupied(pos);
     }
     public override bool checkPosition(Character user, Vector3Int pos)
     {
