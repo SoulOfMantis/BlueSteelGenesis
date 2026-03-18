@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Map;
+using System;
 using System.Collections.Generic;
+using UnityEngine;
 using HKDF = HKDF<System.Security.Cryptography.HMACSHA1>;
+using static GameState;
 
 public class Expedition
 {
@@ -88,4 +91,116 @@ public class Expedition
     }
     public GameModule GetNextModule() => ModuleGen.GetNextModule();
     ModuleGenerator ModuleGen;
+
+
+
+
+
+    private bool isInEvent = false;
+    private EventData currentEvent;
+    private Node pendingBattleType; 
+
+    
+    public void EnterNode(Vector2Int nodePos)
+    {
+        if (Map == null) return;
+
+        Node nodeType;
+        if (nodePos == Map.start_node_pos)
+            nodeType = Node.START;
+        else if (nodePos == Map.boss_node_pos)
+            nodeType = Node.BOSS;
+        else
+            nodeType = Map.map[nodePos.y, nodePos.x];
+
+ 
+
+        switch (nodeType)
+        {
+            case Node.EVENT:
+                StartEvent();
+                break;
+            case Node.REGULAR_ENEMY:
+            case Node.ELITE_ENEMY:
+                StartBattle(nodeType);
+                break;
+            case Node.SHOP:
+                StartShop();
+                break;
+            case Node.REST:
+                break;
+            case Node.TREASURE:
+                break;
+            default:
+                Debug.LogWarning($"Неподдерживаемый тип узла: {nodeType}");
+                break;
+        }
+    }
+
+    
+    private void StartEvent()
+    {
+        if (isInEvent) return;
+        isInEvent = true;
+
+
+        int eventSeed = LocalSeed + BiomeStage * 100 + (int)Biome.id; 
+        currentEvent = EventManager.GetRandomEventForBiome(Biome.id, eventSeed);
+
+
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene(currentEvent.sceneName);
+    }
+
+
+    private void StartBattle(Node enemyType)
+    {
+        //Запуск битвы
+    }
+
+
+    private void StartShop()
+    {
+        //запуск магазина
+    }
+
+  
+    private void ReturnToMap()
+    {
+        //вернуться на карут
+    }
+
+
+    // Методы для обработки результатов (вызываются из других сцен)
+    public void HandleEventOutcome(EventOutcome outcome)
+    {
+        switch (outcome)
+        {
+            case EventOutcome.Exit:
+                ReturnToMap();
+                break;
+            case EventOutcome.EnterBattle:
+                Node enemyType = (UnityEngine.Random.value < 0.5f) ? Node.REGULAR_ENEMY : Node.ELITE_ENEMY;
+                StartBattle(enemyType);
+                break;
+            case EventOutcome.EnterShop:
+                StartShop();
+                break;
+        }
+    }
+
+    public void HandleBattleOutcome(bool victory)
+    {
+        if (victory)
+        {
+            // Начислить награду за победу (ресурсы, предметы)
+            // Например: Player.money += 10;
+        }
+        // В любом случае возвращаемся на карту
+        ReturnToMap();
+    }
+
+
+
+
 }

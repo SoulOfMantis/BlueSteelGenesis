@@ -5,7 +5,7 @@ using UnityEngine;
 public static class GameState
 {
     private static readonly string SeedFilePath = "game_seed.txt";
-
+    public static Expedition CurrentExpedition => Run?.Expedition;
 
     public static void startGameRun(int? seed = null)
     {
