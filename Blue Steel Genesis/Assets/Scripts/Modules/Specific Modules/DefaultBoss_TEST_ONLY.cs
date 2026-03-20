@@ -13,8 +13,8 @@ public class DefaultBoss_TEST_ONLY : ActiveModule
     }
     public override async Task Effect(Character user, Vector3Int pos)
     {
-        await user.strike(pos, (int)damageDealt);
-        await user.damage((int)damageTaken);
+        await user.strike(pos, damageDealt);
+        await user.damage(damageTaken);
         SpendUse();
     }
     public override string Description()
