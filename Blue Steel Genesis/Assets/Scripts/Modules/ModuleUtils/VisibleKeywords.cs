@@ -62,7 +62,7 @@ public abstract class TargetedVisibleKeyword : VisibleKeyword
 }
 public class ShieldKeyword : TargetedVisibleKeyword
 {
-    public ShieldKeyword(int shield, PossibleTargets target) : base(target)
+    public ShieldKeyword(uint shield, PossibleTargets target) : base(target)
     {
         ChangeName($"Shield {shield}");
         ChangeDescription($"Protects from {shield} damage. Resets at the start of turn.");

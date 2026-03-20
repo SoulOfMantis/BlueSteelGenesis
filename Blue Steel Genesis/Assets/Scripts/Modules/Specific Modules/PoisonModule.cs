@@ -8,18 +8,18 @@ using UnityEngine;
 public class PoisonModule : NegativeStatusModule
 {
     protected uint poisonDamage;
-    public PoisonModule() :base()
+    public PoisonModule() : base()
     {
         triggerType = TriggerType.OnTurnStart;
         poisonDamage = 1;
-        turnsLeft = 3;
+        turnsLeft.Value = 3;
         AddConstKeyword(new PoisonKeyword());
         Icon_name = "Module_poison";
     }
-    public PoisonModule(uint damage = 1, uint duration = 3) :this()
+    public PoisonModule(uint damage, uint duration) :this()
     {
         poisonDamage = damage;
-        turnsLeft = duration;
+        turnsLeft.Value = duration;
     }
     public override string Description()
     {
