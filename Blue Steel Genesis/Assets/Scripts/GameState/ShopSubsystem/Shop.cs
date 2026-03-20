@@ -21,9 +21,9 @@ public class Shop
     public List<GameModule> OnSale = new();
     public void Reroll(RerollOptions r)
     {
-        if (GameState.Run.Expedition.Player.PlayerMoney >= RerollCost)
+        if (GameState.Run.Expedition.Player.HasEnoughMoney(RerollCost))
         {
-            GameState.Run.Expedition.Player.LoseMoney((int)RerollCost);
+            GameState.Run.Expedition.Player.LoseMoney(RerollCost);
             switch (r)
             {
                 case RerollOptions.Common:
@@ -97,7 +97,7 @@ public class Shop
     {
         RerollCost = 0;
         Reroll(RerollOptions.Common);
-        UnityEngine.SceneManagement.SceneManager.LoadScene($"basic_Shop_b{biome}");
+        UnityEngine.SceneManagement.SceneManager.LoadScene($"basic_shop_b{biome}");
     }
     public void TriggerBlackMarket()
     {
