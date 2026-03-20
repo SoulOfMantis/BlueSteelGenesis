@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class BasicStrongAttack : ActiveModule
 {
-    protected int hitDamage;
+    protected uint hitDamage;
 
     public BasicStrongAttack() : base()
     {
@@ -19,7 +19,7 @@ public class BasicStrongAttack : ActiveModule
         return $"Deal {hitDamage} to the adjacent creature.";
     }
 
-    public BasicStrongAttack(int hitDamage) : this()
+    public BasicStrongAttack(uint hitDamage) : this()
     {
         this.hitDamage = hitDamage;
     }
