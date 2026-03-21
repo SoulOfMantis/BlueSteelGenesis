@@ -19,7 +19,7 @@ public class PlayerData
     public void LoseMaterials(uint value) => materials -= value;
     public bool HasEnoughMaterials(uint value) => materials.Value >= value;
     public URangeValue currentHealth { get; set; } = new();
-    public uint maxHealth {
+   public uint maxHealth {
         get => currentHealth.Max;
         set => currentHealth.Max = value;
     }

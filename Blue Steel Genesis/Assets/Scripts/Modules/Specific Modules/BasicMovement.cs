@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -24,12 +25,6 @@ public class BasicMovement : ActiveModule
         await user.move(pos, getCellsInRange(user.Position));
         Debug.Log("BMM executed");
     }
-    protected override bool checkIntermediatePosition(Vector3Int pos)
-    {
-        return base.checkIntermediatePosition(pos) && !Character.tracker.IsOccupied(pos);
-    }
-    protected override bool checkFinalPosition(Vector3Int pos)
-    {
-        return !Character.tracker.IsOccupied(pos);
-    }
+    public override List<Vector3Int> getCellsInRange(PositionCollection start) =>
+        Navigation.Dijkstra.listReachable(start, p => !Entity.tracker.OutOfBounds(p) && !Entity.tracker.IsOccupied(p), range).Except(start).ToList();
 }
