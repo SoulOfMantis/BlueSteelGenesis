@@ -46,7 +46,7 @@ public class Expedition
         Shop = new(Biome.id);
     }
 
-public void displayMap(ExpeditionMapView view)
+    public void displayMap(ExpeditionMapView view)
     {
         if (Map == null || map_progress_ == null)
             throw new InvalidOperationException("Невозможно отобразить карту до начала этапа");
