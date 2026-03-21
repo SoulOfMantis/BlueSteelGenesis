@@ -13,6 +13,7 @@ public class CharacterInfoTooltip : MonoBehaviour
     public TMP_Text shield;
     public TMP_Text energy;
     public List<ModuleTooltipTrigger> module_icons;
+    public List<ModuleTooltipTrigger> status_icons;
 
     private RectTransform rectTransform;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -42,6 +43,17 @@ public class CharacterInfoTooltip : MonoBehaviour
                     module_icons[i].updateModuleTrigger(c.Modules[i]);
                 }
             }
+            for (int i = 0; i < status_icons.Count; i++)
+            {
+                Debug.Log($"Updating status trigger {i}");
+                if (i >= c.Statuses.Count) status_icons[i].gameObject.SetActive(false);
+                else
+                {
+                    status_icons[i].gameObject.SetActive(true);
+                    status_icons[i].updateModuleTrigger(c.Statuses[i]);
+                }
+            }
+
         }
     }
 
