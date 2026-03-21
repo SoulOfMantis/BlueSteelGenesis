@@ -20,6 +20,7 @@ public class PlayerCharacter : Character
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Init()
     {
+        base.Init();
         currentEnergy.Max = GameState.Run.Expedition.Player.maxEnergy;
         VictoryScreen.SetActive(false);
         DefeatScreen.SetActive(false);
