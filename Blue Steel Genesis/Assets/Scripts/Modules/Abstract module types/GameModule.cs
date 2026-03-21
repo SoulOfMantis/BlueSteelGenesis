@@ -105,7 +105,10 @@ public abstract class GameModule
         return res;
     }
     public HashSet<VisibleKeyword> GetVisibleKeywords() => GetKeywords().Where(k => k is VisibleKeyword).Select(k => k as VisibleKeyword).ToHashSet();
-    public bool HasKeywords(params ModuleKeyword[] keywords) => keywords.All(k => GetKeywords().Any(kw => kw.GetType() == k.GetType()));
+    public bool HasAllKeywords(params ModuleKeyword[] keywords) => HasAllKeywords(keywords.ToHashSet());
+    public bool HasAllKeywords(IEnumerable<ModuleKeyword> keywords) => keywords.All(k => GetKeywords().Any(kw => kw == k));
+    public bool HasAnyKeywords(params ModuleKeyword[] keywords) => HasAnyKeywords(keywords.ToHashSet());
+    public bool HasAnyKeywords(IEnumerable<ModuleKeyword> keywords) => keywords.Any(k => GetKeywords().Any(kw => kw == k));
     private HashSet<FrequencyLimiterKeyword> GetFrequencyLimiterKeywords() =>
         constKeywords.Union(tempKeywords).Where(k => k is FrequencyLimiterKeyword).Select(k => k as FrequencyLimiterKeyword).ToHashSet();
     public virtual bool CanBeUsed() => GetFrequencyLimiterKeywords().All(k => k.CanBeUsed());
