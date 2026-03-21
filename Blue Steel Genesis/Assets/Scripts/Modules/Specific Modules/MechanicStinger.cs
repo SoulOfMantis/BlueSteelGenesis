@@ -13,6 +13,7 @@ public class MechanicStinger : ActiveModule
 
     public MechanicStinger() : base()
     {
+        energyCost = 1;
         range = 1;
         hitDamage = 1;
         duration = 3;
