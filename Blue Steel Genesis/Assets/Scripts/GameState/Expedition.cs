@@ -47,7 +47,7 @@ public class Expedition
     }
 
 
-public void displayMap(ExpeditionMapView view)
+    public void displayMap(ExpeditionMapView view)
     {
         if (Map == null || map_progress_ == null)
             throw new InvalidOperationException("Невозможно отобразить карту до начала этапа");
