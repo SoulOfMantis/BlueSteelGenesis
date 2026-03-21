@@ -24,7 +24,7 @@ public class ModuleGenerator
     public GameModule GetNextCommonModule(IEnumerable<Type> forbidden = null, IEnumerable<ModuleKeyword> requiredKeywords = null, IEnumerable<ModuleKeyword> forbiddenKeywords = null)
     {
         if (commonModuleTypes == null) getModuleTypes();
-        var types = commonModuleTypes.Except(forbidden ??= new List<Type>()).Where(t => hasAllKeywords(t, requiredKeywords)).ToList(); ;
+        var types = commonModuleTypes.Except(forbidden ?? new List<Type>()).Where(t => hasAllKeywords(t, requiredKeywords)).ToList(); ;
         if (forbiddenKeywords != null)
             types = commonModuleTypes.Where(t => !hasAnyKeywords(t, forbiddenKeywords)).ToList();
         if (types.Count == 0) return CreateModuleByType(defaultCommonModuleType);
@@ -37,7 +37,7 @@ public class ModuleGenerator
     public GameModule GetNextBossModule(IEnumerable<Type> forbidden = null, IEnumerable<ModuleKeyword> requiredKeywords = null, IEnumerable<ModuleKeyword> forbiddenKeywords = null)
     {
         if (bossModuleTypes == null) getModuleTypes();
-        var types = bossModuleTypes.Except(forbidden ??= new List<Type>()).Where(t => hasAllKeywords(t, requiredKeywords)).ToList(); ;
+        var types = bossModuleTypes.Except(forbidden ?? new List<Type>()).Where(t => hasAllKeywords(t, requiredKeywords)).ToList(); ;
         if (forbiddenKeywords != null)
             types = commonModuleTypes.Where(t => !hasAnyKeywords(t, forbiddenKeywords)).ToList();
         if (types.Count == 0) return CreateModuleByType(defaultBossModuleType);
