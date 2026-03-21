@@ -1,12 +1,12 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public abstract class Character : MonoBehaviour
+public abstract class Character : Entity
 {
-    public virtual async Task damage(uint dmg)
+    public override async Task damage(uint dmg)
     {
         dmg = Math.Max(dmg, 1);
         if (currentShield > 0)
@@ -15,7 +15,7 @@ public abstract class Character : MonoBehaviour
             currentShield -= shield_dmg;
             dmg -= shield_dmg;
             await triggerModules(TriggerType.OnDamageShielded);
-            Debug.Log($"{shield_dmg} óðîíà ïîãëîùåíî ùèòîì");
+            Debug.Log($"{shield_dmg} ÑƒÑ€Ð¾Ð½Ð° Ð¿Ð¾Ð³Ð»Ð¾Ñ‰ÐµÐ½Ð¾ Ñ‰Ð¸Ñ‚Ð¾Ð¼");
             if (currentShield == 0)
                 await triggerModules(TriggerType.OnShieldBroken);
         }
@@ -27,9 +27,9 @@ public abstract class Character : MonoBehaviour
                 await die();
         }
     }
-    public virtual async Task heal(uint hp)
+    public override async Task heal(uint hp)
     {
-        currentHealth += Math.Max(hp, 1);
+        await base.heal(hp);
         await triggerModules(TriggerType.OnHeal);
     }
 
@@ -37,9 +37,8 @@ public abstract class Character : MonoBehaviour
     {
         currentShield += Math.Max(amount, 1);
         await triggerModules(TriggerType.OnShieldGiven);
-        Debug.Log($"Âûäàí ùèò: {amount}; Âñåãî: {currentShield}");
+        Debug.Log($"Ð’Ñ‹Ð´Ð°Ð½ Ñ‰Ð¸Ñ‚: {amount}; Ð’ÑÐµÐ³Ð¾: {currentShield}");
     }
-    abstract protected Task die();
     public virtual async Task drainEnergy(uint amount)
     {
         currentEnergy -= Math.Max(amount, 1);
@@ -59,7 +58,6 @@ public abstract class Character : MonoBehaviour
     public virtual async Task startBattle()
     {
         CharacterInfoTooltipSetup();
-        Position = tracker.WorldToCell(transform.position);
         await triggerModules(TriggerType.OnBattleStart);
     }
     public virtual async Task endBattle()
@@ -90,14 +88,17 @@ public abstract class Character : MonoBehaviour
 
         foreach (var step in path)
             await moveStep(step);
-        await triggerModules(TriggerType.OnMove, Position);
+        await triggerModules(TriggerType.OnMove, Position.LeftBottom);
     }
     protected virtual async Task moveStep(Vector3Int dir)
     {
-        Vector3Int new_pos = Position + dir;
+        var new_pos = Position + dir;
 
         Vector3Int[] valid_moves = { Vector3Int.left, Vector3Int.right, Vector3Int.down, Vector3Int.up };
-        if (!valid_moves.Contains(dir) || tracker.OutOfBounds(new_pos) || tracker.IsOccupied(new_pos)) return;
+        if (!valid_moves.Contains(dir) ||
+            new_pos.Except(Position).Any(p => tracker.OutOfBounds(p)) ||
+            new_pos.Except(Position).Any(p => tracker.IsOccupied(p)))
+            return;
         Position = new_pos;
 
         await Awaitable.WaitForSecondsAsync(.2f); //TODO: remove delay; derived classes must await animations
@@ -106,7 +107,7 @@ public abstract class Character : MonoBehaviour
     public Task strike(int x, int y, int z, uint dmg) => strike(new Vector3Int(x, y, z), dmg);
     public async Task strike(Vector3Int pos, uint dmg)
     {
-        Character target = tracker.FindCharacterAtPosition(pos);
+        Entity target = tracker.FindEntityAtPosition(pos);
         if (target == null)
             return;
         await target.damage(dmg);
@@ -158,7 +159,7 @@ public abstract class Character : MonoBehaviour
         }
         return false;
     }
-    protected Task triggerModules(TriggerType triggerType) => triggerModules(triggerType, Position);
+    protected Task triggerModules(TriggerType triggerType) => triggerModules(triggerType, Position.LeftBottom);
     protected async Task triggerModules(TriggerType triggerType, Vector3Int pos)
     {
         foreach (var pm in listModules<PassiveModule>().Where(pm => pm.triggerType == triggerType))
@@ -199,7 +200,7 @@ public abstract class Character : MonoBehaviour
     protected virtual bool hasEnoughEnergy(ActiveModule module) => module != null && currentEnergy >= module.energyCost;
     protected virtual Task useActiveModule_internal(ActiveModule m, Vector3Int pos) => m.Effect(this, pos);
     protected virtual Task usePassiveModule_internal(PassiveModule m, Vector3Int pos) => m.Effect(this, pos);
-    protected virtual Task useStatusModule_internal(StatusModule m) => m.Effect(this, Position);
+    protected virtual Task useStatusModule_internal(StatusModule m) => m.Effect(this, Position.LeftBottom);
 
     public string getModuleName(int index)
     {
@@ -211,36 +212,16 @@ public abstract class Character : MonoBehaviour
         if (!doesModuleExist(index)) return null;
         return getModule(index).Description();
     }
-    public abstract URangeValue currentHealth { get; protected set; }
-    public abstract uint maxHealth { get; protected set; }
+
     public URangeValue currentShield { get; protected set; } = new();
-
-
     public URangeValue currentEnergy { get; protected set; } = new();
     public abstract uint maxEnergy { get; protected set; }
     public int Initiative { get; protected set; }
 
     public bool myTurn { get; protected set; }
 
-    public Vector3Int Position
-    {
-        get => position_;
-        protected set
-        {
-            transform.position = tracker.CellToWorld(value);
-            position_ = value;
-        }
-    }
-
-    public string Name { get; protected set; }
-    public string Description { get; protected set; }
-
-    public static SceneTracker tracker;
-
     protected abstract List<GameModule> modules_ { get; set; }
     public IReadOnlyList<GameModule> Modules { get => modules_.AsReadOnly();}
     protected List<StatusModule> status_modules_ = new();
     public IReadOnlyList<GameModule> Statuses { get => status_modules_.AsReadOnly(); }
-
-    private Vector3Int position_;
 }
