@@ -5,8 +5,8 @@ public class TooltipSystem : MonoBehaviour
     private static TooltipSystem instance;
     public CharacterInfoTooltip characterTooltip;
     public ModuleInfoTooltip moduleTooltip;
-    public CharacterTooltipTrigger currentCharacterTrigger;
-    public ModuleTooltipTrigger currentModuleTrigger;
+    CharacterTooltipTrigger currentCharacterTrigger;
+    ModuleTooltipTrigger currentModuleTrigger;
     public static readonly float HidingTimeInSeconds = .4f;
     public static readonly float ShowingTimeInSeconds = .2f;
     public static bool IsCharTooltipActive => instance.characterTooltip.enabled;
