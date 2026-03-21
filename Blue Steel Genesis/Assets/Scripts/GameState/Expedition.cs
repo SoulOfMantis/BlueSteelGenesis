@@ -14,12 +14,13 @@ public class Expedition
     {
         // TODO: handle player creation properly
         Player.modules = new List<GameModule>{
-            new PoisonStinger(),
+            new DefaultAdaptiveTEST_ONLY(),
+            new MechanicStinger(),
             new BasicMovement()
         };
         Player.maxHealth = 10;
         Player.maxEnergy = 3;
-        Player.currentHealth = Player.maxHealth;
+        Player.currentHealth.Value = Player.maxHealth;
         Player.GiveMaterials(3);
         Player.GiveMoney(10);
 
@@ -44,7 +45,7 @@ public class Expedition
 
         CombatSystem = new CombatSystem(Biome.id, (uint)BiomeStage, LocalSeed);
         ModuleGen = new(LocalSeed);
-    }
+}
 
     public void displayMap(ExpeditionMapView view)
     {
@@ -87,8 +88,6 @@ public class Expedition
             hkdf.expand(BitConverter.GetBytes(biome_id), sizeof(int)));
         return seed;
     }
-    public GameModule GetNextModule() => ModuleGen.GetNextModule();
-    ModuleGenerator ModuleGen;
     public CombatSystem CombatSystem;
-
+    public ModuleGenerator ModuleGen;
 }

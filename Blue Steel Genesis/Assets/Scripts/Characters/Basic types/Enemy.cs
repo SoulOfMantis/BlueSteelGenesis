@@ -5,12 +5,14 @@ using UnityEngine;
 
 public abstract class Enemy : Character
 {
-    public Enemy(int maxHealth, int maxEnergy, int initiative)
+    public Enemy(uint maxHealth, uint maxEnergy, int initiative)
     {
+        Name = "Default enemy name";
+        Description = "Default enemy description. If you see this, something went wrong.";
         this.maxHealth = maxHealth;
         this.maxEnergy = maxEnergy;
-        currentHealth = maxHealth;
-        currentEnergy = maxEnergy;
+        currentHealth.Value = maxHealth;
+        currentEnergy.Value = maxEnergy;
         Initiative = initiative;
     }
     protected List<ActiveModule> priorityModules;
@@ -19,6 +21,8 @@ public abstract class Enemy : Character
     public override async Task startTurn()
     {
         await base.startTurn();
+        if (currentHealth == 0)
+            return;
         await TurnLogic();
         await endTurn();
     }
@@ -26,7 +30,7 @@ public abstract class Enemy : Character
     {
         if (priorityModules == null) SetPriorityModules();
         bool actionTaken = true;
-        while (actionTaken && CanUseAnyPriorityModule())
+        while (actionTaken && CanUseAnyPriorityModule() && tracker.IsPlayerAlive())
         {
             actionTaken = false;
             foreach (var module in priorityModules)
@@ -86,9 +90,15 @@ public abstract class Enemy : Character
         return Task.CompletedTask;
     }
 
-    public override int currentHealth { get; protected set; }
-    public override int maxHealth { get; protected set; }
-    public override int maxEnergy { get; protected set; }
+    public override URangeValue currentHealth { get; protected set; } = new();
+    public override uint maxHealth {
+        get => currentHealth.Max;
+        protected set => currentHealth.Max = value;
+    }
+    public override uint maxEnergy {
+        get => currentEnergy.Max;
+        protected set => currentEnergy.Max = value;
+    }
     protected override List<GameModule> modules_ { get; set; } = new();
 }
 

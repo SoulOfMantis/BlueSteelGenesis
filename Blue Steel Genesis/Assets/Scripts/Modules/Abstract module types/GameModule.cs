@@ -1,29 +1,40 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
-
 /// <summary>
 /// класс модуля
 /// </summary>
 public abstract class GameModule
 {
-    public List<string> Keywords { get; protected set; }
     public string Name { get; protected set; }
-    public string Description { get; protected set; }
-    public int range = 0;
-
+    private string icon_name = "default_default.png";
+    public string Icon_name { get => icon_name; protected set => icon_name = value; }
+    public virtual string Description()
+    {
+        string res = "";
+        foreach (var k in GetVisibleKeywords())
+        {
+            res += $"{k.Name}";
+            if (k is TargetedVisibleKeyword t)
+                res += $" {TargetedVisibleKeyword.TargetDescription(t.Target)}";
+            res += ".\n";
+        }
+        return res;
+    }
+    public uint range = 0;
     public GameModule()
     {
         changeName(GetType().Name);
+        constKeywords = new();
+        tempKeywords = new();
     }
-
-    protected List<Vector3Int> getAvailableCells(int n, Vector3Int start)
+    protected List<Vector3Int> getAvailableCells(uint n, IEnumerable<Vector3Int> start)
     {
-        var res = new HashSet<Vector3Int>();
-        HashSet<Vector3Int> toAdd = new HashSet<Vector3Int>();
-        res.Add(start);
-        for (int i = 1; i <= n; i++)
+        var res = start.ToHashSet();
+        HashSet<Vector3Int> toAdd = new();
+        for (uint i = 1; i <= n; i++)
         {
             foreach (var cell in res)
             {
@@ -42,29 +53,76 @@ public abstract class GameModule
         return res.Where(c => checkFinalPosition(c)).ToList();
     }
     public virtual List<Vector3Int> getCellsInRange(Character user) => getCellsInRange(user.Position);
-    public virtual List<Vector3Int> getCellsInRange(Vector3Int start)
+    public virtual List<Vector3Int> getCellsInRange(PositionCollection start)
     {
         return getAvailableCells(range, start);
     }
-
     public void changeName(string newName) => Name = newName;
     public abstract Task Effect(Character user, Vector3Int pos);
+    public Task Use(Character user, Vector3Int pos)
+    {
+        if (!CanBeUsed()) return Task.CompletedTask;
+        SpendUse();
+        return Effect(user, pos);
+    }
 
     public virtual void Initialize()
     {
-        Debug.Log($"Module {GetType().Name} initialized");
+        Debug.Log($"Module {Name} initialized");
     }
-    protected virtual bool checkFinalPosition(Vector3Int pos)
+    protected virtual bool checkFinalPosition(Vector3Int pos) => true;
+    protected virtual bool checkIntermediatePosition(Vector3Int pos) => !Character.tracker.OutOfBounds(pos);
+    public virtual bool checkPosition(Character user, Vector3Int pos) => getCellsInRange(user).Contains(pos);
+    public virtual HashSet<ModuleKeyword> renewableKeywords() => new();
+    public HashSet<ModuleKeyword> tempKeywords { get; private set; }
+    public void AddTemporaryKeyword(ModuleKeyword keyword) =>
+        tempKeywords.Add(keyword);
+    public void AddTemporaryKeywords(params ModuleKeyword[] keywords)
     {
-        return true;
+        foreach (var k in keywords)
+            AddTemporaryKeyword(k);
     }
-    protected virtual bool checkIntermediatePosition(Vector3Int pos)
+    public void ClearTemporaryKeywords() => tempKeywords.Clear();
+    public HashSet<ModuleKeyword> constKeywords { get; private set; }
+    public void AddConstKeyword(ModuleKeyword keyword) =>
+        constKeywords.Add(keyword);
+    public void RemoveConstKeyword(ModuleKeyword keyword) =>
+        constKeywords.Remove(keyword);
+    public void AddConstKeywords(params ModuleKeyword[] keywords)
     {
-        return !Character.tracker.OutOfBounds(pos);
+        foreach (var k in keywords)
+            AddConstKeyword(k);
     }
-    public virtual bool checkPosition(Character user, Vector3Int pos)
+    public void ReplaceConstKeyword(ModuleKeyword toDelete, ModuleKeyword replacement)
     {
-        return getCellsInRange(user).Contains(pos);
+        RemoveConstKeyword(toDelete);
+        AddConstKeyword(replacement);
     }
+    public HashSet<ModuleKeyword> GetKeywords()
+    {
+        var res = constKeywords;
+        res.UnionWith(renewableKeywords());
+        res.UnionWith(tempKeywords);
+        return res;
+    }
+    public HashSet<VisibleKeyword> GetVisibleKeywords() => GetKeywords().Where(k => k is VisibleKeyword).Select(k => k as VisibleKeyword).ToHashSet();
+    public bool HasAllKeywords(params ModuleKeyword[] keywords) => HasAllKeywords(keywords.ToHashSet());
+    public bool HasAllKeywords(IEnumerable<ModuleKeyword> keywords) => keywords?.All(k => GetKeywords().Any(kw => kw.Equals(k))) ?? true;
+    public bool HasAnyKeywords(params ModuleKeyword[] keywords) => HasAnyKeywords(keywords.ToHashSet());
+    public bool HasAnyKeywords(IEnumerable<ModuleKeyword> keywords) => keywords?.Any(k => GetKeywords().Any(kw => kw.Equals(k))) ?? true;
+    private HashSet<FrequencyLimiterKeyword> GetFrequencyLimiterKeywords() =>
+        constKeywords.Union(tempKeywords).Where(k => k is FrequencyLimiterKeyword).Select(k => k as FrequencyLimiterKeyword).ToHashSet();
+    public virtual bool CanBeUsed() => GetFrequencyLimiterKeywords().All(k => k.CanBeUsed());
+    public void SpendUse()
+    {
+        foreach (var freq in GetFrequencyLimiterKeywords())
+            freq.SpendUseLeft();
+    }
+    public void Recharge(TriggerType trigger)
+    {
+        foreach (var freq in GetFrequencyLimiterKeywords().Where(f => f.rechargeTime == trigger))
+            freq.Recharge();
+    }
+
 }
 
