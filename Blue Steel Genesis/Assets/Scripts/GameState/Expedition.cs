@@ -14,6 +14,7 @@ public class Expedition
     {
         // TODO: handle player creation properly
         Player.modules = new List<GameModule>{
+            new DefaultAdaptiveTEST_ONLY(),
             new MechanicStinger(),
             new BasicMovement()
         };
@@ -42,7 +43,7 @@ public class Expedition
         );
         map_progress_ = new(Map);
         ModuleGen = new(LocalSeed);
-    }
+}
 
     public void displayMap(ExpeditionMapView view)
     {
@@ -86,6 +87,5 @@ public class Expedition
             hkdf.expand(BitConverter.GetBytes(biome_id), sizeof(int)));
         return seed;
     }
-    public GameModule GetNextModule() => ModuleGen.GetNextModule();
-    ModuleGenerator ModuleGen;
+    public ModuleGenerator ModuleGen;
 }

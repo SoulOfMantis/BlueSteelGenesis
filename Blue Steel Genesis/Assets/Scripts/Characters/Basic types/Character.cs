@@ -14,15 +14,15 @@ public abstract class Character : Entity
             uint shield_dmg = Math.Min(currentShield, dmg);
             currentShield -= shield_dmg;
             dmg -= shield_dmg;
-            await triggerModules(TriggerType.OnDamageShielded);
+            await processTrigger(TriggerType.OnDamageShielded);
             Debug.Log($"{shield_dmg} урона поглощено щитом");
             if (currentShield == 0)
-                await triggerModules(TriggerType.OnShieldBroken);
+                await processTrigger(TriggerType.OnShieldBroken);
         }
         if (dmg > 0)
         {
             currentHealth -= dmg;
-            await triggerModules(TriggerType.OnHealthDamage);
+            await processTrigger(TriggerType.OnHealthDamage);
             if (currentHealth == 0)
                 await die();
         }
@@ -30,24 +30,24 @@ public abstract class Character : Entity
     public override async Task heal(uint hp)
     {
         await base.heal(hp);
-        await triggerModules(TriggerType.OnHeal);
+        await processTrigger(TriggerType.OnHeal);
     }
 
     public virtual async Task giveShield(uint amount)
     {
         currentShield += Math.Max(amount, 1);
-        await triggerModules(TriggerType.OnShieldGiven);
+        await processTrigger(TriggerType.OnShieldGiven);
         Debug.Log($"Выдан щит: {amount}; Всего: {currentShield}");
     }
-    public virtual async Task drainEnergy(uint amount)
+public virtual async Task drainEnergy(uint amount)
     {
         currentEnergy -= Math.Max(amount, 1);
-        await triggerModules(TriggerType.OnEnergyDrain);
+        await processTrigger(TriggerType.OnEnergyDrain);
     }
     public virtual async Task restoreEnergy(uint amount)
     {
         currentEnergy += Math.Max(amount, 1);
-        await triggerModules(TriggerType.OnEnergyRestore);
+        await processTrigger(TriggerType.OnEnergyRestore);
     }
 
     private void CharacterInfoTooltipSetup()
@@ -58,12 +58,12 @@ public abstract class Character : Entity
     public virtual async Task startBattle()
     {
         CharacterInfoTooltipSetup();
-        await triggerModules(TriggerType.OnBattleStart);
+        await processTrigger(TriggerType.OnBattleStart);
     }
     public virtual async Task endBattle()
     {
         status_modules_.Clear();
-        await triggerModules(TriggerType.OnBattleEnd);
+        await processTrigger(TriggerType.OnBattleEnd);
     }
     public virtual async Task startTurn()
     {
@@ -71,11 +71,11 @@ public abstract class Character : Entity
         myTurn = true;
         currentShield.Value = 0;
         await restoreEnergy(maxEnergy);
-        await triggerModules(TriggerType.OnTurnStart);
+        await processTrigger(TriggerType.OnTurnStart);
     }
     public virtual async Task endTurn()
     {
-        await triggerModules(TriggerType.OnTurnEnd);
+        await processTrigger(TriggerType.OnTurnEnd);
         myTurn = false;
         tracker.NextTurn();
     }
@@ -88,7 +88,7 @@ public abstract class Character : Entity
 
         foreach (var step in path)
             await moveStep(step);
-        await triggerModules(TriggerType.OnMove, Position.LeftBottom);
+        await processTrigger(TriggerType.OnMove, Position.LeftBottom);
     }
     protected virtual async Task moveStep(Vector3Int dir)
     {
@@ -111,7 +111,7 @@ public abstract class Character : Entity
         if (target == null)
             return;
         await target.damage(dmg);
-        await triggerModules(TriggerType.OnStrike, pos);
+        await processTrigger(TriggerType.OnStrike, pos);
         Debug.Log($"Strike at {pos} for {dmg} damage");
     }
 
@@ -122,7 +122,7 @@ public abstract class Character : Entity
         if (target == null)
             return;
         target.addStatusModule(status);
-        await triggerModules(TriggerType.OnApply, pos);
+        await processTrigger(TriggerType.OnApply, pos);
         Debug.Log($"Apply {status.GetType().Name} at {pos}");
     }
 
@@ -159,6 +159,12 @@ public abstract class Character : Entity
         }
         return false;
     }
+    protected Task processTrigger(TriggerType trigger) => processTrigger(trigger, Position.LeftBottom);
+    protected Task processTrigger(TriggerType trigger, Vector3Int pos)
+    {
+        RechargeModules(trigger);
+        return triggerModules(trigger, pos);
+    }
     protected Task triggerModules(TriggerType triggerType) => triggerModules(triggerType, Position.LeftBottom);
     protected async Task triggerModules(TriggerType triggerType, Vector3Int pos)
     {
@@ -175,7 +181,7 @@ public abstract class Character : Entity
             await useStatusModule_internal(st);
         status_modules_.RemoveAll(m => m.IsExpired());
     }
-
+    protected void RechargeModules(TriggerType trigger) => modules_.ForEach(m => m.Recharge(trigger));
 
     protected IEnumerable<ModuleT> listModules<ModuleT>()
         where ModuleT : GameModule
@@ -198,9 +204,9 @@ public abstract class Character : Entity
     public bool doesModuleExist(int module_index) => getModule<GameModule>(module_index) != null;
     protected virtual bool isCorrectPosition(GameModule module, Vector3Int pos) => module.checkPosition(this, pos);
     protected virtual bool hasEnoughEnergy(ActiveModule module) => module != null && currentEnergy >= module.energyCost;
-    protected virtual Task useActiveModule_internal(ActiveModule m, Vector3Int pos) => m.Effect(this, pos);
-    protected virtual Task usePassiveModule_internal(PassiveModule m, Vector3Int pos) => m.Effect(this, pos);
-    protected virtual Task useStatusModule_internal(StatusModule m) => m.Effect(this, Position.LeftBottom);
+    protected virtual Task useActiveModule_internal(ActiveModule m, Vector3Int pos) => m.Use(this, pos);
+    protected virtual Task usePassiveModule_internal(PassiveModule m, Vector3Int pos) => m.Use(this, pos);
+    protected virtual Task useStatusModule_internal(StatusModule m) => m.Use(this, Position.LeftBottom);
 
     public string getModuleName(int index)
     {
