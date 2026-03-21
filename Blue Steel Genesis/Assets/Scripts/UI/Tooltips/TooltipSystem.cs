@@ -3,13 +3,13 @@ using UnityEngine;
 public class TooltipSystem : MonoBehaviour
 {
     private static TooltipSystem instance;
-    public CharacterInfoTooltip characterTooltip;
+    public EntityInfoTooltip entityTooltip;
     public ModuleInfoTooltip moduleTooltip;
-    CharacterTooltipTrigger currentCharacterTrigger;
+    EntityTooltipTrigger currentEntityTrigger;
     ModuleTooltipTrigger currentModuleTrigger;
     public static readonly float HidingTimeInSeconds = .4f;
     public static readonly float ShowingTimeInSeconds = .2f;
-    public static bool IsCharTooltipActive => instance.characterTooltip.enabled;
+    public static bool IsEntityTooltipActive => instance.entityTooltip.enabled;
     public static bool IsModuleTooltipActive => instance.moduleTooltip.enabled;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void Awake()
@@ -17,9 +17,9 @@ public class TooltipSystem : MonoBehaviour
         instance = this;
     }
 
-    public static void Load(Character c)
+    public static void Load(Entity c)
     {
-        instance.characterTooltip.updateInfo(c);
+        instance.entityTooltip.updateInfo(c);
     }
     public static void Load(GameModule g)
     {
@@ -30,18 +30,18 @@ public class TooltipSystem : MonoBehaviour
     {
         switch (type)
         {
-            case TooltipType.characterTooltip:
-                instance.characterTooltip.gameObject.SetActive(true);
+            case TooltipType.entityTooltip:
+                instance.entityTooltip.gameObject.SetActive(true);
                  break;
             case TooltipType.moduleTooltip:
                 instance.moduleTooltip.gameObject.SetActive(true);
-                Delay(TooltipType.characterTooltip);
+                Delay(TooltipType.entityTooltip);
                 break;
         }
     }
-    public static void Show(TooltipType type, CharacterTooltipTrigger trigger)
+    public static void Show(TooltipType type, EntityTooltipTrigger trigger)
     {
-        instance.currentCharacterTrigger = trigger;
+        instance.currentEntityTrigger = trigger;
         Show(type);
     }
     public static void Show(TooltipType type, ModuleTooltipTrigger trigger)
@@ -53,12 +53,12 @@ public class TooltipSystem : MonoBehaviour
     {
         switch (type)
         {
-            case TooltipType.characterTooltip:
-                if (instance.currentCharacterTrigger)
-                    instance.currentCharacterTrigger.StopCoroutine("HidingTooltip");
+            case TooltipType.entityTooltip:
+                if (instance.currentEntityTrigger)
+                    instance.currentEntityTrigger.StopCoroutine("HidingTooltip");
                 break;
             case TooltipType.moduleTooltip:
-                Delay(TooltipType.characterTooltip);
+                Delay(TooltipType.entityTooltip);
                 if (instance.currentModuleTrigger)
                     instance.currentModuleTrigger.StopCoroutine("HidingTooltip");
                 break;
@@ -68,11 +68,11 @@ public class TooltipSystem : MonoBehaviour
     {
         switch (type)
         {
-            case TooltipType.characterTooltip:
-                if (instance.currentCharacterTrigger)
+            case TooltipType.entityTooltip:
+                if (instance.currentEntityTrigger)
                 {
-                    instance.currentCharacterTrigger.StopCoroutine("HidingTooltip");
-                    instance.currentCharacterTrigger.StartCoroutine("HidingTooltip");
+                    instance.currentEntityTrigger.StopCoroutine("HidingTooltip");
+                    instance.currentEntityTrigger.StartCoroutine("HidingTooltip");
                 }                
                 break;
             case TooltipType.moduleTooltip:
@@ -89,8 +89,8 @@ public class TooltipSystem : MonoBehaviour
     {
         switch (type)
         {
-            case TooltipType.characterTooltip:
-                instance.characterTooltip.gameObject.SetActive(false);               
+            case TooltipType.entityTooltip:
+                instance.entityTooltip.gameObject.SetActive(false);               
                 break;
             case TooltipType.moduleTooltip:
                 instance.moduleTooltip.gameObject.SetActive(false);
@@ -110,6 +110,6 @@ public class TooltipSystem : MonoBehaviour
     }
     public enum TooltipType
     { 
-        characterTooltip, moduleTooltip
+        entityTooltip, moduleTooltip
     }
 }

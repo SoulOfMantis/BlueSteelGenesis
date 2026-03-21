@@ -2,31 +2,33 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class CharacterTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class EntityTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public Character character = null;
-    private Color baseCharacterColor;
+    public Entity entity = null;
+    private Color baseEntityColor;
     IEnumerator ShowingTooltip()
     {
-        if (TooltipSystem.IsCharTooltipActive) yield return new WaitForSeconds(TooltipSystem.HidingTimeInSeconds);
-        TooltipSystem.Load(character);           
+        if (TooltipSystem.IsEntityTooltipActive) yield return new WaitForSeconds(TooltipSystem.HidingTimeInSeconds);
+        TooltipSystem.Load(entity);           
         yield return new WaitForSeconds(TooltipSystem.ShowingTimeInSeconds);
-        TooltipSystem.Show(TooltipSystem.TooltipType.characterTooltip, this);
-        if (character != null)  
+        TooltipSystem.Show(TooltipSystem.TooltipType.entityTooltip, this);
+        if (entity != null) 
         { 
-            character.gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
-            Character.tracker.HighlightCharacterInInitiative(character);
+            entity.gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
+            if (entity is Character c)
+                Entity.tracker.HighlightCharacterInInitiative(c);
         }
     }
     IEnumerator HidingTooltip()
     {    
         yield return new WaitForSeconds(TooltipSystem.HidingTimeInSeconds);
-        if (character != null)  
+        if (entity != null)  
         {
-            character.gameObject.GetComponent<SpriteRenderer>().color = baseCharacterColor;
-            Character.tracker.UnhighlightCharacterInInitiative(character);
-        }        
-        TooltipSystem.Hide(TooltipSystem.TooltipType.characterTooltip);
+            entity.gameObject.GetComponent<SpriteRenderer>().color = baseEntityColor;
+            if (entity is Character c)
+                Entity.tracker.UnhighlightCharacterInInitiative(c);
+        }
+        TooltipSystem.Hide(TooltipSystem.TooltipType.entityTooltip);
     }
     public void OnMouseEnter()
     {
@@ -53,8 +55,8 @@ public class CharacterTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPoi
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (character != null)  
-            baseCharacterColor = character.gameObject.GetComponent<SpriteRenderer>().color;
+        if (entity != null)  
+            baseEntityColor = entity.gameObject.GetComponent<SpriteRenderer>().color;
     }
 
     // Update is called once per frame

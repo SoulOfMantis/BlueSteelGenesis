@@ -4,6 +4,8 @@ public class Debug_Obstacle : Obstacle
 {
     Debug_Obstacle() {
         currentHealth = new(2, 2);
+        Name = "Default Obstacle";
+        Description = "Breakable!";
     }
 
     protected override Task die() {

@@ -20,6 +20,13 @@ public abstract class Entity : MonoBehaviour
             tracker.AddObstacle(o);
         else
             Debug.LogWarning("Enity is not added");
+
+        EntityInfoTooltipSetup();
+    }
+    void EntityInfoTooltipSetup()
+    {
+        gameObject.AddComponent<EntityTooltipTrigger>().entity = this;
+        gameObject.AddComponent<BoxCollider2D>();
     }
 
     public virtual Task damage(uint dmg) {

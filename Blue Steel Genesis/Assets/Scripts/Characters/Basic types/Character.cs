@@ -49,15 +49,8 @@ public abstract class Character : Entity
         currentEnergy += Math.Max(amount, 1);
         await triggerModules(TriggerType.OnEnergyRestore);
     }
-
-    private void CharacterInfoTooltipSetup()
-    {
-        gameObject.AddComponent<CharacterTooltipTrigger>().character = this;
-        gameObject.AddComponent<BoxCollider2D>();
-    }
     public virtual async Task startBattle()
     {
-        CharacterInfoTooltipSetup();
         await triggerModules(TriggerType.OnBattleStart);
     }
     public virtual async Task endBattle()
