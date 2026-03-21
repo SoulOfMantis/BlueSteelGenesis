@@ -18,11 +18,10 @@ public abstract class GameModule
     {
         changeName(GetType().Name);
     }
-    protected List<Vector3Int> getAvailableCells(uint n, Vector3Int start)
+    protected List<Vector3Int> getAvailableCells(uint n, IEnumerable<Vector3Int> start)
     {
-        var res = new HashSet<Vector3Int>();
-        HashSet<Vector3Int> toAdd = new HashSet<Vector3Int>();
-        res.Add(start);
+        var res = start.ToHashSet();
+        HashSet<Vector3Int> toAdd = new();
         for (uint i = 1; i <= n; i++)
         {
             foreach (var cell in res)
@@ -42,7 +41,7 @@ public abstract class GameModule
         return res.Where(c => checkFinalPosition(c)).ToList();
     }
     public virtual List<Vector3Int> getCellsInRange(Character user) => getCellsInRange(user.Position);
-    public virtual List<Vector3Int> getCellsInRange(Vector3Int start)
+    public virtual List<Vector3Int> getCellsInRange(PositionCollection start)
     {
         return getAvailableCells(range, start);
     }

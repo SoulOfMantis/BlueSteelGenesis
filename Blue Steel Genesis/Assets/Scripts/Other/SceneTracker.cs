@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 public class SceneTracker : MonoBehaviour
 {
     private InitiativeTracker init;
-    private List<Obstacle> obstacles = new();
+    private List<Entity> entities = new();
     public Tilemap tl;
     public int max_y { get; private set; } = 3;
     public int max_x { get; private set; } = 17;
@@ -22,14 +22,14 @@ public class SceneTracker : MonoBehaviour
     {
         init.UnhighlightCharacterInInitiative(c);
     }
-    public Character FindCharacterAtPosition(Vector3Int pos)
-    {
-        return init.characters.Find(c => c.Position == pos);
-    }
-    public Obstacle FindObstacleAtPosition(Vector3Int pos)
-    {
-        return obstacles.Find(o => o.Position == pos);
-    }
+
+    public Entity FindEntityAtPosition(Vector3Int pos) =>
+        entities.Find(e => e.Position.Contains(pos));
+    public Character FindCharacterAtPosition(Vector3Int pos) =>
+        FindEntityAtPosition(pos) as Character;
+    public Obstacle FindObstacleAtPosition(Vector3Int pos) =>
+        FindEntityAtPosition(pos) as Obstacle;
+
     public bool IsOccupiedByCharacter(Vector3Int pos)
     {
         return (FindCharacterAtPosition(pos) != null);
@@ -42,7 +42,7 @@ public class SceneTracker : MonoBehaviour
 
     public bool IsOccupied(Vector3Int pos)
     {
-        return IsOccupiedByCharacter(pos) || IsOccupiedByObstacle(pos);
+        return FindEntityAtPosition(pos) != null;
     }
 
     public Vector3 CellToWorld(Vector3Int pos)
@@ -77,14 +77,20 @@ public class SceneTracker : MonoBehaviour
             .Select(v => v + pos)
             .Where(p => !OutOfBounds(p));
     }
-    public void AddCharacter(Character charact)
+    public void AddCharacter(Character character)
     {
-        init.AddCharacter(charact);
+        entities.Add(character);
+        init.AddCharacter(character);
     }
     public void RemoveCharacter(Character character)
     {
+        entities.Remove(character);
         init.RemoveCharacter(character);
     }
+    public void AddObstacle(Obstacle obstacle) =>
+        entities.Add(obstacle);
+    public void RemoveObstacle(Obstacle obstacle) =>
+        entities.Remove(obstacle);
 
     //                                         
     public PlayerCharacter getPlayer() =>
@@ -126,11 +132,6 @@ public class SceneTracker : MonoBehaviour
     void Start()
     {
         init = gameObject.AddComponent(typeof(InitiativeTracker)) as InitiativeTracker;
-        Character.tracker = this;
-    }
-
-    void Update()
-    {
-
+        Entity.tracker = this;
     }
 }
