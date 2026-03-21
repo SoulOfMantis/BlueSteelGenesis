@@ -4,7 +4,8 @@ using UnityEngine;
 
 public abstract class Entity : MonoBehaviour
 {
-    void Start() {
+    void Start() => Init();
+    protected virtual void Init() {
         if (tracker == null)
             return;
 
@@ -19,10 +20,7 @@ public abstract class Entity : MonoBehaviour
             tracker.AddObstacle(o);
         else
             Debug.LogWarning("Enity is not added");
-
-        Init();
     }
-    protected virtual void Init() {}
 
     public virtual Task damage(uint dmg) {
         currentHealth -= Math.Max(dmg, 1);

@@ -8,9 +8,9 @@ namespace Navigation
     public class Dijkstra
     {
         public static List<Vector3Int> listReachable(Vector3Int initial_pos, Predicate<Vector3Int> is_allowed, uint max_length = uint.MaxValue - 1) =>
-            listReachable(new PositionCollection(initial_pos, 1), is_allowed, max_length);
+            listReachable(new PositionCollection(initial_pos), is_allowed, max_length);
         public static List<Vector3Int> getPath(Vector3Int initial_pos, Vector3Int target, Predicate<Vector3Int> is_allowed) =>
-            getPath(new PositionCollection(initial_pos, 1), target, is_allowed);
+            getPath(new PositionCollection(initial_pos), target, is_allowed);
         public static List<Vector3Int> getPath(PositionCollection initial_pos, Vector3Int target, Predicate<Vector3Int> is_allowed) =>
             getPath(initial_pos, Enumerable.Repeat(target, 1), is_allowed);
 

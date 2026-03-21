@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PositionCollection : IEnumerable<Vector3Int>
 {
-    public PositionCollection(Vector3Int leading_position, int side_size) =>
+    public PositionCollection(Vector3Int leading_position, int side_size = 1) =>
         (leading_position_, side_size_) = (leading_position, side_size);
 
     public bool Contains(Vector3Int p) =>
