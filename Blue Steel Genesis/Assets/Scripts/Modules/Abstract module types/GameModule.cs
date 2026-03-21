@@ -30,11 +30,10 @@ public abstract class GameModule
         constKeywords = new();
         tempKeywords = new();
     }
-    protected List<Vector3Int> getAvailableCells(uint n, Vector3Int start)
+    protected List<Vector3Int> getAvailableCells(uint n, IEnumerable<Vector3Int> start)
     {
-        var res = new HashSet<Vector3Int>();
-        HashSet<Vector3Int> toAdd = new HashSet<Vector3Int>();
-        res.Add(start);
+        var res = start.ToHashSet();
+        HashSet<Vector3Int> toAdd = new();
         for (uint i = 1; i <= n; i++)
         {
             foreach (var cell in res)
@@ -54,8 +53,10 @@ public abstract class GameModule
         return res.Where(c => checkFinalPosition(c)).ToList();
     }
     public virtual List<Vector3Int> getCellsInRange(Character user) => getCellsInRange(user.Position);
-    public virtual List<Vector3Int> getCellsInRange(Vector3Int start) => getAvailableCells(range, start);
-
+    public virtual List<Vector3Int> getCellsInRange(PositionCollection start)
+    {
+        return getAvailableCells(range, start);
+    }
     public void changeName(string newName) => Name = newName;
     public abstract Task Effect(Character user, Vector3Int pos);
     public Task Use(Character user, Vector3Int pos)
@@ -105,7 +106,10 @@ public abstract class GameModule
         return res;
     }
     public HashSet<VisibleKeyword> GetVisibleKeywords() => GetKeywords().Where(k => k is VisibleKeyword).Select(k => k as VisibleKeyword).ToHashSet();
-    public bool HasKeywords(params ModuleKeyword[] keywords) => keywords.All(k => GetKeywords().Any(kw => kw.GetType() == k.GetType()));
+    public bool HasAllKeywords(params ModuleKeyword[] keywords) => HasAllKeywords(keywords.ToHashSet());
+    public bool HasAllKeywords(IEnumerable<ModuleKeyword> keywords) => keywords?.All(k => GetKeywords().Any(kw => kw.Equals(k))) ?? true;
+    public bool HasAnyKeywords(params ModuleKeyword[] keywords) => HasAnyKeywords(keywords.ToHashSet());
+    public bool HasAnyKeywords(IEnumerable<ModuleKeyword> keywords) => keywords?.Any(k => GetKeywords().Any(kw => kw.Equals(k))) ?? true;
     private HashSet<FrequencyLimiterKeyword> GetFrequencyLimiterKeywords() =>
         constKeywords.Union(tempKeywords).Where(k => k is FrequencyLimiterKeyword).Select(k => k as FrequencyLimiterKeyword).ToHashSet();
     public virtual bool CanBeUsed() => GetFrequencyLimiterKeywords().All(k => k.CanBeUsed());
