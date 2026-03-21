@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -44,7 +45,7 @@ public class MechanicStinger : ActiveModule
     }
     public override bool checkPosition(Character user, Vector3Int pos)
     {
-        return base.checkPosition(user, pos) && (pos != user.Position);
+        return base.checkPosition(user, pos) && !user.Position.Contains(pos);
     }
 
 }

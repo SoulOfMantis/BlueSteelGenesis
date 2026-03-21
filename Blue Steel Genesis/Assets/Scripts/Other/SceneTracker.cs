@@ -24,7 +24,7 @@ public class SceneTracker : MonoBehaviour
     }
 
     public Entity FindEntityAtPosition(Vector3Int pos) =>
-        entities.Find(e => e.Position == pos);
+        entities.Find(e => e.Position.Contains(pos));
     public Character FindCharacterAtPosition(Vector3Int pos) =>
         FindEntityAtPosition(pos) as Character;
     public Obstacle FindObstacleAtPosition(Vector3Int pos) =>

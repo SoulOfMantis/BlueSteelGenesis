@@ -38,7 +38,7 @@ public class BasicAttack : ActiveModule
     }
     public override bool checkPosition(Character user, Vector3Int pos)
     {
-        return base.checkPosition(user, pos) && (pos != user.Position);
+        return base.checkPosition(user, pos) && !user.Position.Contains(pos);
     }
 
 }

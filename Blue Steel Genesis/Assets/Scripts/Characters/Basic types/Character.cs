@@ -88,14 +88,17 @@ public abstract class Character : Entity
 
         foreach (var step in path)
             await moveStep(step);
-        await triggerModules(TriggerType.OnMove, Position);
+        await triggerModules(TriggerType.OnMove, Position.LeftBottom);
     }
     protected virtual async Task moveStep(Vector3Int dir)
     {
-        Vector3Int new_pos = Position + dir;
+        var new_pos = Position + dir;
 
         Vector3Int[] valid_moves = { Vector3Int.left, Vector3Int.right, Vector3Int.down, Vector3Int.up };
-        if (!valid_moves.Contains(dir) || tracker.OutOfBounds(new_pos) || tracker.IsOccupied(new_pos)) return;
+        if (!valid_moves.Contains(dir) ||
+            new_pos.Except(Position).Any(p => tracker.OutOfBounds(p)) ||
+            new_pos.Except(Position).Any(p => tracker.IsOccupied(p)))
+            return;
         Position = new_pos;
 
         await Awaitable.WaitForSecondsAsync(.2f); //TODO: remove delay; derived classes must await animations
@@ -156,7 +159,7 @@ public abstract class Character : Entity
         }
         return false;
     }
-    protected Task triggerModules(TriggerType triggerType) => triggerModules(triggerType, Position);
+    protected Task triggerModules(TriggerType triggerType) => triggerModules(triggerType, Position.LeftBottom);
     protected async Task triggerModules(TriggerType triggerType, Vector3Int pos)
     {
         foreach (var pm in listModules<PassiveModule>().Where(pm => pm.triggerType == triggerType))
@@ -197,7 +200,7 @@ public abstract class Character : Entity
     protected virtual bool hasEnoughEnergy(ActiveModule module) => module != null && currentEnergy >= module.energyCost;
     protected virtual Task useActiveModule_internal(ActiveModule m, Vector3Int pos) => m.Effect(this, pos);
     protected virtual Task usePassiveModule_internal(PassiveModule m, Vector3Int pos) => m.Effect(this, pos);
-    protected virtual Task useStatusModule_internal(StatusModule m) => m.Effect(this, Position);
+    protected virtual Task useStatusModule_internal(StatusModule m) => m.Effect(this, Position.LeftBottom);
 
     public string getModuleName(int index)
     {

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -8,7 +8,10 @@ public abstract class Entity : MonoBehaviour
         if (tracker == null)
             return;
 
-        Position = tracker.WorldToCell(transform.position);
+        Position = new(
+            tracker.WorldToCell(transform.position) - new Vector3Int((int)bodySize, (int)bodySize) / 2,
+            (int)bodySize
+        );
 
         if (this is Character ch)
             tracker.AddCharacter(ch);
@@ -38,20 +41,23 @@ public abstract class Entity : MonoBehaviour
     public abstract URangeValue currentHealth { get; protected set; }
     public abstract uint maxHealth { get; protected set; }
 
-    public Vector3Int Position
+    public PositionCollection Position
     {
         get => position_;
         protected set
         {
-            transform.position = tracker.CellToWorld(value);
+            transform.position = (tracker.CellToWorld(value.LeftBottom) +
+                                  tracker.CellToWorld(value.RightTop)) / 2;
             position_ = value;
         }
     }
+    [SerializeField, Tooltip("Размер сущности на поле")]
+    protected uint bodySize = 1;
 
     public string Name { get; protected set; }
     public string Description { get; protected set; }
 
     public static SceneTracker tracker;
 
-    private Vector3Int position_;
+    private PositionCollection position_;
 }
