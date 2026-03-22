@@ -83,7 +83,7 @@ public class InitiativeTracker : MonoBehaviour
     {
         characterTooltipsTriggers[c] = new GameObject($"{c.Name}");
         var ctt = characterTooltipsTriggers[c];
-        ctt.AddComponent<CharacterTooltipTrigger>().character = c;
+        ctt.AddComponent<EntityTooltipTrigger>().entity = c;
         ctt.AddComponent<TextMeshProUGUI>().enableAutoSizing = true;
         ctt.transform.SetParent(transform);
         ctt.transform.localScale = new(1, 1);

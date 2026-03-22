@@ -4,12 +4,17 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class PlayerCharacter : Character
 {
     public static List<ModuleButton> activeModuleButtons = new();
-    public TMP_Text energyDisplay;
-    public TMP_Text healthDisplay;
+    [SerializeField] Slider energySlider;
+    [SerializeField] TMP_Text energyDisplay;
+    [SerializeField] Slider healthSlider;
+    [SerializeField] TMP_Text healthDisplay;
+    [SerializeField] Slider shieldSlider;
+    [SerializeField] TMP_Text shieldDisplay;
     public GameObject VictoryScreen;
     public GameObject DefeatScreen;
     PlayerCharacter()
@@ -25,6 +30,8 @@ public class PlayerCharacter : Character
         currentEnergy.Max = GameState.Run.Expedition.Player.maxEnergy;
         VictoryScreen.SetActive(false);
         DefeatScreen.SetActive(false);
+        energySlider.maxValue = maxEnergy;
+        healthSlider.maxValue = maxHealth;
     }
 
     // Update is called once per frame
@@ -37,14 +44,19 @@ public class PlayerCharacter : Character
 
     void updateHealth()
     {
+        healthSlider.value = currentHealth;
         healthDisplay.text = $"{currentHealth}/{maxHealth}";
     }
 
     void updateEnergy()
     {
+        energySlider.value = currentEnergy;
         energyDisplay.text = $"{currentEnergy}/{maxEnergy}";
     }
-
+    void updateShields()
+    {
+        shieldSlider.value = currentShield;
+    }
     void updateButtons()
     {
         activeModuleButtons.ForEach(mb => mb.buttonInteractableManaging());
@@ -90,11 +102,22 @@ public class PlayerCharacter : Character
         return myTurn && hasEnoughEnergy(getModule<ActiveModule>(module_index));
     }
 
+    public override async Task giveShield(uint amount)
+    {
+        await base.giveShield(amount);
+        updateShields();
+    }
+    public override void loseShield(uint value)
+    {
+        base.loseShield(value);
+        updateShields();
+    }
     public override async Task startBattle()
     {
         await base.startBattle();
         updateHealth();
         updateEnergy();
+        updateShields();
         updateButtons();
         //play starting battle animation
     }

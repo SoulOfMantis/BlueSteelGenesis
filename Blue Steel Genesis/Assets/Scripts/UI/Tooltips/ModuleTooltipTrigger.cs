@@ -10,36 +10,49 @@ public class ModuleTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointe
     public Image icon;
     IEnumerator ShowingTooltip()
     {
-        if (TooltipSystem.IsModuleTooltipActive) yield return new WaitForSeconds(0.2f);
+        if (TooltipSystem.IsModuleTooltipActive) yield return new WaitForSeconds(TooltipSystem.HidingTimeInSeconds);
         TooltipSystem.Load(module);           
-        yield return new WaitForSeconds(0.3f);
-        TooltipSystem.Show(TooltipSystem.TooltipType.moduleTooltip);
+        yield return new WaitForSeconds(TooltipSystem.ShowingTimeInSeconds);
+        TooltipSystem.Show(TooltipSystem.TooltipType.moduleTooltip, this);
     }
     IEnumerator HidingTooltip()
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(TooltipSystem.HidingTimeInSeconds);
         TooltipSystem.Hide(TooltipSystem.TooltipType.moduleTooltip);
     }
+
     public void OnMouseEnter()
     {
-        StopCoroutine("HidingTooltip");
-        StartCoroutine("ShowingTooltip");
+        if (!TooltipSystem.moduleTooltipLocked)
+        {
+            StopCoroutine("HidingTooltip");
+            StartCoroutine("ShowingTooltip");
+        }
     }
 
     public void OnMouseExit()
     {
-        StopCoroutine("ShowingTooltip");
-        StartCoroutine("HidingTooltip");
+        if (!TooltipSystem.moduleTooltipLocked)
+        {
+            StopCoroutine("ShowingTooltip");
+            StartCoroutine("HidingTooltip");
+        }
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        StopCoroutine("HidingTooltip");
-        StartCoroutine("ShowingTooltip");
+        if (!TooltipSystem.moduleTooltipLocked)
+        {
+            StopCoroutine("HidingTooltip");
+            StartCoroutine("ShowingTooltip");
+        }
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        StopCoroutine("ShowingTooltip");
-        StartCoroutine("HidingTooltip");
+        if (!TooltipSystem.moduleTooltipLocked)
+        {
+            StopCoroutine("ShowingTooltip");
+            StartCoroutine("HidingTooltip");
+        }
     }
     public void updateModuleTrigger(GameModule module)
     {
@@ -51,7 +64,6 @@ public class ModuleTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointe
         if (module == null) return;
         icon.overrideSprite = Resources.Load<Sprite>($"ModuleIcons/{module.Icon_name}");
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         //icon = GetComponent<Image>();
