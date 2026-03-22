@@ -1,17 +1,18 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class EntityInfoTooltip : MonoBehaviour
 {
     [SerializeField] TMP_Text header;
     [SerializeField] TMP_Text description;
-    [SerializeField] TMP_Text health;
-    [SerializeField] GameObject shield;
-    [SerializeField] TMP_Text shieldValue;
-    [SerializeField] GameObject energy;
-    [SerializeField] TMP_Text energyValue;
+    [SerializeField] Slider energySlider;
+    [SerializeField] TMP_Text energyDisplay;
+    [SerializeField] Slider healthSlider;
+    [SerializeField] TMP_Text healthDisplay;
+    [SerializeField] Slider shieldSlider;
+    [SerializeField] TMP_Text shieldDisplay;
     [SerializeField] List<ModuleTooltipTrigger> module_icons;
     [SerializeField] List<ModuleTooltipTrigger> status_icons;
 
@@ -29,17 +30,22 @@ public class EntityInfoTooltip : MonoBehaviour
         if (entity == null) return;
         header.text = entity.Name;
         description.text = entity.Description;
-        health.text = $"{entity.currentHealth}/{entity.maxHealth}";
+        healthDisplay.text = $"{entity.currentHealth}/{entity.maxHealth}";
+        healthSlider.maxValue = entity.maxHealth;
+        healthSlider.value = entity.currentHealth;
         module_icons.ForEach(m => m.gameObject.SetActive(false));
         status_icons.ForEach(s => s.gameObject.SetActive(false));
-        shield.SetActive(false);
-        energy.SetActive(false);
+        shieldSlider.gameObject.SetActive(false);
+        energySlider.gameObject.SetActive(false);
         if (entity is Character c)
         {
-            shield.SetActive(true);
-            energy.SetActive(true);
-            shieldValue.text = $"{c.currentShield}"; 
-            energyValue.text = $"{c.currentEnergy}/{c.maxEnergy}";
+            shieldSlider.gameObject.SetActive(true);
+            energySlider.gameObject.SetActive(true);
+            shieldDisplay.text = $"{c.currentShield}";
+            shieldSlider.value = c.currentShield;
+            energyDisplay.text = $"{c.currentEnergy}/{c.maxEnergy}";
+            energySlider.maxValue = c.maxEnergy;
+            energySlider.value = c.currentEnergy;
             for (int i = 0; i < c.Modules.Count; i++)
             {
                 module_icons[i].gameObject.SetActive(true);
@@ -53,7 +59,6 @@ public class EntityInfoTooltip : MonoBehaviour
             }
         }
     }
-
     void OnEnable()
     {
         Vector2 position = Input.mousePosition;

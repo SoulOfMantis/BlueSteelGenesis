@@ -12,12 +12,8 @@ public abstract class Character : Entity
         if (currentShield > 0)
         {
             uint shield_dmg = Math.Min(currentShield, dmg);
-            currentShield -= shield_dmg;
             dmg -= shield_dmg;
-            await processTrigger(TriggerType.OnDamageShielded);
-            Debug.Log($"{shield_dmg} урона поглощено щитом");
-            if (currentShield == 0)
-                await processTrigger(TriggerType.OnShieldBroken);
+            await shieldDamage(shield_dmg);
         }
         if (dmg > 0)
         {
@@ -27,6 +23,15 @@ public abstract class Character : Entity
                 await die();
         }
     }
+    public virtual async Task shieldDamage(uint shield_dmg)
+    {
+        loseShield(shield_dmg);
+        await processTrigger(TriggerType.OnDamageShielded);
+        Debug.Log($"{shield_dmg} урона поглощено щитом");
+        if (currentShield == 0)
+            await processTrigger(TriggerType.OnShieldBroken);
+    }
+    public virtual void loseShield(uint value) => currentShield -= value;
     public override async Task heal(uint hp)
     {
         await base.heal(hp);
@@ -62,7 +67,7 @@ public virtual async Task drainEnergy(uint amount)
     {
         Debug.Log($"turn started");
         myTurn = true;
-        currentShield.Value = 0;
+        loseShield(currentShield.Value);
         await restoreEnergy(maxEnergy);
         await processTrigger(TriggerType.OnTurnStart);
     }
