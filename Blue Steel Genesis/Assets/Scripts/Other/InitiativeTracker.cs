@@ -24,7 +24,8 @@ public class InitiativeTracker : MonoBehaviour
                 ++currentCharacterIndex;
             createCharacterTooltipTrigger(charact);
             updateCharacterTooltips();
-            StartCoroutine(TaskCoro.Make(charact.startBattle()));
+            if (currentCharacterIndex >= 0)
+                StartCoroutine(TaskCoro.Make(charact.startBattle()));
 
             Debug.Log($"Added {charact.name}");
         }
@@ -102,6 +103,8 @@ public class InitiativeTracker : MonoBehaviour
     }
     public void StartBattle()
     {
+        foreach (Character c in characters)
+            StartCoroutine(TaskCoro.Make(c.startBattle()));
         updateCharacterTooltips();
         StartNextTurn();
     }
