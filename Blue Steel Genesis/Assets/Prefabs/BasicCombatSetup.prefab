@@ -283,9 +283,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BlueSteelGenesis.Character_Modules.PlayerCharacter,
-          Assembly-CSharp
+      - m_Target: {fileID: 896703178159881375}
+        m_TargetAssemblyTypeName: PlayerCharacter, BlueSteelGenesis
         m_MethodName: onEndTurnButtonPressed
         m_Mode: 1
         m_Arguments:
