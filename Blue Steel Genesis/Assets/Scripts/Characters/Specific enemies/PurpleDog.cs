@@ -6,9 +6,6 @@ using System.Linq;
 
 public class PurpleDog : Enemy
 {
-    //public TMP_Text healthDisplay;
-
-
     public PurpleDog() : base(5, 3, 60)
     {
         Name = "Purple Dog";
@@ -18,12 +15,6 @@ public class PurpleDog : Enemy
 
         SetPriorityModules();
     }
-
-    void updateHealth()
-    {
-        //healthDisplay.text = $"{currentHealth}/{maxHealth}";
-    }
-
     protected override bool TryGetTargetForZero(out Vector3Int targetPos)
     {
         var possibleTargets = priorityModules[0].getCellsInRange(Position)
@@ -47,7 +38,6 @@ public class PurpleDog : Enemy
     {
         Debug.Log($"Собака получила {dmg} урона!");
         await base.damage(dmg);
-        updateHealth();
         //play taking damage animation
     }
 
@@ -55,13 +45,11 @@ public class PurpleDog : Enemy
     {
         Debug.Log($"Собака восстановила {hp} здоровья!");
         await base.heal(hp);
-        updateHealth();
         //play healing animation
     }
 
     public override async Task startBattle()
     {
         await base.startBattle();
-        updateHealth();
     }
 }
