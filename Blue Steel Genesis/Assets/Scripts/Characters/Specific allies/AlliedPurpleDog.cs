@@ -1,13 +1,10 @@
 ﻿using System.Threading.Tasks;
 using System;
-using TMPro;
 using UnityEngine;
 using System.Linq;
 
 public class AlliedPurpleDog : Ally
 {
-    //public TMP_Text healthDisplay;
-
     public AlliedPurpleDog() : base(5, 3, 61)
     {
         Name = "Allied Purple Dog";
@@ -16,11 +13,6 @@ public class AlliedPurpleDog : Ally
         addModule(new BasicMovement());
 
         SetPriorityModules();
-    }
-
-    void updateHealth()
-    {
-        //healthDisplay.text = $"{currentHealth}/{maxHealth}";
     }
 
     protected override bool TryGetTargetForZero(out Vector3Int targetPos)
@@ -46,7 +38,6 @@ public class AlliedPurpleDog : Ally
     {
         Debug.Log($"Собака получила {dmg} урона!");
         await base.damage(dmg);
-        updateHealth();
         //play taking damage animation
     }
 
@@ -54,13 +45,11 @@ public class AlliedPurpleDog : Ally
     {
         Debug.Log($"Собака восстановила {hp} здоровья!");
         await base.heal(hp);
-        updateHealth();
         //play healing animation
     }
 
     public override async Task startBattle()
     {
         await base.startBattle();
-        updateHealth();
     }
 }
