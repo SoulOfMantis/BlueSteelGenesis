@@ -15,6 +15,8 @@ public class TooltipSystem : MonoBehaviour
     public void Awake()
     {
         instance = this;
+        instance.entityTooltip.gameObject.SetActive(false);
+        instance.moduleTooltip.gameObject.SetActive(false);
     }
 
     public static void Load(Entity c)
@@ -97,16 +99,6 @@ public class TooltipSystem : MonoBehaviour
                 break;
         }
 
-    }
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
     public enum TooltipType
     { 
