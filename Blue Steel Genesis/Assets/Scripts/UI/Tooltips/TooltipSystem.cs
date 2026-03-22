@@ -63,7 +63,6 @@ public class TooltipSystem : MonoBehaviour
                  break;
             case TooltipType.moduleTooltip:
                 instance.moduleTooltip.gameObject.SetActive(true);
-                Delay(TooltipType.entityTooltip);
                 break;
         }
     }
@@ -122,6 +121,7 @@ public class TooltipSystem : MonoBehaviour
                 break;
             case TooltipType.moduleTooltip:
                 instance.moduleTooltip.gameObject.SetActive(false);
+                Unlock(TooltipType.entityTooltip);
                 break;
         }
 

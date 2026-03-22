@@ -12,5 +12,6 @@ public class ModuleTooltipTooltipTrigger : MonoBehaviour, IPointerEnterHandler, 
     {
         TooltipSystem.Unlock(TooltipSystem.TooltipType.moduleTooltip);
         TooltipSystem.ResumeHiding(TooltipSystem.TooltipType.moduleTooltip);
+        TooltipSystem.ResumeHiding(TooltipSystem.TooltipType.entityTooltip);
     }
 }
