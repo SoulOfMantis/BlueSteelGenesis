@@ -23,24 +23,36 @@ public class ModuleTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void OnMouseEnter()
     {
-        StopCoroutine("HidingTooltip");
-        StartCoroutine("ShowingTooltip");
+        if (!TooltipSystem.moduleTooltipLocked)
+        {
+            StopCoroutine("HidingTooltip");
+            StartCoroutine("ShowingTooltip");
+        }
     }
 
     public void OnMouseExit()
     {
-        StopCoroutine("ShowingTooltip");
-        StartCoroutine("HidingTooltip");
+        if (!TooltipSystem.moduleTooltipLocked)
+        {
+            StopCoroutine("ShowingTooltip");
+            StartCoroutine("HidingTooltip");
+        }
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        StopCoroutine("HidingTooltip");
-        StartCoroutine("ShowingTooltip");
+        if (!TooltipSystem.moduleTooltipLocked)
+        {
+            StopCoroutine("HidingTooltip");
+            StartCoroutine("ShowingTooltip");
+        }
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        StopCoroutine("ShowingTooltip");
-        StartCoroutine("HidingTooltip");
+        if (!TooltipSystem.moduleTooltipLocked)
+        {
+            StopCoroutine("ShowingTooltip");
+            StartCoroutine("HidingTooltip");
+        }
     }
     public void updateModuleTrigger(GameModule module)
     {

@@ -6,12 +6,14 @@ public class TooltipSystem : MonoBehaviour
     public EntityInfoTooltip entityTooltip;
     public ModuleInfoTooltip moduleTooltip;
     EntityTooltipTrigger currentEntityTrigger;
+    public static bool entityTooltipLocked = false;
     ModuleTooltipTrigger currentModuleTrigger;
+    public static bool moduleTooltipLocked = false;
     public static readonly float HidingTimeInSeconds = .4f;
     public static readonly float ShowingTimeInSeconds = .2f;
     public static bool IsEntityTooltipActive => instance.entityTooltip.enabled;
     public static bool IsModuleTooltipActive => instance.moduleTooltip.enabled;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     public void Awake()
     {
         instance = this;
@@ -26,6 +28,30 @@ public class TooltipSystem : MonoBehaviour
     public static void Load(GameModule g)
     {
         instance.moduleTooltip.updateInfo(g);
+    }
+    public static void Lock(TooltipType type)
+    {
+        switch (type)
+        {
+            case TooltipType.entityTooltip:
+                entityTooltipLocked = true;
+                break;
+            case TooltipType.moduleTooltip:
+                moduleTooltipLocked = true;
+                break;
+        }
+    }
+    public static void Unlock(TooltipType type)
+    {
+        switch (type)
+        {
+            case TooltipType.entityTooltip:
+                entityTooltipLocked = false;
+                break;
+            case TooltipType.moduleTooltip:
+                moduleTooltipLocked = false;
+                break;
+        }
     }
 
     public static void Show(TooltipType type)

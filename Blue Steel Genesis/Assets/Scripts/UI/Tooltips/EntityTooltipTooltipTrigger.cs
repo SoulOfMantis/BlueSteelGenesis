@@ -9,10 +9,12 @@ public class EntityTooltipTooltipTrigger : MonoBehaviour, IPointerEnterHandler, 
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
+        TooltipSystem.Lock(TooltipSystem.TooltipType.entityTooltip);
         TooltipSystem.Delay(TooltipSystem.TooltipType.entityTooltip);
-    }
+    }    
     public void OnPointerExit(PointerEventData eventData)
     {
+        TooltipSystem.Unlock(TooltipSystem.TooltipType.entityTooltip);
         TooltipSystem.ResumeHiding(TooltipSystem.TooltipType.entityTooltip);
     }
 }

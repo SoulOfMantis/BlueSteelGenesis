@@ -5,18 +5,12 @@ public class ModuleTooltipTooltipTrigger : MonoBehaviour, IPointerEnterHandler, 
 {
     public void OnPointerEnter(PointerEventData eventData)
     {
+        TooltipSystem.Lock(TooltipSystem.TooltipType.moduleTooltip);
         TooltipSystem.Delay(TooltipSystem.TooltipType.moduleTooltip);
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        TooltipSystem.ResumeHiding(TooltipSystem.TooltipType.moduleTooltip);
-    }
-    private void OnMouseEnter()
-    {
-        TooltipSystem.Delay(TooltipSystem.TooltipType.moduleTooltip);
-    }
-    private void OnMouseExit()
-    {
+        TooltipSystem.Unlock(TooltipSystem.TooltipType.moduleTooltip);
         TooltipSystem.ResumeHiding(TooltipSystem.TooltipType.moduleTooltip);
     }
 }

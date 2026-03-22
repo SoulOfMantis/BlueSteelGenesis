@@ -20,9 +20,9 @@ public class EntityTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointe
         }
     }
     IEnumerator HidingTooltip()
-    {    
+    {           
         yield return new WaitForSeconds(TooltipSystem.HidingTimeInSeconds);
-        if (entity != null)  
+        if (entity != null)
         {
             entity.gameObject.GetComponent<SpriteRenderer>().color = baseEntityColor;
             if (entity is Character c)
@@ -32,24 +32,36 @@ public class EntityTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointe
     }
     public void OnMouseEnter()
     {
-        StopCoroutine("HidingTooltip");
-        StartCoroutine("ShowingTooltip");
+        if (!TooltipSystem.entityTooltipLocked)
+        {
+            StopCoroutine("HidingTooltip");
+            StartCoroutine("ShowingTooltip");
+        }
     }
 
     public void OnMouseExit()
     {
-        StopCoroutine("ShowingTooltip");
-        StartCoroutine("HidingTooltip");
+        if (!TooltipSystem.entityTooltipLocked)
+        {
+            StopCoroutine("ShowingTooltip");
+            StartCoroutine("HidingTooltip");
+        }
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        StopCoroutine("HidingTooltip");
-        StartCoroutine("ShowingTooltip");
+        if (!TooltipSystem.entityTooltipLocked)
+        {
+            StopCoroutine("HidingTooltip");
+            StartCoroutine("ShowingTooltip");
+        }
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        StopCoroutine("ShowingTooltip");
-        StartCoroutine("HidingTooltip");
+        if (!TooltipSystem.entityTooltipLocked)
+        {
+            StopCoroutine("ShowingTooltip");
+            StartCoroutine("HidingTooltip");
+        }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
