@@ -10,6 +10,8 @@ namespace Map
         public uint id;
         public float missing_node_rate = .3f;
 
+        // public BiomeInfo() { }
+
         public Dictionary<(uint stage, uint elite_id), Type> elites = new();
         // (stage, boss_id) => boss_variation_count
         public Dictionary<(uint stage, uint boss_id), uint> bosses = new();

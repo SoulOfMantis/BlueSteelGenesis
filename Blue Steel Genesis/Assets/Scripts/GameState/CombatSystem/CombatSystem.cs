@@ -114,8 +114,10 @@ public class CombatSystem
             money_given += (uint)gen.Next((int)min_money_given, (int)max_money_given);
         }
 
-        GameState.Run.Expedition.Player.GiveMaterials((int)materials_given);
-        GameState.Run.Expedition.Player.GiveMoney((int)money_given);
+        GameState.Run.Expedition.Player.GiveMaterials(materials_given);
+        GameState.Run.Expedition.Player.GiveMoney(money_given);
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene("ExpeditionMapTest_usingGameState");
     }
 
     public void Defeat()
@@ -142,21 +144,17 @@ public class CombatSystem
     void VictoryNormal()
     {
         GiveReward(normal_reward_modifier);
-        UnityEngine.SceneManagement.SceneManager.LoadScene("ExpeditionMapTest_usingGameState");
     }
 
     void VictoryElite()
     {
         GiveReward(elite_reward_modifier);
         UnityEngine.Debug.Log($"Reward: {reward.Name}");
-        UnityEngine.SceneManagement.SceneManager.LoadScene("ExpeditionMapTest_usingGameState");
     }
 
     void VictoryBoss()
     {
         GiveReward(boss_reward_modifier);
-        //TODO: Загрузить чёрный рынок
-        GameState.Run.Expedition.startNextStage();
-        // UnityEngine.SceneManagement.SceneManager.LoadScene("ExpeditionMapTest_usingGameState");
+        // GameState.Run.Expedition.startNextStage();
     }
 }   
