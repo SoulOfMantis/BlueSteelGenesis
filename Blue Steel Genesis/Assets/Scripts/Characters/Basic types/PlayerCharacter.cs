@@ -178,39 +178,20 @@ public class PlayerCharacter : Character
         DefeatScreen.SetActive(true);
     }
 
-    // Добавление нового модуля
-    public void AddModule(GameModule module)
+    private void OnEnable()
     {
-        // Предотвращает дупликаты модулей
-        if (modules_.Any(m => m.GetType() == module.GetType())) return;
-
-        modules_.Add(module);
-
+        ModuleManager.ModulesChanged += RefreshModuleUI;
     }
 
-    // Поменять два модуля местами
-    public void SwapModules(int mod1, int mod2)
+    private void OnDisable()
     {
-        if (mod1 < 0 || mod2 < 0 || mod1 > modules_.Count || mod2 > modules_.Count) return;
-
-        (modules_[mod1], modules_[mod2]) = (modules_[mod2], modules_[mod1]);
-
-        RefreshModuleUI();
-    }
-
-    // Удаляет модуль
-    public void RemoveModule(int mod)
-    {
-        if (mod < 0 || mod > modules_.Count) return;
-
-        modules_.RemoveAt(mod);
-        RefreshModuleUI();
+        ModuleManager.ModulesChanged -= RefreshModuleUI;
     }
 
     // Обновляет видимость кнопок
     public void RefreshModuleUI()
     {
-        for (int i = 0;  i < moduleButtons.Length; i++)
+        for (int i = 0; i < moduleButtons.Length; i++)
         {
             var btn = moduleButtons[i];
             if (i < modules_.Count && modules_[i] is ActiveModule)
@@ -226,8 +207,6 @@ public class PlayerCharacter : Character
         }
         updateButtons();
     }
-
-
 
     public override URangeValue currentHealth {
         get => GameState.Run.Expedition.Player.currentHealth;
