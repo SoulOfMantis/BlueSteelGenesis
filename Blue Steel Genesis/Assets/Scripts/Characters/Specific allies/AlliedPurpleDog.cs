@@ -4,15 +4,14 @@ using TMPro;
 using UnityEngine;
 using System.Linq;
 
-public class PurpleDog : Enemy
+public class AlliedPurpleDog : Ally
 {
     //public TMP_Text healthDisplay;
 
-
-    public PurpleDog() : base(5, 3, 60)
+    public AlliedPurpleDog() : base(5, 3, 60)
     {
-        Name = "Purple Dog";
-        Description = "The first enemy. Will move closer to you and bite, if it has an opportunity!";
+        Name = "Allied Purple Dog";
+        Description = "The first ally. Will move closer to your enemies and bite, if it has an opportunity!";
         addModule(new BasicAttack());
         addModule(new BasicMovement());
 

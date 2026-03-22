@@ -35,7 +35,7 @@ public class InitiativeTracker : MonoBehaviour
 
     public bool CheckVictory()
     {
-        return characters.All(c => c is PlayerCharacter);
+        return characters.All(c => c is PlayerCharacter || c is Ally);
     }
 
     public bool CheckDefeat()
