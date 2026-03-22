@@ -7,6 +7,7 @@ public class SceneTracker : MonoBehaviour
 {
     private InitiativeTracker init;
     private List<Entity> entities = new();
+    public IReadOnlyList<Entity> Entities => entities;
     public Tilemap tl;
     public int max_y { get; private set; } = 3;
     public int max_x { get; private set; } = 17;
