@@ -10,11 +10,18 @@ namespace Map
         public uint id;
         public float missing_node_rate = .3f;
 
-        // public BiomeInfo() { }
+        public BiomeInfo(uint id, 
+                        Dictionary<(uint stage, uint elite_id), Type> elites, 
+                        Dictionary<(uint stage, uint boss_id), uint> bosses)
+        {
+            this.id = id;
+            this.elites = elites;
+            this.bosses = bosses;
+        }
 
-        public Dictionary<(uint stage, uint elite_id), Type> elites = new();
+        public Dictionary<(uint stage, uint elite_id), Type> elites;
         // (stage, boss_id) => boss_variation_count
-        public Dictionary<(uint stage, uint boss_id), uint> bosses = new();
+        public Dictionary<(uint stage, uint boss_id), uint> bosses;
     }
 
     public class ExpeditionMap

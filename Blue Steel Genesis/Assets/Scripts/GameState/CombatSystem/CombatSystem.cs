@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class CombatSystem
 {
-    uint biome_id, stage_id;
+    uint stage_id;
     Type reward;
     internal enum EncounterType
     {
@@ -34,15 +34,12 @@ public class CombatSystem
 
 
     const uint default_elite = 0;
-    //const uint elite_variation_count = 3;
 
-    List<uint> boss_list = new List<uint>() { 1, 2, 3 };
     const uint default_boss = 0;
-    const uint boss_variation_count = 3;
 
-    public CombatSystem(uint biome, uint stage, int local_seed)
+    public CombatSystem(BiomeInfo BiomeInfo, uint stage, int local_seed)
     {
-        biome_id = biome;
+        this.BiomeInfo = BiomeInfo;
         stage_id = stage;
         gen = new System.Random(local_seed);
     }
@@ -50,7 +47,7 @@ public class CombatSystem
     string NextNormalEncounter()
     {
         uint enc_id = (uint)gen.Next((int)max_enc_id);
-        return $"b{biome_id}_st{stage_id}_Normal{enc_id}";
+        return $"b{BiomeInfo.id}_st{stage_id}_Normal{enc_id}";
     }
 
     string NextEliteEncounter()
@@ -67,22 +64,24 @@ public class CombatSystem
         else elite_id = default_elite;
         reward = BiomeInfo.elites[(stage_id, elite_id)];
 
-        return $"b{biome_id}_st{stage_id}_Elite{elite_id}"; // Добавить вариации
+        return $"b{BiomeInfo.id}_st{stage_id}_Elite{elite_id}"; // Добавить вариации
     }
 
     string NextBossEncounter()
     {
         uint boss_id;
+        List<uint> boss_list = BiomeInfo.bosses.Keys.Where(x => x.stage == stage_id).Select(y => y.boss_id).ToList();
+
         if (boss_list.Count != 0)
         {
             int boss_ind = gen.Next(boss_list.Count);
             boss_id = boss_list[boss_ind];
-            boss_list.RemoveAt(boss_ind);
+            BiomeInfo.bosses.Remove((stage_id, boss_id));
         }
         else boss_id = default_boss;
 
-        uint boss_variation = (uint)gen.Next((int)boss_variation_count);
-        return $"b{biome_id}_st{stage_id}_Boss{boss_id}_{boss_variation}";
+        uint boss_variation = (uint)gen.Next((int)BiomeInfo.bosses[(stage_id, boss_id)]);
+        return $"b{BiomeInfo.id}_st{stage_id}_Boss{boss_id}_{boss_variation}";
     }
 
     public void TriggerNormalEncounter()
