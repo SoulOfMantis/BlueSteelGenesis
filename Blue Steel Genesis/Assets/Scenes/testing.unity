@@ -2592,14 +2592,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SceneTracker
   tl: {fileID: 173677968}
   tiles:
-  - BaseTile: {fileID: 11400000, guid: b6503ebdd25f0df4885c462f983579ff, type: 2}
-    HighlightedTile: {fileID: 11400000, guid: b4da69aa541548443ad8d7098a20bc49, type: 2}
-  - BaseTile: {fileID: 11400000, guid: 2e3c147cb5e040d44a8ab00f77a518ca, type: 2}
-    HighlightedTile: {fileID: 11400000, guid: 331cde8a204fa904cab0ed38c7c875a9, type: 2}
-  - BaseTile: {fileID: 11400000, guid: 61a7ee2e42beb2c42a880decd289b7f4, type: 2}
-    HighlightedTile: {fileID: 11400000, guid: b13548269394ce341945c654e1a9bc88, type: 2}
-  - BaseTile: {fileID: 11400000, guid: c527d93eeb799da42879f6224f383cf9, type: 2}
-    HighlightedTile: {fileID: 11400000, guid: 96772d0b9399221488d623f0502141b9, type: 2}
+  - BaseTile: {fileID: 11400000, guid: 7c239ae56ce69db4586b770552f8b7b8, type: 2}
+    HighlightedTile: {fileID: 11400000, guid: 65872bf33b998674e80858e0183ef423, type: 2}
+  - BaseTile: {fileID: 11400000, guid: 441b1a854f8aecb41ae2e374efe58902, type: 2}
+    HighlightedTile: {fileID: 11400000, guid: 24ea6bfd8b3af3748989fdb40bb992f1, type: 2}
+  - BaseTile: {fileID: 11400000, guid: 786fabf302cf08440a02ed402080f570, type: 2}
+    HighlightedTile: {fileID: 11400000, guid: 88ebfbcc585735f4ea7e2d9aa8678127, type: 2}
+  - BaseTile: {fileID: 11400000, guid: 434ecbcb1f956664e84209baf17a7aeb, type: 2}
+    HighlightedTile: {fileID: 11400000, guid: 43e1183a8d4ef70428af7cdc4568104e, type: 2}
 --- !u!114 &493101782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4934,6 +4934,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab8af0f28dee768419813bf1d35b3a9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PurpleDog
+  bodySize: 1
 --- !u!1 &1137003727
 GameObject:
   m_ObjectHideFlags: 0
@@ -6482,6 +6483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02672043a8635f44ab92501dd74c873e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlueSteelGenesis.Character_Modules.PlayerCharacter
+  bodySize: 1
   energyDisplay: {fileID: 1877821849}
   healthDisplay: {fileID: 2141466689}
   VictoryScreen: {fileID: 2116830881}
