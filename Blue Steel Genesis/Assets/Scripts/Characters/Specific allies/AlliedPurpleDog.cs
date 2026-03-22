@@ -8,7 +8,7 @@ public class AlliedPurpleDog : Ally
 {
     //public TMP_Text healthDisplay;
 
-    public AlliedPurpleDog() : base(5, 3, 60)
+    public AlliedPurpleDog() : base(5, 3, 61)
     {
         Name = "Allied Purple Dog";
         Description = "The first ally. Will move closer to your enemies and bite, if it has an opportunity!";

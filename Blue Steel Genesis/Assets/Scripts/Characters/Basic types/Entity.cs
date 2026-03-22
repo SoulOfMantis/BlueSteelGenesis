@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -58,4 +59,31 @@ public abstract class Entity : MonoBehaviour
     public static SceneTracker tracker;
 
     private PositionCollection position_;
+
+
+
+    public static bool summon<T>(PositionCollection pos) where T : Entity {
+        if (pos.Any(p => tracker.OutOfBounds(p) || tracker.IsOccupied(p)))
+            return false;
+
+        string folder;
+        if (typeof(T).IsSubclassOf(typeof(Ally)))
+            folder = "Ally";
+        else if (typeof(T).IsSubclassOf(typeof(Enemy)))
+            folder = "Enemy";
+        else
+            return false;
+
+        string prefab_path = $"Prefabs/Entity/{folder}/{typeof(T)}";
+        GameObject entity_prefab = Resources.Load<GameObject>(prefab_path);
+        if (entity_prefab == null)
+            return false;
+
+        GameObject entity_object = Instantiate(entity_prefab);
+        if (entity_object.transform.GetComponentInChildren<T>() is Entity entity)
+            entity.Position = pos;
+        else
+            Debug.LogWarning("Could not set position!");
+        return entity_object != null;
+    }
 }
