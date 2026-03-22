@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -8,13 +10,12 @@ using UnityEngine;
 public class BasicShield : ActiveModule
 {
     private uint shieldGiven;
-    public BasicShield()
+    public BasicShield() : base()
     {
-        changeName("BasicShield");
         shieldGiven = 3;
         energyCost = 1;
         range = 0;
-        Name = "BasicShield";
+        AddConstKeywords(new CommonKeyword(), new DefenseKeyword());
     }
     public override string Description()
     {
@@ -29,6 +30,12 @@ public class BasicShield : ActiveModule
     {
         await user.giveShield(shieldGiven);
         Debug.Log("BSM executed");
+    }
+    public override HashSet<ModuleKeyword> renewableKeywords()
+    {
+        var rk = base.renewableKeywords();
+        rk.Add(new ShieldKeyword(shieldGiven, PossibleTargets.Self));
+        return rk;
     }
 }
 
