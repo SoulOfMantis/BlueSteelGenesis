@@ -21,9 +21,9 @@ public class Expedition
         };
         Player.maxHealth = 10;
         Player.maxEnergy = 3;
-        Player.currentHealth.Value = Player.maxHealth;
         Player.GiveMaterials(3);
         Player.GiveMoney(10);
+        Player.currentHealth.Value = Player.maxHealth;
 
         startNextStage();
     }
@@ -46,7 +46,8 @@ public class Expedition
 
         CombatSystem = new CombatSystem(Biome, (uint)BiomeStage, LocalSeed);
         ModuleGen = new(LocalSeed);
-}
+        Shop = new(Biome.id);
+    }
 
     public void displayMap(ExpeditionMapView view)
     {
@@ -90,5 +91,6 @@ public class Expedition
         return seed;
     }
     public CombatSystem CombatSystem;
+    public Shop Shop;
     public ModuleGenerator ModuleGen;
 }

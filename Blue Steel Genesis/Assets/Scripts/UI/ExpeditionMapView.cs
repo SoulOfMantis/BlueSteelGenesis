@@ -159,6 +159,9 @@ public class ExpeditionMapView : MonoBehaviour
             case Node.BOSS:
                 GameState.Run.Expedition.CombatSystem.TriggerBossEncounter();
                 break;
+            case Node.SHOP:
+                GameState.Run.Expedition.Shop.TriggerShop();
+                break;
         }
     }
 
