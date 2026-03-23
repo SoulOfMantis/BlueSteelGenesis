@@ -157,6 +157,7 @@ public class CombatSystem
 
     void VictoryBoss()
     {
+        GameState.Run.Expedition.Player.GetGoldenTicket();
         GiveReward(boss_reward_modifier);
         // GameState.Run.Expedition.startNextStage();
     }
