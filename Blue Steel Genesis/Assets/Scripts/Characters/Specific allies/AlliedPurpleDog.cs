@@ -1,20 +1,20 @@
 ﻿using System.Threading.Tasks;
 using System;
-using TMPro;
 using UnityEngine;
 using System.Linq;
 
-public class PurpleDog : Enemy
+public class AlliedPurpleDog : Ally
 {
-    public PurpleDog() : base(5, 3, 60)
+    public AlliedPurpleDog() : base(5, 3, 61)
     {
-        Name = "Purple Dog";
-        Description = "The first enemy. Will move closer to you and bite, if it has an opportunity!";
+        Name = "Allied Purple Dog";
+        Description = "The first ally. Will move closer to your enemies and bite, if it has an opportunity!";
         addModule(new BasicAttack());
         addModule(new BasicMovement());
 
         SetPriorityModules();
     }
+
     protected override bool TryGetTargetForZero(out Vector3Int targetPos)
     {
         var possibleTargets = priorityModules[0].getCellsInRange(Position)

@@ -13,8 +13,21 @@ public class InitiativeTracker : MonoBehaviour
     {
         if ((charact != null) && !(characters.Contains(charact)))
         {
+            int insert_index = characters.BinarySearch(charact,
+                Comparer<Character>.Create(
+                    (ch1, ch2) => -ch1.Initiative.CompareTo(ch2.Initiative)));
+            if (insert_index < 0)
+                insert_index = ~insert_index;
+
+            characters.Insert(insert_index, charact);
+            if (insert_index <= currentCharacterIndex)
+                ++currentCharacterIndex;
+            createCharacterTooltipTrigger(charact);
+            updateCharacterTooltips();
+            if (currentCharacterIndex >= 0)
+                StartCoroutine(TaskCoro.Make(charact.startBattle()));
+
             Debug.Log($"Added {charact.name}");
-            characters.Add(charact);
         }
     }
     public void RemoveCharacter(Character charact)
@@ -35,7 +48,7 @@ public class InitiativeTracker : MonoBehaviour
 
     public bool CheckVictory()
     {
-        return characters.All(c => c is PlayerCharacter);
+        return characters.All(c => c is PlayerCharacter || c is Ally);
     }
 
     public bool CheckDefeat()
@@ -83,20 +96,15 @@ public class InitiativeTracker : MonoBehaviour
     {
         characterTooltipsTriggers[c] = new GameObject($"{c.Name}");
         var ctt = characterTooltipsTriggers[c];
-        ctt.AddComponent<CharacterTooltipTrigger>().character = c;
+        ctt.AddComponent<EntityTooltipTrigger>().entity = c;
         ctt.AddComponent<TextMeshProUGUI>().enableAutoSizing = true;
         ctt.transform.SetParent(transform);
         ctt.transform.localScale = new(1, 1);
     }
     public void StartBattle()
     {
-        characters.Sort((c1, c2) => (c2.Initiative.CompareTo(c1.Initiative)));
-        for (int i = 0; i < characters.Count; i++)
-        {
-            var c = characters[i];
-            createCharacterTooltipTrigger(c);
+        foreach (Character c in characters)
             StartCoroutine(TaskCoro.Make(c.startBattle()));
-        }
         updateCharacterTooltips();
         StartNextTurn();
     }
