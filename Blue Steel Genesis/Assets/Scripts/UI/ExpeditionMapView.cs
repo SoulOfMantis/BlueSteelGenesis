@@ -150,9 +150,9 @@ public class ExpeditionMapView : MonoBehaviour
         Debug.Log($"Player selected: {last_selection_?.type} at {last_selection_?.pos}");
         //TODO: implement
         switch (last_selection_?.type) {
-            //case Node.REGULAR_ENEMY:
-            //    GameState.Run.Expedition.CombatSystem.TriggerNormalEncounter();
-            //    break;
+            case Node.REGULAR_ENEMY:
+                GameState.Run.Expedition.CombatSystem.TriggerNormalEncounter();
+                break;
             case Node.ELITE_ENEMY:
                 GameState.Run.Expedition.CombatSystem.TriggerEliteEncounter();
                 break;
