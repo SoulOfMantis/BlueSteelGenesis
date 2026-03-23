@@ -16,6 +16,10 @@ public class BasicMovement : ActiveModule
         Icon_name = "Module_movement";
         AddConstKeywords(new MobilityKeyword(), new CommonKeyword());
     }
+    public BasicMovement(uint speed) : this()
+    {
+        range = speed;
+    }
     public override string Description()
     {
         return $"Move to an unoccupied space within {range} cells.\n" + base.Description();
