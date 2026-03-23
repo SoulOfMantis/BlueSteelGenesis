@@ -1034,7 +1034,7 @@ MonoBehaviour:
   moduleEntryPrefab: {fileID: 610763912501953441, guid: d2121944119e21d4cb658af436f17eaa, type: 3}
   contentParent: {fileID: 1586294988}
   closeButton: {fileID: 165209686}
-  moduleButton: {fileID: 0}
+  moduleButton: {fileID: 1639927740}
 --- !u!1 &1528010977
 GameObject:
   m_ObjectHideFlags: 0
