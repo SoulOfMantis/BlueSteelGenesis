@@ -137,19 +137,18 @@ public class Expedition
         }
     }
 
-    
+
     private void StartEvent()
     {
         if (isInEvent) return;
         isInEvent = true;
 
-
-        int eventSeed = LocalSeed + BiomeStage * 100 + (int)Biome.id; 
+        int eventSeed = LocalSeed + BiomeStage * 100 + (int)Biome.id;
         currentEvent = EventManager.GetRandomEventForBiome(Biome.id, eventSeed);
 
+        GlobalEventStorage.CurrentEvent = currentEvent;
 
-
-        UnityEngine.SceneManagement.SceneManager.LoadScene(currentEvent.sceneName);
+        UnityEngine.SceneManagement.SceneManager.LoadScene("EventScene");
     }
 
 
@@ -174,6 +173,7 @@ public class Expedition
     // Методы для обработки результатов (вызываются из других сцен)
     public void HandleEventOutcome(EventOutcome outcome)
     {
+        isInEvent = false;
         switch (outcome)
         {
             case EventOutcome.Exit:
