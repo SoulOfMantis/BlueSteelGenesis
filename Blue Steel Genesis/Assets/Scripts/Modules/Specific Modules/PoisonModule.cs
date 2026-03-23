@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 /// <summary>
-/// Пассивный модуль яда  - наносит урон при начале хода
+/// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ  - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 /// </summary>
 public class PoisonModule : NegativeStatusModule
 {
