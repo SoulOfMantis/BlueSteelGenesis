@@ -59,10 +59,14 @@ public class CombatSystem
         {
             int elite_ind = gen.Next(elite_list.Count);
             elite_id = elite_list[elite_ind];
+            reward = BiomeInfo.elites[(stage_id, elite_id)];
             BiomeInfo.elites.Remove((stage_id, elite_id));
         }
-        else elite_id = default_elite;
-        reward = BiomeInfo.elites[(stage_id, elite_id)];
+        else
+        {
+            elite_id = default_elite;
+            reward = GameState.Run.Expedition.ModuleGen.GetNextCommonModule().GetType();
+        }
 
         return $"b{BiomeInfo.id}_st{stage_id}_Elite{elite_id}"; // Добавить вариации
     }

@@ -44,7 +44,7 @@ public class Expedition
         );
         map_progress_ = new(Map);
 
-        CombatSystem = new CombatSystem(Biome.id, (uint)BiomeStage, LocalSeed);
+        CombatSystem = new CombatSystem(Biome, (uint)BiomeStage, LocalSeed);
         ModuleGen = new(LocalSeed);
 }
 
