@@ -38,4 +38,10 @@ public static class ModuleManager
         EditableModules.RemoveAt((int)idx);
         ModulesChanged?.Invoke();
     }
+    public static void SellModule(uint idx)
+    {
+        if (idx < MinEditableModuleIndex || idx > MaxEditableModuleIndex) return;
+        GameState.Run.Expedition.Shop.Sell(EditableModules[(int)idx]);
+        ModulesChanged?.Invoke();
+    }
 }
