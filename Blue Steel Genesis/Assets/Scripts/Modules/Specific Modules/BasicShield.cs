@@ -1,11 +1,10 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
 
 /// <summary>
-/// Базовый модуль щита (BSM сокращение)
+/// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ (BSM пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 /// </summary>
 public class BasicShield : ActiveModule
 {

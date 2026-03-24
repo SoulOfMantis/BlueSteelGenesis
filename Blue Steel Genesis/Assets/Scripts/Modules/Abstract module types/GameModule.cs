@@ -4,13 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 /// <summary>
-/// класс модуля
+/// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 /// </summary>
 public abstract class GameModule
 {
     public string Name { get; protected set; }
     private string icon_name = "default_default.png";
     public string Icon_name { get => icon_name; protected set => icon_name = value; }
+    public uint price;
+    public uint range = 0;
+
     public virtual string Description()
     {
         string res = "";
@@ -23,7 +26,6 @@ public abstract class GameModule
         }
         return res;
     }
-    public uint range = 0;
     public GameModule()
     {
         changeName(GetType().Name);
