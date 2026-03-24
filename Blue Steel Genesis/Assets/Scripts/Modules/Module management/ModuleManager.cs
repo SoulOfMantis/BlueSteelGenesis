@@ -1,40 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-internal class ModuleManager
+public static class ModuleManager
 {
     public static event Action ModulesChanged;
-
+    public static uint MinEditableModuleIndex => Math.Min((uint)Modules.Count - 1, 1);
+    public static uint MaxEditableModuleIndex => Math.Min((uint)Modules.Count - 1, 4);
     public static IReadOnlyList<GameModule> Modules =>
         GameState.Run.Expedition.Player.modules.AsReadOnly();
 
     private static List<GameModule> EditableModules =>
         GameState.Run.Expedition.Player.modules;
 
-    public static void SwapModules(int idx1, int idx2)
+    public static void SwapModules(uint idx1, uint idx2)
     {
         var modules = EditableModules;
-        if (idx1 < 0 || idx2 < 0 || idx1 >= modules.Count || idx2 >= modules.Count)
+        if (idx1 < MinEditableModuleIndex || idx2 < idx1 || idx2 > MaxEditableModuleIndex)
             return;
-        (modules[idx1], modules[idx2]) = (modules[idx2], modules[idx1]);
+        (modules[(int)idx1], modules[(int)idx2]) = (modules[(int)idx2], modules[(int)idx1]);
         ModulesChanged?.Invoke();
     }
 
-    public static void MoveModuleUp(int idx) => SwapModules(idx, idx - 1);
-    public static void MoveModuleDown(int idx) => SwapModules(idx, idx + 1);
+    public static void MoveModuleUp(uint idx) => SwapModules(idx - 1, idx);
+    public static void MoveModuleDown(uint idx) => SwapModules(idx, idx + 1);
 
     public static void AddModule(GameModule module)
     {
-        if (module == null) return;
+        if (module == null || MaxEditableModuleIndex >= 4) return;
         EditableModules.Add(module);
         ModulesChanged?.Invoke();
     }
 
-    public static void RemoveModule(int idx)
+    public static void RemoveModule(uint idx)
     {
-        if (idx < 0 || idx >= EditableModules.Count) return;
-        EditableModules.RemoveAt(idx);
+        if (idx < MinEditableModuleIndex || idx > MaxEditableModuleIndex) return;
+        EditableModules.RemoveAt((int)idx);
         ModulesChanged?.Invoke();
     }
 }

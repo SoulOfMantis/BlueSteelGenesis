@@ -66,7 +66,7 @@ public class ModuleTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointe
     }
     void Awake()
     {
-        //icon = GetComponent<Image>();
+        if (icon == null) icon = GetComponent<Image>();
     }
 
     // Update is called once per frame
