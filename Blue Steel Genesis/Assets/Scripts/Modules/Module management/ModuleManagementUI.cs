@@ -15,6 +15,7 @@ public class ModuleManagementUI : MonoBehaviour
             GameState.startGameRun(12345);
             GameState.Run.startExpedition(1);
         }
+        gameObject.SetActive(false);
     }
 
     private void OnEnable()
