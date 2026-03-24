@@ -24,11 +24,12 @@ public static class ModuleManager
     public static void MoveModuleUp(uint idx) => SwapModules(idx - 1, idx);
     public static void MoveModuleDown(uint idx) => SwapModules(idx, idx + 1);
 
-    public static void AddModule(GameModule module)
+    public static bool AddModule(GameModule module)
     {
-        if (module == null || MaxEditableModuleIndex >= 4) return;
+        if (module == null || MaxEditableModuleIndex >= 4) return false;
         EditableModules.Add(module);
         ModulesChanged?.Invoke();
+        return true;
     }
 
     public static void RemoveModule(uint idx)

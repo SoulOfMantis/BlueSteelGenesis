@@ -26,9 +26,11 @@ class ModuleEntry : MonoBehaviour
         upButton.onClick.AddListener(() => manager.MoveModuleUp(currentIdx));
         downButton.onClick.AddListener(() => manager.MoveModuleDown(currentIdx));
         removeButton.onClick.AddListener(() => manager.RemoveModule(currentIdx));
+
         upButton.gameObject.SetActive(idx <= ModuleManager.MaxEditableModuleIndex && idx > ModuleManager.MinEditableModuleIndex);
         downButton.gameObject.SetActive(idx < ModuleManager.MaxEditableModuleIndex && idx >= ModuleManager.MinEditableModuleIndex);
         removeButton.gameObject.SetActive(idx <= ModuleManager.MaxEditableModuleIndex && idx >= ModuleManager.MinEditableModuleIndex);
+
         trigger.updateModuleTrigger(module);
     }
 }
