@@ -6,22 +6,31 @@ using UnityEngine.Tilemaps;
 public class SceneTracker : MonoBehaviour
 {
     private InitiativeTracker init;
-    private List<Obstacle> obstacles = new();
+    private List<Entity> entities = new();
+    public IReadOnlyList<Entity> Entities => entities;
     public Tilemap tl;
     public int max_y { get; private set; } = 3;
     public int max_x { get; private set; } = 17;
     private float CameraDistance = 10;
     public List<HighlightableTile> tiles;
-    private List<Vector3Int> map = new List<Vector3Int>();
 
-    public Character FindCharacterAtPosition(Vector3Int pos)
+    public void HighlightCharacterInInitiative(Character c, Color color)
     {
-        return init.characters.Find(c => c.Position == pos);
+        init.HighlightCharacterInInitiative(c, color);
     }
-    public Obstacle FindObstacleAtPosition(Vector3Int pos)
+    public void HighlightCharacterInInitiative(Character c) => HighlightCharacterInInitiative(c, Color.yellow);
+    public void UnhighlightCharacterInInitiative(Character c)
     {
-        return obstacles.Find(o => o.Position == pos);
+        init.UnhighlightCharacterInInitiative(c);
     }
+
+    public Entity FindEntityAtPosition(Vector3Int pos) =>
+        entities.Find(e => e.Position.Contains(pos));
+    public Character FindCharacterAtPosition(Vector3Int pos) =>
+        FindEntityAtPosition(pos) as Character;
+    public Obstacle FindObstacleAtPosition(Vector3Int pos) =>
+        FindEntityAtPosition(pos) as Obstacle;
+
     public bool IsOccupiedByCharacter(Vector3Int pos)
     {
         return (FindCharacterAtPosition(pos) != null);
@@ -34,7 +43,7 @@ public class SceneTracker : MonoBehaviour
 
     public bool IsOccupied(Vector3Int pos)
     {
-        return IsOccupiedByCharacter(pos) || IsOccupiedByObstacle(pos);
+        return FindEntityAtPosition(pos) != null;
     }
 
     public Vector3 CellToWorld(Vector3Int pos)
@@ -69,48 +78,52 @@ public class SceneTracker : MonoBehaviour
             .Select(v => v + pos)
             .Where(p => !OutOfBounds(p));
     }
-    public void AddCharacter(Character charact)
+    public void AddCharacter(Character character)
     {
-        init.AddCharacter(charact);
+        entities.Add(character);
+        init.AddCharacter(character);
     }
     public void RemoveCharacter(Character character)
     {
+        entities.Remove(character);
         init.RemoveCharacter(character);
     }
+    public void AddObstacle(Obstacle obstacle) =>
+        entities.Add(obstacle);
+    public void RemoveObstacle(Obstacle obstacle) =>
+        entities.Remove(obstacle);
 
     //                                         
-    public PlayerCharacter getPlayer()
-    {
-        return init.characters.Find(c => c is PlayerCharacter) as PlayerCharacter;
-    }
+    public PlayerCharacter getPlayer() =>
+        init.getPlayer();
+    public bool IsPlayerAlive() =>
+        !init.CheckDefeat();
 
     // Highlights given cells
     public void HighlightCells(List<Vector3Int> cells)
     {
         foreach (var cell in cells)
-        {
-            var m = tiles.FindIndex(t => tl.GetTile(cell) == t.BaseTile);
-            if (m >= 0)
-            {
-                tl.SetTile(cell, tiles[m].HighlightedTile);
-            }
-        }
+            HighlightCell(cell);
+    }
+    public void HighlightCell(Vector3Int cell)
+    {
+        var m = tiles.FindIndex(t => tl.GetTile(cell) == t.BaseTile);
+        if (m >= 0)
+            tl.SetTile(cell, tiles[m].HighlightedTile);
     }
 
     // Clears the highlighted cells
     public void ClearHighlights(List<Vector3Int> cells)
     {
         foreach (var cell in cells)
-        {
-            var n = tiles.FindIndex(t => tl.GetTile(cell) == t.HighlightedTile);
-            if (n >= 0)
-            {
-                tl.SetTile(cell, tiles[n].BaseTile);
-            }
-        }
-
+            UnhighlightCell(cell);
     }
-
+    public void UnhighlightCell(Vector3Int cell)
+    {
+        var n = tiles.FindIndex(t => tl.GetTile(cell) == t.HighlightedTile);
+        if (n >= 0)
+            tl.SetTile(cell, tiles[n].BaseTile);
+    }
     public void NextTurn()
     {
         init.StartNextTurn();
@@ -120,11 +133,6 @@ public class SceneTracker : MonoBehaviour
     void Start()
     {
         init = gameObject.AddComponent(typeof(InitiativeTracker)) as InitiativeTracker;
-        Character.tracker = this;
-    }
-
-    void Update()
-    {
-
+        Entity.tracker = this;
     }
 }

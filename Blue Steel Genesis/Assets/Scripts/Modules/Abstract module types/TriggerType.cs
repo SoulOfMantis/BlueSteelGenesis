@@ -14,5 +14,6 @@ public enum TriggerType
     OnStrike,
     OnApply,
     OnEnergyRestore,
-    OnEnergyDrain
+    OnEnergyDrain,
+    Never
 }

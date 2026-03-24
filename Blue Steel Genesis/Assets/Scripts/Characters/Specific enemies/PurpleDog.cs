@@ -1,130 +1,55 @@
+п»їusing System.Threading.Tasks;
 using System;
-using System.Linq;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using System.Linq;
 
 public class PurpleDog : Enemy
 {
-    public TMP_Text healthDisplay;
-
-    // Purple Dog enemy constructor
     public PurpleDog() : base(5, 3, 60)
     {
+        Name = "Purple Dog";
+        Description = "The first enemy. Will move closer to you and bite, if it has an opportunity!";
         addModule(new BasicAttack());
         addModule(new BasicMovement());
+
+        SetPriorityModules();
     }
-
-    void updateHealth()
+    protected override bool TryGetTargetForZero(out Vector3Int targetPos)
     {
-        healthDisplay.text = $"{currentHealth}/{maxHealth}";
+        var possibleTargets = priorityModules[0].getCellsInRange(Position)
+            .Where(p => getEnemies().SelectMany(e => e.Position).Contains(p));
+        targetPos = possibleTargets.FirstOrDefault();
+        return possibleTargets.Count() != 0;
     }
-
-    void Start()
+    protected override bool TryGetTargetForOne(out Vector3Int targetPos)
     {
-        if (tracker != null) tracker.AddCharacter(this);
-        Debug.Log("Dog added");
+        targetPos = Position.LeftBottom;
+        var moveRange = priorityModules[1].getCellsInRange(Position).Concat(Position).ToHashSet();
+        var path = Navigation.Dijkstra.getPath(Position, getEnemies().SelectMany(e => e.Position.NeighborPositions()),
+            p => !tracker.IsOccupied(p) && !tracker.OutOfBounds(p)) ?? new();
+        foreach (var move in path)
+            if (moveRange.Contains(targetPos + move))
+                targetPos += move;
+            else break;
+        return targetPos != Position.LeftBottom;
     }
-
-
-    // Begins PDs turn
-    public override async Task startTurn()
+    public override async Task damage(uint dmg)
     {
-        await base.startTurn();
-
-        if (currentHealth > 0)
-            await MainLogic();
-
-        await endTurn();
-    }
-
-
-
-    // Check if PD can attack player
-    private bool CanAttack(Vector3Int playerPosition)
-    {
-
-        BasicAttack attack = getModule<BasicAttack>(0);
-        // Available cells
-        var attackRange = attack.getCellsInRange(Position);
-        return attackRange.Contains(playerPosition);
-    }
-
-    // Finds best position to get to player
-    private Vector3Int FindBestPosition(Vector3Int playerPosition)
-    {
-
-        BasicMovement move = getModule<BasicMovement>(1);
-
-        // Available cells
-        var moveRange = move.getCellsInRange(Position);
-
-        int distance = Math.Abs(playerPosition.x - Position.x) + Math.Abs(playerPosition.y - Position.y);
-        Vector3Int bestPosition = Position;
-
-        if (distance == 1)
-            return bestPosition;
-
-        // Finding closest available cell
-        foreach (var cell in moveRange)
-        {
-            int temp = Math.Abs(playerPosition.x - cell.x) + Math.Abs(playerPosition.y - cell.y);
-            if (temp < distance && !tracker.IsOccupied(cell) && !tracker.OutOfBounds(cell))
-            {
-                distance = temp;
-                bestPosition = cell;
-            }
-        }
-
-        return bestPosition;
-    }
-
-    // Function of main logic
-    private async Task MainLogic()
-    {
-        // Object of player
-        PlayerCharacter player = tracker.getPlayer();
-
-        // Get modules
-
-        while (modules_.Any(m => hasEnoughEnergy((ActiveModule)m)))
-        {
-            //  Try attacking player
-            if (CanAttack(player.Position) && await useActiveModule(0, player.Position))
-                Debug.Log("PD attacks the player");
-
-            // Get closer to player
-            else if (await useActiveModule(1, FindBestPosition(player.Position)))
-                Debug.Log("PD moves closer to player");
-
-            // No available modules
-            else
-            {
-                Debug.Log("Ran out of energy");
-                break;
-            }
-        }
-    }
-
-    public override async Task damage(int dmg)
-    {
-        Debug.Log($"Собака получила {dmg} урона!");
+        Debug.Log($"РЎРѕР±Р°РєР° РїРѕР»СѓС‡РёР»Р° {dmg} СѓСЂРѕРЅР°!");
         await base.damage(dmg);
-        updateHealth();
         //play taking damage animation
     }
 
-    public override async Task heal(int hp)
+    public override async Task heal(uint hp)
     {
-        Debug.Log($"Собака восстановила {hp} здоровья!");
+        Debug.Log($"РЎРѕР±Р°РєР° РІРѕСЃСЃС‚Р°РЅРѕРІРёР»Р° {hp} Р·РґРѕСЂРѕРІСЊСЏ!");
         await base.heal(hp);
-        updateHealth();
         //play healing animation
     }
+
     public override async Task startBattle()
     {
         await base.startBattle();
-        updateHealth();
     }
-
 }

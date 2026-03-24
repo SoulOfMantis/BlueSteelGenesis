@@ -1,20 +1,30 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
 /// <summary>
-/// Пассивный модуль яда  - наносит урон при начале хода
+/// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ  - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 /// </summary>
-public class PoisonModule : StatusModule
+public class PoisonModule : NegativeStatusModule
 {
-    private int poisonDamage;
-
-    public PoisonModule(int damage = 1, int duration = 3)
+    protected uint poisonDamage;
+    public PoisonModule() : base()
     {
         triggerType = TriggerType.OnTurnStart;
-        poisonDamage = damage;
-        turnsLeft = duration;
+        poisonDamage = 1;
+        turnsLeft.Value = 3;
+        AddConstKeyword(new PoisonKeyword());
+        Icon_name = "Module_poison";
     }
-
+    public PoisonModule(uint damage, uint duration) :this()
+    {
+        poisonDamage = damage;
+        turnsLeft.Value = duration;
+    }
+    public override string Description()
+    {
+        return $"Target takes {poisonDamage} damage at the start of the turn for another {turnsLeft} turns." + base.Description();
+    }
     public override async Task Effect(Character user, Vector3Int pos)
     {
         await user.damage(poisonDamage);
