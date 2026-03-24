@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using System;
 using UnityEngine.UI;
 
 public class PlayerCharacter : Character
@@ -190,43 +191,13 @@ public class PlayerCharacter : Character
         updateButtons();
         await endBattle();
         VictoryScreen.SetActive(true);
+        GameState.Run.Expedition.CombatSystem.Victory();
     }
     public void Defeat()
     {
         updateButtons();
         DefeatScreen.SetActive(true);
     }
-
-    private void OnEnable()
-    {
-        ModuleManager.ModulesChanged += RefreshModuleUI;
-    }
-
-    private void OnDisable()
-    {
-        ModuleManager.ModulesChanged -= RefreshModuleUI;
-    }
-
-    // Обновляет видимость кнопок
-    public void RefreshModuleUI()
-    {
-        for (int i = 0; i < moduleButtons.Length; i++)
-        {
-            var btn = moduleButtons[i];
-            if (i < modules_.Count && modules_[i] is ActiveModule)
-            {
-                btn.gameObject.SetActive(true);
-                btn.connectedModuleIndex = i;
-                btn.RefreshDisplay();
-            }
-            else
-            {
-                btn.gameObject.SetActive(false);
-            }
-        }
-        updateButtons();
-    }
-
     public override URangeValue currentHealth {
         get => GameState.Run.Expedition.Player.currentHealth;
         protected set => GameState.Run.Expedition.Player.currentHealth = value;
