@@ -24,7 +24,6 @@ public class SwarmMandibles : ActiveModule
 
     public override async Task Effect(Character user, Vector3Int pos) {
         for (uint i = 0; i < attackCount; ++i)
-            if (Entity.tracker.FindCharacterAtPosition(pos) is Character target)
-                await target.damage(biteDamage);
+            await user.strike(pos, biteDamage);
     }
 }
