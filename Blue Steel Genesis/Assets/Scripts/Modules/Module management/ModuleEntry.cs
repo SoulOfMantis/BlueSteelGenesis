@@ -13,7 +13,7 @@ class ModuleEntry : MonoBehaviour
     private uint currentIdx;
     private ModuleManagementUI manager;
 
-    public void Setup(GameModule module, uint idx, ModuleManagementUI mgr)
+    public void Setup(GameModule module, uint idx, ModuleManagementUI mgr, bool IsShop = false)
     {
         currentIdx = idx;
         manager = mgr;
@@ -25,7 +25,14 @@ class ModuleEntry : MonoBehaviour
 
         upButton.onClick.AddListener(() => manager.MoveModuleUp(currentIdx));
         downButton.onClick.AddListener(() => manager.MoveModuleDown(currentIdx));
-        removeButton.onClick.AddListener(() => manager.RemoveModule(currentIdx));
+        if (IsShop)
+        {
+            removeButton.image.color = Color.gold;
+            (removeButton.GetComponentInChildren(typeof(TMP_Text)) as TMP_Text).text = "Sell";
+            removeButton.onClick.AddListener(() => manager.SellModule(currentIdx));
+        }
+        else
+            removeButton.onClick.AddListener(() => manager.RemoveModule(currentIdx));
 
         upButton.gameObject.SetActive(idx <= ModuleManager.MaxEditableModuleIndex && idx > ModuleManager.MinEditableModuleIndex);
         downButton.gameObject.SetActive(idx < ModuleManager.MaxEditableModuleIndex && idx >= ModuleManager.MinEditableModuleIndex);
