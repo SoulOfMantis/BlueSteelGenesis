@@ -85,6 +85,8 @@ public abstract class NPC : Character
     {
         if (myTurn)
             await endTurn();
+        if (visualHandler != null)
+            await visualHandler.PlayDeathAnimation();
         Debug.Log($"{name} умер");
         tracker.RemoveCharacter(this);
         Destroy(gameObject);

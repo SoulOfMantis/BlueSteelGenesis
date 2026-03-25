@@ -177,6 +177,8 @@ public class PlayerCharacter : Character
     override protected async Task die()
     {
         Debug.Log("����� ����!");
+        if (visualHandler != null)
+            await visualHandler.PlayDeathAnimation();
         tracker.RemoveCharacter(this);
         Defeat();
         //TODO: player loss

@@ -10,9 +10,6 @@ public abstract class Character : Entity
 
     public override async Task damage(uint dmg)
     {
-        if (visualHandler != null)
-            await visualHandler.PlayHurtAnimation(dmg);
-
         dmg = Math.Max(dmg, 1);
         if (visualHandler != null)
             await visualHandler.PlayHurtAnimation(dmg);
@@ -43,6 +40,8 @@ public abstract class Character : Entity
     public override async Task heal(uint hp)
     {
         await base.heal(hp);
+        if (visualHandler != null)
+            await visualHandler.PlayHealingAnimation(hp);
         await processTrigger(TriggerType.OnHeal);
     }
 
@@ -105,7 +104,11 @@ public virtual async Task drainEnergy(uint amount)
             new_pos.Except(Position).Any(p => tracker.OutOfBounds(p)) ||
             new_pos.Except(Position).Any(p => tracker.IsOccupied(p)))
             return;
+
+        
         Position = new_pos;
+        if (visualHandler != null)
+            await visualHandler.PlayWalkAnimation(dir);
     }
 
     public Task strike(int x, int y, int z, uint dmg) => strike(new Vector3Int(x, y, z), dmg);

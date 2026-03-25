@@ -41,7 +41,7 @@ public class CharacterVisualHandler : VisualHandlerBase
     public async Task PlayAttackAnimation(Vector3Int target)
     {
         PlayAnimation(attackAnimation.animationName);
-        LookAt(target);
+        //LookAt(target);
 
         await Task.Delay((int)(attackAnimation.transitionDuration * 1000));
     }
@@ -72,18 +72,18 @@ public class CharacterVisualHandler : VisualHandlerBase
     }
 
     // Заставить персонажа смотреть в направление клетки
-    private void LookAt(Vector3Int target)
-    {
-        Vector3 direction = (Character.tracker.CellToWorld(target) - transform.position).normalized;
+    //private void LookAt(Vector3Int target)
+    //{
+    //    Vector3 direction = (Character.tracker.CellToWorld(target) - transform.position).normalized;
 
-        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
-        {
-            if (direction.x > 0)
-                spriteRenderer.flipX = false;
-            else 
-                spriteRenderer.flipX = true;
-        }
-    }
+    //    if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+    //    {
+    //        if (direction.x > 0)
+    //            spriteRenderer.flipX = false;
+    //        else 
+    //            spriteRenderer.flipX = true;
+    //    }
+    //}
 
 
     // Частично работает, пока закомментировано
