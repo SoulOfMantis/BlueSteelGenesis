@@ -24,6 +24,14 @@ public class PoisonKeyword : VisibleKeyword
         ChangeDescription("Some creatures may have resistance or immunity to this.");
     }
 }
+public class FlightKeyword : VisibleKeyword
+{
+    public FlightKeyword()
+    {
+        ChangeName("Flight");
+        ChangeDescription("Allows flying over obstacles.");
+    }
+}
 public enum PossibleTargets
 {
     Self,

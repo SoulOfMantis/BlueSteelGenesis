@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -8,10 +7,10 @@ public class FlightMovement : ActiveModule
     public FlightMovement(uint range = 3) {
         this.range = range;
         energyCost = 1;
-        AddConstKeywords(new MobilityKeyword());
+        AddConstKeywords(new MobilityKeyword(), new FlightKeyword());
     }
     public override string Description() {
-        return $"Fly to an unoccupied space within {range} cells.\n" + base.Description();
+        return $"Fly to an unoccupied space within {range} cells.\nAllows flying over obstacles.\n" + base.Description();
     }
 
     public override async Task Effect(Character user, Vector3Int pos) {
