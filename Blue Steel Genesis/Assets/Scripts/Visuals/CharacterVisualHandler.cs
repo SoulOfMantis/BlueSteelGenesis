@@ -46,7 +46,7 @@ public class CharacterVisualHandler : VisualHandlerBase
         await Task.Delay((int)(attackAnimation.transitionDuration * 1000));
     }
 
-    public async Task PlayHurtAnimation(int amount)
+    public async Task PlayHurtAnimation(uint amount)
     {
         PlayAnimation(hurtAnimation.animationName);
 
@@ -63,7 +63,7 @@ public class CharacterVisualHandler : VisualHandlerBase
         await Task.Delay((int)(deathAnimation.transitionDuration * 1000));
     }
 
-    public async Task PlayHealingAnimation(int amount)
+    public async Task PlayHealingAnimation(uint amount)
     {
         PlayAnimation(healEffect.animationName);
 

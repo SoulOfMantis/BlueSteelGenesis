@@ -6,6 +6,8 @@ using UnityEngine;
 
 public abstract class Character : Entity
 {
+    [SerializeField] protected CharacterVisualHandler visualHandler;
+
     public override async Task damage(uint dmg)
     {
         if (visualHandler != null)
