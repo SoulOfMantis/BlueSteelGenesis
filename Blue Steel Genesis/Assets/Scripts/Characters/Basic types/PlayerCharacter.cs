@@ -3,12 +3,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using System;
+using UnityEngine.UI;
 
 public class PlayerCharacter : Character
 {
     public static List<ModuleButton> activeModuleButtons = new();
-    public TMP_Text energyDisplay;
-    public TMP_Text healthDisplay;
+    [SerializeField] Slider energySlider;
+    [SerializeField] TMP_Text energyDisplay;
+    [SerializeField] Slider healthSlider;
+    [SerializeField] TMP_Text healthDisplay;
+    [SerializeField] Slider shieldSlider;
+    [SerializeField] TMP_Text shieldDisplay;
     public GameObject VictoryScreen;
     public GameObject DefeatScreen;
     PlayerCharacter()
@@ -18,15 +24,14 @@ public class PlayerCharacter : Character
         Initiative = 10;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected override void Init()
     {
-        if (tracker != null)
-        {
-            tracker.AddCharacter(this);
-            Debug.Log("Player added");
-        }
+        base.Init();
+        currentEnergy.Max = GameState.Run.Expedition.Player.maxEnergy;
         VictoryScreen.SetActive(false);
         DefeatScreen.SetActive(false);
+        energySlider.maxValue = maxEnergy;
+        healthSlider.maxValue = maxHealth;
     }
 
     // Update is called once per frame
@@ -39,14 +44,19 @@ public class PlayerCharacter : Character
 
     void updateHealth()
     {
+        healthSlider.value = currentHealth;
         healthDisplay.text = $"{currentHealth}/{maxHealth}";
     }
 
     void updateEnergy()
     {
+        energySlider.value = currentEnergy;
         energyDisplay.text = $"{currentEnergy}/{maxEnergy}";
     }
-
+    void updateShields()
+    {
+        shieldSlider.value = currentShield;
+    }
     void updateButtons()
     {
         activeModuleButtons.ForEach(mb => mb.buttonInteractableManaging());
@@ -92,11 +102,22 @@ public class PlayerCharacter : Character
         return myTurn && hasEnoughEnergy(getModule<ActiveModule>(module_index));
     }
 
+    public override async Task giveShield(uint amount)
+    {
+        await base.giveShield(amount);
+        updateShields();
+    }
+    public override void loseShield(uint value)
+    {
+        base.loseShield(value);
+        updateShields();
+    }
     public override async Task startBattle()
     {
         await base.startBattle();
         updateHealth();
         updateEnergy();
+        updateShields();
         updateButtons();
         //play starting battle animation
     }
@@ -122,30 +143,30 @@ public class PlayerCharacter : Character
     public void onEndTurnButtonPressed() =>
         StartCoroutine(TaskCoro.Make(endTurn()));
 
-    public override async Task damage(int dmg)
+    public override async Task damage(uint dmg)
     {
-        Debug.Log($"Игрок получил {dmg} урона!");
+        Debug.Log($"пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ {dmg} пїЅпїЅпїЅпїЅпїЅ!");
         await base.damage(dmg);
         updateHealth();
         //play taking damage animation
     }
 
-    public override async Task heal(int hp)
+    public override async Task heal(uint hp)
     {
-        Debug.Log($"Игрок восстановил {hp} здоровья!");
+        Debug.Log($"пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ {hp} пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!");
         await base.heal(hp);
         updateHealth();
         //play healing animation
     }
 
-    public override async Task drainEnergy(int amount)
+    public override async Task drainEnergy(uint amount)
     {
         await base.drainEnergy(amount);
         updateButtons();
         updateEnergy();
         //play losing energy animation
     }
-    public override async Task restoreEnergy(int amount)
+    public override async Task restoreEnergy(uint amount)
     {
         await base.restoreEnergy(amount);
         updateButtons();
@@ -155,7 +176,7 @@ public class PlayerCharacter : Character
 
     override protected async Task die()
     {
-        Debug.Log("Игрок умер!");
+        Debug.Log("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ!");
         tracker.RemoveCharacter(this);
         Defeat();
         //TODO: player loss
@@ -167,6 +188,7 @@ public class PlayerCharacter : Character
         updateButtons();
         await endBattle();
         VictoryScreen.SetActive(true);
+        GameState.Run.Expedition.CombatSystem.Victory();
     }
     public void Defeat()
     {
@@ -175,18 +197,20 @@ public class PlayerCharacter : Character
     }
 
 
-
-    public override int currentHealth {
+    public override URangeValue currentHealth {
         get => GameState.Run.Expedition.Player.currentHealth;
         protected set => GameState.Run.Expedition.Player.currentHealth = value;
     }
-    public override int maxHealth {
+    public override uint maxHealth {
         get => GameState.Run.Expedition.Player.maxHealth;
         protected set => GameState.Run.Expedition.Player.maxHealth = value;
     }
-    public override int maxEnergy {
+    public override uint maxEnergy {
         get => GameState.Run.Expedition.Player.maxEnergy;
-        protected set => GameState.Run.Expedition.Player.maxEnergy = value;
+        protected set {
+            currentEnergy.Max = value;
+            GameState.Run.Expedition.Player.maxEnergy = value;
+        }
     }
     protected override List<GameModule> modules_ {
         get => GameState.Run.Expedition.Player.modules;

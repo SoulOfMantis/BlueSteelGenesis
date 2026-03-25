@@ -1,35 +1,41 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
 /// <summary>
-/// Активный модуль ядовитого жала - наносит урон и накладывает отравление
+/// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 /// </summary>
 public class MechanicStinger : ActiveModule
 {
-    private int hitDamage;
-    private int poisonDamage;
-    private int duration;
+    private uint hitDamage;
+    private uint poisonDamage;
+    private uint duration;
 
-    public MechanicStinger()
+    public MechanicStinger() : base()
     {
+        energyCost = 1;
         range = 1;
         hitDamage = 1;
         duration = 3;
         poisonDamage = 1;
-        changeName("MechanicStinger");
         Icon_name = "Module_mechanical_sting2";
+        AddConstKeywords(new OffenseKeyword(), new CommonKeyword());
     }
-    public MechanicStinger(int damage, int duration, int hitDamage) : this()
+    public MechanicStinger(uint damage, uint duration, uint hitDamage) : this()
     {
         this.hitDamage = hitDamage;
         poisonDamage = damage;
         this.duration = duration;
     }
+    public override HashSet<ModuleKeyword> renewableKeywords()
+    {
+        var rk = base.renewableKeywords();
+        rk.Add(new InflictKeyword<PoisonModule>(PossibleTargets.Target, poisonDamage, duration));
+        return rk;
+    }
     public override string Description()
     {
-        return $"A mechanic weapon modeled after scorpion's stinger." +
-            $"Deals {hitDamage} damage to adjacent creature and inflicts poison " +
-            $"that deals {poisonDamage} damage at the start of it's turn for {duration} turns.";
+        return $"Deals {hitDamage} damage to the adjacent creature.\n" + base.Description();
     }
     public override async Task Effect(Character user, Vector3Int pos)
     {
@@ -40,11 +46,11 @@ public class MechanicStinger : ActiveModule
 
     protected override bool checkFinalPosition(Vector3Int pos)
     {
-        return Character.tracker.IsOccupiedByCharacter(pos);
+        return Entity.tracker.IsOccupied(pos);
     }
     public override bool checkPosition(Character user, Vector3Int pos)
     {
-        return base.checkPosition(user, pos) && (pos != user.Position);
+        return base.checkPosition(user, pos) && !user.Position.Contains(pos);
     }
 
 }

@@ -1,7 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
-public class ArrayUtil
+public static class ArrayUtil
 {
     public static byte[] join(params byte[][] data) {
         byte[] res = new byte[data.Select(arr => arr.Length).Sum()];
@@ -24,5 +25,30 @@ public class ArrayUtil
 
     public static string toHexString(byte[] data) {
         return BitConverter.ToString(data).Replace("-", "");
+    }
+
+    public static T MinBy<T>(this IEnumerable<T> seq, Func<T, IComparable> comp) {
+        if (seq.Count() == 0)
+            return default(T);
+
+        (T val, IComparable est) best_fit = (seq.First(), comp(seq.First()));
+        foreach (T el in seq) {
+            var el_est = comp(el);
+            if (el_est.CompareTo(best_fit.est) < 0)
+                best_fit = (el, el_est);
+        }
+        return best_fit.val;
+    }
+    public static T MaxBy<T>(this IEnumerable<T> seq, Func<T, IComparable> comp) {
+        if (seq.Count() == 0)
+            return default(T);
+
+        (T val, IComparable est) best_fit = (seq.First(), comp(seq.First()));
+        foreach (T el in seq) {
+            var el_est = comp(el);
+            if (el_est.CompareTo(best_fit.est) > 0)
+                best_fit = (el, el_est);
+        }
+        return best_fit.val;
     }
 }
