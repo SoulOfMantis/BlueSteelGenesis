@@ -2,8 +2,7 @@ using System.Threading.Tasks;
 
 public class Debug_Obstacle : Obstacle
 {
-    Debug_Obstacle() {
-        currentHealth = new(2, 2);
+    Debug_Obstacle() : base(2) {
         Name = "Default Obstacle";
         Description = "Breakable!";
     }
