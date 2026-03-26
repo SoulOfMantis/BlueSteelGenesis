@@ -1,31 +1,41 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
 public class LongAttack : ActiveModule
 {
-    uint hitDamage = 3;
+    uint hitDamage = 4;
+    uint waveDamage = 3;
 
     public LongAttack() : base()
     {
         range = 1;
-        energyCost = 2;
+        energyCost = 3;
         AddConstKeywords(new OffenseKeyword());
-    }
-    public override HashSet<ModuleKeyword> renewableKeywords()
-    {
-        var res = base.renewableKeywords();
-        res.Add(new InflictKeyword<AcidModule>(PossibleTargets.Target));
-        return res;
     }
     public override async Task Effect(Character user, Vector3Int pos)
     {
         await user.strike(pos, hitDamage);
-        await user.apply(pos, new AcidModule(acidDamage, acidDuration));
+        var attackPosition = user.Position.Where(x => Entity.tracker.GetNeighborTiles(x)
+                            .Contains(pos)).First();
+        var direction = pos - attackPosition;
+        direction.Clamp(new(-1, -1), new(1, 1));
+
+        bool flag = true;
+
+        while (flag)
+        {
+            if (Entity.tracker.FindEntityAtPosition(pos) is Entity e)
+                await e.damage(waveDamage);
+            flag = !Entity.tracker.IsOccupied(pos);
+            pos += direction;
+            flag = flag && !Entity.tracker.OutOfBounds(pos);
+        }
     }
     public override string Description()
     {
-        return $"Deals {hitDamage} damage to the adjacent cell.\n" + base.Description();
+        return $"Deals {hitDamage} damage in a line until it hits an obstacle.\n" + base.Description();
     }
     protected override bool checkFinalPosition(Vector3Int pos)
     {
