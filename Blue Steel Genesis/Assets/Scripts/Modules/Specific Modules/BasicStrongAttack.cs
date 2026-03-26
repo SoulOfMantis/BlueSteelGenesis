@@ -2,27 +2,24 @@ using System.Threading.Tasks;
 using UnityEngine;
 using System.Collections.Generic;
 
-/// <summary>
-/// ������� ������ ����� (BAM ����������)
-/// </summary>
-public class BasicAttack : ActiveModule
+public class BasicStrongAttack : ActiveModule
 {
     protected uint hitDamage;
 
-    public BasicAttack() : base()
+    public BasicStrongAttack() : base()
     {
-        hitDamage = 1;
-        energyCost = 1;
-        range = 1;
-        //Icon_name = "...";
+        hitDamage = 5;
+        energyCost = 3;
+        range = 1; 
         AddConstKeywords(new CommonKeyword(), new OffenseKeyword());
+        //Icon_name = "...";
     }
     public override string Description()
     {
-        return $"Deal {hitDamage} damage to the adjacent creature.\n" + base.Description();
+        return $"Deal {hitDamage} to the adjacent creature.";
     }
 
-    public BasicAttack(uint hitDamage) : this()
+    public BasicStrongAttack(uint hitDamage) : this()
     {
         this.hitDamage = hitDamage;
     }
@@ -34,12 +31,13 @@ public class BasicAttack : ActiveModule
 
     protected override bool checkFinalPosition(Vector3Int pos)
     {
-        return Entity.tracker.IsOccupied(pos);
+        return Character.tracker.IsOccupiedByCharacter(pos);
     }
     public override bool checkPosition(Character user, Vector3Int pos)
     {
-        return base.checkPosition(user, pos) && !user.Position.Contains(pos);
+        return base.checkPosition(user, pos) && (pos != user.Position);
     }
+
 }
 
 

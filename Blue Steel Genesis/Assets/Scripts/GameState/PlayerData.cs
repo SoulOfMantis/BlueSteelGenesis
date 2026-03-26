@@ -25,10 +25,21 @@ public class PlayerData
     }
     public uint maxEnergy { get; set; }
 
-
     public URangeValue money { get; set; } = new();
     public URangeValue materials { get; set; } = new();
 
-
     public List<GameModule> modules = new();
+
+    public void AddModule(GameModule module)
+    {
+        if (modules.Count > 5) modules.RemoveRange(5, modules.Count - 5);
+        //TODO: give player choice of which to throw away
+        if (modules.Count == 5)
+            modules[4] = module;
+        else modules.Add(module);
+    }
+    public bool RemoveModule(GameModule module)
+    {
+        return modules.Remove(module);
+    }
 }

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using System;
 using UnityEngine.UI;
 
 public class PlayerCharacter : Character
@@ -144,7 +145,7 @@ public class PlayerCharacter : Character
 
     public override async Task damage(uint dmg)
     {
-        Debug.Log($"Игрок получил {dmg} урона!");
+        Debug.Log($"пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ {dmg} пїЅпїЅпїЅпїЅпїЅ!");
         await base.damage(dmg);
         updateHealth();
         //play taking damage animation
@@ -152,7 +153,7 @@ public class PlayerCharacter : Character
 
     public override async Task heal(uint hp)
     {
-        Debug.Log($"Игрок восстановил {hp} здоровья!");
+        Debug.Log($"пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ {hp} пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!");
         await base.heal(hp);
         updateHealth();
         //play healing animation
@@ -188,13 +189,13 @@ public class PlayerCharacter : Character
         updateButtons();
         await endBattle();
         VictoryScreen.SetActive(true);
+        GameState.Run.Expedition.CombatSystem.Victory();
     }
     public void Defeat()
     {
         updateButtons();
         DefeatScreen.SetActive(true);
     }
-
 
 
     public override URangeValue currentHealth {

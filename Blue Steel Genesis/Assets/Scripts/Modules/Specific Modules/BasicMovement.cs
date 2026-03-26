@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 /// <summary>
-/// Базовый модуль движения (BMM сокращение)
+/// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (BMM пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 /// </summary>
 public class BasicMovement : ActiveModule
 {

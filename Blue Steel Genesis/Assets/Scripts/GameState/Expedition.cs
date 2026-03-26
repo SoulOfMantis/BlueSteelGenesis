@@ -21,9 +21,9 @@ public class Expedition
         };
         Player.maxHealth = 10;
         Player.maxEnergy = 3;
+        Player.GiveMaterials(3);
+        Player.GiveMoney(10);
         Player.currentHealth.Value = Player.maxHealth;
-        Player.materials.Value = 3;
-        Player.money.Value = 10;
 
         startNextStage();
     }
@@ -43,8 +43,11 @@ public class Expedition
             Biome, (uint)BiomeStage
         );
         map_progress_ = new(Map);
+
+        CombatSystem = new CombatSystem(Biome, (uint)BiomeStage, LocalSeed);
         ModuleGen = new(LocalSeed);
-}
+        Shop = new(Biome.id);
+    }
 
     public void displayMap(ExpeditionMapView view)
     {
@@ -63,7 +66,6 @@ public class Expedition
 
     private ExpeditionMapProgressInfo map_progress_ = null;
     public int BiomeStage { get; private set; } = -1;
-
 
 
     private static int generateLocalSeed(int global_seed, uint biome_id, uint biome_stage, uint lives_count, byte[] ship_parts_data)
@@ -88,5 +90,7 @@ public class Expedition
             hkdf.expand(BitConverter.GetBytes(biome_id), sizeof(int)));
         return seed;
     }
+    public CombatSystem CombatSystem;
+    public Shop Shop;
     public ModuleGenerator ModuleGen;
 }

@@ -20,8 +20,6 @@ public static class GameState
 
     public static GameRun Run { get; private set; } = null;
 
-
-
     private static int generateRandomSeed() {
         byte[] seed_bytes = new byte[sizeof(int)];
         System.Security.Cryptography.RandomNumberGenerator.Fill(seed_bytes);
