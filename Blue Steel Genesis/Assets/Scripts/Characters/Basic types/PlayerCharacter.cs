@@ -176,7 +176,8 @@ public class PlayerCharacter : Character
 
     override protected async Task die()
     {
-        Debug.Log("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ!");
+        Debug.Log("Игрок умер!");
+        await triggerModules(TriggerType.OnDeath);
         tracker.RemoveCharacter(this);
         Defeat();
         //TODO: player loss

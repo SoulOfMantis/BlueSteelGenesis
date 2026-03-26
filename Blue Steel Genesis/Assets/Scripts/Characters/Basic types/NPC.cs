@@ -85,6 +85,7 @@ public abstract class NPC : Character
     {
         if (myTurn)
             await endTurn();
+        await triggerModules(TriggerType.OnDeath);
         Debug.Log($"{name} умер");
         tracker.RemoveCharacter(this);
         Destroy(gameObject);
