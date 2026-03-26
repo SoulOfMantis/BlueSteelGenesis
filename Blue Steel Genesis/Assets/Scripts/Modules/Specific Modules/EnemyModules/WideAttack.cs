@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -8,23 +9,37 @@ public class WideAttack : ActiveModule
     public WideAttack() : base()
     {
         range = 1;
-        energyCost = 2;
+        energyCost = 3;
         AddConstKeywords(new OffenseKeyword());
-    }
-    public override HashSet<ModuleKeyword> renewableKeywords()
-    {
-        var res = base.renewableKeywords();
-        res.Add(new InflictKeyword<AcidModule>(PossibleTargets.Target, acidDamage, acidDuration));
-        return res;
     }
     public override async Task Effect(Character user, Vector3Int pos)
     {
-        await user.strike(pos, hitDamage);
-        await user.apply(pos, new AcidModule(acidDamage, acidDuration));
+        var attackPosition = user.Position.Where(x => Entity.tracker.GetNeighborTiles(x)
+                    .Contains(pos)).First();
+        var direction = attackPosition - pos;
+        direction = new(direction.y, direction.x);
+
+        bool flag = true;
+        while (flag)
+        {
+            flag = !Entity.tracker.OutOfBounds(pos) && Entity.tracker.GetNeighborTiles(pos)
+                .Any(n => user.Position.Contains(n));
+            pos += direction;
+        }
+        direction *= -1;
+
+        flag = true;
+        while (flag)
+        {
+            await user.strike(pos, hitDamage);
+            flag = !Entity.tracker.OutOfBounds(pos) && Entity.tracker.GetNeighborTiles(pos)
+                    .Any(n => user.Position.Contains(n));
+            pos += direction;
+        }
     }
     public override string Description()
     {
-        return $"Deals {hitDamage} damage to the adjacent cell.\n" + base.Description();
+        return $"Deals {hitDamage} damage to each cell in front of the user.\n" + base.Description();
     }
     protected override bool checkFinalPosition(Vector3Int pos)
     {
