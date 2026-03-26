@@ -24,7 +24,6 @@ public class Expedition
         Player.GiveMaterials(3);
         Player.GiveMoney(10);
         Player.currentHealth.Value = Player.maxHealth;
-
         startNextStage();
     }
 

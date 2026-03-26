@@ -10,6 +10,7 @@ public static class GameState
             return;
         }
         Run = new(seed ?? generateRandomSeed());
+        EventManager.LoadAllEvents();
         Run.start();
     }
 
