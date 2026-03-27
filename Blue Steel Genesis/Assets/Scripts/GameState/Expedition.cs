@@ -16,15 +16,13 @@ public class Expedition
         Player.modules = new List<GameModule>{
             new DefaultAdaptiveTEST_ONLY(),
             new MechanicStinger(),
-            new BasicMovement(),
-            new DogSummoner_TEST_ONLY()
+            new BasicMovement()
         };
         Player.maxHealth = 10;
-        Player.maxEnergy = 3;
+        Player.maxEnergy = 5;
         Player.GiveMaterials(3);
         Player.GiveMoney(10);
         Player.currentHealth.Value = Player.maxHealth;
-
         startNextStage();
     }
 
