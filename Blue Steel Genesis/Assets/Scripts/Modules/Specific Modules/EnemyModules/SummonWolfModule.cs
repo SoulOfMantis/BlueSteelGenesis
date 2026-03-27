@@ -1,6 +1,39 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
-public class SummonWolfModule
+
+/// <summary>
+/// Модуль призыва волков для вожака.
+/// </summary>
+public class SumonWolfModule : ActiveModule
 {
-    
+    public SumonWolfModule(WolfLeader wolfLeader)
+    {
+        Name = "Summon Wolves";
+        energyCost = 2;      
+        range = 2;           
+    }
+
+    public override async Task Effect(Character user, Vector3Int pos)
+    {
+        var freeCells = getCellsInRange(user).Where(cell => !Character.tracker.IsOccupied(cell) && !Character.tracker.OutOfBounds(cell)).ToList();
+
+        int summonedCount = 0;
+        foreach (var cell in freeCells)
+        {
+            if (summonedCount >= 2) break;
+            var wolfPos = new PositionCollection(cell, 1);
+            if (Entity.summon<Wolf>(wolfPos))
+                summonedCount++;
+        }
+
+        if (summonedCount > 0)
+            Debug.Log($"{user.Name} summoned {summonedCount} wolf(s)!");
+        else
+            Debug.LogWarning("No free cells to summon wolves!");
+
+        await Task.CompletedTask;
+    }
 }

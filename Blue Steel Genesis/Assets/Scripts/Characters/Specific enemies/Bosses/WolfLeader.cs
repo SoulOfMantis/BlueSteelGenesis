@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 public class WolfLeader : Enemy
 {
-    private int remainingSummons = 2; // —колько раз можно использовать призыв (каждый раз призывает 2 волков)
+    private int remainingSummons = 2; // —колько раз можно использовать призыв (каждый раз пытаетс€ призвать  до 2 волков)
 
     public WolfLeader() : base(40, 5, 70) 
     {
@@ -16,7 +16,7 @@ public class WolfLeader : Enemy
 
         addModule(new BasicAttack());         
         addModule(new BasicMovement());        
-        addModule(new SummonWolfModule(this)); 
+        addModule(new SumonWolfModule(this)); 
 
         SetPriorityModules(); 
     }
@@ -27,10 +27,8 @@ public class WolfLeader : Enemy
         remainingSummons--;
     }
 
-    
     public bool HasSummonsLeft() => remainingSummons > 0;
 
-    
     protected override bool TryGetTargetForZero(out Vector3Int targetPos)
     {
         var possibleTargets = priorityModules[0].getCellsInRange(Position)
@@ -107,59 +105,3 @@ public class Wolf : Enemy
 }
 
 
-public class SummonWolfModule : ActiveModule
-{
-    private WolfLeader owner; 
-
-    public SummonWolfModule(WolfLeader owner)
-    {
-        this.owner = owner;
-        energyCost = 2;      
-        range = 2;          
-    }
-
-    public override bool CanBeUsed()
-    {
-        return owner != null && owner.HasSummonsLeft() && base.CanBeUsed();
-    }
-
-    public override async Task<bool> Use(Vector3Int targetPos)
-    {
-        if (owner == null || !owner.HasSummonsLeft())
-            return false;
-        bool success1 = false, success2 = false;
-        var freeCells = getCellsInRange(owner.Position).Where(cell => !tracker.IsOccupied(cell) && !tracker.OutOfBounds(cell)).ToList();
-        if (freeCells.Count >= 2)
-        {
-            success1 = Entity.summon<Wolf>(new PositionCollection(freeCells[0], 1));
-            success2 = Entity.summon<Wolf>(new PositionCollection(freeCells[1], 1));
-        }
-        else if (freeCells.Count == 1)
-        {
-            success1 = Entity.summon<Wolf>(new PositionCollection(freeCells[0], 1));
-        }
-
-        if (success1 || success2)
-        {
-            owner.UseSummon(); 
-            return true;
-        }
-        return false;
-    }
-
-    public override List<Vector3Int> getCellsInRange(PositionCollection position)
-    {
-        // ¬озвращаем все клетки в радиусе range от позиции
-        var cells = new List<Vector3Int>();
-        for (int x = (int)-range; x <= range; x++)
-        {
-            for (int y = (int)-range; y <= range; y++)
-            {
-                var offset = new Vector3Int(x, y, 0);
-                var cell = position.LeftBottom + offset;
-                cells.Add(cell);
-            }
-        }
-        return cells;
-    }
-}
