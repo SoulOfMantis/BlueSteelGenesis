@@ -5,13 +5,18 @@ public abstract class Obstacle : Entity {
         get => currentHealth.Max;
         protected set => currentHealth.Max = value;
     }
+
+    public Obstacle(uint maxHealth)
+    {
+        this.maxHealth = maxHealth;
+        currentHealth.Max = maxHealth;
+        currentHealth.Value = maxHealth;
+    }
+
     protected override Task die()
     {
-        if (TooltipSystem.IsCurrent(this))
-        {
-            TooltipSystem.Unlock(TooltipSystem.TooltipType.entityTooltip);
-            TooltipSystem.Hide(TooltipSystem.TooltipType.entityTooltip);
-        }
+        tracker.RemoveObstacle(this);
+        Destroy(gameObject);
         return Task.CompletedTask;
     }
 }
