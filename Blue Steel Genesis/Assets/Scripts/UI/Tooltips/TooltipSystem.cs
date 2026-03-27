@@ -10,7 +10,7 @@ public class TooltipSystem : MonoBehaviour
     ModuleTooltipTrigger currentModuleTrigger;
     public static bool moduleTooltipLocked = false;
     public static readonly float HidingTimeInSeconds = .4f;
-    public static readonly float ShowingTimeInSeconds = .2f;
+    public static readonly float ShowingTimeInSeconds = .4f;
     public static bool IsEntityTooltipActive => instance.entityTooltip.enabled;
     public static bool IsModuleTooltipActive => instance.moduleTooltip.enabled;
 
