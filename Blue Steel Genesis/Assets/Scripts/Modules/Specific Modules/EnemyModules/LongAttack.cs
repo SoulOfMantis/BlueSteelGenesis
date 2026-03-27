@@ -12,6 +12,7 @@ public class LongAttack : ActiveModule
     {
         range = 1;
         energyCost = 3;
+        Icon_name = "LongAttack";
         AddConstKeywords(new OffenseKeyword());
     }
     public override async Task Effect(Character user, Vector3Int pos)

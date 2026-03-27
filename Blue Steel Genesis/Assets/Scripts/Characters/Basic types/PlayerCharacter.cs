@@ -17,6 +17,9 @@ public class PlayerCharacter : Character
     [SerializeField] TMP_Text shieldDisplay;
     public GameObject VictoryScreen;
     public GameObject DefeatScreen;
+
+    [SerializeField] private ModuleButton[] moduleButtons;
+
     PlayerCharacter()
     {
         Name = "You";
@@ -55,7 +58,16 @@ public class PlayerCharacter : Character
     }
     void updateShields()
     {
+        if (currentShield == 0)
+        {
+            shieldSlider.gameObject.SetActive(false);
+            shieldDisplay.gameObject.SetActive(false);
+            return;
+        }
+        shieldSlider.gameObject.SetActive(true);
+        shieldDisplay.gameObject.SetActive(true);
         shieldSlider.value = currentShield;
+        shieldDisplay.text = currentShield.Value.ToString();
     }
     void updateButtons()
     {
@@ -107,9 +119,9 @@ public class PlayerCharacter : Character
         await base.giveShield(amount);
         updateShields();
     }
-    public override void loseShield(uint value)
+    public override async Task loseShield(uint value)
     {
-        base.loseShield(value);
+        await base.loseShield(value);
         updateShields();
     }
     public override async Task startBattle()
@@ -145,7 +157,7 @@ public class PlayerCharacter : Character
 
     public override async Task damage(uint dmg)
     {
-        Debug.Log($"����� ������� {dmg} �����!");
+        Debug.Log($"Èãðîê ïîëó÷èë {dmg} óðîíà!");
         await base.damage(dmg);
         updateHealth();
         //play taking damage animation
@@ -153,7 +165,7 @@ public class PlayerCharacter : Character
 
     public override async Task heal(uint hp)
     {
-        Debug.Log($"����� ����������� {hp} ��������!");
+        Debug.Log($"Èãðîê âîññòàíîâèë {hp} çäîðîâüÿ!");
         await base.heal(hp);
         updateHealth();
         //play healing animation
@@ -176,8 +188,14 @@ public class PlayerCharacter : Character
 
     override protected async Task die()
     {
-        Debug.Log("����� ����!");
+        Debug.Log("Игрок умер!");
         await triggerModules(TriggerType.OnDeath);
+        if (TooltipSystem.IsCurrent(this))
+        {
+            TooltipSystem.Unlock(TooltipSystem.TooltipType.entityTooltip);
+            TooltipSystem.Hide(TooltipSystem.TooltipType.entityTooltip);
+        }
+        await Awaitable.WaitForSecondsAsync(.5f);
         tracker.RemoveCharacter(this);
         Defeat();
         //TODO: player loss
@@ -196,8 +214,6 @@ public class PlayerCharacter : Character
         updateButtons();
         DefeatScreen.SetActive(true);
     }
-
-
     public override URangeValue currentHealth {
         get => GameState.Run.Expedition.Player.currentHealth;
         protected set => GameState.Run.Expedition.Player.currentHealth = value;

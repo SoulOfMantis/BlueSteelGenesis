@@ -3,14 +3,18 @@ using UnityEngine;
 
 public class BigAcidSlime : Enemy
 {
-    public BigAcidSlime() : base(20, 3, -5)
+    public BigAcidSlime() : base(12, 3, -5)
+    {
+        Name = "Big Acid Slime";
+        Description = "Roughly half the size of the biggest. The strategy didn't change much.";
+    }
+    protected override void Init()
     {
         addModule(new AcidBite());
         addModule(new AcidShot());
         addModule(new BasicMovement(2));
         addModule(new ExplodeWithSlime(bodySize - 1));
-        Name = "Big Acid Slime";
-        Description = "Roughly half the size of the biggest. The strategy didn't change much.";
+        base.Init();
     }
     protected override bool TryGetTargetForZero(out Vector3Int targetPos)
     {

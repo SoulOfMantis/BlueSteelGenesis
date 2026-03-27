@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f65944e0b47acde4a8cff7b956029c41
+guid: 140f78479372e18479a66d713abced2c
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -129,8 +129,8 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: BossSlugEnemy
     originalName: 
-    pivot: {x: 0.5671642, y: -0.19402985}
-    alignment: 9
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
     rect:
@@ -139,7 +139,7 @@ ScriptedImporter:
       y: 4
       width: 67
       height: 67
-    spriteID: bf328346b60641f4895ce2ddf6a0ef11
+    spriteID: 89dd0c715e239ee4c9b7298b33624d8e
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -171,7 +171,7 @@ ScriptedImporter:
         y: 13
         width: 67
         height: 67
-      spriteId: bf328346b60641f4895ce2ddf6a0ef11
+      spriteId: 89dd0c715e239ee4c9b7298b33624d8e
     linkedCells: []
     tileCells: []
     tileSetIndex: 0
