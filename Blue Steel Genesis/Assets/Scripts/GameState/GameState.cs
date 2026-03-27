@@ -14,33 +14,8 @@ public static class GameState
             Debug.LogWarning("Попытка начать новый забег до окончания предыдущего");
             return;
         }
-
-        int actualSeed;
-        if (seed.HasValue)
-        {
-            actualSeed = seed.Value;
-            File.WriteAllText(SeedFilePath, actualSeed.ToString());
-        }
-        else
-        {
-            if (File.Exists(SeedFilePath))
-            {
-                string content = File.ReadAllText(SeedFilePath);
-                if (int.TryParse(content, out actualSeed))
-                {
-                    Debug.Log($"Загружен сохранённый сид: {actualSeed}");
-                }
-                else
-                {
-                    actualSeed = generateRandomSeed();
-                }
-            }
-            else
-            {
-                actualSeed = generateRandomSeed();
-            }
-        }
-        Run = new(actualSeed);
+        Run = new(seed ?? generateRandomSeed());
+        EventManager.LoadAllEvents();
         Run.start();
     }
 
@@ -51,8 +26,6 @@ public static class GameState
     }
 
     public static GameRun Run { get; private set; } = null;
-
-
 
     private static int generateRandomSeed()
     {

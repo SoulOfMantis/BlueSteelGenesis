@@ -1,13 +1,11 @@
-using System.Threading.Tasks;
+п»їusing System.Threading.Tasks;
 using System;
 using TMPro;
 using UnityEngine;
+using System.Linq;
 
 public class PurpleDog : Enemy
 {
-    //public TMP_Text healthDisplay;
-
-
     public PurpleDog() : base(5, 3, 60)
     {
         Name = "Purple Dog";
@@ -17,61 +15,41 @@ public class PurpleDog : Enemy
 
         SetPriorityModules();
     }
-
-    void updateHealth()
-    {
-        //healthDisplay.text = $"{currentHealth}/{maxHealth}";
-    }
-
-    void Start()
-    {
-        if (tracker != null) tracker.AddCharacter(this);
-        Debug.Log("Dog added");
-    }
-
     protected override bool TryGetTargetForZero(out Vector3Int targetPos)
     {
-        targetPos = tracker.getPlayer().Position;
-        return priorityModules[0].getCellsInRange(Position).Contains(targetPos);
+        var possibleTargets = priorityModules[0].getCellsInRange(Position)
+            .Where(p => getEnemies().SelectMany(e => e.Position).Contains(p));
+        targetPos = possibleTargets.FirstOrDefault();
+        return possibleTargets.Count() != 0;
     }
     protected override bool TryGetTargetForOne(out Vector3Int targetPos)
     {
-        var playerPosition = tracker.getPlayer().Position;
-        var moveRange = priorityModules[1].getCellsInRange(Position);
-        int distance = Math.Abs(playerPosition.x - Position.x) + Math.Abs(playerPosition.y - Position.y);
-        targetPos = Position;
-        if (distance == 1) return false; //Нет смысла двигаться!
-
-        foreach (var cell in moveRange)
-        {
-            int temp = Math.Abs(playerPosition.x - cell.x) + Math.Abs(playerPosition.y - cell.y);
-            if (temp < distance && !tracker.IsOccupied(cell) && !tracker.OutOfBounds(cell))
-            {
-                distance = temp;
-                targetPos = cell;
-            }
-        }
-        return true;
+        targetPos = Position.LeftBottom;
+        var moveRange = priorityModules[1].getCellsInRange(Position).Concat(Position).ToHashSet();
+        var path = Navigation.Dijkstra.getPath(Position, getEnemies().SelectMany(e => e.Position.NeighborPositions()),
+            p => !tracker.IsOccupied(p) && !tracker.OutOfBounds(p)) ?? new();
+        foreach (var move in path)
+            if (moveRange.Contains(targetPos + move))
+                targetPos += move;
+            else break;
+        return targetPos != Position.LeftBottom;
     }
-    public override async Task damage(int dmg)
+    public override async Task damage(uint dmg)
     {
-        Debug.Log($"Собака получила {dmg} урона!");
+        Debug.Log($"РЎРѕР±Р°РєР° РїРѕР»СѓС‡РёР»Р° {dmg} СѓСЂРѕРЅР°!");
         await base.damage(dmg);
-        updateHealth();
         //play taking damage animation
     }
 
-    public override async Task heal(int hp)
+    public override async Task heal(uint hp)
     {
-        Debug.Log($"Собака восстановила {hp} здоровья!");
+        Debug.Log($"РЎРѕР±Р°РєР° РІРѕСЃСЃС‚Р°РЅРѕРІРёР»Р° {hp} Р·РґРѕСЂРѕРІСЊСЏ!");
         await base.heal(hp);
-        updateHealth();
         //play healing animation
     }
 
     public override async Task startBattle()
     {
         await base.startBattle();
-        updateHealth();
     }
 }

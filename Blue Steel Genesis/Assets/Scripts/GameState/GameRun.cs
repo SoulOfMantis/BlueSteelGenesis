@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class GameRun
 {
@@ -9,7 +10,25 @@ public class GameRun
 
     public void start()
     {
-        playerLivesCount = 3;
+        playerLivesCount = new(3, 3);
+    }
+
+    public static Dictionary<(uint stage, uint elite_id), System.Type> GetElitesByBiomeId(uint biomeId)
+    {
+        switch (biomeId)
+        {
+            default:
+                return new Dictionary<(uint stage, uint elite_id), System.Type>();
+        }
+    }
+
+    public static Dictionary<(uint stage, uint boss_id), uint> GetBossesByBiomeId(uint biomeId)
+    {
+        switch (biomeId)
+        {
+            default:
+                return new Dictionary<(uint stage, uint boss_id), uint>();
+        }
     }
 
     public void startExpedition(uint biome_id)
@@ -18,7 +37,7 @@ public class GameRun
             Debug.LogWarning("Попытка начать новую экспедицию до окончания предыдущей");
             return;
         }
-        Expedition = new(new Map.BiomeInfo() { // TODO: handle biomes
+        Expedition = new(new Map.BiomeInfo(biome_id, GetElitesByBiomeId(biome_id), GetBossesByBiomeId(biome_id)) { // TODO: handle biomes
             id = biome_id,
             missing_node_rate = .3f
         });
@@ -33,7 +52,7 @@ public class GameRun
     public int GlobalSeed { get; private set; }
     public Expedition Expedition { get; private set; } = null;
     
-    public uint playerLivesCount { get; set; }
+    public URangeValue playerLivesCount { get; set; }
 
     // ship data
     // available biomes

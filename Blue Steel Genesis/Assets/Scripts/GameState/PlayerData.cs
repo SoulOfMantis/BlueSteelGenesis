@@ -3,21 +3,43 @@ using System.Collections.Generic;
 
 public class PlayerData
 {
-    public int currentHealth
+    public uint GoldenTickets { get; private set; }
+    public bool HasGoldenTickets() => GoldenTickets > 0;
+    public void GetGoldenTicket() => GoldenTickets++;
+    public void SpendGoldenTicket()
     {
-        get => current_health_;
-        set => current_health_ = Math.Clamp(value, 0, maxHealth);
+        if (GoldenTickets >= 1) GoldenTickets--;
     }
-    private int current_health_;
 
+    public void GiveMoney(uint value) => money += value;
+    public void LoseMoney(uint value) => money -= value;
+    public bool HasEnoughMoney(uint value) => money.Value >= value;
 
-    public int maxHealth { get; set; }
-    public int maxEnergy { get; set; }
+    public void GiveMaterials(uint value) => materials += value;
+    public void LoseMaterials(uint value) => materials -= value;
+    public bool HasEnoughMaterials(uint value) => materials.Value >= value;
+    public URangeValue currentHealth { get; set; } = new();
+   public uint maxHealth {
+        get => currentHealth.Max;
+        set => currentHealth.Max = value;
+    }
+    public uint maxEnergy { get; set; }
 
-
-    public uint money { get; set; }
-    public uint materials { get; set; }
-
+    public URangeValue money { get; set; } = new();
+    public URangeValue materials { get; set; } = new();
 
     public List<GameModule> modules = new();
+
+    public void AddModule(GameModule module)
+    {
+        if (modules.Count > 5) modules.RemoveRange(5, modules.Count - 5);
+        //TODO: give player choice of which to throw away
+        if (modules.Count == 5)
+            modules[4] = module;
+        else modules.Add(module);
+    }
+    public bool RemoveModule(GameModule module)
+    {
+        return modules.Remove(module);
+    }
 }

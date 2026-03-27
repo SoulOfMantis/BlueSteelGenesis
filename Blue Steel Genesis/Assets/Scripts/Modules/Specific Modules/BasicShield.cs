@@ -1,27 +1,27 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
 
 /// <summary>
-/// Базовый модуль щита (BSM сокращение)
+/// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ (BSM пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 /// </summary>
 public class BasicShield : ActiveModule
 {
-    private int shieldGiven;
-    public BasicShield()
+    private uint shieldGiven;
+    public BasicShield() : base()
     {
-        changeName("BasicShield");
         shieldGiven = 3;
         energyCost = 1;
         range = 0;
-        Name = "BasicShield";
+        AddConstKeywords(new CommonKeyword(), new DefenseKeyword());
     }
     public override string Description()
     {
         return $"Give {shieldGiven} shield to yourself.";
     }
 
-    public BasicShield(int shield) : this()
+    public BasicShield(uint shield) : this()
     {
         shieldGiven = shield;
     }
@@ -29,6 +29,12 @@ public class BasicShield : ActiveModule
     {
         await user.giveShield(shieldGiven);
         Debug.Log("BSM executed");
+    }
+    public override HashSet<ModuleKeyword> renewableKeywords()
+    {
+        var rk = base.renewableKeywords();
+        rk.Add(new ShieldKeyword(shieldGiven, PossibleTargets.Self));
+        return rk;
     }
 }
 

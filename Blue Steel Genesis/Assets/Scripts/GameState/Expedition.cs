@@ -17,15 +17,16 @@ public class Expedition
     {
         // TODO: handle player creation properly
         Player.modules = new List<GameModule>{
+            new DefaultAdaptiveTEST_ONLY(),
             new MechanicStinger(),
-            new BasicMovement()
+            new BasicMovement(),
+            new DogSummoner_TEST_ONLY()
         };
         Player.maxHealth = 10;
         Player.maxEnergy = 3;
-        Player.currentHealth = Player.maxHealth;
-        Player.materials = 3;
-        Player.money = 10;
-
+        Player.GiveMaterials(3);
+        Player.GiveMoney(10);
+        Player.currentHealth.Value = Player.maxHealth;
         startNextStage();
     }
 
@@ -44,7 +45,10 @@ public class Expedition
             Biome, (uint)BiomeStage
         );
         map_progress_ = new(Map);
+
+        CombatSystem = new CombatSystem(Biome, (uint)BiomeStage, LocalSeed);
         ModuleGen = new(LocalSeed);
+        Shop = new(Biome.id);
     }
 
     public void displayMap(ExpeditionMapView view)
@@ -64,7 +68,6 @@ public class Expedition
 
     private ExpeditionMapProgressInfo map_progress_ = null;
     public int BiomeStage { get; private set; } = -1;
-
 
 
     private static int generateLocalSeed(int global_seed, uint biome_id, uint biome_stage, uint lives_count, byte[] ship_parts_data)
@@ -89,118 +92,7 @@ public class Expedition
             hkdf.expand(BitConverter.GetBytes(biome_id), sizeof(int)));
         return seed;
     }
-    public GameModule GetNextModule() => ModuleGen.GetNextModule();
-    ModuleGenerator ModuleGen;
-
-
-
-
-
-    private bool isInEvent = false;
-    private EventData currentEvent;
-    private Node pendingBattleType; 
-
-    
-    public void EnterNode(Vector2Int nodePos)
-    {
-        if (Map == null) return;
-
-        Node nodeType;
-        if (nodePos == Map.start_node_pos)
-            nodeType = Node.START;
-        else if (nodePos == Map.boss_node_pos)
-            nodeType = Node.BOSS;
-        else
-            nodeType = Map.map[nodePos.y, nodePos.x];
-
- 
-
-        switch (nodeType)
-        {
-            case Node.EVENT:
-                StartEvent();
-                break;
-            case Node.REGULAR_ENEMY:
-            case Node.ELITE_ENEMY:
-                StartBattle(nodeType);
-                break;
-            case Node.SHOP:
-                StartShop();
-                break;
-            case Node.REST:
-                break;
-            case Node.TREASURE:
-                break;
-            default:
-                Debug.LogWarning($"Неподдерживаемый тип узла: {nodeType}");
-                break;
-        }
-    }
-
-
-    private void StartEvent()
-    {
-        if (isInEvent) return;
-        isInEvent = true;
-
-        int eventSeed = LocalSeed + BiomeStage * 100 + (int)Biome.id;
-        currentEvent = EventManager.GetRandomEventForBiome(Biome.id, eventSeed);
-
-        GlobalEventStorage.CurrentEvent = currentEvent;
-
-        UnityEngine.SceneManagement.SceneManager.LoadScene("EventScene");
-    }
-
-
-    private void StartBattle(Node enemyType)
-    {
-        //Запуск битвы
-    }
-
-
-    private void StartShop()
-    {
-        //запуск магазина
-    }
-
-  
-    private void ReturnToMap()
-    {
-        //вернуться на карут
-    }
-
-
-    // Методы для обработки результатов (вызываются из других сцен)
-    public void HandleEventOutcome(EventOutcome outcome)
-    {
-        isInEvent = false;
-        switch (outcome)
-        {
-            case EventOutcome.Exit:
-                ReturnToMap();
-                break;
-            case EventOutcome.EnterBattle:
-                Node enemyType = (UnityEngine.Random.value < 0.5f) ? Node.REGULAR_ENEMY : Node.ELITE_ENEMY;
-                StartBattle(enemyType);
-                break;
-            case EventOutcome.EnterShop:
-                StartShop();
-                break;
-        }
-    }
-
-    public void HandleBattleOutcome(bool victory)
-    {
-        if (victory)
-        {
-            // Начислить награду за победу (ресурсы, предметы)
-            // Например: Player.money += 10;
-        }
-        // В любом случае возвращаемся на карту
-        ReturnToMap();
-    }
-
-
-
-
+    public CombatSystem CombatSystem;
+    public Shop Shop;
+    public ModuleGenerator ModuleGen;
 }
