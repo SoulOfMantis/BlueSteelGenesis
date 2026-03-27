@@ -12,6 +12,7 @@ public class RoboWolf : Enemy
         Description = "A robotic copy of regular wolf. Got some pretty cool enhancements!";
         addModule(new BurnBite());
         addModule(new AcceleratedMovement());
+        
 
         SetPriorityModules();
     }

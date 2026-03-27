@@ -6,6 +6,7 @@ public class RoboWolfSummoner : ActiveModule {
         changeName("Summonning howl");
         range = 1;
         energyCost = 5;
+        Icon_name = "RoboWolfSummoner";
     }
     public override string Description() =>
         "Summons a RoboWolf.\n" + base.Description();

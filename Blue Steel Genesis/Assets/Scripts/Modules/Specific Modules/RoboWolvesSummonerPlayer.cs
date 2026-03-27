@@ -10,6 +10,7 @@ public class RoboWolfSummonerPlayer : ActiveModule
         range = 1;
         energyCost = 5;
         AddConstKeywords(new LimitedPerBattleKeyword(2));
+        Icon_name = "RoboWolfSummoner";
     }
     public override string Description() =>
         "Summons an allied RoboWolf.\n" + base.Description();

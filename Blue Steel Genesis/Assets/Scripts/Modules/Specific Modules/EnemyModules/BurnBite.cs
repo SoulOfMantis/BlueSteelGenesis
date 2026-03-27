@@ -12,6 +12,7 @@ public class BurnBite : ActiveModule
         range = 1;
         energyCost = 2;
         AddConstKeywords(new OffenseKeyword());
+        Icon_name = "BurnBite";
     }
     public override HashSet<ModuleKeyword> renewableKeywords()
     {

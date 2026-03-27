@@ -18,7 +18,7 @@ public class AcceleratedMovement : ActiveModule
         energyCost = 2;
         //Icon_name = "Module_accelerated_movement";
         AddConstKeywords(new MobilityKeyword(), new CommonKeyword());
-
+        Icon_name = "AcceleratedMovement";
     }
     public AcceleratedMovement(uint speed) : this()
     {

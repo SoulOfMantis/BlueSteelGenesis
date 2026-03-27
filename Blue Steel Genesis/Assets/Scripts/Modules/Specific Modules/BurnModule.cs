@@ -12,6 +12,7 @@ public class BurnModule : NegativeStatusModule
         //To do add BurnKeyword
         //AddConstKeyword(new Keyword()); 
         triggerType = TriggerType.OnMove;
+        Icon_name = "BurnModule";
     }
     public override string Description()
     {
