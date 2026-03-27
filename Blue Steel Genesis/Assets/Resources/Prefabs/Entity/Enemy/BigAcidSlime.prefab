@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: -3082053887355838057, guid: 7af20effaa48c7449a61caf419013db7, type: 3}
+  m_Sprite: {fileID: 3862514025724828046, guid: 764cb267823210a46b9e3ea85a4ba7ab, type: 3}
   m_Color: {r: 0.48584908, g: 1, b: 0.55393773, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -100,7 +100,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 344885736801266915}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c04c91c54d35ec6458f3d0605b2051b5, type: 3}
+  m_Script: {fileID: 11500000, guid: 9783924f505296642ac3d8533bd0e5aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BlueSteelGenesis::BigAcidSlime
   bodySize: 2
