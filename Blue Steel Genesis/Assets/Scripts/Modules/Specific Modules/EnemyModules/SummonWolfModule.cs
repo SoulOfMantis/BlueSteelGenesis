@@ -7,13 +7,18 @@ using UnityEngine;
 /// <summary>
 /// Модуль призыва волков для вожака.
 /// </summary>
-public class SumonWolfModule : ActiveModule
+public class SummonWolfModule : ActiveModule
 {
-    public SumonWolfModule(WolfLeader wolfLeader)
+    public SummonWolfModule(WolfLeader wolfLeader)
     {
         Name = "Summon Wolves";
         energyCost = 2;      
-        range = 2;           
+        range = 2;
+        Icon_name = "SummonWolfModule";
+    }
+    public override string Description()
+    {
+        return "Summons 2 wolves.\n" + base.Description();
     }
 
     public override async Task Effect(Character user, Vector3Int pos)

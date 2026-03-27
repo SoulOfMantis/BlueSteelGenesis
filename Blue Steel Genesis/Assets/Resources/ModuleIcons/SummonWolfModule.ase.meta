@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e0a9161004a695b439d9dcb1a27854a9
+guid: 2c9f1b4dd35457b46bb2a3f1e3cb91d4
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,7 +127,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: HitWidthMacheteModule
+  - name: CallModule
     originalName: 
     pivot: {x: 0.5, y: -0.033333335}
     alignment: 9
@@ -139,7 +139,7 @@ ScriptedImporter:
       y: 4
       width: 30
       height: 30
-    spriteID: 58e0e366ab2a4654894f8d847d8b757f
+    spriteID: b0a6e0621d9c63845baf75b9a95c85b6
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,17 +153,17 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 1188107872
+      value0: 735083074
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: HitWidthMacheteModule
+    name: CallModule
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: HitWidthMacheteModule
+    - name: SummonWolfModule
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -171,7 +171,7 @@ ScriptedImporter:
         y: 1
         width: 30
         height: 30
-      spriteId: 58e0e366ab2a4654894f8d847d8b757f
+      spriteId: b0a6e0621d9c63845baf75b9a95c85b6
     linkedCells: []
     tileCells: []
     tileSetIndex: 0
