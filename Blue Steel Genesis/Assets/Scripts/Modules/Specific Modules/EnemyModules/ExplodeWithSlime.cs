@@ -8,14 +8,19 @@ public class ExplodeWithSlime : PassiveModule
     uint summonSize;
     uint acidDamage;
     uint acidDuration;
-    public ExplodeWithSlime(uint summonSize) : base()
+    public ExplodeWithSlime() : base()
     {
+        Icon_name = "AcidExplosionModule";
         acidDamage = 1;
         acidDuration = 2;
         triggerType = TriggerType.OnDeath;
         range = 10;
-        this.summonSize = summonSize;
+        summonSize = 1;
         AddConstKeywords(new OffenseKeyword());
+    }
+    public ExplodeWithSlime(uint summonSize) : this()
+    {
+        this.summonSize = summonSize;
     }
     public override HashSet<ModuleKeyword> renewableKeywords()
     {
@@ -35,18 +40,24 @@ public class ExplodeWithSlime : PassiveModule
             switch (summonSize)
             {
                 case 1:
-                    Entity.summon<SmallAcidSlime>(new(getCellsInRange(user).First(), (int)summonSize));
-                    break;
+                    if (!Entity.summon<SmallAcidSlime>(new(getCellsInRange(user).First(), (int)summonSize)))
+                        Debug.Log("Couldn't summon a small slime.");
+                        break;                    
                 case 2:
-                    Entity.summon<BigAcidSlime>(new(getCellsInRange(user).First(), (int)summonSize));
+                    if(!Entity.summon<BigAcidSlime>(new(getCellsInRange(user).First(), (int)summonSize)))
+                        Debug.Log("Couldn't summon a big slime.");
                     break;
                 default:
                     break;
-        }
+            }
     }
     protected override bool checkFinalPosition(Vector3Int pos)
     {
         return new PositionCollection(pos, (int)summonSize).All(p => !Entity.tracker.IsOccupied(p));
+    }
+    public override bool checkPosition(Character user, Vector3Int pos)
+    {
+        return true;
     }
 }
 

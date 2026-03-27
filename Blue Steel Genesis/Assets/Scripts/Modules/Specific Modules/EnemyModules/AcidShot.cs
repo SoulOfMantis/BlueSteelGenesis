@@ -9,6 +9,7 @@ public class AcidShot : ActiveModule
     uint acidDuration = 1;
     public AcidShot() : base()
     {
+        Icon_name = "AcidShotModule";
         range = 5;
         energyCost = 2;
         AddConstKeywords(new OffenseKeyword());

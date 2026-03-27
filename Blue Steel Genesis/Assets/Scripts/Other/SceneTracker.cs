@@ -13,6 +13,8 @@ public class SceneTracker : MonoBehaviour
     public int max_x { get; private set; } = 17;
     private float CameraDistance = 10;
     public List<HighlightableTile> tiles;
+    [SerializeField] GameObject initiativeEntryPrefab;
+    [SerializeField] Transform contentParent;
 
     public void HighlightCharacterInInitiative(Character c, Color color)
     {
@@ -133,6 +135,8 @@ public class SceneTracker : MonoBehaviour
     void Start()
     {
         init = gameObject.AddComponent(typeof(InitiativeTracker)) as InitiativeTracker;
+        init.contentParent = contentParent;
+        init.initiativeEntryPrefab = initiativeEntryPrefab;
         Entity.tracker = this;
     }
 }

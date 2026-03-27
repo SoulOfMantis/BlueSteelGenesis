@@ -3,14 +3,18 @@ using UnityEngine;
 
 public class LivingAcid : Enemy
 {
-    public LivingAcid() : base(50, 5, -10) 
+    public LivingAcid() : base(30, 5, -10) 
+    {
+        Name = "the Living Acid";
+        Description = "The biggest slime there ever was. Will bite. Will shoot. Will... EXPLODE!";
+    }
+    protected override void Init()
     {
         addModule(new AcidBite());
         addModule(new AcidShot());
         addModule(new BasicMovement(1));
         addModule(new ExplodeWithSlime(bodySize - 1));
-        Name = "the Living Acid";
-        Description = "The biggest slime there ever was. Will bite. Will shoot. Will... EXPLODE!";
+        base.Init();
     }
     protected override bool TryGetTargetForZero(out Vector3Int targetPos)
     {
