@@ -6,11 +6,16 @@ public class SwarmScatter : PassiveModule
 {
     uint shieldAmount;
 
-    public SwarmScatter(uint shieldAmount = 1) {
+    public SwarmScatter() : base()
+    {
         range = 1;
-        this.shieldAmount = shieldAmount;
+        shieldAmount = 3;
         triggerType = TriggerType.OnTurnEnd;
         AddConstKeywords(new DefenseKeyword(), new ShieldKeyword(shieldAmount, PossibleTargets.Self));
+    }
+    public SwarmScatter(uint shieldAmount) : this()
+    {
+        this.shieldAmount = shieldAmount;
     }
 
     public override string Description() {
