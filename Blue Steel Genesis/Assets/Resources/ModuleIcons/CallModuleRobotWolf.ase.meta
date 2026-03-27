@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8c3a61546c1878c48933fc56a08a4881
+guid: da199215df8d95246bd6729d9754fc80
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,9 +127,9 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: WolfLeaderEnemy
+  - name: CallModuleRobotWolf
     originalName: 
-    pivot: {x: 0.47368422, y: -0.13725491}
+    pivot: {x: 0.5, y: -0.033333335}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -137,9 +137,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 57
-      height: 51
-    spriteID: 6e9d2a707b5673340af99b451d77217c
+      width: 30
+      height: 30
+    spriteID: 4c3e7170ce06f3945bccbfda91f97004
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,25 +153,25 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 2829708315
+      value0: 1737577406
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: WolfLeaderEnemy
+    name: CallModuleRobotWolf
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: WolfLeaderEnemy
+    - name: CallModuleRobotWolf
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 5
-        y: 7
-        width: 57
-        height: 51
-      spriteId: 6e9d2a707b5673340af99b451d77217c
+        x: 1
+        y: 1
+        width: 30
+        height: 30
+      spriteId: 4c3e7170ce06f3945bccbfda91f97004
     linkedCells: []
     tileCells: []
     tileSetIndex: 0
@@ -181,5 +181,5 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 64, y: 64}
-  previousTextureSize: {x: 128, y: 64}
+  canvasSize: {x: 32, y: 32}
+  previousTextureSize: {x: 64, y: 64}

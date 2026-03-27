@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 910996753969975453}
   - component: {fileID: 6436685001208273242}
-  - component: {fileID: 8936109384407902662}
+  - component: {fileID: 3830082207309243854}
   m_Layer: 0
-  m_Name: AlliedDog
+  m_Name: RoboWolf
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,9 +80,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: -6726115255258312124, guid: 57df6a75a624b8142b2de4e95b455fda, type: 3}
-  m_Color: {r: 0.16958882, g: 0.8731657, b: 0.9716981, a: 1}
-  m_FlipX: 1
+  m_Sprite: {fileID: -6928652880715268486, guid: fdd3882bd8f94eb409e19cee398bf64b, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.34, y: 0.31}
@@ -91,7 +91,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8936109384407902662
+--- !u!114 &3830082207309243854
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,9 +100,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 344885736801266915}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a940f76b044e01e48a240d180cb62aea, type: 3}
+  m_Script: {fileID: 11500000, guid: 88f8ecfa34679364781ef8ef35b74577, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: BlueSteelGenesis::AlliedPurpleDog
+  m_EditorClassIdentifier: BlueSteelGenesis::RoboWolf
   bodySize: 1
 --- !u!1 &7030514784578829008
 GameObject:
@@ -114,7 +114,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4196047120132471949}
   m_Layer: 0
-  m_Name: AlliedPurpleDog
+  m_Name: RoboWolf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

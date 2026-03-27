@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: aaf595307c76c7d41a6dd7c0e9afbe2c
+guid: 019e20b8cf481b949b2f87093956d420
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -129,8 +129,8 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: RobotWolfGoodnessEnemy
     originalName: 
-    pivot: {x: 0.48, y: -0.13043478}
-    alignment: 9
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
     rect:
@@ -139,7 +139,7 @@ ScriptedImporter:
       y: 4
       width: 25
       height: 23
-    spriteID: d67cdc545f09d6e44a3a31dbe1d66a3d
+    spriteID: 87f9ac1970da9ce4f9a3467a2efc51a8
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -171,7 +171,7 @@ ScriptedImporter:
         y: 3
         width: 25
         height: 23
-      spriteId: d67cdc545f09d6e44a3a31dbe1d66a3d
+      spriteId: 87f9ac1970da9ce4f9a3467a2efc51a8
     linkedCells: []
     tileCells: []
     tileSetIndex: 0
