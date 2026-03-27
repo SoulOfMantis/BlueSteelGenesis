@@ -15,7 +15,7 @@ public class SwarmMandibles : ActiveModule
     }
 
     public override string Description() {
-        return $"Bites {attackCount} times, {biteDamage} damage per bite.\n" + base.Description();
+        return $"Bites {attackCount} times, dealing {biteDamage} damage per bite.\n" + base.Description();
     }
 
     protected override bool checkFinalPosition(Vector3Int pos) {
