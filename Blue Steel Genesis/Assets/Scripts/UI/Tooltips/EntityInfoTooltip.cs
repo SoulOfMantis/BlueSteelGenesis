@@ -39,10 +39,14 @@ public class EntityInfoTooltip : MonoBehaviour
         energySlider.gameObject.SetActive(false);
         if (entity is Character c)
         {
-            shieldSlider.gameObject.SetActive(true);
+            Debug.Log(c.Name);
             energySlider.gameObject.SetActive(true);
-            shieldDisplay.text = $"{c.currentShield}";
-            shieldSlider.value = c.currentShield;
+            if (c.currentShield != 0)
+            {
+                shieldSlider.gameObject.SetActive(true);
+                shieldDisplay.text = $"{c.currentShield}";
+                shieldSlider.value = c.currentShield;
+            }
             energyDisplay.text = $"{c.currentEnergy}/{c.maxEnergy}";
             energySlider.maxValue = c.maxEnergy;
             energySlider.value = c.currentEnergy;

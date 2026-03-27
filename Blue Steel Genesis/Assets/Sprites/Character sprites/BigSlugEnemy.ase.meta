@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ca95febe0c2aa4241bb312692712d848
+guid: 764cb267823210a46b9e3ea85a4ba7ab
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -129,8 +129,8 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: BigSlugEnemy
     originalName: 
-    pivot: {x: 0.5454545, y: -0.078431375}
-    alignment: 9
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
     rect:
@@ -139,7 +139,7 @@ ScriptedImporter:
       y: 4
       width: 55
       height: 51
-    spriteID: beaae58629eef0c4daeb045255766deb
+    spriteID: ad3e8b5171b48ca41975003742a3b4bc
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -171,7 +171,7 @@ ScriptedImporter:
         y: 4
         width: 55
         height: 51
-      spriteId: beaae58629eef0c4daeb045255766deb
+      spriteId: ad3e8b5171b48ca41975003742a3b4bc
     linkedCells: []
     tileCells: []
     tileSetIndex: 0
