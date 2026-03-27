@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 910996753969975453}
   - component: {fileID: 6436685001208273242}
-  - component: {fileID: 8936109384407902662}
+  - component: {fileID: 1518573372539590349}
   m_Layer: 0
-  m_Name: AlliedDog
+  m_Name: theLivingAcid
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,7 +91,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8936109384407902662
+--- !u!114 &1518573372539590349
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,10 +100,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 344885736801266915}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a940f76b044e01e48a240d180cb62aea, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a094334bb781de44bcbb0037c6645ab, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: BlueSteelGenesis::AlliedPurpleDog
-  bodySize: 1
+  m_EditorClassIdentifier: BlueSteelGenesis::LivingAcid
+  bodySize: 3
 --- !u!1 &7030514784578829008
 GameObject:
   m_ObjectHideFlags: 0
@@ -114,7 +114,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4196047120132471949}
   m_Layer: 0
-  m_Name: AlliedPurpleDog
+  m_Name: theLivingAcid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
