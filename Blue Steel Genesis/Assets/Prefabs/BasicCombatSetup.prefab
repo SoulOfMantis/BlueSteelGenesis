@@ -2693,7 +2693,7 @@ MonoBehaviour:
     HighlightedTile: {fileID: 11400000, guid: 88ebfbcc585735f4ea7e2d9aa8678127, type: 2}
   - BaseTile: {fileID: 11400000, guid: 434ecbcb1f956664e84209baf17a7aeb, type: 2}
     HighlightedTile: {fileID: 11400000, guid: 43e1183a8d4ef70428af7cdc4568104e, type: 2}
-  initiativeEntryPrefab: {fileID: 610763912501953441, guid: 9b60b5361dd08984e957b06bb672c6e4, type: 3}
+  initiativeEntryPrefab: {fileID: 610763912501953441, guid: e5ca0fb969422e34a937afd45dd4c940, type: 3}
   contentParent: {fileID: 3548581214578371716}
 --- !u!1 &5088248606950066334
 GameObject:
@@ -4547,7 +4547,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000010967255, y: 0.000058710575}
+  m_AnchoredPosition: {x: -0.000010967255, y: 0.00007247925}
   m_SizeDelta: {x: 0, y: 8.21}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &5470408372509567572
