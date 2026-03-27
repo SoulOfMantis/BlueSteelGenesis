@@ -26,15 +26,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/b1_st0_Normal2.unity
     guid: f6b940023bacf804f94e9c7c44cd3bf8
-  - enabled: 0
-    path: Assets/Scenes/b1_st1_Boss0_0.unity
-    guid: 40cba96a43680a24386c7ce069164a7e
   - enabled: 1
-    path: Assets/Scenes/treasure_room_b1.unity
-    guid: 6d00e1083fe2c544e809fe35075b2003
-  - enabled: 1
-    path: Assets/Scenes/b1_st0_Boss0_0.unity
-    guid: 212b07fd3e663994bbe30737ddf0ff45
+    path: Assets/Scenes/b1_st1_Elite1.unity
+    guid: abb448fdb44ea3a4fad764cae7ca76d8
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
