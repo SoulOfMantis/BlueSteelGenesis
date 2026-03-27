@@ -188,7 +188,7 @@ public class PlayerCharacter : Character
 
     override protected async Task die()
     {
-        Debug.Log("����� ����!");
+        Debug.Log("Игрок умер!");
         await triggerModules(TriggerType.OnDeath);
         if (TooltipSystem.IsCurrent(this))
         {
