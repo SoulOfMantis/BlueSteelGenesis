@@ -55,7 +55,7 @@ MonoBehaviour:
   ShopIcon: {fileID: -573265044797812623, guid: 8ca8dac4ac394c241975e8b13cd16ef9, type: 3}
   RestIcon: {fileID: -5632654094959129268, guid: ddd96ebea04f8e74b99c12d269d6ec58, type: 3}
   EliteEnemyIcon: {fileID: -8641209409080487704, guid: f1897441747f9d64eb1abee23cc8eb65, type: 3}
-  TreasureIcon: {fileID: 0}
+  TreasureIcon: {fileID: 898854083305998427, guid: 9099a1fa649df0649b2e4498a6e18bdb, type: 3}
   StartIcon: {fileID: 0}
   BossIcon: {fileID: 0}
   BlackMarketIcon: {fileID: 694090069625626145, guid: 44d362f0207a02f4f8b900811fd0ba60, type: 3}

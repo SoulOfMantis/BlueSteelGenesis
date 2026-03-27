@@ -18,7 +18,7 @@ public class NodeButton : MonoBehaviour
     private void updateVisuals() {
         Sprite icon = null;
         Color col = Color.white;
-        Vector2 scale = new(1, 1);
+        Vector2 scale = new(1.5f, 1.5f);
 
         switch (type_) {
             case Map.Node.REGULAR_ENEMY:
@@ -41,11 +41,11 @@ public class NodeButton : MonoBehaviour
                 break;
             case Map.Node.START:
                 icon = StartIcon;
-                scale *= 2f;
+                scale *= 1.25f;
                 break;
             case Map.Node.BOSS:
                 icon = BossIcon;
-                scale *= 2f;
+                scale *= 1.25f;
                 break;
             case Map.Node.BLACK_MARKET:
                 icon = BlackMarketIcon;
