@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: da199215df8d95246bd6729d9754fc80
+guid: f33fdc022dd6ef64884e312813f3a9d5
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,7 +127,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: CallModuleRobotWolf
+  - name: ClowModule
     originalName: 
     pivot: {x: 0.5, y: -0.033333335}
     alignment: 9
@@ -139,7 +139,7 @@ ScriptedImporter:
       y: 4
       width: 30
       height: 30
-    spriteID: ecc3ca3c9c1ea604199a56ea49adba7b
+    spriteID: 558f6835137143b4e8ed194b4210aa86
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,17 +153,17 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 1737577406
+      value0: 277191505
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: CallModuleRobotWolf
+    name: ClowModule
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: CallModuleRobotWolf
+    - name: ClawModule
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -171,7 +171,7 @@ ScriptedImporter:
         y: 1
         width: 30
         height: 30
-      spriteId: ecc3ca3c9c1ea604199a56ea49adba7b
+      spriteId: 558f6835137143b4e8ed194b4210aa86
     linkedCells: []
     tileCells: []
     tileSetIndex: 0

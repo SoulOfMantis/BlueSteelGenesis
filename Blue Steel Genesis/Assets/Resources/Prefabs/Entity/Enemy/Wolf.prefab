@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 910996753969975453}
   - component: {fileID: 6436685001208273242}
-  - component: {fileID: 3830082207309243854}
+  - component: {fileID: 4108516043659552751}
   m_Layer: 0
-  m_Name: RoboWolf
+  m_Name: Wolf
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 7262922348641676942, guid: fe4bd74127dfd2146816968d76057b4d, type: 3}
+  m_Sprite: {fileID: -9188245553332931909, guid: f2e7ae989cd862648888cf17b379d348, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -91,7 +91,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3830082207309243854
+--- !u!114 &4108516043659552751
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,9 +100,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 344885736801266915}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88f8ecfa34679364781ef8ef35b74577, type: 3}
+  m_Script: {fileID: 11500000, guid: 089d67923471a2644b36c9a284575de3, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: BlueSteelGenesis::RoboWolf
+  m_EditorClassIdentifier: BlueSteelGenesis::Wolf
   bodySize: 1
 --- !u!1 &7030514784578829008
 GameObject:
@@ -114,7 +114,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4196047120132471949}
   m_Layer: 0
-  m_Name: RoboWolf
+  m_Name: Wolf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
