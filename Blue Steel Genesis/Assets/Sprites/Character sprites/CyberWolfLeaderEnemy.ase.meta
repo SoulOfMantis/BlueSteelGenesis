@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c8da7c89063b1054393c939288886333
+guid: 0cfbca8ebeb0bf549829796ac6a66572
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,19 +127,19 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: EliteEnemy
+  - name: CyberWolfLeaderEnemy
     originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
+    pivot: {x: 0.47368422, y: -0.13725491}
+    alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 53
-      height: 62
-    spriteID: c2edec3aaff620349ac4d981c3209ccd
+      width: 57
+      height: 51
+    spriteID: 73dada51ce7bc554698ceb917cedb72c
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,25 +153,25 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 2299411811
+      value0: 3711620782
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: EliteEnemy
+    name: CyberWolfLeaderEnemy
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: EliteEnemy
+    - name: CyberWolfLeaderEnemy
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
         x: 5
-        y: 1
-        width: 53
-        height: 62
-      spriteId: c2edec3aaff620349ac4d981c3209ccd
+        y: 7
+        width: 57
+        height: 51
+      spriteId: 73dada51ce7bc554698ceb917cedb72c
     linkedCells: []
     tileCells: []
     tileSetIndex: 0
@@ -182,4 +182,4 @@ ScriptedImporter:
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 64, y: 64}
-  previousTextureSize: {x: 64, y: 128}
+  previousTextureSize: {x: 128, y: 64}
