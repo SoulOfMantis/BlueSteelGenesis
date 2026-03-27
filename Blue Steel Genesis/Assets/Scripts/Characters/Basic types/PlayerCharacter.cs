@@ -58,6 +58,14 @@ public class PlayerCharacter : Character
     }
     void updateShields()
     {
+        if (currentShield == 0)
+        {
+            shieldSlider.gameObject.SetActive(false);
+            shieldDisplay.gameObject.SetActive(false);
+            return;
+        }
+        shieldSlider.gameObject.SetActive(true);
+        shieldDisplay.gameObject.SetActive(true);
         shieldSlider.value = currentShield;
         shieldDisplay.text = currentShield.Value.ToString();
     }
