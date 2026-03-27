@@ -2,9 +2,9 @@
 using System.Linq;
 using UnityEngine;
 
-public class SaberRobot : Enemy
+public class MacheteRobot : Enemy
 {
-    public SaberRobot() : base(32, 4, 64)
+    public MacheteRobot() : base(32, 4, 64)
     {
         addModule(new LongAttack());
         addModule(new WideAttack());
