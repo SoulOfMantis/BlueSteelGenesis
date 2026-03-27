@@ -66,7 +66,7 @@ public class Expedition
     public Map.BiomeInfo Biome { get; private set; }
 
     private ExpeditionMapProgressInfo map_progress_ = null;
-    public int BiomeStage { get; private set; } = 0;
+    public int BiomeStage { get; private set; } = -1;
 
 
     private static int generateLocalSeed(int global_seed, uint biome_id, uint biome_stage, uint lives_count, byte[] ship_parts_data)

@@ -50,15 +50,15 @@ MonoBehaviour:
       m_Calls: []
   position_: {x: 0, y: 0}
   type_: 0
-  RegularEnemyIcon: {fileID: -8982579351608264847, guid: f1866b24ca37a7148ba0c78b435f1c6d, type: 3}
+  RegularEnemyIcon: {fileID: -372674217349630506, guid: ec0e298a6276f0447b9d31890ce0c18b, type: 3}
   EventIcon: {fileID: 0}
-  ShopIcon: {fileID: -573265044797812623, guid: 8ca8dac4ac394c241975e8b13cd16ef9, type: 3}
-  RestIcon: {fileID: -5632654094959129268, guid: ddd96ebea04f8e74b99c12d269d6ec58, type: 3}
-  EliteEnemyIcon: {fileID: -8641209409080487704, guid: f1897441747f9d64eb1abee23cc8eb65, type: 3}
-  TreasureIcon: {fileID: 898854083305998427, guid: 9099a1fa649df0649b2e4498a6e18bdb, type: 3}
+  ShopIcon: {fileID: 5495121454292350632, guid: 6da65a41cb4b65c43b4859296c6f0a7d, type: 3}
+  RestIcon: {fileID: -4992995096616195933, guid: 84e3ec6de96307b48bd54526069cb8e4, type: 3}
+  EliteEnemyIcon: {fileID: -197017022953627775, guid: 82defb221e85ae34bb5674c3b320a6b5, type: 3}
+  TreasureIcon: {fileID: 6029224591642543062, guid: a3819d5228aefec449afd236d1fd3cf6, type: 3}
   StartIcon: {fileID: 0}
   BossIcon: {fileID: 0}
-  BlackMarketIcon: {fileID: 694090069625626145, guid: 44d362f0207a02f4f8b900811fd0ba60, type: 3}
+  BlackMarketIcon: {fileID: -4213302759279698812, guid: 7ce617e6184704f46bab2ee37f872b01, type: 3}
 --- !u!1 &7150776707198773678
 GameObject:
   m_ObjectHideFlags: 0
