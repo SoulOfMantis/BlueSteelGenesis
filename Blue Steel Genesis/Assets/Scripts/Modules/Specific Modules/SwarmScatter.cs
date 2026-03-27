@@ -14,7 +14,7 @@ public class SwarmScatter : PassiveModule
     }
 
     public override string Description() {
-        return "Bugs scatter, making them harder to hit.\n" + base.Description();
+        return "At the end of their turn, the bugs scatter, making them harder to hit.\n" + base.Description();
     }
 
     public override async Task Effect(Character user, Vector3Int pos) {
