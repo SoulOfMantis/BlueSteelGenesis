@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: abd1da186e0afc54294356324ab84450
+guid: 35105058a0e05444fb7d75b19335b5db
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,9 +127,9 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: CyberWolfLeaderEnemy
+  - name: FireModuleRoboWolf
     originalName: 
-    pivot: {x: 0.47368422, y: -0.13725491}
+    pivot: {x: 0.5, y: -0.033333335}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -137,9 +137,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 57
-      height: 51
-    spriteID: 0a31130e44c5c5f48ae722e42dd566a0
+      width: 30
+      height: 30
+    spriteID: 425aba81c52749746ab67548748156dc
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,25 +153,25 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 3711620782
+      value0: 3383252858
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: CyberWolfLeaderEnemy
+    name: FireModuleRoboWolf
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: CyberWolfLeaderEnemy
+    - name: BurnModule
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 5
-        y: 7
-        width: 57
-        height: 51
-      spriteId: 0a31130e44c5c5f48ae722e42dd566a0
+        x: 1
+        y: 1
+        width: 30
+        height: 30
+      spriteId: 425aba81c52749746ab67548748156dc
     linkedCells: []
     tileCells: []
     tileSetIndex: 0
@@ -181,5 +181,5 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 64, y: 64}
-  previousTextureSize: {x: 128, y: 64}
+  canvasSize: {x: 32, y: 32}
+  previousTextureSize: {x: 64, y: 64}

@@ -16,35 +16,39 @@ public class NodeButton : MonoBehaviour
     /// Вызывается при необходимости обновить внешний вид кнопки
     /// </summary>
     private void updateVisuals() {
+        Sprite icon = null;
         Color col = Color.white;
-        Vector2 scale = new(1, 1);
+        Vector2 scale = new(1.5f, 1.5f);
 
         switch (type_) {
             case Map.Node.REGULAR_ENEMY:
-                col = Color.gray;
+                icon = RegularEnemyIcon;
                 break;
             case Map.Node.EVENT:
-                col = Color.lightCyan;
+                icon = EventIcon;
                 break;
             case Map.Node.SHOP:
-                col = Color.purple;
+                icon = ShopIcon;
                 break;
             case Map.Node.TREASURE:
-                col = Color.gold;
+                icon = TreasureIcon;
                 break;
             case Map.Node.REST:
-                col = Color.lightGreen;
+                icon = RestIcon;
                 break;
             case Map.Node.ELITE_ENEMY:
-                col = Color.softRed;
+                icon = EliteEnemyIcon;
                 break;
             case Map.Node.START:
-                col = Color.blue;
-                scale *= 2f;
+                icon = StartIcon;
+                scale *= 1.25f;
                 break;
             case Map.Node.BOSS:
-                col = Color.red;
-                scale *= 2f;
+                icon = BossIcon;
+                scale *= 1.25f;
+                break;
+            case Map.Node.BLACK_MARKET:
+                icon = BlackMarketIcon;
                 break;
         }
 
@@ -65,6 +69,8 @@ public class NodeButton : MonoBehaviour
         }
 
         setButton();
+
+        button.GetComponent<Image>().sprite = icon;
         button.GetComponent<Image>().color = col;
         button.GetComponent<RectTransform>().localScale = scale;
     }
@@ -82,7 +88,7 @@ public class NodeButton : MonoBehaviour
     /// <summary>
     /// Размер кнопки в обычном состоянии (используется ExpeditionMapView для рассчета позиций)
     /// </summary>
-    public static Vector2 size => new(30, 30);
+    public static Vector2 size => new(50, 50);
 
     public Button button { get; private set; } = null;
     public Vector2Int position => position_;
@@ -99,6 +105,16 @@ public class NodeButton : MonoBehaviour
         }
     }
     private SelectionStatus selection_status_;
+
+    [SerializeField] private Sprite RegularEnemyIcon;
+    [SerializeField] private Sprite EventIcon;
+    [SerializeField] private Sprite ShopIcon;
+    [SerializeField] private Sprite RestIcon;
+    [SerializeField] private Sprite EliteEnemyIcon;
+    [SerializeField] private Sprite TreasureIcon;
+    [SerializeField] private Sprite StartIcon;
+    [SerializeField] private Sprite BossIcon;
+    [SerializeField] private Sprite BlackMarketIcon;
 
     public enum SelectionStatus {
         Normal,
