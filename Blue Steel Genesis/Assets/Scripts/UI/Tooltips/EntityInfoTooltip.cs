@@ -39,6 +39,7 @@ public class EntityInfoTooltip : MonoBehaviour
         energySlider.gameObject.SetActive(false);
         if (entity is Character c)
         {
+            Debug.Log(c.Name);
             energySlider.gameObject.SetActive(true);
             if (c.currentShield != 0)
             {

@@ -8,7 +8,7 @@ public class EntityTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointe
     private Color baseEntityColor;
     IEnumerator ShowingTooltip()
     {
-        if (TooltipSystem.IsEntityTooltipActive) yield return new WaitForSeconds(TooltipSystem.HidingTimeInSeconds);
+        if (TooltipSystem.IsEntityTooltipActive()) yield return new WaitForSeconds(TooltipSystem.HidingTimeInSeconds);
         TooltipSystem.Load(entity);           
         yield return new WaitForSeconds(TooltipSystem.ShowingTimeInSeconds);
         TooltipSystem.Show(TooltipSystem.TooltipType.entityTooltip, this);

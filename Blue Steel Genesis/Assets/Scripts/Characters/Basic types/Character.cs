@@ -149,6 +149,7 @@ public virtual async Task drainEnergy(uint amount)
         else
         {
             status_modules_.Add(status);
+            UpdateTooltipIfCurrent();
             status.Initialize();
             Debug.Log($"Status module {status.GetType().Name} added to {GetType().Name}");
         }
