@@ -8,6 +8,7 @@ public class Debug_Obstacle : Obstacle
     }
 
     protected override Task die() {
+        base.die();
         tracker.RemoveObstacle(this);
         Destroy(gameObject);
         return Task.CompletedTask;

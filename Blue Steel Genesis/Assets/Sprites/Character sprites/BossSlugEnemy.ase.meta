@@ -129,8 +129,8 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: BossSlugEnemy
     originalName: 
-    pivot: {x: 0.5671642, y: -0.19402985}
-    alignment: 9
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
     rect:
@@ -139,7 +139,7 @@ ScriptedImporter:
       y: 4
       width: 67
       height: 67
-    spriteID: 1b590cbe95e28334f8fc8596aba042f8
+    spriteID: 89dd0c715e239ee4c9b7298b33624d8e
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -171,7 +171,7 @@ ScriptedImporter:
         y: 13
         width: 67
         height: 67
-      spriteId: 1b590cbe95e28334f8fc8596aba042f8
+      spriteId: 89dd0c715e239ee4c9b7298b33624d8e
     linkedCells: []
     tileCells: []
     tileSetIndex: 0

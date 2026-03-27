@@ -9,10 +9,13 @@ public class AlliedPurpleDog : Ally
     {
         Name = "Allied Purple Dog";
         Description = "The first ally. Will move closer to your enemies and bite, if it has an opportunity!";
+    }
+    protected override void Init()
+    {
         addModule(new BasicAttack());
         addModule(new BasicMovement());
-
         SetPriorityModules();
+        base.Init();
     }
 
     protected override bool TryGetTargetForZero(out Vector3Int targetPos)

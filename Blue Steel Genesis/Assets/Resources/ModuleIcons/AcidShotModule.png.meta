@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 677653c7317e06b4883f822b504bf956
+guid: 711596be89a627d458330965b6bbf13d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7855081903636864331
-    second: Black_Shop_bakcground_0
+      213: 590227360453752852
+    second: AcidShotModule_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Black_Shop_bakcground_0
+      name: AcidShotModule_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 320
-        height: 240
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b4ddfd39f5bd20d60800000000000000
-      internalID: 7855081903636864331
+      spriteID: 418ff8c38a8e03800800000000000000
+      internalID: 590227360453752852
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Black_Shop_bakcground_0: 7855081903636864331
+      AcidShotModule_0: 590227360453752852
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -10,9 +10,19 @@ public class TooltipSystem : MonoBehaviour
     ModuleTooltipTrigger currentModuleTrigger;
     public static bool moduleTooltipLocked = false;
     public static readonly float HidingTimeInSeconds = .4f;
-    public static readonly float ShowingTimeInSeconds = .2f;
-    public static bool IsEntityTooltipActive => instance.entityTooltip.enabled;
-    public static bool IsModuleTooltipActive => instance.moduleTooltip.enabled;
+    public static readonly float ShowingTimeInSeconds = .4f;
+    public static bool IsEntityTooltipActive()
+    {
+        if (instance == null) return false;
+        if (instance.entityTooltip == null) return false;
+        return instance.entityTooltip.enabled;
+    }
+    public static bool IsModuleTooltipActive()
+    {
+        if (instance == null) return false;
+        if (instance.moduleTooltip == null) return false;
+        return instance.moduleTooltip.enabled;
+    }
 
     public void Awake()
     {
@@ -20,14 +30,40 @@ public class TooltipSystem : MonoBehaviour
         instance.entityTooltip.gameObject.SetActive(false);
         instance.moduleTooltip.gameObject.SetActive(false);
     }
-
-    public static void Load(Entity c)
+    public static void Update(TooltipType type)
     {
-        instance.entityTooltip.updateInfo(c);
+        switch (type)
+        {
+            case TooltipType.entityTooltip:
+                Load(instance.currentEntityTrigger.entity);
+                break;
+            case TooltipType.moduleTooltip:
+                Load(instance.currentModuleTrigger.module);
+                break;
+        }
     }
-    public static void Load(GameModule g)
+    public static bool IsCurrent(Entity e)
     {
-        instance.moduleTooltip.updateInfo(g);
+        if (instance == null) return false;
+        if (!IsEntityTooltipActive()) return false;
+        if (instance.currentEntityTrigger == null) return false;
+        return instance.currentEntityTrigger.entity == e;
+    }
+    public static bool IsCurrent(GameModule m)
+    {
+        if (instance == null) return false;
+        if (!IsModuleTooltipActive()) return false;
+        if (instance.currentModuleTrigger == null) return false;
+        return instance.currentModuleTrigger.module == m;
+    }
+
+    public static void Load(Entity e)
+    {
+        instance.entityTooltip.updateInfo(e);
+    }
+    public static void Load(GameModule m)
+    {
+        instance.moduleTooltip.updateInfo(m);
     }
     public static void Lock(TooltipType type)
     {

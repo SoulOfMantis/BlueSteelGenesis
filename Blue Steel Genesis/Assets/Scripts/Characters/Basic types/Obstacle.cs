@@ -5,6 +5,7 @@ public abstract class Obstacle : Entity {
         get => currentHealth.Max;
         protected set => currentHealth.Max = value;
     }
+
     public Obstacle(uint maxHealth)
     {
         this.maxHealth = maxHealth;
