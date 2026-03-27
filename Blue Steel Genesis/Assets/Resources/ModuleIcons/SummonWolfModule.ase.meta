@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2c9f1b4dd35457b46bb2a3f1e3cb91d4
+guid: 3a3f03f1662aa3047bf35fa6986392e8
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,7 +127,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: CallModule
+  - name: SummonWolfModule
     originalName: 
     pivot: {x: 0.5, y: -0.033333335}
     alignment: 9
@@ -139,7 +139,7 @@ ScriptedImporter:
       y: 4
       width: 30
       height: 30
-    spriteID: b0a6e0621d9c63845baf75b9a95c85b6
+    spriteID: eb0452875bc53f943ba7a473235ad4f6
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,12 +153,12 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 735083074
+      value0: 3439196003
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: CallModule
+    name: SummonWolfModule
     layerFlags: 0
     layerType: 0
     blendMode: 0
@@ -171,7 +171,7 @@ ScriptedImporter:
         y: 1
         width: 30
         height: 30
-      spriteId: b0a6e0621d9c63845baf75b9a95c85b6
+      spriteId: eb0452875bc53f943ba7a473235ad4f6
     linkedCells: []
     tileCells: []
     tileSetIndex: 0
