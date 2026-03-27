@@ -95,7 +95,7 @@ namespace Map
         {
             ExpeditionMap map = new() {
                 map = new Node[height, width],
-                upside_down = biome_stage % 2 == 1
+                upside_down = biome_stage % 2 == 0
             };
 
             var biome_map = generateBiomeMap(width, height, biome, biome_seed);
