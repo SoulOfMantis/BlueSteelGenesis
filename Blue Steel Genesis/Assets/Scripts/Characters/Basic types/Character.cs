@@ -25,13 +25,13 @@ public abstract class Character : Entity
     }
     public virtual async Task shieldDamage(uint shield_dmg)
     {
-        loseShield(shield_dmg);
+        await loseShield(shield_dmg);
         await processTrigger(TriggerType.OnDamageShielded);
         Debug.Log($"{shield_dmg} урона поглощено щитом");
         if (currentShield == 0)
             await processTrigger(TriggerType.OnShieldBroken);
     }
-    public virtual void loseShield(uint value) => currentShield -= value;
+    public virtual async Task loseShield(uint value) => currentShield -= value;
     public override async Task heal(uint hp)
     {
         await base.heal(hp);

@@ -73,18 +73,22 @@ public class CombatSystem
 
     string NextBossEncounter()
     {
-        uint boss_id;
+        uint boss_id, boss_variation;
         List<uint> boss_list = BiomeInfo.bosses.Keys.Where(x => x.stage == stage_id).Select(y => y.boss_id).ToList();
 
         if (boss_list.Count != 0)
         {
             int boss_ind = gen.Next(boss_list.Count);
             boss_id = boss_list[boss_ind];
+            boss_variation = (uint)gen.Next((int)BiomeInfo.bosses[(stage_id, boss_id)]);
             BiomeInfo.bosses.Remove((stage_id, boss_id));
         }
-        else boss_id = default_boss;
+        else
+        {
+            boss_id = default_boss;
+            boss_variation = 0;
+        }
 
-        uint boss_variation = (uint)gen.Next((int)BiomeInfo.bosses[(stage_id, boss_id)]);
         return $"b{BiomeInfo.id}_st{stage_id}_Boss{boss_id}_{boss_variation}";
     }
 
