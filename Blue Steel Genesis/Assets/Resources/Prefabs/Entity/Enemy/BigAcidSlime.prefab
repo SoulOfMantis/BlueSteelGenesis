@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 910996753969975453}
   - component: {fileID: 6436685001208273242}
-  - component: {fileID: 1518573372539590349}
+  - component: {fileID: 1477556361739014106}
   m_Layer: 0
-  m_Name: theLivingAcid
+  m_Name: BigAcidSlime
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,8 +80,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 2071782372704099228, guid: f17770007bba24a4ebc56812f940255a, type: 3}
-  m_Color: {r: 0.6769436, g: 1, b: 0.5990566, a: 1}
+  m_Sprite: {fileID: -3961811924317017272, guid: 7af20effaa48c7449a61caf419013db7, type: 3}
+  m_Color: {r: 0.48584908, g: 1, b: 0.55393773, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
@@ -91,7 +91,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!114 &1518573372539590349
+--- !u!114 &1477556361739014106
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,10 +100,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 344885736801266915}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a094334bb781de44bcbb0037c6645ab, type: 3}
+  m_Script: {fileID: 11500000, guid: c04c91c54d35ec6458f3d0605b2051b5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: BlueSteelGenesis::LivingAcid
-  bodySize: 3
+  m_EditorClassIdentifier: BlueSteelGenesis::BigAcidSlime
+  bodySize: 2
 --- !u!1 &7030514784578829008
 GameObject:
   m_ObjectHideFlags: 0
@@ -114,7 +114,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4196047120132471949}
   m_Layer: 0
-  m_Name: theLivingAcid
+  m_Name: BigAcidSlime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -130,7 +130,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 910996753969975453}
