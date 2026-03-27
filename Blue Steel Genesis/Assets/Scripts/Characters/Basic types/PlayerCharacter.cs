@@ -58,6 +58,14 @@ public class PlayerCharacter : Character
     }
     void updateShields()
     {
+        if (currentShield == 0)
+        {
+            shieldSlider.gameObject.SetActive(false);
+            shieldDisplay.gameObject.SetActive(false);
+            return;
+        }
+        shieldSlider.gameObject.SetActive(true);
+        shieldDisplay.gameObject.SetActive(true);
         shieldSlider.value = currentShield;
         shieldDisplay.text = currentShield.Value.ToString();
     }
@@ -182,6 +190,12 @@ public class PlayerCharacter : Character
     {
         Debug.Log("����� ����!");
         await triggerModules(TriggerType.OnDeath);
+        if (TooltipSystem.IsCurrent(this))
+        {
+            TooltipSystem.Unlock(TooltipSystem.TooltipType.entityTooltip);
+            TooltipSystem.Hide(TooltipSystem.TooltipType.entityTooltip);
+        }
+        await Awaitable.WaitForSecondsAsync(.5f);
         tracker.RemoveCharacter(this);
         Defeat();
         //TODO: player loss

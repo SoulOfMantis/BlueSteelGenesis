@@ -38,6 +38,7 @@ public class PoisonModule : NegativeStatusModule
         {
             turnsLeft += p.turnsLeft;
             poisonDamage = Math.Max(poisonDamage, turnsLeft / 5);
+            UpdateTooltipIfCurrent();
         }
     }
 

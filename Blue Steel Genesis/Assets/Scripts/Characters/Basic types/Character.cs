@@ -9,6 +9,7 @@ public abstract class Character : Entity
     public override async Task damage(uint dmg)
     {
         dmg = Math.Max(dmg, 1);
+        await Awaitable.WaitForSecondsAsync(.1f); //TODO: remove delay; derived classes must await animations
         if (currentShield > 0)
         {
             uint shield_dmg = Math.Min(currentShield, dmg);
@@ -18,6 +19,7 @@ public abstract class Character : Entity
         if (dmg > 0)
         {
             currentHealth -= dmg;
+            await changeColorAndWait(Color.crimson, 0.2f*dmg);
             await processTrigger(TriggerType.OnHealthDamage);
             if (currentHealth == 0)
                 await die();
@@ -31,7 +33,12 @@ public abstract class Character : Entity
         if (currentShield == 0)
             await processTrigger(TriggerType.OnShieldBroken);
     }
-    public virtual async Task loseShield(uint value) => currentShield -= value;
+    public virtual async Task loseShield(uint value)
+    {
+        currentShield -= value;
+        UpdateTooltipIfCurrent();
+        await Awaitable.WaitForSecondsAsync(.1f); //TODO: remove delay; derived classes must await animations
+    }
     public override async Task heal(uint hp)
     {
         await base.heal(hp);
@@ -41,38 +48,48 @@ public abstract class Character : Entity
     public virtual async Task giveShield(uint amount)
     {
         currentShield += Math.Max(amount, 1);
+        UpdateTooltipIfCurrent();
+        await Awaitable.WaitForSecondsAsync(.2f); //TODO: remove delay; derived classes must await animations
         await processTrigger(TriggerType.OnShieldGiven);
         Debug.Log($"Выдан щит: {amount}; Всего: {currentShield}");
     }
 public virtual async Task drainEnergy(uint amount)
     {
         currentEnergy -= Math.Max(amount, 1);
+        UpdateTooltipIfCurrent();
+        await changeColorAndWait(Color.blue, 0.1f*amount);
         await processTrigger(TriggerType.OnEnergyDrain);
     }
     public virtual async Task restoreEnergy(uint amount)
     {
         currentEnergy += Math.Max(amount, 1);
+        UpdateTooltipIfCurrent();
+        await changeColorAndWait(Color.aquamarine, 0.1f*amount);
         await processTrigger(TriggerType.OnEnergyRestore);
     }
     public virtual async Task startBattle()
     {
+        await Awaitable.WaitForSecondsAsync(.5f); //TODO: remove delay; derived classes must await animations
         await processTrigger(TriggerType.OnBattleStart);
     }
     public virtual async Task endBattle()
     {
         status_modules_.Clear();
+        await Awaitable.WaitForSecondsAsync(.5f); //TODO: remove delay; derived classes must await animations
         await processTrigger(TriggerType.OnBattleEnd);
     }
     public virtual async Task startTurn()
     {
         Debug.Log($"turn started");
         myTurn = true;
-        loseShield(currentShield.Value);
+        await Awaitable.WaitForSecondsAsync(.2f); //TODO: remove delay; derived classes must await animations
+        await loseShield(currentShield.Value);
         await restoreEnergy(maxEnergy);
         await processTrigger(TriggerType.OnTurnStart);
     }
     public virtual async Task endTurn()
     {
+        await Awaitable.WaitForSecondsAsync(.1f); //TODO: remove delay; derived classes must await animations
         await processTrigger(TriggerType.OnTurnEnd);
         myTurn = false;
         tracker.NextTurn();
@@ -108,6 +125,7 @@ public virtual async Task drainEnergy(uint amount)
         Entity target = tracker.FindEntityAtPosition(pos);
         if (target == null)
             return;
+        await Awaitable.WaitForSecondsAsync(.3f);
         await target.damage(dmg);
         await processTrigger(TriggerType.OnStrike, pos);
         Debug.Log($"Strike at {pos} for {dmg} damage");
@@ -119,6 +137,7 @@ public virtual async Task drainEnergy(uint amount)
         Character target = tracker.FindCharacterAtPosition(pos);
         if (target == null)
             return;
+        await Awaitable.WaitForSecondsAsync(.2f);
         target.addStatusModule(status);
         await processTrigger(TriggerType.OnApply, pos);
         Debug.Log($"Apply {status.GetType().Name} at {pos}");
@@ -142,6 +161,7 @@ public virtual async Task drainEnergy(uint amount)
         else
         {
             status_modules_.Add(status);
+            UpdateTooltipIfCurrent();
             status.Initialize();
             Debug.Log($"Status module {status.GetType().Name} added to {GetType().Name}");
         }
@@ -202,9 +222,12 @@ public virtual async Task drainEnergy(uint amount)
     public bool doesModuleExist(int module_index) => getModule<GameModule>(module_index) != null;
     protected virtual bool isCorrectPosition(GameModule module, Vector3Int pos) => module.checkPosition(this, pos);
     protected virtual bool hasEnoughEnergy(ActiveModule module) => module != null && currentEnergy >= module.energyCost;
-    protected virtual Task useActiveModule_internal(ActiveModule m, Vector3Int pos) => m.Use(this, pos);
-    protected virtual Task usePassiveModule_internal(PassiveModule m, Vector3Int pos) => m.Use(this, pos);
-    protected virtual Task useStatusModule_internal(StatusModule m) => m.Use(this, Position.LeftBottom);
+    protected virtual async Task useActiveModule_internal(ActiveModule m, Vector3Int pos)
+    { await m.Use(this, pos); }
+    protected virtual async Task usePassiveModule_internal(PassiveModule m, Vector3Int pos)
+    { await m.Use(this, pos); }
+    protected virtual async Task useStatusModule_internal(StatusModule m)
+    { await m.Use(this, Position.LeftBottom); }
 
     public string getModuleName(int index)
     {
