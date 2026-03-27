@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 910996753969975453}
   - component: {fileID: 6436685001208273242}
-  - component: {fileID: 8936109384407902662}
+  - component: {fileID: 3568364980691701657}
   m_Layer: 0
-  m_Name: AlliedDog
+  m_Name: CyberLeader
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,9 +80,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: -6726115255258312124, guid: 57df6a75a624b8142b2de4e95b455fda, type: 3}
-  m_Color: {r: 0.16958882, g: 0.8731657, b: 0.9716981, a: 1}
-  m_FlipX: 1
+  m_Sprite: {fileID: 3966498314549504201, guid: abd1da186e0afc54294356324ab84450, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.34, y: 0.31}
@@ -91,7 +91,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8936109384407902662
+--- !u!114 &3568364980691701657
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,10 +100,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 344885736801266915}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a940f76b044e01e48a240d180cb62aea, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a68223a87e6df54ba9f47ab0156de75, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: BlueSteelGenesis::AlliedPurpleDog
-  bodySize: 1
+  m_EditorClassIdentifier: BlueSteelGenesis::CyberLeader
+  bodySize: 2
 --- !u!1 &7030514784578829008
 GameObject:
   m_ObjectHideFlags: 0
@@ -114,7 +114,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4196047120132471949}
   m_Layer: 0
-  m_Name: AlliedPurpleDog
+  m_Name: CyberLeader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
