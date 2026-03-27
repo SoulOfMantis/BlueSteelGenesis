@@ -127,7 +127,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: BoostSpeedModule
+  - name: AcceleratedMovement
     originalName: 
     pivot: {x: 0.5, y: -0.033333335}
     alignment: 9
@@ -139,7 +139,7 @@ ScriptedImporter:
       y: 4
       width: 30
       height: 30
-    spriteID: 9ee6c8c49d3b672429833bf99118d9b9
+    spriteID: e3a9ae745c4f6834da221d9ede204093
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,12 +153,12 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 3671092560
+      value0: 3080387316
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: BoostSpeedModule
+    name: AcceleratedMovement
     layerFlags: 0
     layerType: 0
     blendMode: 0
@@ -171,7 +171,7 @@ ScriptedImporter:
         y: 1
         width: 30
         height: 30
-      spriteId: 9ee6c8c49d3b672429833bf99118d9b9
+      spriteId: e3a9ae745c4f6834da221d9ede204093
     linkedCells: []
     tileCells: []
     tileSetIndex: 0

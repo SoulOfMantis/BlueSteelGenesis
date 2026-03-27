@@ -127,7 +127,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: BiteWithFireModule
+  - name: BurnBite
     originalName: 
     pivot: {x: 0.5, y: -0.033333335}
     alignment: 9
@@ -139,7 +139,7 @@ ScriptedImporter:
       y: 4
       width: 30
       height: 30
-    spriteID: fad1db61fbee3f040b9f7c250a13a676
+    spriteID: 48b8d8de27e2a2343b37a80f871fb5dc
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,12 +153,12 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 257625608
+      value0: 243546141
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: BiteWithFireModule
+    name: BurnBite
     layerFlags: 0
     layerType: 0
     blendMode: 0
@@ -171,7 +171,7 @@ ScriptedImporter:
         y: 1
         width: 30
         height: 30
-      spriteId: fad1db61fbee3f040b9f7c250a13a676
+      spriteId: 48b8d8de27e2a2343b37a80f871fb5dc
     linkedCells: []
     tileCells: []
     tileSetIndex: 0
