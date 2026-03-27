@@ -32,11 +32,20 @@ public class FlightKeyword : VisibleKeyword
         ChangeDescription("Allows flying over obstacles.");
     }
 }
+public class AcidKeyword : VisibleKeyword
+{
+    public AcidKeyword() : base()
+    {
+        ChangeName("Acid");
+        ChangeDescription("Some creatures may have resistance or immunity to this.");
+    }
+}
 public enum PossibleTargets
 {
     Self,
     Target,
-    AllAdjacent
+    AllAdjacent,
+    All
 }
 public abstract class TargetedVisibleKeyword : VisibleKeyword
 {
@@ -63,6 +72,8 @@ public abstract class TargetedVisibleKeyword : VisibleKeyword
                 return "to the target";
             case PossibleTargets.AllAdjacent:
                 return "to all adjacent creatures";
+            case PossibleTargets.All:
+                return "to ALL creatures";
             default:
                 return "";
         }
