@@ -61,11 +61,13 @@ public abstract class GameModule
     }
     public void changeName(string newName) => Name = newName;
     public abstract Task Effect(Character user, Vector3Int pos);
-    public Task Use(Character user, Vector3Int pos)
+    public async Task Use(Character user, Vector3Int pos)
     {
-        if (!CanBeUsed()) return Task.CompletedTask;
-        SpendUse();
-        return Effect(user, pos);
+        await Awaitable.WaitForSecondsAsync(.1f);
+        if (CanBeUsed()) 
+        {        SpendUse();
+            await Effect(user, pos);
+        }
     }
 
     public virtual void Initialize()

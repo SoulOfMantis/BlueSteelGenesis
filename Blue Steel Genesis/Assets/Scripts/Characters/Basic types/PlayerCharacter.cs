@@ -110,9 +110,9 @@ public class PlayerCharacter : Character
         await base.giveShield(amount);
         updateShields();
     }
-    public override void loseShield(uint value)
+    public override async Task loseShield(uint value)
     {
-        base.loseShield(value);
+        await base.loseShield(value);
         updateShields();
     }
     public override async Task startBattle()
@@ -180,6 +180,7 @@ public class PlayerCharacter : Character
     override protected async Task die()
     {
         Debug.Log("Èãðîê óìåð!");
+        await Awaitable.WaitForSecondsAsync(.5f);
         tracker.RemoveCharacter(this);
         Defeat();
         //TODO: player loss
