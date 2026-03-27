@@ -35,8 +35,9 @@ public abstract class Character : Entity
     }
     public virtual async Task loseShield(uint value)
     {
-        await Awaitable.WaitForSecondsAsync(.1f); //TODO: remove delay; derived classes must await animations
         currentShield -= value;
+        UpdateTooltipIfCurrent();
+        await Awaitable.WaitForSecondsAsync(.1f); //TODO: remove delay; derived classes must await animations
     }
     public override async Task heal(uint hp)
     {
@@ -47,6 +48,7 @@ public abstract class Character : Entity
     public virtual async Task giveShield(uint amount)
     {
         currentShield += Math.Max(amount, 1);
+        UpdateTooltipIfCurrent();
         await Awaitable.WaitForSecondsAsync(.2f); //TODO: remove delay; derived classes must await animations
         await processTrigger(TriggerType.OnShieldGiven);
         Debug.Log($"Выдан щит: {amount}; Всего: {currentShield}");
@@ -54,12 +56,14 @@ public abstract class Character : Entity
 public virtual async Task drainEnergy(uint amount)
     {
         currentEnergy -= Math.Max(amount, 1);
+        UpdateTooltipIfCurrent();
         await changeColorAndWait(Color.blue, 0.1f*amount);
         await processTrigger(TriggerType.OnEnergyDrain);
     }
     public virtual async Task restoreEnergy(uint amount)
     {
         currentEnergy += Math.Max(amount, 1);
+        UpdateTooltipIfCurrent();
         await changeColorAndWait(Color.aquamarine, 0.1f*amount);
         await processTrigger(TriggerType.OnEnergyRestore);
     }
@@ -157,6 +161,7 @@ public virtual async Task drainEnergy(uint amount)
         else
         {
             status_modules_.Add(status);
+            UpdateTooltipIfCurrent();
             status.Initialize();
             Debug.Log($"Status module {status.GetType().Name} added to {GetType().Name}");
         }

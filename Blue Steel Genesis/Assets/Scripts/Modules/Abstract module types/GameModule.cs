@@ -9,7 +9,7 @@ using UnityEngine;
 public abstract class GameModule
 {
     public string Name { get; protected set; }
-    private string icon_name = "default_default.png";
+    private string icon_name = "NoModuleIcon";
     public string Icon_name { get => icon_name; protected set => icon_name = value; }
     public uint price;
     public uint range = 0;
@@ -59,7 +59,11 @@ public abstract class GameModule
     {
         return getAvailableCells(range, start);
     }
-    public void changeName(string newName) => Name = newName;
+    public void changeName(string newName)
+    {
+        Name = newName;
+        UpdateTooltipIfCurrent();
+    }
     public abstract Task Effect(Character user, Vector3Int pos);
     public async Task Use(Character user, Vector3Int pos)
     {
@@ -79,8 +83,11 @@ public abstract class GameModule
     public virtual bool checkPosition(Character user, Vector3Int pos) => getCellsInRange(user).Contains(pos);
     public virtual HashSet<ModuleKeyword> renewableKeywords() => new();
     public HashSet<ModuleKeyword> tempKeywords { get; private set; }
-    public void AddTemporaryKeyword(ModuleKeyword keyword) =>
+    public void AddTemporaryKeyword(ModuleKeyword keyword)
+    {
         tempKeywords.Add(keyword);
+        UpdateTooltipIfCurrent();
+    }
     public void AddTemporaryKeywords(params ModuleKeyword[] keywords)
     {
         foreach (var k in keywords)
@@ -88,10 +95,16 @@ public abstract class GameModule
     }
     public void ClearTemporaryKeywords() => tempKeywords.Clear();
     public HashSet<ModuleKeyword> constKeywords { get; private set; }
-    public void AddConstKeyword(ModuleKeyword keyword) =>
+    public void AddConstKeyword(ModuleKeyword keyword)
+    {
         constKeywords.Add(keyword);
-    public void RemoveConstKeyword(ModuleKeyword keyword) =>
+        UpdateTooltipIfCurrent();
+    }
+    public void RemoveConstKeyword(ModuleKeyword keyword)
+    {
         constKeywords.Remove(keyword);
+        UpdateTooltipIfCurrent();
+    }
     public void AddConstKeywords(params ModuleKeyword[] keywords)
     {
         foreach (var k in keywords)
@@ -121,12 +134,18 @@ public abstract class GameModule
     {
         foreach (var freq in GetFrequencyLimiterKeywords())
             freq.SpendUseLeft();
+        UpdateTooltipIfCurrent();
     }
     public void Recharge(TriggerType trigger)
     {
         foreach (var freq in GetFrequencyLimiterKeywords().Where(f => f.rechargeTime == trigger))
             freq.Recharge();
+        UpdateTooltipIfCurrent();
     }
-
+    protected void UpdateTooltipIfCurrent()
+    {
+        if (TooltipSystem.IsCurrent(this))
+            TooltipSystem.Update(TooltipSystem.TooltipType.moduleTooltip);
+    }
 }
 

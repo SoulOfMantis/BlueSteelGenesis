@@ -40,6 +40,7 @@ public abstract class Entity : MonoBehaviour
 
     public virtual async Task damage(uint dmg) {
         currentHealth -= Math.Max(dmg, 1);
+        UpdateTooltipIfCurrent();
         await changeColorAndWait(Color.crimson, 0.2f*dmg);
         switch (currentHealth)
         {
@@ -52,7 +53,13 @@ public abstract class Entity : MonoBehaviour
     }
     public virtual async Task heal(uint hp) {
         currentHealth += Math.Max(hp, 1);
+        TooltipSystem.Update(TooltipSystem.TooltipType.entityTooltip);
         await changeColorAndWait(Color.green, 0.2f*hp);
+    }
+    protected void UpdateTooltipIfCurrent()
+    {
+        if (TooltipSystem.IsCurrent(this))
+        TooltipSystem.Update(TooltipSystem.TooltipType.entityTooltip);
     }
     abstract protected Task die();
 

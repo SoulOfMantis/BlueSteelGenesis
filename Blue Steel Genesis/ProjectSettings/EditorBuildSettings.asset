@@ -17,6 +17,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/b1_st0_Elite0.unity
     guid: 2174387e04e118b449b951320ca725de
+  - enabled: 0
+    path: Assets/Scenes/b1_st0_Normal0.unity
+    guid: f047b3c76d3e1434c99d5c7531fa6136
+  - enabled: 0
+    path: Assets/Scenes/b1_st0_Normal1.unity
+    guid: fe8c95ea899b0a847909df2a65a95239
+  - enabled: 0
+    path: Assets/Scenes/b1_st0_Normal2.unity
+    guid: f6b940023bacf804f94e9c7c44cd3bf8
+  - enabled: 1
+    path: Assets/Scenes/b1_st1_Boss0_0.unity
+    guid: 40cba96a43680a24386c7ce069164a7e
   - enabled: 1
     path: Assets/Scenes/treasure_room_b1.unity
     guid: 6d00e1083fe2c544e809fe35075b2003

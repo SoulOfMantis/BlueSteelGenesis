@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
@@ -58,7 +58,16 @@ public class PlayerCharacter : Character
     }
     void updateShields()
     {
+        if (currentShield == 0)
+        {
+            shieldSlider.gameObject.SetActive(false);
+            shieldDisplay.gameObject.SetActive(false);
+            return;
+        }
+        shieldSlider.gameObject.SetActive(true);
+        shieldDisplay.gameObject.SetActive(true);
         shieldSlider.value = currentShield;
+        shieldDisplay.text = currentShield.Value.ToString();
     }
     void updateButtons()
     {
@@ -179,7 +188,13 @@ public class PlayerCharacter : Character
 
     override protected async Task die()
     {
-        Debug.Log("Èãðîê óìåð!");
+        Debug.Log("����� ����!");
+        await triggerModules(TriggerType.OnDeath);
+        if (TooltipSystem.IsCurrent(this))
+        {
+            TooltipSystem.Unlock(TooltipSystem.TooltipType.entityTooltip);
+            TooltipSystem.Hide(TooltipSystem.TooltipType.entityTooltip);
+        }
         await Awaitable.WaitForSecondsAsync(.5f);
         tracker.RemoveCharacter(this);
         Defeat();
