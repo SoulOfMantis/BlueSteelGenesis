@@ -5,7 +5,7 @@ using UnityEngine;
 using HKDF = HKDF<System.Security.Cryptography.HMACSHA1>;
 using static GameState;
 
-public class Expedition
+public partial class Expedition
 {
     public Expedition(Map.BiomeInfo biome)
     {

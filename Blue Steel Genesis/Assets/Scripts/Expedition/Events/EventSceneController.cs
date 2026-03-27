@@ -65,6 +65,12 @@ public class EventSceneController : MonoBehaviour
             case EventOutcome.EnterShop:
                 StartShop();
                 break;
+            case EventOutcome.EnterEliteBattle:
+                StartShop();
+                break;
+            case EventOutcome.EnterBossBattle:
+                StartShop();
+                break;
         }
     }
 
@@ -98,6 +104,16 @@ public class EventSceneController : MonoBehaviour
     void StartBattle()
     {
         GameState.Run.Expedition.CombatSystem.TriggerNormalEncounter();
+    }
+
+    void StartEliteBattle()
+    {
+        GameState.Run.Expedition.CombatSystem.TriggerEliteEncounter();
+    }
+
+    void StartBossBattle()
+    {
+        GameState.Run.Expedition.CombatSystem.TriggerBossEncounter();
     }
 
     void StartShop()
