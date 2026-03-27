@@ -56,6 +56,7 @@ public class PlayerCharacter : Character
     void updateShields()
     {
         shieldSlider.value = currentShield;
+        shieldDisplay.text = currentShield.Value.ToString();
     }
     void updateButtons()
     {
@@ -107,9 +108,9 @@ public class PlayerCharacter : Character
         await base.giveShield(amount);
         updateShields();
     }
-    public override void loseShield(uint value)
+    public override async Task loseShield(uint value)
     {
-        base.loseShield(value);
+        await base.loseShield(value);
         updateShields();
     }
     public override async Task startBattle()
