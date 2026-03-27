@@ -91,6 +91,7 @@ public abstract class NPC : Character
             TooltipSystem.Unlock(TooltipSystem.TooltipType.entityTooltip);
             TooltipSystem.Hide(TooltipSystem.TooltipType.entityTooltip);
         }    
+        await Awaitable.WaitForSecondsAsync(.2f);
         Debug.Log($"{name} умер");
         tracker.RemoveCharacter(this);
         Destroy(gameObject);

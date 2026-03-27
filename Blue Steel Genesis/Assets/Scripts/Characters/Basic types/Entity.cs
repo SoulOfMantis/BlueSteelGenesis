@@ -29,26 +29,40 @@ public abstract class Entity : MonoBehaviour
         gameObject.AddComponent<EntityTooltipTrigger>().entity = this;
         gameObject.AddComponent<BoxCollider2D>();
     }
-    public virtual Task damage(uint dmg) {
+    protected async Task changeColorAndWait(Color color, float seconds = 0.1f)
+    {
+        var spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        var baseColor = spriteRenderer.color;
+        spriteRenderer.color = color;
+        await Awaitable.WaitForSecondsAsync(seconds);
+        spriteRenderer.color = baseColor;
+    }
+
+    public virtual async Task damage(uint dmg) {
         currentHealth -= Math.Max(dmg, 1);
         UpdateTooltipIfCurrent();
-        return currentHealth.Value switch {
-            0 => die(),
-            _ => Task.CompletedTask
-        };
+        await changeColorAndWait(Color.crimson, 0.2f*dmg);
+        switch (currentHealth)
+        {
+            case 0:
+                await die();
+            break;
+            default:
+                break;
+        }
     }
-    public virtual Task heal(uint hp) {
+    public virtual async Task heal(uint hp) {
         currentHealth += Math.Max(hp, 1);
         TooltipSystem.Update(TooltipSystem.TooltipType.entityTooltip);
-        return Task.CompletedTask;
+        await changeColorAndWait(Color.green, 0.2f*hp);
     }
-    abstract protected Task die();
-
     protected void UpdateTooltipIfCurrent()
     {
         if (TooltipSystem.IsCurrent(this))
         TooltipSystem.Update(TooltipSystem.TooltipType.entityTooltip);
     }
+    abstract protected Task die();
+
     public abstract URangeValue currentHealth { get; protected set; }
     public abstract uint maxHealth { get; protected set; }
 
