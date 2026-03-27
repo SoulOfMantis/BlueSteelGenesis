@@ -72,7 +72,7 @@ namespace Map
         }
 
         public const int width = 5;
-        public const int height = 9;
+        public const int height = 7;
         /// <summary>
         /// Специальная позиция, соответствующая начальному узлу (не содержится в map)
         /// </summary>
