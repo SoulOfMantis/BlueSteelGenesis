@@ -8,14 +8,19 @@ public class ExplodeWithSlime : PassiveModule
     uint summonSize;
     uint acidDamage;
     uint acidDuration;
-    public ExplodeWithSlime(uint summonSize) : base()
+    public ExplodeWithSlime() : base()
     {
+        Icon_name = "AcidExplosionModule";
         acidDamage = 1;
         acidDuration = 2;
         triggerType = TriggerType.OnDeath;
         range = 10;
-        this.summonSize = summonSize;
+        summonSize = 1;
         AddConstKeywords(new OffenseKeyword());
+    }
+    public ExplodeWithSlime(uint summonSize) : this()
+    {
+        this.summonSize = summonSize;
     }
     public override HashSet<ModuleKeyword> renewableKeywords()
     {
