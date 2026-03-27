@@ -112,7 +112,7 @@ public virtual async Task drainEnergy(uint amount)
         Vector3Int[] valid_moves = { Vector3Int.left, Vector3Int.right, Vector3Int.down, Vector3Int.up };
         if (!valid_moves.Contains(dir) ||
             new_pos.Except(Position).Any(p => tracker.OutOfBounds(p)) ||
-            new_pos.Except(Position).Any(p => tracker.IsOccupied(p)))
+            new_pos.Except(Position).Any(p => tracker.IsOccupiedByCharacter(p)))
             return;
         Position = new_pos;
 
