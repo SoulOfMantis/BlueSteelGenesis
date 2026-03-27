@@ -1,11 +1,19 @@
 ﻿using System;
 using System.Threading.Tasks;
 using UnityEngine;
+using static Codice.Client.Commands.WkTree.WorkspaceTreeNode;
 
 public class AcidModule : NegativeStatusModule
 {
     uint damage;
-    public AcidModule(uint dmg, uint dur) : base()
+    public AcidModule() : base()
+    {
+        damage = 1;
+        turnsLeft.Value = 1;
+        AddConstKeyword(new AcidKeyword());
+        triggerType = TriggerType.OnTurnEnd;
+    }
+    public AcidModule(uint dmg, uint dur) : this()
     {
         damage = dmg;
         turnsLeft.Value = dur;
@@ -23,6 +31,7 @@ public class AcidModule : NegativeStatusModule
         {
             damage += a.damage;
             turnsLeft.Value = Math.Min(turnsLeft, a.turnsLeft);
+            UpdateTooltipIfCurrent();
         }
     }
     public override async Task Effect(Character user, Vector3Int pos)
