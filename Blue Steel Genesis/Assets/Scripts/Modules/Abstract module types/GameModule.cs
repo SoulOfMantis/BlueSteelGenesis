@@ -9,7 +9,7 @@ using UnityEngine;
 public abstract class GameModule
 {
     public string Name { get; protected set; }
-    private string icon_name = "default_default.png";
+    private string icon_name = "NoModuleIcon";
     public string Icon_name { get => icon_name; protected set => icon_name = value; }
     public uint price;
     public uint range = 0;
