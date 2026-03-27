@@ -29,9 +29,9 @@ public abstract class Entity : MonoBehaviour
         gameObject.AddComponent<EntityTooltipTrigger>().entity = this;
         gameObject.AddComponent<BoxCollider2D>();
     }
-
     public virtual Task damage(uint dmg) {
         currentHealth -= Math.Max(dmg, 1);
+        UpdateTooltipIfCurrent();
         return currentHealth.Value switch {
             0 => die(),
             _ => Task.CompletedTask
@@ -39,11 +39,16 @@ public abstract class Entity : MonoBehaviour
     }
     public virtual Task heal(uint hp) {
         currentHealth += Math.Max(hp, 1);
+        TooltipSystem.Update(TooltipSystem.TooltipType.entityTooltip);
         return Task.CompletedTask;
     }
     abstract protected Task die();
 
-
+    protected void UpdateTooltipIfCurrent()
+    {
+        if (TooltipSystem.IsCurrent(this))
+        TooltipSystem.Update(TooltipSystem.TooltipType.entityTooltip);
+    }
     public abstract URangeValue currentHealth { get; protected set; }
     public abstract uint maxHealth { get; protected set; }
 

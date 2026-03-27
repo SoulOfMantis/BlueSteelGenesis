@@ -31,7 +31,11 @@ public abstract class Character : Entity
         if (currentShield == 0)
             await processTrigger(TriggerType.OnShieldBroken);
     }
-    public virtual async Task loseShield(uint value) => currentShield -= value;
+    public virtual async Task loseShield(uint value)
+    {
+        currentShield -= value;
+        UpdateTooltipIfCurrent();
+    }
     public override async Task heal(uint hp)
     {
         await base.heal(hp);
@@ -41,17 +45,20 @@ public abstract class Character : Entity
     public virtual async Task giveShield(uint amount)
     {
         currentShield += Math.Max(amount, 1);
+        UpdateTooltipIfCurrent();
         await processTrigger(TriggerType.OnShieldGiven);
         Debug.Log($"Выдан щит: {amount}; Всего: {currentShield}");
     }
 public virtual async Task drainEnergy(uint amount)
     {
         currentEnergy -= Math.Max(amount, 1);
+        UpdateTooltipIfCurrent();
         await processTrigger(TriggerType.OnEnergyDrain);
     }
     public virtual async Task restoreEnergy(uint amount)
     {
         currentEnergy += Math.Max(amount, 1);
+        UpdateTooltipIfCurrent();
         await processTrigger(TriggerType.OnEnergyRestore);
     }
     public virtual async Task startBattle()
@@ -67,7 +74,7 @@ public virtual async Task drainEnergy(uint amount)
     {
         Debug.Log($"turn started");
         myTurn = true;
-        loseShield(currentShield.Value);
+        await loseShield(currentShield.Value);
         await restoreEnergy(maxEnergy);
         await processTrigger(TriggerType.OnTurnStart);
     }

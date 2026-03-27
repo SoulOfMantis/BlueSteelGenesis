@@ -23,6 +23,7 @@ public class AcidModule : NegativeStatusModule
         {
             damage += a.damage;
             turnsLeft.Value = Math.Min(turnsLeft, a.turnsLeft);
+            UpdateTooltipIfCurrent();
         }
     }
     public override async Task Effect(Character user, Vector3Int pos)

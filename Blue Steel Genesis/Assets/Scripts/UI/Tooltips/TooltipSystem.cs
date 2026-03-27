@@ -20,6 +20,32 @@ public class TooltipSystem : MonoBehaviour
         instance.entityTooltip.gameObject.SetActive(false);
         instance.moduleTooltip.gameObject.SetActive(false);
     }
+    public static void Update(TooltipType type)
+    {
+        switch (type)
+        {
+            case TooltipType.entityTooltip:
+                Load(instance.currentEntityTrigger.entity);
+                break;
+            case TooltipType.moduleTooltip:
+                Load(instance.currentModuleTrigger.module);
+                break;
+        }
+    }
+    public static bool IsCurrent(Entity e)
+    {
+        if (instance == null) return false;
+        if (!IsEntityTooltipActive) return false;
+        if (instance.currentEntityTrigger == null) return false;
+        return instance.currentEntityTrigger.entity == e;
+    }
+    public static bool IsCurrent(GameModule m)
+    {
+        if (instance == null) return false;
+        if (!IsModuleTooltipActive) return false;
+        if (instance.currentModuleTrigger == null) return false;
+        return instance.currentModuleTrigger.module == m;
+    }
 
     public static void Load(Entity c)
     {

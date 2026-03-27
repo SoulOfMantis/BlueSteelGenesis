@@ -190,6 +190,11 @@ public class PlayerCharacter : Character
     {
         Debug.Log("����� ����!");
         await triggerModules(TriggerType.OnDeath);
+        if (TooltipSystem.IsCurrent(this))
+        {
+            TooltipSystem.Unlock(TooltipSystem.TooltipType.entityTooltip);
+            TooltipSystem.Hide(TooltipSystem.TooltipType.entityTooltip);
+        }
         tracker.RemoveCharacter(this);
         Defeat();
         //TODO: player loss
