@@ -34,17 +34,17 @@ public class Expedition
 
         LocalSeed = generateLocalSeed(
             GameState.Run.GlobalSeed,
-            Biome.id, (uint)BiomeStage,
+            Biome.id, BiomeStage,
             GameState.Run.playerLivesCount,
             Array.Empty<byte>() //TODO: pass actual data
         );
         Map = global::Map.ExpeditionMap.generate(
             BiomeSeed, LocalSeed,
-            Biome, (uint)BiomeStage
+            Biome, BiomeStage
         );
         map_progress_ = new(Map);
 
-        CombatSystem = new CombatSystem(Biome, (uint)BiomeStage, LocalSeed);
+        CombatSystem = new CombatSystem(Biome, BiomeStage, LocalSeed);
         ModuleGen = new(LocalSeed);
         Shop = new(Biome.id);
     }
@@ -65,7 +65,7 @@ public class Expedition
     public Map.BiomeInfo Biome { get; private set; }
 
     private ExpeditionMapProgressInfo map_progress_ = null;
-    public int BiomeStage { get; private set; } = -1;
+    public uint BiomeStage { get; private set; } = 0;
 
 
     private static int generateLocalSeed(int global_seed, uint biome_id, uint biome_stage, uint lives_count, byte[] ship_parts_data)

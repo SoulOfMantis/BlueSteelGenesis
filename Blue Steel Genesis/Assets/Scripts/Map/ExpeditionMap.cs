@@ -31,8 +31,13 @@ namespace Map
         /// </summary>
         public IEnumerable<Vector2Int> listTargets(Vector2Int pos) {
             int target_y = pos.y + (upside_down ? -1 : 1);
-            if (target_y < -1 || target_y > map.GetLength(0))
+            if (target_y < -2 || target_y > map.GetLength(0))
                 yield break;
+            if (target_y == -2) {
+                if (upside_down)
+                    yield return black_market_node;
+                yield break;
+            }
             if (target_y == -1 || target_y == map.GetLength(0)) {
                 yield return new(-1, target_y);
                 yield break;
@@ -76,6 +81,10 @@ namespace Map
         /// Специальная позиция, соответствующая узлу босса (не содержится в map)
         /// </summary>
         public Vector2Int boss_node_pos => new(-1, upside_down ? -1 : height);
+        /// <summary>
+        /// Специальная позиция, соответствующая узлу черного рынка (не содержится в map)
+        /// </summary>
+        public Vector2Int black_market_node => new(-1, -2);
 
         public Node[,] map { get; private set; }
         public bool upside_down { get; private set; }
@@ -109,8 +118,8 @@ namespace Map
             }
 
             System.Random prng = new(local_seed);
-            Node getRandomNode(byte allowed_mask) {
-                int popcnt(byte b) {
+            Node getRandomNode(short allowed_mask) {
+                int popcnt(short b) {
                     int cnt = 0;
                     while (b > 0) {
                         if ((b & 1) != 0) ++cnt;
@@ -119,9 +128,9 @@ namespace Map
                     return cnt;
                 }
 
-                allowed_mask = Math.Max(allowed_mask, (byte)Node.REGULAR_ENEMY);
+                allowed_mask = Math.Max(allowed_mask, (short)Node.REGULAR_ENEMY);
                 int target_idx = prng.Next(popcnt(allowed_mask)) + 1;
-                byte node = 1;
+                short node = 1;
                 for (int cur_idx = node & allowed_mask; cur_idx < target_idx;) {
                     node <<= 1;
                     if ((node & allowed_mask) != 0)
@@ -154,7 +163,7 @@ namespace Map
                         Node mask =
                             ~(progress_limit(line) | link_limit(line, x) | group_limit(line, x))
                             & Node.RANDOMLY_GENERATABLE;
-                        map[line, x] = getRandomNode((byte)mask);
+                        map[line, x] = getRandomNode((short)mask);
                     }
 
             var final_map = new Node[height, width];

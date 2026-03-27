@@ -46,6 +46,9 @@ public class NodeButton : MonoBehaviour
                 col = Color.red;
                 scale *= 2f;
                 break;
+            case Map.Node.BLACK_MARKET:
+                col = Color.black;
+                break;
         }
 
         switch (selection_status_) {
