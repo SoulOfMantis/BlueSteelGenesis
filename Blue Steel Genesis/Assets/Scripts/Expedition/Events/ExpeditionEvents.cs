@@ -28,6 +28,9 @@ public partial class Expedition
             case Node.ELITE_ENEMY:
                 CombatSystem.TriggerEliteEncounter();
                 break;
+            case Node.BOSS:
+                CombatSystem.TriggerBossEncounter();
+                break;
             case Node.SHOP:
                 Shop.TriggerShop();
                 break;
