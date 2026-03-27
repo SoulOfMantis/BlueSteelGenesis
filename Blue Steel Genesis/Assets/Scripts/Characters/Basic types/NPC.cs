@@ -85,6 +85,7 @@ public abstract class NPC : Character
     {
         if (myTurn)
             await endTurn();
+        await Awaitable.WaitForSecondsAsync(.2f);
         Debug.Log($"{name} умер");
         tracker.RemoveCharacter(this);
         Destroy(gameObject);
