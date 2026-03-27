@@ -46,6 +46,7 @@ public class Expedition
 
         CombatSystem = new CombatSystem(Biome, (uint)BiomeStage, LocalSeed);
         ModuleGen = new(LocalSeed);
+        TreasureSubsystem = new(Biome.id);
         Shop = new(Biome.id);
     }
 
@@ -90,6 +91,7 @@ public class Expedition
             hkdf.expand(BitConverter.GetBytes(biome_id), sizeof(int)));
         return seed;
     }
+    public TreasureSubsystem TreasureSubsystem;
     public CombatSystem CombatSystem;
     public Shop Shop;
     public ModuleGenerator ModuleGen;
