@@ -2,12 +2,14 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 public class RoboWolfSummoner : ActiveModule {
+
     public RoboWolfSummoner() {
         changeName("Summonning howl");
         range = 1;
         energyCost = 5;
         Icon_name = "RoboWolfSummoner";
     }
+
     public override string Description() =>
         "Summons a RoboWolf.\n" + base.Description();
 
