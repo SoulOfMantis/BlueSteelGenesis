@@ -1,0 +1,77 @@
+using System.Collections;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
+[RequireComponent(typeof(Image))]
+public class ModuleTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+{
+    public GameModule module;
+    public Image icon;
+    IEnumerator ShowingTooltip()
+    {
+        if (TooltipSystem.IsModuleTooltipActive()) yield return new WaitForSeconds(TooltipSystem.HidingTimeInSeconds);
+        TooltipSystem.Load(module);           
+        yield return new WaitForSeconds(TooltipSystem.ShowingTimeInSeconds);
+        TooltipSystem.Show(TooltipSystem.TooltipType.moduleTooltip, this);
+    }
+    IEnumerator HidingTooltip()
+    {
+        yield return new WaitForSeconds(TooltipSystem.HidingTimeInSeconds);
+        TooltipSystem.Hide(TooltipSystem.TooltipType.moduleTooltip);
+    }
+
+    public void OnMouseEnter()
+    {
+        if (!TooltipSystem.moduleTooltipLocked)
+        {
+            StopCoroutine("HidingTooltip");
+            StartCoroutine("ShowingTooltip");
+        }
+    }
+
+    public void OnMouseExit()
+    {
+        if (!TooltipSystem.moduleTooltipLocked)
+        {
+            StopCoroutine("ShowingTooltip");
+            StartCoroutine("HidingTooltip");
+        }
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (!TooltipSystem.moduleTooltipLocked)
+        {
+            StopCoroutine("HidingTooltip");
+            StartCoroutine("ShowingTooltip");
+        }
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (!TooltipSystem.moduleTooltipLocked)
+        {
+            StopCoroutine("ShowingTooltip");
+            StartCoroutine("HidingTooltip");
+        }
+    }
+    public void updateModuleTrigger(GameModule module)
+    {
+        this.module = module;
+        updateIcon();
+    }
+    public void updateIcon()
+    {
+        if (module == null) return;
+        icon.overrideSprite = Resources.Load<Sprite>($"ModuleIcons/{module.Icon_name}");
+    }
+    void Awake()
+    {
+        if (icon == null) icon = GetComponent<Image>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}
