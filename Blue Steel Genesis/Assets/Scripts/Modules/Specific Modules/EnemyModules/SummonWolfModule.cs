@@ -9,7 +9,7 @@ using UnityEngine;
 /// </summary>
 public class SummonWolfModule : ActiveModule
 {
-    public SummonWolfModule(WolfLeader wolfLeader)
+    public SummonWolfModule() : base()
     {
         Name = "Summon Wolves";
         energyCost = 2;      
@@ -38,7 +38,5 @@ public class SummonWolfModule : ActiveModule
             Debug.Log($"{user.Name} summoned {summonedCount} wolf(s)!");
         else
             Debug.LogWarning("No free cells to summon wolves!");
-
-        await Task.CompletedTask;
     }
 }
