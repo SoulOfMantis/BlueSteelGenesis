@@ -178,6 +178,9 @@ public class ExpeditionMapView : MonoBehaviour
             case Node.SHOP:
                 GameState.Run.Expedition.Shop.TriggerShop();
                 break;
+            case Node.BLACK_MARKET:
+                GameState.Run.Expedition.Shop.TriggerBlackMarket();
+                break;
         }
     }
 
