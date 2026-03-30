@@ -17,7 +17,6 @@ public class Expedition
             new DefaultAdaptiveTEST_ONLY(),
             new MechanicStinger(),
             new BasicMovement(),
-            new DogSummoner_TEST_ONLY()
         };
         Player.maxHealth = 50;
         Player.maxEnergy = 5;

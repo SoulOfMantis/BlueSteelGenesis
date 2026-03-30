@@ -34,7 +34,7 @@ public abstract class Entity : MonoBehaviour
         var spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         var baseColor = spriteRenderer.color;
         spriteRenderer.color = color;
-        await Awaitable.WaitForSecondsAsync(seconds);
+        await Awaitable.WaitForSecondsAsync(Math.Min(seconds, 10));
         spriteRenderer.color = baseColor;
     }
 

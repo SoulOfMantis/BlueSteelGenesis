@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class FlightMovement : ActiveModule
 {
-    public FlightMovement(uint range = 3) {
-        this.range = range;
+    public FlightMovement() : base()
+    {
+        range = 3;
         energyCost = 1;
         AddConstKeywords(new MobilityKeyword(), new FlightKeyword());
+    }
+    public FlightMovement(uint range) : this()
+    {
+        this.range = range;
     }
     public override string Description() {
         return $"Move to an unoccupied space within {range} cells.\n" + base.Description();

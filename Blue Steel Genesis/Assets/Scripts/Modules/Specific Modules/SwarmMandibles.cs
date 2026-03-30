@@ -6,12 +6,18 @@ public class SwarmMandibles : ActiveModule
     uint biteDamage;
     uint attackCount;
 
-    public SwarmMandibles(uint biteDamage, uint attackCount) {
+    public SwarmMandibles() : base()
+    {
         range = 1;
         energyCost = 1;
+        biteDamage = 1;        
+        attackCount = 2;
+        AddConstKeywords(new OffenseKeyword());
+    }
+    public SwarmMandibles(uint biteDamage, uint attackCount) : this()
+    {
         this.biteDamage = biteDamage;
         this.attackCount = attackCount;
-        AddConstKeywords(new OffenseKeyword());
     }
 
     public override string Description() {
