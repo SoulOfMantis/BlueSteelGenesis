@@ -16,16 +16,10 @@ EditorBuildSettings:
     guid: 481fd94d86cfd764b8a4086fb24859b8
   - enabled: 1
     path: Assets/Scenes/b1_st0_Elite0.unity
-    guid: bd3965c7086bcf8469cffe2b8fb111cb
+    guid: 2174387e04e118b449b951320ca725de
   - enabled: 1
-    path: Assets/Scenes/b1_st0_Normal0.unity
-    guid: f047b3c76d3e1434c99d5c7531fa6136
-  - enabled: 1
-    path: Assets/Scenes/b1_st0_Normal1.unity
-    guid: fe8c95ea899b0a847909df2a65a95239
-  - enabled: 1
-    path: Assets/Scenes/b1_st0_Normal2.unity
-    guid: f6b940023bacf804f94e9c7c44cd3bf8
+    path: Assets/Scenes/treasure_room_b1.unity
+    guid: 6d00e1083fe2c544e809fe35075b2003
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

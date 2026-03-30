@@ -90,5 +90,17 @@ using UnityEngine.UI;
                 inUse = true;
             }
         }
+
+        public void RefreshDisplay()
+        {
+            if (player != null && player.doesModuleExist(connectedModuleIndex))
+            {
+                var text = button.GetComponentInChildren<TMP_Text>();
+                if (text != null) text.text = player.getModuleName(connectedModuleIndex);
+
+                var tooltip = GetComponent<ModuleTooltipTrigger>();
+                if (tooltip != null) tooltip.updateModuleTrigger(player.Modules[connectedModuleIndex]);
+            }
+        }
     }
 
