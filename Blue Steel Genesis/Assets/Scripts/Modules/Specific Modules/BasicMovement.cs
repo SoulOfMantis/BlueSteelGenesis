@@ -26,7 +26,7 @@ public class BasicMovement : ActiveModule
     }
     public override async Task Effect(Character user, Vector3Int pos)
     {
-        await user.move(pos, getCellsInRange(user.Position));
+        await user.move(new PositionCollection(pos, user.Position.SideSize), getCellsInRange(user.Position));
         Debug.Log("BMM executed");
     }
     public override List<Vector3Int> getCellsInRange(PositionCollection start) =>

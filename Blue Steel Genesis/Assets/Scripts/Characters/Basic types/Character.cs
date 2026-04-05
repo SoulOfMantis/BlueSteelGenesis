@@ -97,11 +97,17 @@ public virtual async Task drainEnergy(uint amount)
 
     public async Task move(Vector3Int target_pos, List<Vector3Int> allowed)
     {
-        var path = Navigation.Dijkstra.getPath(
-            Position,
-            new PositionCollection(target_pos, Position.SideSize),
-            p => allowed.Contains(p)
-        );
+        var path = Navigation.Dijkstra.getPath(Position, target_pos, p => allowed.Contains(p));
+        if (path == null)
+            return;
+
+        foreach (var step in path)
+            await moveStep(step);
+        await processTrigger(TriggerType.OnMove, Position.LeftBottom);
+    }
+    public async Task move(PositionCollection target_pos, List<Vector3Int> allowed)
+    {
+        var path = Navigation.Dijkstra.getPath(Position, target_pos, p => allowed.Contains(p));
         if (path == null)
             return;
 
