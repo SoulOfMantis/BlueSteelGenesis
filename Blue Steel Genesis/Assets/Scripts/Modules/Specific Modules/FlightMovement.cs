@@ -19,7 +19,8 @@ public class FlightMovement : ActiveModule
     }
 
     public override async Task Effect(Character user, Vector3Int pos) {
-        await user.move(pos,
+        await user.move(
+            new PositionCollection(pos, user.Position.SideSize),
             Navigation.Dijkstra.listReachable(
                 user.Position,
                 p => !Entity.tracker.OutOfBounds(p) && !Entity.tracker.IsOccupiedByCharacter(p),
