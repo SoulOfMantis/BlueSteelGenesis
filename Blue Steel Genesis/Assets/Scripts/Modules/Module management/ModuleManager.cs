@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public static class ModuleManager
 {
     public static event Action ModulesChanged;
-    public static uint MinEditableModuleIndex => Math.Min((uint)Modules.Count - 1, 1);
+    public static uint MinEditableModuleIndex => 1;
     public static uint MaxEditableModuleIndex => Math.Min((uint)Modules.Count - 1, 4);
     public static IReadOnlyList<GameModule> Modules =>
         GameState.Run.Expedition.Player.modules.AsReadOnly();

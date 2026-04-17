@@ -10,7 +10,7 @@ public class ModuleTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointe
     public Image icon;
     IEnumerator ShowingTooltip()
     {
-        if (TooltipSystem.IsModuleTooltipActive) yield return new WaitForSeconds(TooltipSystem.HidingTimeInSeconds);
+        if (TooltipSystem.IsModuleTooltipActive()) yield return new WaitForSeconds(TooltipSystem.HidingTimeInSeconds);
         TooltipSystem.Load(module);           
         yield return new WaitForSeconds(TooltipSystem.ShowingTimeInSeconds);
         TooltipSystem.Show(TooltipSystem.TooltipType.moduleTooltip, this);
