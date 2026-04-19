@@ -6,12 +6,15 @@ using UnityEngine.Tilemaps;
 public class SceneTracker : MonoBehaviour
 {
     private InitiativeTracker initiative;
-    private List<Obstacle> obstacles = new();
+    private List<Entity> entities = new();
+    public IReadOnlyList<Entity> Entities => entities;
     public Tilemap tl;
     public int max_y { get; private set; } = 3;
     public int max_x { get; private set; } = 17;
     private float CameraDistance = 10;
     public List<HighlightableTile> tiles;
+    [SerializeField] GameObject initiativeEntryPrefab;
+    [SerializeField] Transform contentParent;
 
     public void HighlightCharacterInInitiative(Character c, Color color)
     {
@@ -22,16 +25,14 @@ public class SceneTracker : MonoBehaviour
     {
         initiative.UnhighlightCharacterInInitiative(c);
     }
-    public Character FindCharacterAtPosition(Vector3Int pos)
-    {
-        return initiative.characters.Find(c  => c.Position == pos);
-    }
-    public bool isAlive(Character c)
-    { return initiative.isAlive(c); }
-    public Obstacle FindObstacleAtPosition(Vector3Int pos)
-    {
-        return obstacles.Find(o => o.Position == pos);
-    }
+
+    public Entity FindEntityAtPosition(Vector3Int pos) =>
+        entities.Find(e => e.Position.Contains(pos));
+    public Character FindCharacterAtPosition(Vector3Int pos) =>
+        FindEntityAtPosition(pos) as Character;
+    public Obstacle FindObstacleAtPosition(Vector3Int pos) =>
+        FindEntityAtPosition(pos) as Obstacle;
+
     public bool IsOccupiedByCharacter(Vector3Int pos)
     {
         return (FindCharacterAtPosition(pos) != null);
@@ -44,8 +45,10 @@ public class SceneTracker : MonoBehaviour
 
     public bool IsOccupied(Vector3Int pos)
     {
-        return IsOccupiedByCharacter(pos) || IsOccupiedByObstacle(pos);
+        return FindEntityAtPosition(pos) != null;
     }
+
+    public bool isAlive(Character c) => initiative.isAlive(c);
 
     public Vector3 CellToWorld(Vector3Int pos)
     {
@@ -79,14 +82,20 @@ public class SceneTracker : MonoBehaviour
             .Select(v => v + pos)
             .Where(p => !OutOfBounds(p));
     }
-    public void AddCharacter(Character charact)
+    public void AddCharacter(Character character)
     {
-        initiative.AddCharacter(charact);
+        entities.Add(character);
+        initiative.AddCharacter(character);
     }
     public void RemoveCharacter(Character character)
     {
+        entities.Remove(character);
         initiative.RemoveCharacter(character);
     }
+    public void AddObstacle(Obstacle obstacle) =>
+        entities.Add(obstacle);
+    public void RemoveObstacle(Obstacle obstacle) =>
+        entities.Remove(obstacle);
 
     //                                         
     public PlayerCharacter getPlayer() =>
@@ -128,11 +137,8 @@ public class SceneTracker : MonoBehaviour
     void Start()
     {
         initiative = gameObject.AddComponent(typeof(InitiativeTracker)) as InitiativeTracker;
-        Character.tracker = this;
-    }
-
-    void Update()
-    {
-
+        initiative.contentParent = contentParent;
+        initiative.initiativeEntryPrefab = initiativeEntryPrefab;
+        Entity.tracker = this;
     }
 }

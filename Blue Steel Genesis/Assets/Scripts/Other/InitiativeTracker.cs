@@ -2,18 +2,37 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+
 public class InitiativeTracker : MonoBehaviour
 {
     public List<Character> characters = new();
-    private Dictionary<Character, GameObject> characterTooltipsTriggers = new();
+    public GameObject initiativeEntryPrefab;
+    public Transform contentParent;
+    private Dictionary<Character, InitiativeEntry> entries = new();
+    Color highlightColor = Color.yellow;
+    Color basicColor = Color.orange;
+    Color takingTurnColor = Color.aquamarine;
 
     int currentCharacterIndex = -1;
-    public void AddCharacter(Character charact)
+    public void AddCharacter(Character c)
     {
-        if (charact != null)
+        if ((c != null) && !(characters.Contains(c)))
         {
-            Debug.Log($"Added {charact.name}");
-            characters.Add(charact);
+            int insert_index = characters.BinarySearch(c,
+                Comparer<Character>.Create(
+                    (ch1, ch2) => -ch1.Initiative.CompareTo(ch2.Initiative)));
+            if (insert_index < 0)
+                insert_index = ~insert_index;
+
+            characters.Insert(insert_index, c);
+            if (insert_index <= currentCharacterIndex)
+                ++currentCharacterIndex;
+            updateCharacterTooltips();
+            if (currentCharacterIndex >= 0)
+                StartCoroutine(TaskCoro.Make(c.startBattle()));
+
+            Debug.Log($"Added {c.name}");
         }
     }
     public void RemoveCharacter(Character charact)
@@ -23,8 +42,6 @@ public class InitiativeTracker : MonoBehaviour
             if (characters.IndexOf(charact) <= currentCharacterIndex)
                 currentCharacterIndex = (currentCharacterIndex - 1 + characters.Count) % characters.Count;
             characters.Remove(charact);
-            Destroy(characterTooltipsTriggers[charact]);
-            characterTooltipsTriggers.Remove(charact);
             updateCharacterTooltips();
         }
     }
@@ -34,7 +51,7 @@ public class InitiativeTracker : MonoBehaviour
 
     public bool CheckVictory()
     {
-        return characters.All(c => c is PlayerCharacter);
+        return characters.All(c => c is PlayerCharacter || c is Ally);
     }
 
     public bool CheckDefeat()
@@ -44,14 +61,14 @@ public class InitiativeTracker : MonoBehaviour
 
     public void HighlightCharacterInInitiative(Character c, Color color)
     {
-        characterTooltipsTriggers[c].GetComponent<TextMeshProUGUI>().color = color;
+        entries[c].GetComponent<Image>().color = color;
     }
-    public void HighlightCharacterInInitiative(Character c) => HighlightCharacterInInitiative(c, Color.yellow);
+    public void HighlightCharacterInInitiative(Character c) => HighlightCharacterInInitiative(c, highlightColor);
     public void UnhighlightCharacterInInitiative(Character c)
     {
         if (characters[currentCharacterIndex] == c)
-            characterTooltipsTriggers[c].GetComponent<TextMeshProUGUI>().color = Color.blue;
-        else characterTooltipsTriggers[c].GetComponent<TextMeshProUGUI>().color = Color.white;
+            HighlightCharacterInInitiative(c, takingTurnColor);
+        else HighlightCharacterInInitiative(c, basicColor);
     }
     public bool isAlive(Character c) =>
         characters.Contains(c);
@@ -59,45 +76,40 @@ public class InitiativeTracker : MonoBehaviour
     {
         Debug.Log($"StartNextTurn");
         if (CheckVictory())
-            StartCoroutine(TaskCoro.Make(Character.tracker.getPlayer().Victory()));
+            StartCoroutine(TaskCoro.Make(Entity.tracker.getPlayer().Victory()));
         else if (!CheckDefeat())
         {
             currentCharacterIndex = (currentCharacterIndex + 1) % characters.Count;
             //снимаем выделение с походившего, такой страшный индекс нужен, чтобы не выйти за пределы списка
             UnhighlightCharacterInInitiative(characters[(currentCharacterIndex-1+characters.Count)%characters.Count]); 
-            HighlightCharacterInInitiative(characters[currentCharacterIndex], Color.blue);
+            HighlightCharacterInInitiative(characters[currentCharacterIndex], takingTurnColor);
             Debug.Log($"Сейчас ход {characters[currentCharacterIndex].GetType().Name}");
             StartCoroutine(TaskCoro.Make(characters[currentCharacterIndex].startTurn()));
         }
     }
     private void updateCharacterTooltips()
     {
-        for (int i = 0; i < characters.Count; i++)
+        foreach (var entry in entries)
         {
-            var c = characters[i];
-            var ctt = characterTooltipsTriggers[c];
-            ctt.GetComponent<TextMeshProUGUI>().text = $"{i+1}    {c.Name}";
-            ctt.transform.position = transform.position + new Vector3(0, -2 * i - 0.6f); //Hardcoded for now
+            entry.Value.gameObject.SetActive(false);
+            Destroy(entry.Value.gameObject);
         }
+        entries.Clear();
+        for (int i = 0; i < characters.Count; i++)
+            createCharacterTooltipTrigger(characters[i]);
     }
     void createCharacterTooltipTrigger(Character c)
     {
-        characterTooltipsTriggers[c] = new GameObject($"{c.Name}");
-        var ctt = characterTooltipsTriggers[c];
-        ctt.AddComponent<CharacterTooltipTrigger>().character = c;
-        ctt.AddComponent<TextMeshProUGUI>().enableAutoSizing = true;
-        ctt.transform.SetParent(transform);
-        ctt.transform.localScale = new(1, 1);
+        var go = Instantiate(initiativeEntryPrefab, contentParent);
+        var entry = go.GetComponent<InitiativeEntry>();
+        entry.Setup(c);
+        entries[c] = entry;
+        HighlightCharacterInInitiative(c, Color.orange);
     }
     public void StartBattle()
     {
-        characters.Sort((c1, c2) => (c2.Initiative.CompareTo(c1.Initiative)));
-        for (int i = 0; i < characters.Count; i++)
-        {
-            var c = characters[i];
-            createCharacterTooltipTrigger(c);
+        foreach (Character c in characters)
             StartCoroutine(TaskCoro.Make(c.startBattle()));
-        }
         updateCharacterTooltips();
         StartNextTurn();
     }
@@ -105,11 +117,5 @@ public class InitiativeTracker : MonoBehaviour
     void Start()
     {
         StartBattle();
-    }
-
-    void Update()
-    {
-
-
     }
 }

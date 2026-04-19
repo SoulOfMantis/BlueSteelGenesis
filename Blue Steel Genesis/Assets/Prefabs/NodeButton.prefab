@@ -50,6 +50,15 @@ MonoBehaviour:
       m_Calls: []
   position_: {x: 0, y: 0}
   type_: 0
+  RegularEnemyIcon: {fileID: -372674217349630506, guid: ec0e298a6276f0447b9d31890ce0c18b, type: 3}
+  EventIcon: {fileID: 0}
+  ShopIcon: {fileID: 5495121454292350632, guid: 6da65a41cb4b65c43b4859296c6f0a7d, type: 3}
+  RestIcon: {fileID: -4992995096616195933, guid: 84e3ec6de96307b48bd54526069cb8e4, type: 3}
+  EliteEnemyIcon: {fileID: -197017022953627775, guid: 82defb221e85ae34bb5674c3b320a6b5, type: 3}
+  TreasureIcon: {fileID: 6029224591642543062, guid: a3819d5228aefec449afd236d1fd3cf6, type: 3}
+  StartIcon: {fileID: 0}
+  BossIcon: {fileID: 0}
+  BlackMarketIcon: {fileID: -4213302759279698812, guid: 7ce617e6184704f46bab2ee37f872b01, type: 3}
 --- !u!1 &7150776707198773678
 GameObject:
   m_ObjectHideFlags: 0
@@ -86,7 +95,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 30, y: 30}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4945880386649040930
 CanvasRenderer:
@@ -116,7 +125,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -8982579351608264847, guid: f1866b24ca37a7148ba0c78b435f1c6d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

@@ -1,14 +1,22 @@
-using UnityEngine;
-public class Obstacle : MonoBehaviour
-{
-    public Vector3Int Position
-    {
-        get => position_;
-        protected set
-        {
-            transform.position = Character.tracker.CellToWorld(value);
-            position_ = value;
-        }
+using System.Threading.Tasks;
+public abstract class Obstacle : Entity {
+    public override URangeValue currentHealth { get; protected set; } = new();
+    public override uint maxHealth {
+        get => currentHealth.Max;
+        protected set => currentHealth.Max = value;
     }
-    private Vector3Int position_;
+
+    public Obstacle(uint maxHealth)
+    {
+        this.maxHealth = maxHealth;
+        currentHealth.Max = maxHealth;
+        currentHealth.Value = maxHealth;
+    }
+
+    protected override Task die()
+    {
+        tracker.RemoveObstacle(this);
+        Destroy(gameObject);
+        return Task.CompletedTask;
+    }
 }

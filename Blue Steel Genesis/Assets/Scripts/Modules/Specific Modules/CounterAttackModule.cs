@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
 public class CounterAttack : PassiveModule
 {
     public uint damage;
-    public CounterAttack(uint dmg = 3)
+    public CounterAttack() : this(3) {}
+    public CounterAttack(uint dmg)
     {
         damage = dmg;
         range = 1;
@@ -21,10 +21,13 @@ public class CounterAttack : PassiveModule
         if (Character.tracker.isAlive(context.prevActionContext.acting))
         {
             var target = context.prevActionContext.acting;
-            if (getCellsInRange(user.Position).Contains(target.Position))
+            Vector3Int? target_pos = getCellsInRange(user.Position)
+                .Intersect(target.Position)
+                .Cast<Vector3Int?>().FirstOrDefault();
+            if (target_pos.HasValue)
             {
                 ActionContext action = new ActionContext(user, "counterattack", context, target);
-                await user.strike(target.Position, damage, action);                
+                await user.strike(target_pos.Value, damage, action);                
             }
         }
     }
