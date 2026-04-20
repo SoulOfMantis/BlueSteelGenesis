@@ -6,29 +6,30 @@ using UnityEngine;
 
 public abstract class Character : Entity
 {
-    public override async Task damage(uint dmg, ActionContext prevAction = null)
+    public override async Task damage(uint dmg, ActionContext ctx)
     {
         dmg = Math.Max(dmg, 1);
+        ctx = ctx?.WithActionData(dmg);
         await Awaitable.WaitForSecondsAsync(.1f); //TODO: remove delay; derived classes must await animations
-        var action = new ActionContext(null, "takeDamage", prevAction, this);
         if (currentShield > 0)
         {
             uint shield_dmg = Math.Min(currentShield, dmg);
             dmg -= shield_dmg;
-            await shieldDamage(shield_dmg);
+            await shieldDamage(shield_dmg, ctx);
         }
         if (dmg > 0)
         {
             currentHealth -= dmg;
             await changeColorAndWait(Color.crimson, 0.2f*dmg);
-            await processTrigger(TriggerType.OnHealthDamage, prevAction);
+            await processTrigger(TriggerType.OnHealthDamage, ctx?.WithActionData(dmg));
             if (currentHealth == 0)
                 await die();
         }
-        await processTrigger(TriggerType.OnDamage, action);
+        await processTrigger(TriggerType.OnDamage, ctx);
     }
-    public virtual async Task shieldDamage(uint shield_dmg, ActionContext ctx = null)
+    public virtual async Task shieldDamage(uint shield_dmg, ActionContext ctx)
     {
+        ctx = ctx?.WithActionData(shield_dmg);
         await loseShield(shield_dmg);
         await processTrigger(TriggerType.OnDamageShielded, ctx);
         Debug.Log($"{shield_dmg} урона поглощено щитом");
@@ -41,33 +42,34 @@ public abstract class Character : Entity
         UpdateTooltipIfCurrent();
         await Awaitable.WaitForSecondsAsync(.1f); //TODO: remove delay; derived classes must await animations
     }
-    public override async Task heal(uint hp, ActionContext ctx = null)
+    public override async Task heal(uint hp, ActionContext ctx)
     {
+        ctx = ctx?.WithActionData(hp);
         await base.heal(hp, ctx);
         await processTrigger(TriggerType.OnHeal, ctx);
     }
 
-    public virtual async Task giveShield(uint amount, ActionContext prevAction = null)
+    public virtual async Task giveShield(uint amount, ActionContext ctx)
     {
         currentShield += Math.Max(amount, 1);
         UpdateTooltipIfCurrent();
         await Awaitable.WaitForSecondsAsync(.2f); //TODO: remove delay; derived classes must await animations
-        await processTrigger(TriggerType.OnShieldGiven, prevAction);
+        await processTrigger(TriggerType.OnShieldGiven, ctx?.WithActionData(amount));
         Debug.Log($"Выдан щит: {amount}; Всего: {currentShield}");
     }
-public virtual async Task drainEnergy(uint amount, ActionContext ctx = null)
+    public virtual async Task drainEnergy(uint amount, ActionContext ctx = null)
     {
         currentEnergy -= Math.Max(amount, 1);
         UpdateTooltipIfCurrent();
         await changeColorAndWait(Color.blue, 0.1f*amount);
-        await processTrigger(TriggerType.OnEnergyDrain, ctx);
+        await processTrigger(TriggerType.OnEnergyDrain, ctx?.WithActionData(amount));
     }
-    public virtual async Task restoreEnergy(uint amount, ActionContext prevAction = null)
+    public virtual async Task restoreEnergy(uint amount, ActionContext ctx = null)
     {
         currentEnergy += Math.Max(amount, 1);
         UpdateTooltipIfCurrent();
         await changeColorAndWait(Color.aquamarine, 0.1f*amount);
-        await processTrigger(TriggerType.OnEnergyRestore, prevAction);
+        await processTrigger(TriggerType.OnEnergyRestore, ctx?.WithActionData(amount));
     }
     public virtual async Task startBattle()
     {
@@ -97,7 +99,7 @@ public virtual async Task drainEnergy(uint amount, ActionContext ctx = null)
         tracker.NextTurn();
     }
 
-    public async Task move(Vector3Int target_pos, List<Vector3Int> allowed, ActionContext prevAction = null)
+    public async Task move(Vector3Int target_pos, List<Vector3Int> allowed, ActionContext ctx = null)
     {
         var path = Navigation.Dijkstra.getPath(Position, target_pos, p => allowed.Contains(p));
         if (path == null)
@@ -105,7 +107,7 @@ public virtual async Task drainEnergy(uint amount, ActionContext ctx = null)
 
         foreach (var step in path)
             await moveStep(step);
-        await processTrigger(TriggerType.OnMove, Position.LeftBottom, prevAction);
+        await processTrigger(TriggerType.OnMove, Position.LeftBottom, ctx?.WithActionData(path));
     }
     public async Task move(PositionCollection target_pos, List<Vector3Int> allowed, ActionContext ctx = null)
     {
@@ -115,7 +117,7 @@ public virtual async Task drainEnergy(uint amount, ActionContext ctx = null)
 
         foreach (var step in path)
             await moveStep(step);
-        await processTrigger(TriggerType.OnMove, Position.LeftBottom, ctx);
+        await processTrigger(TriggerType.OnMove, Position.LeftBottom, ctx?.WithActionData(path));
     }
     protected virtual async Task moveStep(Vector3Int dir)
     {
@@ -131,26 +133,30 @@ public virtual async Task drainEnergy(uint amount, ActionContext ctx = null)
         await Awaitable.WaitForSecondsAsync(.2f); //TODO: remove delay; derived classes must await animations
     }
 
-    public Task strike(int x, int y, int z, uint dmg) => strike(new Vector3Int(x, y, z), dmg);
-    public async Task strike(Vector3Int pos, uint dmg, ActionContext prevAction = null)
+    public Task strike(int x, int y, int z, uint dmg, ActionContext ctx) => strike(new Vector3Int(x, y, z), dmg, ctx);
+    public async Task strike(Vector3Int pos, uint dmg, ActionContext ctx)
     {
         Entity target = tracker.FindEntityAtPosition(pos);
         if (target == null)
             return;
         await Awaitable.WaitForSecondsAsync(.3f);
-        await target.damage(dmg, prevAction);
-        await processTrigger(TriggerType.OnStrike, pos, prevAction);
+
+        ctx = ctx?.WithActionData(dmg);
+        await target.damage(dmg, ctx);
+        await processTrigger(TriggerType.OnStrike, pos, ctx);
         Debug.Log($"Strike at {pos} for {dmg} damage");
     }
 
-    public async Task apply(Vector3Int pos, StatusModule status, ActionContext prevAction = null)
+    public async Task apply(Vector3Int pos, StatusModule status, ActionContext ctx)
     {
         Character target = tracker.FindCharacterAtPosition(pos);
         if (target == null)
             return;
         await Awaitable.WaitForSecondsAsync(.2f);
-        await target.addStatusModule(status);
-        await processTrigger(TriggerType.OnApply, pos, prevAction);
+
+        ctx = ctx?.WithActionData(status);
+        await target.addStatusModule(status, ctx);
+        await processTrigger(TriggerType.OnApply, pos, ctx);
         Debug.Log($"Apply {status.GetType().Name} at {pos}");
     }
 
@@ -164,7 +170,7 @@ public virtual async Task drainEnergy(uint amount, ActionContext ctx = null)
     {
         return modules_.Remove(module);
     }
-    public async Task addStatusModule(StatusModule status, ActionContext prevAction = null)
+    public async Task addStatusModule(StatusModule status, ActionContext ctx)
     {
         var module = status_modules_.Find(m => m.GetType() == status.GetType());
         if (module != null)
@@ -174,16 +180,12 @@ public virtual async Task drainEnergy(uint amount, ActionContext ctx = null)
             status_modules_.Add(status);
             UpdateTooltipIfCurrent();
             status.Initialize();
-            if (status is NegativeStatusModule)
-            {
-                var action = new ActionContext(null, "addNegativeStatusModule", prevAction, this);
-                await processTrigger(TriggerType.OnNegativeStatusApplied, action);
-             }
-            else if (status is PositiveStatusModule)
-            {
-                var action = new ActionContext(null, "addPositiveStatusModule", prevAction, this);
-                await processTrigger(TriggerType.OnPositiveStatusApplied, action);
-            }
+            await processTrigger(
+                status switch {
+                    NegativeStatusModule => TriggerType.OnNegativeStatusApplied,
+                    PositiveStatusModule => TriggerType.OnPositiveStatusApplied,
+                }, ctx?.WithActionData(status));
+
             Debug.Log($"Status module {status.GetType().Name} added to {GetType().Name}");
         }
     }
@@ -212,8 +214,7 @@ public virtual async Task drainEnergy(uint amount, ActionContext ctx = null)
             Debug.Log(pm.Name + " triggering");
             if (isCorrectPosition(pm, pos))
             {
-                pm.loadContext(context);
-                await usePassiveModule_internal(pm, pos);
+                await usePassiveModule_internal(pm, pos, context);
                 Debug.Log(pm.Name + " triggered");
             }
         }
@@ -222,10 +223,7 @@ public virtual async Task drainEnergy(uint amount, ActionContext ctx = null)
     protected async Task processStatusModules(TriggerType triggerType, ActionContext context = null)
     {
         foreach (var st in status_modules_.Where(m => triggerType == m.triggerType))
-        {
-            st.loadContext(context);
-            await useStatusModule_internal(st);
-        }
+            await useStatusModule_internal(st, context);
         status_modules_.RemoveAll(m => m.IsExpired());
     }
     protected void RechargeModules(TriggerType trigger) => modules_.ForEach(m => m.Recharge(trigger));
@@ -251,12 +249,9 @@ public virtual async Task drainEnergy(uint amount, ActionContext ctx = null)
     public bool doesModuleExist(int module_index) => getModule<GameModule>(module_index) != null;
     protected virtual bool isCorrectPosition(GameModule module, Vector3Int pos) => module.checkPosition(this, pos);
     protected virtual bool hasEnoughEnergy(ActiveModule module) => module != null && currentEnergy >= module.energyCost;
-    protected virtual async Task useActiveModule_internal(ActiveModule m, Vector3Int pos)
-    { await m.Use(this, pos); }
-    protected virtual async Task usePassiveModule_internal(PassiveModule m, Vector3Int pos)
-    { await m.Use(this, pos); }
-    protected virtual async Task useStatusModule_internal(StatusModule m)
-    { await m.Use(this, Position.LeftBottom); }
+    protected virtual Task useActiveModule_internal(ActiveModule m, Vector3Int pos) => m.Use(this, pos, null);
+    protected virtual Task usePassiveModule_internal(PassiveModule m, Vector3Int pos, ActionContext ctx) => m.Use(this, pos, ctx);
+    protected virtual Task useStatusModule_internal(StatusModule m, ActionContext ctx) => m.Use(this, Position.LeftBottom, ctx);
 
     public string getModuleName(int index)
     {

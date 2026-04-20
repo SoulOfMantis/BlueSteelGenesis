@@ -7,10 +7,4 @@ public abstract class PassiveModule : GameModule
     {
         AddConstKeyword(new PassiveKeyword());
     }
-
-    protected ActionContext context { get; private set; }
-    public void loadContext(ActionContext c)
-    {
-        context = c;
-    }
 }

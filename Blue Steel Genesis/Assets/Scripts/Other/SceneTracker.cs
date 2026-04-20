@@ -48,7 +48,7 @@ public class SceneTracker : MonoBehaviour
         return FindEntityAtPosition(pos) != null;
     }
 
-    public bool isAlive(Character c) => initiative.isAlive(c);
+    public bool isAlive(Entity e) => entities.Contains(e);
 
     public Vector3 CellToWorld(Vector3Int pos)
     {

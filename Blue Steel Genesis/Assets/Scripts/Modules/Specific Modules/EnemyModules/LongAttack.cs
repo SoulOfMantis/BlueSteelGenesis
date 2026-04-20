@@ -15,9 +15,9 @@ public class LongAttack : ActiveModule
         Icon_name = "LongAttack";
         AddConstKeywords(new OffenseKeyword());
     }
-    public override async Task Effect(Character user, Vector3Int pos)
+    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
     {
-        await user.strike(pos, hitDamage);
+        await user.strike(pos, hitDamage, MakeContext(user, pos));
         var attackPosition = user.Position.Where(x => Entity.tracker.GetNeighborTiles(x)
                             .Contains(pos)).First();
         var direction = pos - attackPosition;

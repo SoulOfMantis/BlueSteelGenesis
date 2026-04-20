@@ -78,15 +78,15 @@ public class PlayerCharacter : Character
         //play using module animation
         await base.useActiveModule_internal(m, pos);
     }
-    protected override async Task usePassiveModule_internal(PassiveModule m, Vector3Int pos)
+    protected override async Task usePassiveModule_internal(PassiveModule m, Vector3Int pos, ActionContext ctx)
     {
         //play using module animation
-        await base.usePassiveModule_internal(m, pos);
+        await base.usePassiveModule_internal(m, pos, ctx);
     }
-    protected override async Task useStatusModule_internal(StatusModule m)
+    protected override async Task useStatusModule_internal(StatusModule m, ActionContext ctx)
     {
         //play using module animation
-        await base.useStatusModule_internal(m);
+        await base.useStatusModule_internal(m, ctx);
     }
 
     protected override bool isCorrectPosition(GameModule module, Vector3Int pos)
