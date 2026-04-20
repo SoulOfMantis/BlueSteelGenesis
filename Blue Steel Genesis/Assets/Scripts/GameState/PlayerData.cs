@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class PlayerData
 {
     public uint GoldenTickets { get; private set; }
+
     public bool HasGoldenTickets() => GoldenTickets > 0;
     public void GetGoldenTicket() => GoldenTickets++;
     public void SpendGoldenTicket()
@@ -23,12 +24,19 @@ public class PlayerData
         get => currentHealth.Max;
         set => currentHealth.Max = value;
     }
-    public uint maxEnergy { get; set; }
+    public uint maxEnergy
+    {
+        get => currentEnergy.Max;
+        set => currentEnergy.Max = value;
+    }
 
     public URangeValue money { get; set; } = new();
     public URangeValue materials { get; set; } = new();
+    public URangeValue currentEnergy { get; set; } = new();
 
     public List<GameModule> modules = new();
+
+
 
     public void AddModule(GameModule module)
     {

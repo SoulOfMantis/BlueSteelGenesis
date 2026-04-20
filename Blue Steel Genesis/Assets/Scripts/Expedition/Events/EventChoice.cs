@@ -14,4 +14,6 @@ public class EventChoice
     public EventEffect successEffect; // эффект при успехе
     public EventEffect failureEffect; // эффект при неудаче
     public EventOutcome outcome;     // что произойдёт после выбора
+    [Tooltip("Если не пусто, событие перейдёт в указанное состояние вместо завершения")]
+    public string nextStateId;   // идентификатор состояния 
 }

@@ -49,6 +49,7 @@ public partial class Expedition
         ModuleGen = new(LocalSeed);
         TreasureSubsystem = new(Biome.id);
         Shop = new(Biome.id);
+        EventManager.PrepareEventsForStage(Biome.id);
     }
 
     public void displayMap(ExpeditionMapView view)

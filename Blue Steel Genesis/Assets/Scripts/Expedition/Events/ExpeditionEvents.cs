@@ -51,7 +51,7 @@ public partial class Expedition
         if (isInEvent) return;
         isInEvent = true;
 
-        EventData eventData = EventManager.GetRandomEventForBiome(Biome.id);
+        EventData eventData = EventManager.GetRandomEventForStage();
         CurrentEventHolder.Event = eventData;
         UnityEngine.SceneManagement.SceneManager.LoadScene(eventData.sceneName);
     }
