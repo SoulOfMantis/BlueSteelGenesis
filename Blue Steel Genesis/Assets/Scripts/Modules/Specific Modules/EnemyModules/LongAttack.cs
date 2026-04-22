@@ -28,7 +28,7 @@ public class LongAttack : ActiveModule
         while (flag)
         {
             if (Entity.tracker.FindEntityAtPosition(pos) is Entity e)
-                await e.damage(waveDamage, null); //TODO: provide context
+                await e.damage(waveDamage, MakeContext(user, pos));
             flag = !Entity.tracker.IsOccupied(pos);
             pos += direction;
             flag = flag && !Entity.tracker.OutOfBounds(pos);
