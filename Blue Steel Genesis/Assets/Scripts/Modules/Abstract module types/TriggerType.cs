@@ -6,6 +6,7 @@ public enum TriggerType
     OnTurnEnd,
     OnNegativeStatusApplied,
     OnPositiveStatusApplied,
+    OnHealthLost,
     OnDamage,
     OnHealthDamage,
     OnDamageShielded,

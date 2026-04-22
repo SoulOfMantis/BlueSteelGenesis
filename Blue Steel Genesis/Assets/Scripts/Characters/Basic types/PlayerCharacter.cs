@@ -155,6 +155,11 @@ public class PlayerCharacter : Character
     public void onEndTurnButtonPressed() =>
         StartCoroutine(TaskCoro.Make(endTurn()));
 
+    public override async Task looseHealth(uint hp, ActionContext ctx) {
+        await base.looseHealth(hp, ctx);
+        updateHealth();
+    }
+
     public override async Task damage(uint dmg, ActionContext prevAction = null)
     {
         Debug.Log($"Игрок получил {dmg} урона!");

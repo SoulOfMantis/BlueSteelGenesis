@@ -6,6 +6,11 @@ using UnityEngine;
 
 public abstract class Character : Entity
 {
+    public override async Task looseHealth(uint hp, ActionContext ctx) {
+        ctx = ctx?.WithActionData(hp);
+        await base.looseHealth(hp, ctx);
+        await processTrigger(TriggerType.OnHealthLost, ctx);
+    }
     public override async Task damage(uint dmg, ActionContext ctx)
     {
         dmg = Math.Max(dmg, 1);

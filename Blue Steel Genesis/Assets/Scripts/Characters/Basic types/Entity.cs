@@ -38,10 +38,11 @@ public abstract class Entity : MonoBehaviour
         spriteRenderer.color = baseColor;
     }
 
-    public virtual async Task damage(uint dmg, ActionContext ctx) {
-        currentHealth -= Math.Max(dmg, 1);
+    public virtual Task damage(uint dmg, ActionContext ctx) => looseHealth(dmg, ctx);
+    public virtual async Task looseHealth(uint hp, ActionContext ctx) {
+        currentHealth -= Math.Max(hp, 1);
         UpdateTooltipIfCurrent();
-        await changeColorAndWait(Color.crimson, 0.2f*dmg);
+        await changeColorAndWait(Color.crimson, 0.2f*hp);
         switch (currentHealth)
         {
             case 0:
