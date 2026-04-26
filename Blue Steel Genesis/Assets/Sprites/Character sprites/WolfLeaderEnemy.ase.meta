@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 152a91a26f99f45478244579f0dcefe3
+guid: cf591d1f52ac6084b82a5748763b12b8
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -129,8 +129,8 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: WolfLeaderEnemy
     originalName: 
-    pivot: {x: 0.47368422, y: -0.13725491}
-    alignment: 9
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
     rect:
@@ -139,7 +139,7 @@ ScriptedImporter:
       y: 4
       width: 57
       height: 51
-    spriteID: bac06c8048f039f47a4e379e4f8e980a
+    spriteID: 4b6eba8da0ba25f46af48484fefa67e2
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -171,7 +171,7 @@ ScriptedImporter:
         y: 7
         width: 57
         height: 51
-      spriteId: bac06c8048f039f47a4e379e4f8e980a
+      spriteId: 4b6eba8da0ba25f46af48484fefa67e2
     linkedCells: []
     tileCells: []
     tileSetIndex: 0

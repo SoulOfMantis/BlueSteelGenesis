@@ -17,10 +17,9 @@ public class Expedition
             new DefaultAdaptiveTEST_ONLY(),
             new MechanicStinger(),
             new BasicMovement(),
-            new DogSummoner_TEST_ONLY()
         };
-        Player.maxHealth = 10;
-        Player.maxEnergy = 3;
+        Player.maxHealth = 50;
+        Player.maxEnergy = 5;
         Player.GiveMaterials(3);
         Player.GiveMoney(10);
         Player.currentHealth.Value = Player.maxHealth;
