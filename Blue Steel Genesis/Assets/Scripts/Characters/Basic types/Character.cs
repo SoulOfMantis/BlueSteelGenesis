@@ -153,6 +153,9 @@ public virtual async Task drainEnergy(uint amount)
         Debug.Log($"Apply {status.GetType().Name} at {pos}");
     }
 
+    public new virtual Task<bool> summon<T>(PositionCollection pos) where T : Entity =>
+        Task.FromResult(Entity.summon<T>(pos));
+
 
     public void addModule(GameModule module)
     {
