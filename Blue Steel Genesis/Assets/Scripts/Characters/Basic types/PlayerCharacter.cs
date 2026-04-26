@@ -160,32 +160,32 @@ public class PlayerCharacter : Character
         updateHealth();
     }
 
-    public override async Task damage(uint dmg, ActionContext prevAction = null)
+    public override async Task damage(uint dmg, ActionContext ctx)
     {
         Debug.Log($"Игрок получил {dmg} урона!");
-        await base.damage(dmg, prevAction);
+        await base.damage(dmg, ctx);
         updateHealth();
         //play taking damage animation
     }
 
-    public override async Task heal(uint hp, ActionContext prevAction = null)
+    public override async Task heal(uint hp, ActionContext ctx)
     {
         Debug.Log($"Игрок восстановил {hp} здоровья!");
-        await base.heal(hp, prevAction);
+        await base.heal(hp, ctx);
         updateHealth();
         //play healing animation
     }
 
-    public override async Task drainEnergy(uint amount, ActionContext prevAction = null)
+    public override async Task drainEnergy(uint amount, ActionContext ctx = null)
     {
-        await base.drainEnergy(amount, prevAction);
+        await base.drainEnergy(amount, ctx);
         updateButtons();
         updateEnergy();
         //play losing energy animation
     }
-    public override async Task restoreEnergy(uint amount, ActionContext prevAction = null)
+    public override async Task restoreEnergy(uint amount, ActionContext ctx = null)
     {
-        await base.restoreEnergy(amount, prevAction);
+        await base.restoreEnergy(amount, ctx);
         updateButtons();
         updateEnergy();
         //play restoring energy animation
