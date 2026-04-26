@@ -657,9 +657,9 @@ MonoBehaviour:
     clip: {fileID: 0}
     transitionDuration: 0.2
   attackAnimation:
-    animationName: Strike
-    clip: {fileID: 0}
-    transitionDuration: 0
+    animationName: Attack
+    clip: {fileID: 7400000, guid: fc9a0315c4c1e604a86c7f340619b7b6, type: 2}
+    transitionDuration: 1
   hurtAnimation:
     animationName: Hurt
     clip: {fileID: 0}
