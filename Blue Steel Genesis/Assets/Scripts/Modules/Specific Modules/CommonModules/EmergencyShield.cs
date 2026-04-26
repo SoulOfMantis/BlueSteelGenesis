@@ -16,6 +16,7 @@ public class EmergencyShield : PassiveModule
 
     public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx) {
         ctx.ThrowIfIncomplete();
+        ctx.ThrowIfNoActionData<uint>();
 
         uint shield_amount = Math.Min(
             (user.maxHealth - user.currentHealth) * shieldPercent / 100,
