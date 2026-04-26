@@ -1,19 +1,18 @@
-using UnityEngine;
-
 using System;
+using UnityEngine;
 
 [Serializable]
 public class EventChoice
 {
-    public string buttonText;       
+    public string buttonText;
     [TextArea]
-    public string description;      
-    public bool isRandom;            
+    public string description;
+    public bool isRandom;
     [Range(0, 100)]
-    public int successChance = 50;  
-    public EventEffect successEffect; // эффект при успехе
-    public EventEffect failureEffect; // эффект при неудаче
-    public EventOutcome outcome;     // что произойдЄт после выбора
-    [Tooltip("≈сли не пусто, событие перейдЄт в указанное состо€ние вместо завершени€")]
-    public string nextStateId;   // идентификатор состо€ни€ 
+    public int successChance = 50;
+    public EventEffect successEffect;
+    public EventEffect failureEffect;
+
+    [Tooltip("0 Ц выход из событи€, >0 Ц идентификатор следующего состо€ни€")]
+    public uint nextStateId;
 }

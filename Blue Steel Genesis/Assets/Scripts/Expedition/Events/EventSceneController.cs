@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class EventSceneController : MonoBehaviour
 {
@@ -12,65 +12,97 @@ public class EventSceneController : MonoBehaviour
     public TMP_Text eventDescriptionText;
     public Transform buttonsContainer;
     public GameObject buttonPrefab;
-
-    [Header("Reward Screen")]
     public GameObject rewardPanelPrefab;
-
-    private const string MAP_SCENE_NAME = "ExpeditionMapTest_usingGameState";
+    public GameObject moduleTooltipPrefab;      // Префаб тултипа, содержащий ModuleTooltipTrigger
 
     private EventData currentEvent;
-    private EventData.EventState currentState;
+    private uint currentStateId;
 
     void Start()
     {
         currentEvent = CurrentEventHolder.Event;
         if (currentEvent == null || currentEvent.states == null || currentEvent.states.Count == 0)
         {
-            Debug.LogError("Нет данных о событии!");
             ReturnToMap();
             return;
         }
-
-        SetState(currentEvent.states[0].stateId);
+        SetState(1);
     }
 
-    private void SetState(string stateId)
+    private void SetState(uint stateId)
     {
-        currentState = currentEvent.states.Find(s => s.stateId == stateId);
-        if (currentState == null)
+        EventData.EventState state = FindState(stateId);
+        if (state == null)
         {
-            Debug.LogError($"Состояние '{stateId}' не найдено!");
+            Debug.LogError($"Состояние с id={stateId} не найдено!");
             ReturnToMap();
             return;
         }
+
+        currentStateId = stateId;
 
         if (eventImage != null && currentEvent.eventImage != null)
             eventImage.sprite = currentEvent.eventImage;
         if (eventNameText != null)
             eventNameText.text = currentEvent.eventName;
         if (eventDescriptionText != null)
-            eventDescriptionText.text = currentState.description;
+            eventDescriptionText.text = state.description;
 
         foreach (Transform child in buttonsContainer)
             Destroy(child.gameObject);
 
-        foreach (var choice in currentState.choices)
+        foreach (var choice in state.choices)
         {
             GameObject btnObj = Instantiate(buttonPrefab, buttonsContainer);
             Button btn = btnObj.GetComponent<Button>();
             TMP_Text btnText = btnObj.GetComponentInChildren<TMP_Text>();
 
-            string effectDesc = "";
+            string effectText = "";
             if (choice.isRandom)
             {
-                effectDesc = $"\nУспех ({choice.successChance}%): {choice.successEffect.GetDescription()}" +
+                effectText = $"\nУспех ({choice.successChance}%): {choice.successEffect.GetDescription()}" +
                              $"\nНеудача: {choice.failureEffect.GetDescription()}";
             }
             else
             {
-                effectDesc = $"\n{choice.successEffect.GetDescription()}";
+                effectText = $"\n{choice.successEffect.GetDescription()}";
             }
-            btnText.text = choice.buttonText + effectDesc;
+            btnText.text = choice.buttonText + effectText;
+
+            List<GameModule> affectedModules = new();
+            var player = GameState.Run?.Expedition?.Player;
+
+            if (choice.successEffect != null)
+            {
+                if (choice.successEffect.addModules != null)
+                    affectedModules.AddRange(choice.successEffect.addModules);
+                if (choice.successEffect.removeModuleIds != null && player != null)
+                    foreach (var id in choice.successEffect.removeModuleIds)
+                    {
+                        var mod = player.modules.Find(m => m.Name == id);
+                        if (mod != null) affectedModules.Add(mod);
+                    }
+            }
+            if (choice.failureEffect != null)
+            {
+                if (choice.failureEffect.addModules != null)
+                    affectedModules.AddRange(choice.failureEffect.addModules);
+                if (choice.failureEffect.removeModuleIds != null && player != null)
+                    foreach (var id in choice.failureEffect.removeModuleIds)
+                    {
+                        var mod = player.modules.Find(m => m.Name == id);
+                        if (mod != null) affectedModules.Add(mod);
+                    }
+            }
+
+            if (affectedModules.Count > 0 && moduleTooltipPrefab != null)
+            {
+                var moduleSet = new EventModuleSet(affectedModules);
+                var tooltipGO = Instantiate(moduleTooltipPrefab, btnObj.transform);
+                var trigger = tooltipGO.GetComponent<ModuleTooltipTrigger>();
+                if (trigger != null)
+                    trigger.updateModuleTrigger(moduleSet);
+            }
 
             EventChoice choiceCopy = choice;
             btn.onClick.AddListener(() => OnChoiceSelected(choiceCopy));
@@ -82,8 +114,7 @@ public class EventSceneController : MonoBehaviour
         bool success = true;
         if (choice.isRandom)
         {
-            int roll = Random.Range(1, 101);
-            success = roll <= choice.successChance;
+            success = SuccessChecker.RollSuccess(choice.successChance);
         }
 
         EventEffect effect = success ? choice.successEffect : choice.failureEffect;
@@ -98,30 +129,13 @@ public class EventSceneController : MonoBehaviour
                 return;
             }
 
-            if (!string.IsNullOrEmpty(choice.nextStateId))
+            if (choice.nextStateId == 0)
             {
-                SetState(choice.nextStateId);
+                ReturnToMap();
             }
             else
             {
-                switch (choice.outcome)
-                {
-                    case EventOutcome.Exit:
-                        ReturnToMap();
-                        break;
-                    case EventOutcome.EnterBattle:
-                        StartBattle();
-                        break;
-                    case EventOutcome.EnterShop:
-                        StartShop();
-                        break;
-                    case EventOutcome.EnterEliteBattle:
-                        StartEliteBattle();
-                        break;
-                    case EventOutcome.EnterBossBattle:
-                        StartBossBattle();
-                        break;
-                }
+                SetState(choice.nextStateId);
             }
         });
     }
@@ -135,36 +149,7 @@ public class EventSceneController : MonoBehaviour
             return;
         }
 
-
-        player.currentHealth.Value = (uint)Mathf.Clamp(
-            player.currentHealth.Value + effect.healthChange,
-            0,
-            player.maxHealth
-        );
-        player.maxHealth = (uint)Mathf.Max(1, player.maxHealth + effect.maxHealthChange);
-
-
-        player.currentEnergy.Value = (uint)Mathf.Clamp(
-            player.currentEnergy.Value + effect.energyChange,
-            0,
-            player.maxEnergy
-        );
-        player.maxEnergy = (uint)Mathf.Max(0, player.maxEnergy + effect.maxEnergyChange);
-
-        if (effect.moneyChange > 0)
-            player.GiveMoney((uint)effect.moneyChange);
-        else if (effect.moneyChange < 0)
-            player.LoseMoney((uint)(-effect.moneyChange));
-
-
-        if (effect.materialChange > 0)
-            player.GiveMaterials((uint)effect.materialChange);
-
-        if (effect.addModules != null)
-            foreach (var mod in effect.addModules)
-                player.AddModule(mod);
-        if (effect.removeModuleIds != null)
-            player.modules.RemoveAll(m => effect.removeModuleIds.Contains(m.Name));
+        player.ApplyEventEffects(effect);
 
         bool hasReward = (effect.addModules != null && effect.addModules.Count > 0) || effect.materialChange > 0 || effect.moneyChange > 0;
 
@@ -187,13 +172,13 @@ public class EventSceneController : MonoBehaviour
     void ReturnToMap()
     {
         CurrentEventHolder.Event = null;
-        SceneManager.LoadScene(MAP_SCENE_NAME);
+        SceneManager.LoadScene(GameEventConstants.MAP_SCENE_NAME);
     }
 
-    void StartBattle() => GameState.Run.Expedition.CombatSystem.TriggerNormalEncounter();
-    void StartEliteBattle() => GameState.Run.Expedition.CombatSystem.TriggerEliteEncounter();
-    void StartBossBattle() => GameState.Run.Expedition.CombatSystem.TriggerBossEncounter();
-    void StartShop() => GameState.Run.Expedition.Shop.TriggerShop();
+    private EventData.EventState FindState(uint id)
+    {
+        return currentEvent.states.Find(s => s.stateId == id);
+    }
 }
 public static class CurrentEventHolder
 {

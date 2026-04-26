@@ -6,18 +6,17 @@ using UnityEngine;
 [Serializable]
 public class EventEffect
 {
-    public int healthChange;   
-    public int moneyChange;   
+    public int healthChange;
+    public int moneyChange;
     public int materialChange;
-    public int maxHealthChange;        // изменение максимального здоровья
-    public int energyChange;           // изменение текущей энергии
-    public int maxEnergyChange;        // изменение максимальной энергии
-    public List<GameModule> addModules;   // модули, которые будут добавлены 
-    public List<string> removeModuleIds;  // ID модулей для удаления
-
+    public int maxHealthChange;
+    public int energyChange;
+    public int maxEnergyChange;
+    public List<GameModule> addModules;
+    public List<string> removeModuleIds;   
 
     /// <summary>
-    /// Возвращает строковое описание эффекта для отображения на кнопке.
+    /// Возвращает строковое описание эффекта с конкретными названиями модулей.
     /// </summary>
     public string GetDescription()
     {
@@ -34,14 +33,46 @@ public class EventEffect
             sb.Append(moneyChange > 0 ? $"+{moneyChange}" : $"{moneyChange}").Append(" Gold, ");
         if (materialChange != 0)
             sb.Append(materialChange > 0 ? $"+{materialChange}" : $"{materialChange}").Append(" Materials, ");
+
         if (addModules != null && addModules.Count > 0)
-            sb.Append($"Add {addModules.Count} module(s), ");
+            foreach (var mod in addModules)
+                sb.Append($"Add {mod.Name}, ");
+
         if (removeModuleIds != null && removeModuleIds.Count > 0)
-            sb.Append($"Remove {removeModuleIds.Count} module(s), ");
+            foreach (var modId in removeModuleIds)
+                sb.Append($"Remove {modId}, ");
 
         if (sb.Length == 0)
             return "No effect";
-        sb.Length -= 2; // убрать последнюю запятую и пробел
+        sb.Length -= 2;
         return sb.ToString();
+    }
+
+    /// <summary>
+    /// Возвращает true, если в эффекте есть изменения модулей.
+    /// </summary>
+    public bool HasModuleChanges() =>
+        (addModules != null && addModules.Count > 0) ||
+        (removeModuleIds != null && removeModuleIds.Count > 0);
+
+    /// <summary>
+    /// Формирует текст подсказки с перечнем модулей.
+    /// </summary>
+    public string GetModuleTooltipText()
+    {
+        var sb = new StringBuilder();
+        if (addModules != null && addModules.Count > 0)
+        {
+            sb.AppendLine("Добавляет модули:");
+            foreach (var mod in addModules)
+                sb.AppendLine($"- {mod.Name}");
+        }
+        if (removeModuleIds != null && removeModuleIds.Count > 0)
+        {
+            sb.AppendLine("Удаляет модули:");
+            foreach (var name in removeModuleIds)
+                sb.AppendLine($"- {name}");
+        }
+        return sb.ToString().TrimEnd();
     }
 }

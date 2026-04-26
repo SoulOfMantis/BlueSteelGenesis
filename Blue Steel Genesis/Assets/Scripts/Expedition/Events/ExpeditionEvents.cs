@@ -1,3 +1,4 @@
+using Codice.CM.Common;
 using Map;
 using UnityEngine;
 
@@ -53,6 +54,6 @@ public partial class Expedition
 
         EventData eventData = EventManager.GetRandomEventForStage();
         CurrentEventHolder.Event = eventData;
-        UnityEngine.SceneManagement.SceneManager.LoadScene(eventData.sceneName);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(GameEventConstants.EVENT_SCENE_NAME);
     }
 }
