@@ -1,19 +1,22 @@
 fileFormatVersion: 2
-guid: e4d3a5e665879244d8f736cdb14d9aa5
+guid: 878e7e7cc12cc174486c4ef28f0843b9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7797237144720623095
-    second: AttackPlayer_0
+      213: -7285144258491380136
+    second: DeathPlayer_0
   - first:
-      213: 7467041340916397544
-    second: AttackPlayer_1
+      213: -8697942326276727320
+    second: DeathPlayer_1
   - first:
-      213: 4413579300173240353
-    second: AttackPlayer_2
+      213: -7598235971761319005
+    second: DeathPlayer_2
   - first:
-      213: -3067542087914024442
-    second: AttackPlayer_3
+      213: -1071806513340894768
+    second: DeathPlayer_3
+  - first:
+      213: 3833093383095499221
+    second: DeathPlayer_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,89 +112,67 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: AttackPlayer_0
+      name: DeathPlayer_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 35
-        width: 26
-        height: 28
+        x: 0
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7f5cd802fd9553c60800000000000000
-      internalID: 7797237144720623095
+      spriteID: 85e052f25e7f5ea90800000000000000
+      internalID: -7285144258491380136
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AttackPlayer_1
+      name: DeathPlayer_1
       rect:
         serializedVersion: 2
-        x: 37
-        y: 35
-        width: 27
-        height: 28
+        x: 32
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8e57a78998240a760800000000000000
-      internalID: 7467041340916397544
+      spriteID: 8edd075b983ba4780800000000000000
+      internalID: -8697942326276727320
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: AttackPlayer_2
+      name: DeathPlayer_2
       rect:
         serializedVersion: 2
-        x: 5
-        y: 3
-        width: 27
-        height: 28
+        x: 0
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 128d7d64dfe204d30800000000000000
-      internalID: 4413579300173240353
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: AttackPlayer_3
-      rect:
-        serializedVersion: 2
-        x: 37
-        y: 3
-        width: 23
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 602135c39b6ed65d0800000000000000
-      internalID: -3067542087914024442
+      spriteID: 3a3529f04a4ad8690800000000000000
+      internalID: -7598235971761319005
       vertices: []
       indices: 
       edges: []
@@ -200,7 +181,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: edffc5e9164bc674eb83aaa994437923
     internalID: 0
     vertices: []
     indices: 
@@ -208,12 +189,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      AttackPlayer_0: 7797237144720623095
-      AttackPlayer_1: 7467041340916397544
-      AttackPlayer_2: 4413579300173240353
-      AttackPlayer_3: -3067542087914024442
+      DeathPlayer_0: -7285144258491380136
+      DeathPlayer_1: -8697942326276727320
+      DeathPlayer_2: -7598235971761319005
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

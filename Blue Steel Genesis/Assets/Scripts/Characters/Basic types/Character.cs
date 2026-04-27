@@ -11,9 +11,7 @@ public abstract class Character : Entity
     public override async Task damage(uint dmg)
     {
         dmg = Math.Max(dmg, 1);
-        if (visualHandler != null)
-            await visualHandler.PlayHurtAnimation(dmg);
-
+        
         if (currentShield > 0)
         {
             uint shield_dmg = Math.Min(currentShield, dmg);
@@ -23,6 +21,8 @@ public abstract class Character : Entity
         if (dmg > 0)
         {
             currentHealth -= dmg;
+            if (visualHandler != null)
+                await visualHandler.PlayHurtAnimation(dmg);
             await changeColorAndWait(Color.crimson, 0.2f*dmg);
             await processTrigger(TriggerType.OnHealthDamage);
             if (currentHealth == 0)

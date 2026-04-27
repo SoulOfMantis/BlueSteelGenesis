@@ -1206,7 +1206,7 @@ MonoBehaviour:
   deathAnimation:
     animationName: Die
     clip: {fileID: 0}
-    transitionDuration: 0
+    transitionDuration: 1
   loseShieldAnimation:
     animationName: 
     clip: {fileID: 0}
@@ -1215,10 +1215,26 @@ MonoBehaviour:
     animationName: 
     clip: {fileID: 0}
     transitionDuration: 0
-  healEffect:
-    animationName: Heal
+  startBattleAnimation:
+    animationName: 
     clip: {fileID: 0}
-    transitionDuration: 0
+    transitionDuration: 0.3
+  endBattleAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0.5
+  startTurnAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0.2
+  endTurnAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0.1
+  healAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0.5
 --- !u!1 &2124079883641599006
 GameObject:
   m_ObjectHideFlags: 0
