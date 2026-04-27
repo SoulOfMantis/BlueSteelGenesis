@@ -11,7 +11,8 @@ public class BasicMovement : ActiveModule
 {
     public BasicMovement() : base()
     {
-        range = 3;
+        price = 15;
+        range = 4;
         energyCost = 1;
         Icon_name = "Module_movement";
         AddConstKeywords(new MobilityKeyword(), new CommonKeyword());

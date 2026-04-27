@@ -11,7 +11,7 @@ public class BiteModule : ActiveModule
 
     public BiteModule() : base()
     {
-        hitDamage = 5;
+        hitDamage = 6;
         energyCost = 2;
         range = 1;
         Icon_name = "BiteModule";

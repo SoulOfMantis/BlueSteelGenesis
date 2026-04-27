@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BigAcidSlime : Enemy
 {
-    public BigAcidSlime() : base(12, 3, -5)
+    public BigAcidSlime() : base(30, 3, -5)
     {
         Name = "Big Acid Slime";
         Description = "Roughly half the size of the biggest. The strategy didn't change much.";

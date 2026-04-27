@@ -13,10 +13,11 @@ public class MechanicStinger : ActiveModule
 
     public MechanicStinger() : base()
     {
-        energyCost = 1;
+        price = 20;
+        energyCost = 3;
         range = 1;
-        hitDamage = 1;
-        duration = 3;
+        hitDamage = 2;
+        duration = 2;
         poisonDamage = 1;
         Icon_name = "Module_mechanical_sting2";
         AddConstKeywords(new OffenseKeyword(), new CommonKeyword());

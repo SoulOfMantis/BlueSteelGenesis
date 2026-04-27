@@ -10,12 +10,13 @@ using UnityEngine;
 /// </summary>
 public class AcceleratedMovement : ActiveModule
 {
-    uint burnDamage = 1;
+    uint burnDamage = 2;
     uint burnDuration = 1;
     public AcceleratedMovement() : base()
     {
-        range = 5;
-        energyCost = 2;
+        price = 50;
+        range = 6;
+        energyCost = 3;
         //Icon_name = "Module_accelerated_movement";
         AddConstKeywords(new MobilityKeyword(), new CommonKeyword());
         Icon_name = "AcceleratedMovement";

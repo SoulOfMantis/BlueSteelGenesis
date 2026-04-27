@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MacheteRobot : Enemy
 {
-    public MacheteRobot() : base(32, 4, 64)
+    public MacheteRobot() : base(50, 5, 40)
     {
         addModule(new LongAttack());
         addModule(new WideAttack());

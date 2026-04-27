@@ -9,9 +9,9 @@ public class SwarmMandibles : ActiveModule
     public SwarmMandibles() : base()
     {
         range = 1;
-        energyCost = 1;
+        energyCost = 2;
         biteDamage = 1;        
-        attackCount = 2;
+        attackCount = 4;
         AddConstKeywords(new OffenseKeyword());
     }
     public SwarmMandibles(uint biteDamage, uint attackCount) : this()

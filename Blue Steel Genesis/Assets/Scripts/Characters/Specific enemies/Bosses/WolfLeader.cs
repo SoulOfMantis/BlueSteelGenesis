@@ -6,7 +6,7 @@ public class WolfLeader : Enemy
 {
     private int remainingSummons = 2; // Сколько раз можно использовать призыв (каждый раз пытается призвать  до 2 волков)
 
-    public WolfLeader() : base(40, 5, 70) 
+    public WolfLeader() : base(70, 5, 70) 
     {
         Name = "Wolf Leader";
         Description = "The mighty leader of the wolf pack. Can summon smaller wolves to aid him!";

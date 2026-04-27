@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class DoubleEdgedBlade : ActiveModule    
 {
-    uint damageDealt = 20;
-    uint damageTaken = 3;
+    uint damageDealt;
+    uint damageTaken;
     public DoubleEdgedBlade():base()
     {
         AddConstKeywords(new BossKeyword(), new OffenseKeyword(), new LimitedPerBattleKeyword());
-        range = 2;
+        energyCost = 3;
+        range = 1;
+        damageDealt = 45;
+        damageTaken = 3;
     }
     public override async Task Effect(Character user, Vector3Int pos)
     {

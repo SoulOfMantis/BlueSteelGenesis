@@ -6,9 +6,10 @@ public class FlightMovement : ActiveModule
 {
     public FlightMovement() : base()
     {
-        range = 3;
+        price = 50;
+        range = 2;
         energyCost = 1;
-        AddConstKeywords(new MobilityKeyword(), new FlightKeyword());
+        AddConstKeywords(new MobilityKeyword(), new FlightKeyword(), new CommonKeyword());
     }
     public FlightMovement(uint range) : this()
     {

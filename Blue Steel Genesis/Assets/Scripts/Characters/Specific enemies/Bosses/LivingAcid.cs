@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class LivingAcid : Enemy
 {
-    public LivingAcid() : base(30, 5, -10) 
+    public LivingAcid() : base(100, 5, -10) 
     {
         Name = "the Living Acid";
         Description = "The biggest slime there ever was. Will bite. Will shoot. Will... EXPLODE!";

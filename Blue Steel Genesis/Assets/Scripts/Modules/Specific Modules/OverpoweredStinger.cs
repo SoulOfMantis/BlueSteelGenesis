@@ -13,6 +13,7 @@ public class OverpoweredStinger : ActiveModule
 
     public OverpoweredStinger() : base()
     {
+        price = 1000;
         energyCost = 1;
         range = 1;
         hitDamage = 51;

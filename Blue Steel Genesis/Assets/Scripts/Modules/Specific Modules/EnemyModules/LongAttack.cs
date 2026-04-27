@@ -6,12 +6,12 @@ using UnityEngine;
 public class LongAttack : ActiveModule
 {
     uint hitDamage = 4;
-    uint waveDamage = 3;
+    uint waveDamage = 4;
 
     public LongAttack() : base()
     {
         range = 1;
-        energyCost = 3;
+        energyCost = 4;
         Icon_name = "LongAttack";
         AddConstKeywords(new OffenseKeyword());
     }
