@@ -89,10 +89,13 @@ public virtual async Task drainEnergy(uint amount)
     }
     public virtual async Task endTurn()
     {
-        await Awaitable.WaitForSecondsAsync(.1f); //TODO: remove delay; derived classes must await animations
-        await processTrigger(TriggerType.OnTurnEnd);
-        myTurn = false;
-        tracker.NextTurn();
+        if (myTurn)
+        {
+            await Awaitable.WaitForSecondsAsync(.1f); //TODO: remove delay; derived classes must await animations                                                     
+            await processTrigger(TriggerType.OnTurnEnd);            
+            myTurn = false;
+            tracker.NextTurn();
+        }
     }
 
     public async Task move(Vector3Int target_pos, List<Vector3Int> allowed)
