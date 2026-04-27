@@ -21,9 +21,13 @@ public class CharacterVisualHandler : VisualHandlerBase
     [SerializeField] private AnimationClipRef attackAnimation;
     [SerializeField] private AnimationClipRef hurtAnimation;
     [SerializeField] private AnimationClipRef deathAnimation;
-
-    [Header("Effect")]
-    [SerializeField] private AnimationClipRef healEffect;
+    [SerializeField] private AnimationClipRef loseShieldAnimation;
+    [SerializeField] private AnimationClipRef gainShieldAnimation;
+    [SerializeField] private AnimationClipRef startBattleAnimation;
+    [SerializeField] private AnimationClipRef endBattleAnimation;
+    [SerializeField] private AnimationClipRef startTurnAnimation;
+    [SerializeField] private AnimationClipRef endTurnAnimation;
+    [SerializeField] private AnimationClipRef healAnimation;
 
     //[Header("Floating text")]
     //[SerializeField] private GameObject floatingTextPrefab;
@@ -36,6 +40,34 @@ public class CharacterVisualHandler : VisualHandlerBase
         PlayAnimation(walkAnimation.animationName);
 
         await Task.Delay((int)(walkAnimation.transitionDuration * 1000));
+    }
+
+    public async Task PlayStartBattleAnimation()
+    {
+        PlayAnimation(walkAnimation.animationName);
+
+        await Task.Delay((int)(startBattleAnimation.transitionDuration * 1000));
+    }
+
+    public async Task PlayEndBattleAnimation()
+    {
+        PlayAnimation(walkAnimation.animationName);
+
+        await Task.Delay((int)(endTurnAnimation.transitionDuration * 1000));
+    }
+
+    public async Task PlayStartTurnAnimation()
+    {
+        PlayAnimation(walkAnimation.animationName);
+
+        await Task.Delay((int)(startTurnAnimation.transitionDuration * 1000));
+    }
+
+    public async Task PlayEndTurnAnimation()
+    {
+        PlayAnimation(walkAnimation.animationName);
+
+        await Task.Delay((int)(endBattleAnimation.transitionDuration * 1000));
     }
 
     public async Task PlayAttackAnimation(Vector3Int target)
@@ -65,10 +97,25 @@ public class CharacterVisualHandler : VisualHandlerBase
 
     public async Task PlayHealingAnimation(uint amount)
     {
-        PlayAnimation(healEffect.animationName);
+        PlayAnimation(healAnimation.animationName);
 
-        await Task.Delay((int)(healEffect.transitionDuration * 1000));
+        await Task.Delay((int)(healAnimation.transitionDuration * 1000));
         //ShowFloatingText($"+{amount}", Color.green);
+    }
+
+    public async Task PlayGainShieldAnimation(uint amount)
+    {
+        PlayAnimation(healAnimation.animationName);
+
+        await Task.Delay((int)(gainShieldAnimation.transitionDuration * 1000));
+    }
+
+    public async Task PlayLoseShieldAnimation(uint amount)
+    {
+        PlayAnimation(hurtAnimation.animationName);
+
+        await Task.Delay((int)(loseShieldAnimation.transitionDuration * 1000));
+
     }
 
     // Заставить персонажа смотреть в направление клетки
@@ -87,23 +134,23 @@ public class CharacterVisualHandler : VisualHandlerBase
 
 
     // Частично работает, пока закомментировано
-/*    private void ShowFloatingText(string text, Color color)
-    {
-        if (floatingTextPrefab == null) return;
-
-        Vector3 spawnPos = floatingTextSpawnPoint != null
-            ? floatingTextSpawnPoint.position : transform.position;
-
-        GameObject textObj = Instantiate(floatingTextPrefab, spawnPos, Quaternion.identity);
-
-        TMP_Text tmp = textObj.GetComponent<TMP_Text>();
-        if (tmp != null)
+    /*    private void ShowFloatingText(string text, Color color)
         {
-            tmp.text = text;
-            tmp.color = color;
-        }
+            if (floatingTextPrefab == null) return;
 
-        Destroy(textObj, 1.5f);
-        Destroy(textObj, 1.5f);
-    }*/
+            Vector3 spawnPos = floatingTextSpawnPoint != null
+                ? floatingTextSpawnPoint.position : transform.position;
+
+            GameObject textObj = Instantiate(floatingTextPrefab, spawnPos, Quaternion.identity);
+
+            TMP_Text tmp = textObj.GetComponent<TMP_Text>();
+            if (tmp != null)
+            {
+                tmp.text = text;
+                tmp.color = color;
+            }
+
+            Destroy(textObj, 1.5f);
+            Destroy(textObj, 1.5f);
+        }*/
 }

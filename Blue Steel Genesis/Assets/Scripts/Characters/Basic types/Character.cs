@@ -55,7 +55,8 @@ public abstract class Character : Entity
     {
         currentShield += Math.Max(amount, 1);
         UpdateTooltipIfCurrent();
-        await Awaitable.WaitForSecondsAsync(.2f); //TODO: remove delay; derived classes must await animations
+        if (visualHandler != null)
+            await visualHandler.PlayGainShieldAnimation(amount);
         await processTrigger(TriggerType.OnShieldGiven);
         Debug.Log($"Выдан щит: {amount}; Всего: {currentShield}");
     }
@@ -75,27 +76,31 @@ public virtual async Task drainEnergy(uint amount)
     }
     public virtual async Task startBattle()
     {
-        await Awaitable.WaitForSecondsAsync(.5f); //TODO: remove delay; derived classes must await animations
+        if (visualHandler != null)
+            await visualHandler.PlayStartBattleAnimation();
         await processTrigger(TriggerType.OnBattleStart);
     }
     public virtual async Task endBattle()
     {
         status_modules_.Clear();
-        await Awaitable.WaitForSecondsAsync(.5f); //TODO: remove delay; derived classes must await animations
+        if (visualHandler != null)
+            await visualHandler.PlayEndBattleAnimation();
         await processTrigger(TriggerType.OnBattleEnd);
     }
     public virtual async Task startTurn()
     {
         Debug.Log($"turn started");
         myTurn = true;
-        await Awaitable.WaitForSecondsAsync(.2f); //TODO: remove delay; derived classes must await animations
+        if (visualHandler != null)
+            await visualHandler.PlayStartTurnAnimation();
         await loseShield(currentShield.Value);
         await restoreEnergy(maxEnergy);
         await processTrigger(TriggerType.OnTurnStart);
     }
     public virtual async Task endTurn()
     {
-        await Awaitable.WaitForSecondsAsync(.1f); //TODO: remove delay; derived classes must await animations
+        if (visualHandler != null)
+            await visualHandler.PlayEndTurnAnimation();
         await processTrigger(TriggerType.OnTurnEnd);
         myTurn = false;
         tracker.NextTurn();
