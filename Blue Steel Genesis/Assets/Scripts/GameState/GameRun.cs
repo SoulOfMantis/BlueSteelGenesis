@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class GameRun
@@ -17,6 +18,10 @@ public class GameRun
     {
         switch (biomeId)
         {
+            case 1:
+                var res = new Dictionary<(uint stage, uint elite_id), System.Type>();
+                res[(0, 1)] = typeof(WideAttack);
+                return res;
             default:
                 return new Dictionary<(uint stage, uint elite_id), System.Type>();
         }

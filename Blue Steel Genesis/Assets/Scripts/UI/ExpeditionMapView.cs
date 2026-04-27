@@ -36,16 +36,18 @@ public class ExpeditionMapView : MonoBehaviour
         var effective_rect = calculateEffectiveRect(
             new(ExpeditionMap.width, ExpeditionMap.height),
             NodeButton.size,
+            map_.upside_down,
             out float node_gap
         );
 
         void addButton(Vector2Int position, Node type) {
             Vector2 local_position = new(
                 NodeButton.size.x/2 + node_gap * position.x,
-                NodeButton.size.y/2 + node_gap * (position.y + 1));
+                NodeButton.size.y/2 + node_gap *
+                    (position.y + (map_.upside_down ? 2 : 1)));
             local_position.y = effective_rect.height - local_position.y;
 
-            if (type == Node.START || type == Node.BOSS)
+            if (type == Node.START || type == Node.BOSS || type == Node.BLACK_MARKET)
                 local_position.x = effective_rect.width / 2;
 
             var button_obj = Instantiate(button_prefab, panel.transform);
@@ -62,6 +64,8 @@ public class ExpeditionMapView : MonoBehaviour
                     addButton(new Vector2Int(x, line), map_.map[line, x]);
         addButton(map.start_node_pos, Node.START);
         addButton(map.boss_node_pos, Node.BOSS);
+        if (map_.upside_down)
+            addButton(map.black_market_node, Node.BLACK_MARKET);
 
         void linkButtons(NodeButton b1, NodeButton b2) {
             var line = new MultilineRenderer2D.Line() {
@@ -78,6 +82,8 @@ public class ExpeditionMapView : MonoBehaviour
                 linkButtons(button, getButton(target));
         foreach (var target in map.listTargets(map_.start_node_pos))
             linkButtons(getButton(map_.start_node_pos), getButton(target));
+        foreach (var target in map.listTargets(map_.boss_node_pos))
+            linkButtons(getButton(map_.boss_node_pos), getButton(target));
 
         foreach (Transform button_transform in panel.transform) {
             var button = button_transform.gameObject.GetComponent<NodeButton>();
@@ -148,8 +154,11 @@ public class ExpeditionMapView : MonoBehaviour
     }
     private void triggerSubsystem() {
         Debug.Log($"Player selected: {last_selection_?.type} at {last_selection_?.pos}");
-        //TODO: implement
-        switch (last_selection_?.type) {
+        switch (last_selection_?.type)
+        {
+            case Node.TREASURE:
+                GameState.Run.Expedition.TreasureSubsystem.Trigger();
+                break;
             case Node.REGULAR_ENEMY:
                 GameState.Run.Expedition.CombatSystem.TriggerNormalEncounter();
                 break;
@@ -162,11 +171,18 @@ public class ExpeditionMapView : MonoBehaviour
             case Node.SHOP:
                 GameState.Run.Expedition.Shop.TriggerShop();
                 break;
+            case Node.BLACK_MARKET:
+                GameState.Run.Expedition.Shop.TriggerBlackMarket();
+                break;
+            default:
+                break;
         }
     }
 
     private NodeButton getButton(Vector2Int pos) {
         if (pos.x == -1) {
+            if (pos.y == -2)
+                return black_market_button_;
             if (pos.y == -1)
                 return upper_end_button_;
             if (pos.y == ExpeditionMap.height)
@@ -177,6 +193,8 @@ public class ExpeditionMapView : MonoBehaviour
     }
     private ref NodeButton getButtonRef(Vector2Int pos) {
         if (pos.x == -1) {
+            if (pos.y == -2)
+                return ref black_market_button_;
             if (pos.y == -1)
                 return ref upper_end_button_;
             if (pos.y == ExpeditionMap.height)
@@ -192,7 +210,7 @@ public class ExpeditionMapView : MonoBehaviour
     /// <param name="graph_dimensions">Размеры карты (кол-во узлов)</param>
     /// <param name="node_button_size">Размеры кнопки</param>
     /// <param name="node_gap">Рекомендуемое расстояние между центрами соседних вершин</param>
-    private Rect calculateEffectiveRect(Vector2Int graph_dimensions, Vector2 node_button_size, out float node_gap) {
+    private Rect calculateEffectiveRect(Vector2Int graph_dimensions, Vector2 node_button_size, bool upside_down, out float node_gap) {
         Rect full_rect =
             (transform.parent is RectTransform parent_transform) ? parent_transform.rect : new();
 
@@ -203,11 +221,11 @@ public class ExpeditionMapView : MonoBehaviour
         effective_rect.height = full_rect.height - 2 * effective_rect.y;
 
         float node_gap_by_width = (effective_rect.width - node_button_size.x) / (graph_dimensions.x - 1);
-        float node_gap_by_height = (effective_rect.height - node_button_size.y) / (graph_dimensions.y + 1);
+        float node_gap_by_height = (effective_rect.height - node_button_size.y) / (graph_dimensions.y + (upside_down ? 2 : 1));
         node_gap = Mathf.Min(node_gap_by_width, node_gap_by_height);
 
         float expected_graph_width = node_gap * (graph_dimensions.x - 1) + node_button_size.x;
-        float expected_graph_height = node_gap * (graph_dimensions.y + 1) + node_button_size.y;
+        float expected_graph_height = node_gap * (graph_dimensions.y + (upside_down ? 2 : 1)) + node_button_size.y;
         effective_rect.position = new Vector2(
             (full_rect.width - expected_graph_width) / 2,
             (full_rect.height - expected_graph_height) / 2
@@ -233,7 +251,7 @@ public class ExpeditionMapView : MonoBehaviour
 
     private ExpeditionMap map_;
     private NodeButton[,] buttons_;
-    private NodeButton upper_end_button_, lower_end_button_;
+    private NodeButton upper_end_button_, lower_end_button_, black_market_button_;
     private ExpeditionMapProgressInfo progress_;
 
     public Button confirmSelectionButton {

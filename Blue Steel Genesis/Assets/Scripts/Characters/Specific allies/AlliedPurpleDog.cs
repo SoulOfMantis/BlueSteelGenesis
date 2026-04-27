@@ -9,10 +9,13 @@ public class AlliedPurpleDog : Ally
     {
         Name = "Allied Purple Dog";
         Description = "The first ally. Will move closer to your enemies and bite, if it has an opportunity!";
+    }
+    protected override void Init()
+    {
         addModule(new BasicAttack());
         addModule(new BasicMovement());
-
         SetPriorityModules();
+        base.Init();
     }
 
     protected override bool TryGetTargetForZero(out Vector3Int targetPos)
@@ -28,11 +31,14 @@ public class AlliedPurpleDog : Ally
         var moveRange = priorityModules[1].getCellsInRange(Position).Concat(Position).ToHashSet();
         var path = Navigation.Dijkstra.getPath(Position, getEnemies().SelectMany(e => e.Position.NeighborPositions()),
             p => !tracker.IsOccupied(p) && !tracker.OutOfBounds(p)) ?? new();
+
+        Vector3Int offset = new();
         foreach (var move in path)
-            if (moveRange.Contains(targetPos + move))
-                targetPos += move;
+            if ((Position + offset + move).All(p => moveRange.Contains(p)))
+                offset += move;
             else break;
-        return targetPos != Position.LeftBottom;
+        targetPos = Position.LeftBottom + offset;
+        return offset != Vector3Int.zero;
     }
     public override async Task damage(uint dmg)
     {

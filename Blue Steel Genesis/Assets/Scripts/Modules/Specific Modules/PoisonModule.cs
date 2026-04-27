@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -34,7 +34,12 @@ public class PoisonModule : NegativeStatusModule
 
     public override void Refresh(StatusModule other)
     {
-        if (other is PoisonModule p) turnsLeft += p.turnsLeft;
+        if (other is PoisonModule p)
+        {
+            turnsLeft += p.turnsLeft;
+            poisonDamage = Math.Max(poisonDamage, turnsLeft / 5);
+            UpdateTooltipIfCurrent();
+        }
     }
 
     public override bool IsExpired()
