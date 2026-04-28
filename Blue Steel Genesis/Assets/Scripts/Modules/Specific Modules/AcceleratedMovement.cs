@@ -37,11 +37,11 @@ public class AcceleratedMovement : ActiveModule
     }
     public override async Task Effect(Character user, Vector3Int pos)
     {
-        await user.move(pos, getCellsInRange(user.Position));
+        await user.move(new PositionCollection(pos, user.Position.SideSize), getCellsInRange(user.Position));
         
         foreach (var item in user.Position.NeighborPositions())
             await user.apply(item, new BurnModule(burnDamage, burnDuration));
     }
     public override List<Vector3Int> getCellsInRange(PositionCollection start) =>
-        Navigation.Dijkstra.listReachable(start, p => !Entity.tracker.OutOfBounds(p) && !Entity.tracker.IsOccupied(p), range).Except(start).ToList();
+        Navigation.Dijkstra.listReachable(start, p => !Entity.tracker.OutOfBounds(p) && !Entity.tracker.IsOccupied(p), range).ToList();
 }

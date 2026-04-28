@@ -34,11 +34,14 @@ public class BigAcidSlime : Enemy
         var moveRange = priorityModules[2].getCellsInRange(Position).Concat(Position).ToHashSet();
         var path = Navigation.Dijkstra.getPath(Position, getEnemies().SelectMany(e => e.Position.NeighborPositions()),
             p => !tracker.IsOccupied(p) && !tracker.OutOfBounds(p)) ?? new();
+
+        Vector3Int offset = new();
         foreach (var move in path)
-            if (moveRange.Contains(targetPos + move))
-                targetPos += move;
+            if ((Position + offset + move).All(p => moveRange.Contains(p)))
+                offset += move;
             else break;
-        return targetPos != Position.LeftBottom;
+        targetPos = Position.LeftBottom + offset;
+        return offset != Vector3Int.zero;
     }
 
 }
