@@ -10,7 +10,7 @@ public class EventEffect
     public int moneyChange;
     public int materialChange;
     public int maxHealthChange;
-    public int energyChange;
+    //public int energyChange;
     public int maxEnergyChange;
     public List<GameModule> addModules;
     public List<string> removeModuleIds;   
@@ -25,8 +25,8 @@ public class EventEffect
             sb.Append(healthChange > 0 ? $"+{healthChange}" : $"{healthChange}").Append(" HP, ");
         if (maxHealthChange != 0)
             sb.Append(maxHealthChange > 0 ? $"+{maxHealthChange}" : $"{maxHealthChange}").Append(" Max HP, ");
-        if (energyChange != 0)
-            sb.Append(energyChange > 0 ? $"+{energyChange}" : $"{energyChange}").Append(" Energy, ");
+        //if (energyChange != 0)
+            //sb.Append(energyChange > 0 ? $"+{energyChange}" : $"{energyChange}").Append(" Energy, ");
         if (maxEnergyChange != 0)
             sb.Append(maxEnergyChange > 0 ? $"+{maxEnergyChange}" : $"{maxEnergyChange}").Append(" Max Energy, ");
         if (moneyChange != 0)

@@ -60,8 +60,8 @@ public class PlayerData
         maxHealth = (uint)Math.Max(1, (long)maxHealth + effect.maxHealthChange);
 
        
-        long newEnergy = (long)currentEnergy.Value + effect.energyChange;
-        currentEnergy.Value = (uint)Math.Max(0, Math.Min(newEnergy, maxEnergy));
+        //long newEnergy = (long)currentEnergy.Value + effect.energyChange;
+        //currentEnergy.Value = (uint)Math.Max(0, Math.Min(newEnergy, maxEnergy));
         maxEnergy = (uint)Math.Max(0, (long)maxEnergy + effect.maxEnergyChange);
 
         if (effect.moneyChange > 0)
