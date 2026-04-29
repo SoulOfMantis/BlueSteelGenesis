@@ -22,7 +22,7 @@ public class SwarmScatter : PassiveModule
         return "At the end of their turn, the bugs scatter, making them harder to hit.\n" + base.Description();
     }
 
-    public override async Task Effect(Character user, Vector3Int pos) {
-        await user.giveShield(shieldAmount);
+    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx) {
+        await user.giveShield(shieldAmount, MakeContext(user, pos));
     }
 }

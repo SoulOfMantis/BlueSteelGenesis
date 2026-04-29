@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class SceneTracker : MonoBehaviour
 {
-    private InitiativeTracker init;
+    private InitiativeTracker initiative;
     private List<Entity> entities = new();
     public IReadOnlyList<Entity> Entities => entities;
     public Tilemap tl;
@@ -18,12 +18,12 @@ public class SceneTracker : MonoBehaviour
 
     public void HighlightCharacterInInitiative(Character c, Color color)
     {
-        init.HighlightCharacterInInitiative(c, color);
+        initiative.HighlightCharacterInInitiative(c, color);
     }
     public void HighlightCharacterInInitiative(Character c) => HighlightCharacterInInitiative(c, Color.yellow);
     public void UnhighlightCharacterInInitiative(Character c)
     {
-        init.UnhighlightCharacterInInitiative(c);
+        initiative.UnhighlightCharacterInInitiative(c);
     }
 
     public Entity FindEntityAtPosition(Vector3Int pos) =>
@@ -47,6 +47,8 @@ public class SceneTracker : MonoBehaviour
     {
         return FindEntityAtPosition(pos) != null;
     }
+
+    public bool isAlive(Entity e) => entities.Contains(e);
 
     public Vector3 CellToWorld(Vector3Int pos)
     {
@@ -83,12 +85,12 @@ public class SceneTracker : MonoBehaviour
     public void AddCharacter(Character character)
     {
         entities.Add(character);
-        init.AddCharacter(character);
+        initiative.AddCharacter(character);
     }
     public void RemoveCharacter(Character character)
     {
         entities.Remove(character);
-        init.RemoveCharacter(character);
+        initiative.RemoveCharacter(character);
     }
     public void AddObstacle(Obstacle obstacle) =>
         entities.Add(obstacle);
@@ -97,9 +99,9 @@ public class SceneTracker : MonoBehaviour
 
     //                                         
     public PlayerCharacter getPlayer() =>
-        init.getPlayer();
+        initiative.getPlayer();
     public bool IsPlayerAlive() =>
-        !init.CheckDefeat();
+        !initiative.CheckDefeat();
 
     // Highlights given cells
     public void HighlightCells(List<Vector3Int> cells)
@@ -128,15 +130,15 @@ public class SceneTracker : MonoBehaviour
     }
     public void NextTurn()
     {
-        init.StartNextTurn();
+        initiative.StartNextTurn();
     }
 
 
     void Start()
     {
-        init = gameObject.AddComponent(typeof(InitiativeTracker)) as InitiativeTracker;
-        init.contentParent = contentParent;
-        init.initiativeEntryPrefab = initiativeEntryPrefab;
+        initiative = gameObject.AddComponent(typeof(InitiativeTracker)) as InitiativeTracker;
+        initiative.contentParent = contentParent;
+        initiative.initiativeEntryPrefab = initiativeEntryPrefab;
         Entity.tracker = this;
     }
 }

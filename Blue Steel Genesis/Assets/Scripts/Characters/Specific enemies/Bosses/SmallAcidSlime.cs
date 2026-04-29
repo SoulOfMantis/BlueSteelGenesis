@@ -20,21 +20,9 @@ public class SmallAcidSlime : Enemy
         targetPos = possibleTargets.FirstOrDefault();
         return possibleTargets.Count() != 0;
     }
-    protected override bool TryGetTargetForOne(out Vector3Int targetPos)
-    {
-        targetPos = Position.LeftBottom;
-        var moveRange = priorityModules[1].getCellsInRange(Position).Concat(Position).ToHashSet();
-        var path = Navigation.Dijkstra.getPath(Position, getEnemies().SelectMany(e => e.Position.NeighborPositions()),
-            p => !tracker.IsOccupied(p) && !tracker.OutOfBounds(p)) ?? new();
-
-        Vector3Int offset = new();
-        foreach (var move in path)
-            if ((Position + offset + move).All(p => moveRange.Contains(p)))
-                offset += move;
-            else break;
-        targetPos = Position.LeftBottom + offset;
-        return offset != Vector3Int.zero;
-    }
+    protected override bool TryGetTargetForOne(out Vector3Int targetPos) =>
+        GetDirectApproachTarget(out targetPos, priorityModules[1], getEnemies()) ||
+        GetApproachTarget(out targetPos, priorityModules[1], getEnemies());
 
 }
 

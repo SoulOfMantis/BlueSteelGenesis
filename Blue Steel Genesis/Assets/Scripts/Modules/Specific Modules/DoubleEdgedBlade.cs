@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class DoubleEdgedBlade : ActiveModule    
+public class DoubleEdgedBlade : ActiveModule
 {
     uint damageDealt;
     uint damageTaken;
@@ -15,10 +15,10 @@ public class DoubleEdgedBlade : ActiveModule
         damageDealt = 45;
         damageTaken = 3;
     }
-    public override async Task Effect(Character user, Vector3Int pos)
+    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
     {
-        await user.strike(pos, damageDealt);
-        await user.damage(damageTaken);
+        await user.strike(pos, damageDealt, MakeContext(user, pos));
+        await user.damage(damageTaken, MakeContext(user, pos));
     }
     public override string Description()
     {

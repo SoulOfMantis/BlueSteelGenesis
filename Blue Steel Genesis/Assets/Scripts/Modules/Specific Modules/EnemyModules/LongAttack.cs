@@ -15,9 +15,9 @@ public class LongAttack : ActiveModule
         Icon_name = "LongAttack";
         AddConstKeywords(new OffenseKeyword());
     }
-    public override async Task Effect(Character user, Vector3Int pos)
+    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
     {
-        await user.strike(pos, hitDamage);
+        await user.strike(pos, hitDamage, MakeContext(user, pos));
         var attackPosition = user.Position.Where(x => Entity.tracker.GetNeighborTiles(x)
                             .Contains(pos)).First();
         var direction = pos - attackPosition;
@@ -28,7 +28,7 @@ public class LongAttack : ActiveModule
         while (flag)
         {
             if (Entity.tracker.FindEntityAtPosition(pos) is Entity e)
-                await e.damage(waveDamage);
+                await e.damage(waveDamage, MakeContext(user, pos));
             flag = !Entity.tracker.IsOccupied(pos);
             pos += direction;
             flag = flag && !Entity.tracker.OutOfBounds(pos);
@@ -40,7 +40,7 @@ public class LongAttack : ActiveModule
     }
     protected override bool checkFinalPosition(Vector3Int pos)
     {
-        return Entity.tracker.IsOccupied(pos);
+        return !Entity.tracker.OutOfBounds(pos);
     }
     public override bool checkPosition(Character user, Vector3Int pos)
     {

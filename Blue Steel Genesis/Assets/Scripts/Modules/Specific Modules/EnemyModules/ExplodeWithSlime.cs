@@ -32,10 +32,10 @@ public class ExplodeWithSlime : PassiveModule
     {
         return "When dies:\n" + base.Description() + $"Summons 2 slimes of size {summonSize}x{summonSize}.";
     }
-    public override async Task Effect(Character user, Vector3Int pos)
+    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
     {
         foreach (var e in Entity.tracker.Entities.Where(e => e == user))
-            await user.apply(e.Position.LeftBottom, new AcidModule(acidDamage, acidDuration));
+            await user.apply(e.Position.LeftBottom, new AcidModule(acidDamage, acidDuration), MakeContext(user, pos));
         for (int i = 0; i < 2; i++)
             switch (summonSize)
             {

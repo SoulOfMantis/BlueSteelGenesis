@@ -9,7 +9,7 @@ public class DefaultBoss : ActiveModule
     {
         AddConstKeywords(new BossKeyword());
     }
-    public override async Task Effect(Character user, Vector3Int pos)
+    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
     {
         await Task.CompletedTask;
     }
