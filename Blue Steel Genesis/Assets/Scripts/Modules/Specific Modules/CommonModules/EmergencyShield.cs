@@ -7,6 +7,7 @@ public class EmergencyShield : PassiveModule
     uint shieldPercent;
 
     public EmergencyShield(uint shieldPercent) {
+        price = 40;
         this.shieldPercent = shieldPercent;
         range = 0;
         triggerType = TriggerType.OnHealthDamage;

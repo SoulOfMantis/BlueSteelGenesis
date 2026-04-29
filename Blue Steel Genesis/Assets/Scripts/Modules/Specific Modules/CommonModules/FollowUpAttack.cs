@@ -6,6 +6,7 @@ public class FollowUpAttack : PassiveModule
     uint damage;
 
     public FollowUpAttack(uint damage) {
+        price = 50;
         this.damage = damage;
         range = 1;
         triggerType = TriggerType.OnStrike;
