@@ -78,15 +78,15 @@ public class PlayerCharacter : Character
         //play using module animation
         await base.useActiveModule_internal(m, pos);
     }
-    protected override async Task usePassiveModule_internal(PassiveModule m, Vector3Int pos)
+    protected override async Task usePassiveModule_internal(PassiveModule m, Vector3Int pos, ActionContext ctx)
     {
         //play using module animation
-        await base.usePassiveModule_internal(m, pos);
+        await base.usePassiveModule_internal(m, pos, ctx);
     }
-    protected override async Task useStatusModule_internal(StatusModule m)
+    protected override async Task useStatusModule_internal(StatusModule m, ActionContext ctx)
     {
         //play using module animation
-        await base.useStatusModule_internal(m);
+        await base.useStatusModule_internal(m, ctx);
     }
 
     protected override bool isCorrectPosition(GameModule module, Vector3Int pos)
@@ -114,9 +114,9 @@ public class PlayerCharacter : Character
         return myTurn && hasEnoughEnergy(getModule<ActiveModule>(module_index));
     }
 
-    public override async Task giveShield(uint amount)
+    public override async Task giveShield(uint amount, ActionContext ctx)
     {
-        await base.giveShield(amount);
+        await base.giveShield(amount, ctx);
         updateShields();
     }
     public override async Task loseShield(uint value)
@@ -131,65 +131,62 @@ public class PlayerCharacter : Character
         updateEnergy();
         updateShields();
         updateButtons();
-        //play starting battle animation
     }
 
     public override async Task endBattle()
     {
         await base.endBattle();
-        //play ending battle animation
     }
 
     public override async Task startTurn()
     {
         await base.startTurn();
-        //play start turn animation
     }
 
     public override async Task endTurn()
     {
         await base.endTurn();
         updateButtons();
-        //play turn end animation
     }
     public void onEndTurnButtonPressed() =>
         StartCoroutine(TaskCoro.Make(endTurn()));
 
-    public override async Task damage(uint dmg)
-    {
-        Debug.Log($"Èãðîê ïîëó÷èë {dmg} óðîíà!");
-        await base.damage(dmg);
+    public override async Task loseHealth(uint hp, ActionContext ctx) {
+        await base.loseHealth(hp, ctx);
         updateHealth();
-        //play taking damage animation
     }
 
-    public override async Task heal(uint hp)
+    public override async Task damage(uint dmg, ActionContext ctx)
     {
-        Debug.Log($"Èãðîê âîññòàíîâèë {hp} çäîðîâüÿ!");
-        await base.heal(hp);
+        Debug.Log($"Игрок получил {dmg} урона!");
+        await base.damage(dmg, ctx);
         updateHealth();
-        //play healing animation
     }
 
-    public override async Task drainEnergy(uint amount)
+    public override async Task heal(uint hp, ActionContext ctx)
     {
-        await base.drainEnergy(amount);
-        updateButtons();
-        updateEnergy();
-        //play losing energy animation
+        Debug.Log($"Игрок восстановил {hp} здоровья!");
+        await base.heal(hp, ctx);
+        updateHealth();
     }
-    public override async Task restoreEnergy(uint amount)
+
+    public override async Task drainEnergy(uint amount, ActionContext ctx = null)
     {
-        await base.restoreEnergy(amount);
+        await base.drainEnergy(amount, ctx);
         updateButtons();
         updateEnergy();
-        //play restoring energy animation
+    }
+    public override async Task restoreEnergy(uint amount, ActionContext ctx = null)
+    {
+        await base.restoreEnergy(amount, ctx);
+        updateButtons();
+        updateEnergy();
     }
 
     override protected async Task die()
     {
         Debug.Log("Игрок умер!");
-        await triggerModules(TriggerType.OnDeath);
+        await processTrigger(TriggerType.OnDeath, null);
         if (TooltipSystem.IsCurrent(this))
         {
             TooltipSystem.Unlock(TooltipSystem.TooltipType.entityTooltip);
@@ -199,7 +196,8 @@ public class PlayerCharacter : Character
         tracker.RemoveCharacter(this);
         Defeat();
         //TODO: player loss
-        //play dying animation
+        if (visualHandler != null)
+            await visualHandler.PlayDeathAnimation();
     }
 
     public async Task Victory()

@@ -1141,6 +1141,100 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1803859357624668591
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4090028066216321804}
+  - component: {fileID: 7323636043721432031}
+  m_Layer: 0
+  m_Name: Visuals
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4090028066216321804
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1803859357624668591}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.54607165, y: 0.13071792, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3420536033560713196}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7323636043721432031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1803859357624668591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f0585ac2972b2446ab6410c834b9bf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterVisualHandler
+  animator: {fileID: 7321249947158375455}
+  spriteRenderer: {fileID: 2907876539609426672}
+  idleAnimation:
+    animationName: Idle
+    clip: {fileID: 0}
+    transitionDuration: 0
+  walkAnimation:
+    animationName: Walk
+    clip: {fileID: 0}
+    transitionDuration: 0.2
+  attackAnimation:
+    animationName: Attack
+    clip: {fileID: 7400000, guid: fc9a0315c4c1e604a86c7f340619b7b6, type: 2}
+    transitionDuration: 1
+  hurtAnimation:
+    animationName: Hurt
+    clip: {fileID: 0}
+    transitionDuration: 0.5
+  deathAnimation:
+    animationName: Die
+    clip: {fileID: 0}
+    transitionDuration: 1
+  loseShieldAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  gainShieldAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  startBattleAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0.3
+  endBattleAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0.5
+  startTurnAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0.2
+  endTurnAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0.1
+  healAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0.5
 --- !u!1 &2124079883641599006
 GameObject:
   m_ObjectHideFlags: 0
@@ -4071,7 +4165,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5643922838940263603}
   m_HandleRect: {fileID: 220041188885393650}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -4547,7 +4641,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000010967255, y: 0.00007247925}
+  m_AnchoredPosition: {x: -0.000010967255, y: 0.0000474602}
   m_SizeDelta: {x: 0, y: 8.21}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &5470408372509567572
@@ -5106,6 +5200,7 @@ GameObject:
   - component: {fileID: 3420536033560713196}
   - component: {fileID: 2907876539609426672}
   - component: {fileID: 896703178159881375}
+  - component: {fileID: 7321249947158375455}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5125,7 +5220,8 @@ Transform:
   m_LocalPosition: {x: -16.84, y: -4.53, z: 10}
   m_LocalScale: {x: 8.5, y: 8.5, z: 8.5}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 4090028066216321804}
   m_Father: {fileID: 4384138742890751676}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2907876539609426672
@@ -5199,6 +5295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlueSteelGenesis.Character_Modules.PlayerCharacter
   bodySize: 1
+  visualHandler: {fileID: 7323636043721432031}
   energySlider: {fileID: 8053608964659962663}
   energyDisplay: {fileID: 4317173170482889044}
   healthSlider: {fileID: 3767884888993694187}
@@ -5208,6 +5305,28 @@ MonoBehaviour:
   VictoryScreen: {fileID: 2780533451962321747}
   DefeatScreen: {fileID: 8868160178079714631}
   moduleButtons: []
+--- !u!95 &7321249947158375455
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7175306729977158092}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2033fb3b827710b46b5214ba15efe42d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7299589265370220578
 GameObject:
   m_ObjectHideFlags: 0
