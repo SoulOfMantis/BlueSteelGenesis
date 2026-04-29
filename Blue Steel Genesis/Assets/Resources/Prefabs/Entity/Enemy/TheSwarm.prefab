@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 2571479059450760285, guid: 826a34f0d545ba947a544cf0787fdaee, type: 3}
+  m_Sprite: {fileID: -5452073434388693350, guid: aa4d1e348746b9a4fbc2c1b2626fd3df, type: 3}
   m_Color: {r: 0.7529412, g: 0, b: 0, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -104,6 +104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: BlueSteelGenesis::TheSwarm
   bodySize: 1
+  visualHandler: {fileID: 0}
 --- !u!1 &7030514784578829008
 GameObject:
   m_ObjectHideFlags: 0

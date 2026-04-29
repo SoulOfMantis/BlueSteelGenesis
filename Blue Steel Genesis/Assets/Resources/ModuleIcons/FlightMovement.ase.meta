@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6ee5600410ef9fc4696bd37e6c5290a2
+guid: 7584af8a67784be40b96cb39cdfe21c9
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,9 +127,9 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: ClowModule
+  - name: FlightMovement
     originalName: 
-    pivot: {x: 0.5, y: -0.033333335}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -137,9 +137,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 30
-      height: 30
-    spriteID: 7c4ea292d3bf9524dbf5833040ec28c2
+      width: 32
+      height: 32
+    spriteID: ab8e53b0cd6ae1449b9bdfb9b94e1684
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,25 +153,25 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 277191505
+      value0: 557645887
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: ClowModule
+    name: FlightMovement
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: ClowModule
+    - name: FlightMovement
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 1
-        y: 1
-        width: 30
-        height: 30
-      spriteId: 7c4ea292d3bf9524dbf5833040ec28c2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      spriteId: ab8e53b0cd6ae1449b9bdfb9b94e1684
     linkedCells: []
     tileCells: []
     tileSetIndex: 0

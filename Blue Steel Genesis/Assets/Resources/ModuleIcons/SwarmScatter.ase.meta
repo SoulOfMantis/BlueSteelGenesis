@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4b81ac8ed1254ee49b85d9abd147d3ea
+guid: e795e4a186bc2fa4f9c15b9f2cd5c578
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,9 +127,9 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: HitWidthMacheteModule
+  - name: SwarmScatter
     originalName: 
-    pivot: {x: 0.5, y: -0.033333335}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -137,9 +137,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 30
-      height: 30
-    spriteID: a6f1a62aa54022e47979a6f5ad8f4e08
+      width: 32
+      height: 32
+    spriteID: c4a14de8f1a654d4f9557ff677ac890c
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,25 +153,25 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 1188107872
+      value0: 3622663340
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: HitWidthMacheteModule
+    name: SwarmScatter
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: HitWidthMacheteModule
+    - name: SwarmScatter
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 1
-        y: 1
-        width: 30
-        height: 30
-      spriteId: a6f1a62aa54022e47979a6f5ad8f4e08
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      spriteId: c4a14de8f1a654d4f9557ff677ac890c
     linkedCells: []
     tileCells: []
     tileSetIndex: 0

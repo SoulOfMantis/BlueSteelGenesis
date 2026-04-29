@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7279c05083572514d979733b8b1f00a5
+guid: 13befd257d864c84e82d9a8b78e05cf1
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,7 +127,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: CallModuleRobotWolf
+  - name: EmergencyShieldModule
     originalName: 
     pivot: {x: 0.5, y: -0.033333335}
     alignment: 9
@@ -139,7 +139,7 @@ ScriptedImporter:
       y: 4
       width: 30
       height: 30
-    spriteID: 0edc79563ac3a40458339cbb9f7a762e
+    spriteID: 1155cf517fc4316488312e8b8c47f02a
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,17 +153,17 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 1737577406
+      value0: 222286958
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: CallModuleRobotWolf
+    name: EmergencyShieldModule
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: CallModuleRobotWolf
+    - name: EmergencyShieldModule
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -171,7 +171,7 @@ ScriptedImporter:
         y: 1
         width: 30
         height: 30
-      spriteId: 0edc79563ac3a40458339cbb9f7a762e
+      spriteId: 1155cf517fc4316488312e8b8c47f02a
     linkedCells: []
     tileCells: []
     tileSetIndex: 0

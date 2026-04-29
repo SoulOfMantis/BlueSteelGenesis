@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9013feedfcaa549449e9709a6b2cbf09
+guid: aa4d1e348746b9a4fbc2c1b2626fd3df
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,9 +127,9 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: BoostSpeedModule
+  - name: DefoultEnemy
     originalName: 
-    pivot: {x: 0.5, y: -0.033333335}
+    pivot: {x: 0.5357143, y: -0.033333335}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -137,9 +137,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 30
+      width: 28
       height: 30
-    spriteID: 902c9578e5a24424cb7ae3a5dbfb39fe
+    spriteID: 8bc55c072bb39d84eafa61d12d4bc3bc
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,25 +153,25 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 3671092560
+      value0: 3472675303
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: BoostSpeedModule
+    name: DefoultEnemy
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: BoostSpeedModule
+    - name: TheSwarm
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
         x: 1
         y: 1
-        width: 30
+        width: 28
         height: 30
-      spriteId: 902c9578e5a24424cb7ae3a5dbfb39fe
+      spriteId: 8bc55c072bb39d84eafa61d12d4bc3bc
     linkedCells: []
     tileCells: []
     tileSetIndex: 0
