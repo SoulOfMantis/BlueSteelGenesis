@@ -11,7 +11,7 @@ public class DogSummoner_TEST_ONLY : ActiveModule {
     public override string Description() =>
         "Summons an allied dog. Can be used only 2 times per battle";
 
-    public override Task Effect(Character user, Vector3Int pos) {
+    public override Task Effect(Character user, Vector3Int pos, ActionContext ctx) {
         Entity.summon<AlliedPurpleDog>(new(pos));
         return Task.CompletedTask;
     }

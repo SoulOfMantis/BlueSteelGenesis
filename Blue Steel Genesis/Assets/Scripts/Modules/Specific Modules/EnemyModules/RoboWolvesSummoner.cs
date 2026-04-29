@@ -11,7 +11,7 @@ public class RoboWolfSummoner : ActiveModule {
     public override string Description() =>
         "Summons a RoboWolf.\n" + base.Description();
 
-    public override Task Effect(Character user, Vector3Int pos) {
+    public override Task Effect(Character user, Vector3Int pos, ActionContext ctx) {
         Entity.summon<RoboWolf>(new(pos));
         return Task.CompletedTask;
     }
