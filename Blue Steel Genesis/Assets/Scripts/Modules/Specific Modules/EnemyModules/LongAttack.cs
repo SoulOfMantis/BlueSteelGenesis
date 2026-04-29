@@ -40,7 +40,7 @@ public class LongAttack : ActiveModule
     }
     protected override bool checkFinalPosition(Vector3Int pos)
     {
-        return Entity.tracker.IsOccupied(pos);
+        return !Entity.tracker.OutOfBounds(pos);
     }
     public override bool checkPosition(Character user, Vector3Int pos)
     {
