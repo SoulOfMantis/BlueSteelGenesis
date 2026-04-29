@@ -25,15 +25,6 @@ public class PurpleDog : Enemy
         GetDirectApproachTarget(out targetPos, priorityModules[1], getEnemies()) ||
         GetApproachTarget(out targetPos, priorityModules[1], getEnemies());
 
-        Vector3Int offset = new();
-        foreach (var move in path)
-            if ((Position + offset + move).All(p => moveRange.Contains(p)))
-                offset += move;
-            else break;
-        targetPos = Position.LeftBottom + offset;
-        return offset != Vector3Int.zero;
-    }
-
     public override async Task damage(uint dmg, ActionContext prevAction = null)
     {
         Debug.Log($"Собака получила {dmg} урона!");
