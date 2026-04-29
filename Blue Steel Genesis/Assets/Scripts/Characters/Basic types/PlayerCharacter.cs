@@ -131,26 +131,22 @@ public class PlayerCharacter : Character
         updateEnergy();
         updateShields();
         updateButtons();
-        //play starting battle animation
     }
 
     public override async Task endBattle()
     {
         await base.endBattle();
-        //play ending battle animation
     }
 
     public override async Task startTurn()
     {
         await base.startTurn();
-        //play start turn animation
     }
 
     public override async Task endTurn()
     {
         await base.endTurn();
         updateButtons();
-        //play turn end animation
     }
     public void onEndTurnButtonPressed() =>
         StartCoroutine(TaskCoro.Make(endTurn()));
@@ -165,7 +161,6 @@ public class PlayerCharacter : Character
         Debug.Log($"Игрок получил {dmg} урона!");
         await base.damage(dmg, ctx);
         updateHealth();
-        //play taking damage animation
     }
 
     public override async Task heal(uint hp, ActionContext ctx)
@@ -173,7 +168,6 @@ public class PlayerCharacter : Character
         Debug.Log($"Игрок восстановил {hp} здоровья!");
         await base.heal(hp, ctx);
         updateHealth();
-        //play healing animation
     }
 
     public override async Task drainEnergy(uint amount, ActionContext ctx = null)
@@ -181,14 +175,12 @@ public class PlayerCharacter : Character
         await base.drainEnergy(amount, ctx);
         updateButtons();
         updateEnergy();
-        //play losing energy animation
     }
     public override async Task restoreEnergy(uint amount, ActionContext ctx = null)
     {
         await base.restoreEnergy(amount, ctx);
         updateButtons();
         updateEnergy();
-        //play restoring energy animation
     }
 
     override protected async Task die()
@@ -204,7 +196,8 @@ public class PlayerCharacter : Character
         tracker.RemoveCharacter(this);
         Defeat();
         //TODO: player loss
-        //play dying animation
+        if (visualHandler != null)
+            await visualHandler.PlayDeathAnimation();
     }
 
     public async Task Victory()

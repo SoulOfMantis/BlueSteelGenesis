@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,6 +6,8 @@ using UnityEngine;
 
 public abstract class Character : Entity
 {
+    [SerializeField] protected CharacterVisualHandler visualHandler;
+
     public override async Task loseHealth(uint hp, ActionContext ctx) {
         ctx = ctx?.WithActionData(hp);
         await base.loseHealth(hp, ctx);
@@ -25,6 +27,8 @@ public abstract class Character : Entity
         if (dmg > 0)
         {
             currentHealth -= dmg;
+            if (visualHandler != null)
+                await visualHandler.PlayHurtAnimation(dmg);
             await changeColorAndWait(Color.crimson, 0.2f*dmg);
             await processTrigger(TriggerType.OnHealthDamage, ctx?.WithActionData(dmg));
             if (currentHealth == 0)
@@ -51,6 +55,8 @@ public abstract class Character : Entity
     {
         ctx = ctx?.WithActionData(hp);
         await base.heal(hp, ctx);
+        if (visualHandler != null)
+            await visualHandler.PlayHealingAnimation(hp);
         await processTrigger(TriggerType.OnHeal, ctx);
     }
 
@@ -58,7 +64,8 @@ public abstract class Character : Entity
     {
         currentShield += Math.Max(amount, 1);
         UpdateTooltipIfCurrent();
-        await Awaitable.WaitForSecondsAsync(.2f); //TODO: remove delay; derived classes must await animations
+        if (visualHandler != null)
+            await visualHandler.PlayGainShieldAnimation(amount);
         await processTrigger(TriggerType.OnShieldGiven, ctx?.WithActionData(amount));
         Debug.Log($"Выдан щит: {amount}; Всего: {currentShield}");
     }
@@ -78,27 +85,31 @@ public abstract class Character : Entity
     }
     public virtual async Task startBattle()
     {
-        await Awaitable.WaitForSecondsAsync(.5f); //TODO: remove delay; derived classes must await animations
+        if (visualHandler != null)
+            await visualHandler.PlayStartBattleAnimation();
         await processTrigger(TriggerType.OnBattleStart, null);
     }
     public virtual async Task endBattle()
     {
         status_modules_.Clear();
-        await Awaitable.WaitForSecondsAsync(.5f); //TODO: remove delay; derived classes must await animations
+        if (visualHandler != null)
+            await visualHandler.PlayEndBattleAnimation();
         await processTrigger(TriggerType.OnBattleEnd, null);
     }
     public virtual async Task startTurn()
     {
         Debug.Log($"turn started");
         myTurn = true;
-        await Awaitable.WaitForSecondsAsync(.2f); //TODO: remove delay; derived classes must await animations
+        if (visualHandler != null)
+            await visualHandler.PlayStartTurnAnimation();
         await loseShield(currentShield.Value);
         await restoreEnergy(maxEnergy);
         await processTrigger(TriggerType.OnTurnStart, null);
     }
     public virtual async Task endTurn()
     {
-        await Awaitable.WaitForSecondsAsync(.1f); //TODO: remove delay; derived classes must await animations
+        if (visualHandler != null)
+            await visualHandler.PlayEndTurnAnimation();
         await processTrigger(TriggerType.OnTurnEnd, null);
         myTurn = false;
         tracker.NextTurn();
@@ -133,9 +144,11 @@ public abstract class Character : Entity
             new_pos.Except(Position).Any(p => tracker.OutOfBounds(p)) ||
             new_pos.Except(Position).Any(p => tracker.IsOccupiedByCharacter(p)))
             return;
-        Position = new_pos;
 
-        await Awaitable.WaitForSecondsAsync(.2f); //TODO: remove delay; derived classes must await animations
+        
+        Position = new_pos;
+        if (visualHandler != null)
+            await visualHandler.PlayWalkAnimation(dir);
     }
 
     public Task strike(int x, int y, int z, uint dmg, ActionContext ctx) => strike(new Vector3Int(x, y, z), dmg, ctx);
@@ -144,8 +157,10 @@ public abstract class Character : Entity
         Entity target = tracker.FindEntityAtPosition(pos);
         if (target == null)
             return;
-        await Awaitable.WaitForSecondsAsync(.3f);
-
+        
+        if (visualHandler != null)
+            await visualHandler.PlayAttackAnimation(pos);
+  
         ctx = ctx?.WithActionData(dmg);
         await target.damage(dmg, ctx);
         await processTrigger(TriggerType.OnStrike, pos, ctx);

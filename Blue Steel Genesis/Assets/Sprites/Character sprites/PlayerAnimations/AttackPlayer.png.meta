@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: 0c5fb08c691f60e48ac3746b8bfddaa5
+guid: e4d3a5e665879244d8f736cdb14d9aa5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7708920532220806285
-    second: Tilemap_0
+      213: 7797237144720623095
+    second: AttackPlayer_0
+  - first:
+      213: 7467041340916397544
+    second: AttackPlayer_1
+  - first:
+      213: 4413579300173240353
+    second: AttackPlayer_2
+  - first:
+      213: -3067542087914024442
+    second: AttackPlayer_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +60,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -100,7 +109,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Tilemap_0
+      name: AttackPlayer_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,14 +124,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 37b734b9e99640590800000000000000
-      internalID: -7708920532220806285
+      spriteID: 7f5cd802fd9553c60800000000000000
+      internalID: 7797237144720623095
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tilemap_1
+      name: AttackPlayer_1
       rect:
         serializedVersion: 2
         x: 32
@@ -135,60 +144,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 228a3dee5c48ea941adcbbf0adf98e57
-      internalID: -1252162576
+      spriteID: 8e57a78998240a760800000000000000
+      internalID: 7467041340916397544
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tilemap_2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fc081417986b82a449342236fe4d69c6
-      internalID: 241596017
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Tilemap_3
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c1b0fcb3983608148a4073b7369f6534
-      internalID: 2094442774
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Tilemap_4
+      name: AttackPlayer_2
       rect:
         serializedVersion: 2
         x: 0
@@ -201,16 +166,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 98b9e840a79a24a4fa97f95557b4d510
-      internalID: 1877866121
+      spriteID: 128d7d64dfe204d30800000000000000
+      internalID: 4413579300173240353
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tilemap_5
+      name: AttackPlayer_3
       rect:
         serializedVersion: 2
         x: 32
@@ -223,54 +188,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 388bc678eb3394b46b2cda626edb5953
-      internalID: 193648177
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Tilemap_6
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0e02a75ee646ae84c9770e665c6b0ecf
-      internalID: -900291865
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Tilemap_7
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9aa4b8158f619ff4d8af0a00d6e33dbb
-      internalID: -729696423
+      spriteID: 602135c39b6ed65d0800000000000000
+      internalID: -3067542087914024442
       vertices: []
       indices: 
       edges: []
@@ -279,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 23d331071724b3a4c9cbde33e7ce6ef5
+    spriteID: 2234bbe8cbc0b83469d7a917fab3cc7d
     internalID: 0
     vertices: []
     indices: 
@@ -289,16 +210,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":4.0,"y":2.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":1,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Tilemap_0: -7708920532220806285
-      Tilemap_1: -1252162576
-      Tilemap_2: 241596017
-      Tilemap_3: 2094442774
-      Tilemap_4: 1877866121
-      Tilemap_5: 193648177
-      Tilemap_6: -900291865
-      Tilemap_7: -729696423
+      AttackPlayer_0: 7797237144720623095
+      AttackPlayer_1: 7467041340916397544
+      AttackPlayer_2: 4413579300173240353
+      AttackPlayer_3: -3067542087914024442
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
