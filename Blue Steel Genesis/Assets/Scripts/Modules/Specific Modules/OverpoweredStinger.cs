@@ -20,7 +20,7 @@ public class OverpoweredStinger : ActiveModule
         duration = 3;
         poisonDamage = 1;
         Icon_name = "Module_mechanical_sting2";
-        AddConstKeywords(new OffenseKeyword(), new CommonKeyword());
+        AddConstKeywords(new OffenseKeyword());
     }
     public OverpoweredStinger(uint damage, uint duration, uint hitDamage) : this()
     {
