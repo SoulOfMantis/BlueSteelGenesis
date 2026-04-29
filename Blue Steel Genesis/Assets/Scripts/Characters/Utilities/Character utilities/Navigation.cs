@@ -26,6 +26,8 @@ namespace Navigation
                 .Select(t => d.getPath(t))
                 .Where(p => p != null).MinBy(p => p.Count);
         }
+        public static List<Vector3Int> getPath(PositionCollection initial_pos, PositionCollection target, Predicate<Vector3Int> is_allowed) =>
+            new Dijkstra(initial_pos, is_allowed).getPath(target);
 
 
 

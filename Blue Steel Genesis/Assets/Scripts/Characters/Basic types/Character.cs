@@ -105,6 +105,16 @@ public virtual async Task drainEnergy(uint amount)
             await moveStep(step);
         await processTrigger(TriggerType.OnMove, Position.LeftBottom);
     }
+    public async Task move(PositionCollection target_pos, List<Vector3Int> allowed)
+    {
+        var path = Navigation.Dijkstra.getPath(Position, target_pos, p => allowed.Contains(p));
+        if (path == null)
+            return;
+
+        foreach (var step in path)
+            await moveStep(step);
+        await processTrigger(TriggerType.OnMove, Position.LeftBottom);
+    }
     protected virtual async Task moveStep(Vector3Int dir)
     {
         var new_pos = Position + dir;

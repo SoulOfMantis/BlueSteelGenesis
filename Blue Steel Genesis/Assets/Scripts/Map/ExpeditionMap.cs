@@ -110,11 +110,12 @@ namespace Map
 
         private static Node[,] generateNodeTypeMap(uint width, uint height, bool upside_down, int local_seed)
         {
+            //TODO: BRING BACK REST!
             var map = new Node[height + 2, width + 2];
             for (int x = 1; x <= width; ++x) {
-                map[1, x] = upside_down ? Node.REST : Node.REGULAR_ENEMY;
+                map[1, x] = upside_down ? Node.TREASURE : Node.REGULAR_ENEMY;
                 map[1 + height/2, x] = Node.TREASURE;
-                map[height, x] = upside_down ? Node.REGULAR_ENEMY : Node.REST;
+                map[height, x] = upside_down ? Node.REGULAR_ENEMY : Node.TREASURE;
             }
 
             System.Random prng = new(local_seed);

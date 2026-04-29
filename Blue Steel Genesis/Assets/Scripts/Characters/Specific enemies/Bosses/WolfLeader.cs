@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 public class WolfLeader : Enemy
 {
-    private int remainingSummons = 2; // Сколько раз можно использовать призыв (каждый раз пытается призвать  до 2 волков)
+    private int remainingSummons = 2; // Г‘ГЄГ®Г«ГјГЄГ® Г°Г Г§ Г¬Г®Г¦Г­Г® ГЁГ±ГЇГ®Г«ГјГ§Г®ГўГ ГІГј ГЇГ°ГЁГ§Г»Гў (ГЄГ Г¦Г¤Г»Г© Г°Г Г§ ГЇГ»ГІГ ГҐГІГ±Гї ГЇГ°ГЁГ§ГўГ ГІГј  Г¤Г® 2 ГўГ®Г«ГЄГ®Гў)
 
     public WolfLeader() : base(40, 5, 70)
     {
@@ -57,7 +57,7 @@ public class WolfLeader : Enemy
         return false;
     }
 
-    // Движение (раньше было для призыва, теперь индекс 3)
+    // Г„ГўГЁГ¦ГҐГ­ГЁГҐ (Г°Г Г­ГјГёГҐ ГЎГ»Г«Г® Г¤Г«Гї ГЇГ°ГЁГ§Г»ГўГ , ГІГҐГЇГҐГ°Гј ГЁГ­Г¤ГҐГЄГ± 3)
     protected override bool TryGetTargetForThree(out Vector3Int targetPos)
     {
         targetPos = Position.LeftBottom;

@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 /// <summary>
-/// Модуль призыва волков для вожака.
+/// ГЊГ®Г¤ГіГ«Гј ГЇГ°ГЁГ§Г»ГўГ  ГўГ®Г«ГЄГ®Гў Г¤Г«Гї ГўГ®Г¦Г ГЄГ .
 /// </summary>
 public class SummonWolfModule : ActiveModule
 {
