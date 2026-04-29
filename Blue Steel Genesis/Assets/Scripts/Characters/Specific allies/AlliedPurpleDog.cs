@@ -29,17 +29,25 @@ public class AlliedPurpleDog : Ally
         GetDirectApproachTarget(out targetPos, priorityModules[1], getEnemies()) ||
         GetApproachTarget(out targetPos, priorityModules[1], getEnemies());
 
-    public override async Task damage(uint dmg)
+        Vector3Int offset = new();
+        foreach (var move in path)
+            if ((Position + offset + move).All(p => moveRange.Contains(p)))
+                offset += move;
+            else break;
+        targetPos = Position.LeftBottom + offset;
+        return offset != Vector3Int.zero;
+    }
+    public override async Task damage(uint dmg, ActionContext ctx)
     {
         Debug.Log($"Собака получила {dmg} урона!");
-        await base.damage(dmg);
+        await base.damage(dmg, ctx);
         //play taking damage animation
     }
 
-    public override async Task heal(uint hp)
+    public override async Task heal(uint hp, ActionContext ctx)
     {
         Debug.Log($"Собака восстановила {hp} здоровья!");
-        await base.heal(hp);
+        await base.heal(hp, ctx);
         //play healing animation
     }
 

@@ -21,7 +21,7 @@ public class SummonWolfModule : ActiveModule
         return "Summons 2 wolves.\n" + base.Description();
     }
 
-    public override async Task Effect(Character user, Vector3Int pos)
+    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
     {
         var freeCells = getCellsInRange(user).Where(cell => !Character.tracker.IsOccupied(cell) && !Character.tracker.OutOfBounds(cell)).ToList();
 

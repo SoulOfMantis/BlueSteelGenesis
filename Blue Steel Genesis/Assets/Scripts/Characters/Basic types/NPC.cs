@@ -85,7 +85,7 @@ public abstract class NPC : Character
     {
         if (myTurn)
             await endTurn();
-        await triggerModules(TriggerType.OnDeath);
+        await processTrigger(TriggerType.OnDeath, null);
         if (TooltipSystem.IsCurrent(this))
         {
             TooltipSystem.Unlock(TooltipSystem.TooltipType.entityTooltip);

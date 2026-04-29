@@ -23,9 +23,9 @@ public class BasicStrongAttack : ActiveModule
     {
         this.hitDamage = hitDamage;
     }
-    public override async Task Effect(Character user, Vector3Int pos)
+    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
     {
-        await user.strike(pos, hitDamage);
+        await user.strike(pos, hitDamage, MakeContext(user, pos));
         Debug.Log("BAM executed");
     }
 

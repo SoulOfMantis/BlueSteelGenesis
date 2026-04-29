@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using System;
-using TMPro;
 using UnityEngine;
 using System.Linq;
 
@@ -26,17 +25,26 @@ public class PurpleDog : Enemy
         GetDirectApproachTarget(out targetPos, priorityModules[1], getEnemies()) ||
         GetApproachTarget(out targetPos, priorityModules[1], getEnemies());
 
-    public override async Task damage(uint dmg)
+        Vector3Int offset = new();
+        foreach (var move in path)
+            if ((Position + offset + move).All(p => moveRange.Contains(p)))
+                offset += move;
+            else break;
+        targetPos = Position.LeftBottom + offset;
+        return offset != Vector3Int.zero;
+    }
+
+    public override async Task damage(uint dmg, ActionContext prevAction = null)
     {
         Debug.Log($"Собака получила {dmg} урона!");
-        await base.damage(dmg);
+        await base.damage(dmg, prevAction);
         //play taking damage animation
     }
 
-    public override async Task heal(uint hp)
+    public override async Task heal(uint hp, ActionContext prevAction = null)
     {
         Debug.Log($"Собака восстановила {hp} здоровья!");
-        await base.heal(hp);
+        await base.heal(hp, prevAction);
         //play healing animation
     }
 
