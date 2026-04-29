@@ -7,6 +7,7 @@ public class EmergencyShield : PassiveModule
     uint shieldPercent;
 
     public EmergencyShield(uint shieldPercent) {
+        Icon_name = "EmergencyShield";
         this.shieldPercent = shieldPercent;
         range = 0;
         triggerType = TriggerType.OnHealthDamage;

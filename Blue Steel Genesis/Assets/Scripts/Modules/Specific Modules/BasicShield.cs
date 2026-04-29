@@ -11,6 +11,7 @@ public class BasicShield : ActiveModule
     private uint shieldGiven;
     public BasicShield() : base()
     {
+        Icon_name = "BasicShield";
         shieldGiven = 3;
         energyCost = 1;
         range = 0;

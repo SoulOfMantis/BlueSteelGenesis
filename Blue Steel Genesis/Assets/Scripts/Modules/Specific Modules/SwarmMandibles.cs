@@ -8,6 +8,7 @@ public class SwarmMandibles : ActiveModule
 
     public SwarmMandibles() : base()
     {
+        Icon_name = "SwarmMandibles";
         range = 1;
         energyCost = 1;
         biteDamage = 1;        

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 49b7bacc0ad513d4f969a5965712a131
+guid: 5b1f4ff32b0d0404a85f9ed43576846b
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,9 +127,9 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: CounterattackModule
+  - name: ShieldModule
     originalName: 
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.5, y: -0.033333335}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -137,9 +137,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 32
-      height: 32
-    spriteID: 7e5a58965d69c2a499dabf0a0345cacd
+      width: 30
+      height: 30
+    spriteID: 9c99574e921d2814d94389acbc8e3190
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,25 +153,25 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 22737486
+      value0: 2707983381
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: CounterattackModule
+    name: ShieldModule
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: CounterattackModule
+    - name: BasicShield
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 0
-        y: 0
-        width: 32
-        height: 32
-      spriteId: 7e5a58965d69c2a499dabf0a0345cacd
+        x: 1
+        y: 1
+        width: 30
+        height: 30
+      spriteId: 9c99574e921d2814d94389acbc8e3190
     linkedCells: []
     tileCells: []
     tileSetIndex: 0

@@ -8,6 +8,7 @@ public class SwarmScatter : PassiveModule
 
     public SwarmScatter() : base()
     {
+        Icon_name = "SwarmScatter";
         range = 1;
         shieldAmount = 3;
         triggerType = TriggerType.OnTurnEnd;

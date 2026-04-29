@@ -6,6 +6,7 @@ public class FlightMovement : ActiveModule
 {
     public FlightMovement() : base()
     {
+        Icon_name = "FlightMovement";
         range = 3;
         energyCost = 1;
         AddConstKeywords(new MobilityKeyword(), new FlightKeyword());

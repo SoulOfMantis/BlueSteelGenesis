@@ -8,6 +8,7 @@ public class CounterAttack : PassiveModule
     public CounterAttack() : this(3) {}
     public CounterAttack(uint dmg)
     {
+        Icon_name = "CounterAttack";
         damage = dmg;
         range = 1;
         triggerType = TriggerType.OnDamage;
