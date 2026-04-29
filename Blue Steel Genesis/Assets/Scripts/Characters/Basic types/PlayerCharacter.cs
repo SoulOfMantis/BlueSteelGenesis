@@ -155,8 +155,8 @@ public class PlayerCharacter : Character
     public void onEndTurnButtonPressed() =>
         StartCoroutine(TaskCoro.Make(endTurn()));
 
-    public override async Task looseHealth(uint hp, ActionContext ctx) {
-        await base.looseHealth(hp, ctx);
+    public override async Task loseHealth(uint hp, ActionContext ctx) {
+        await base.loseHealth(hp, ctx);
         updateHealth();
     }
 
