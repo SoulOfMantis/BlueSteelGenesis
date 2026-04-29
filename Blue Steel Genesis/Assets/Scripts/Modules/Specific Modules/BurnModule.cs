@@ -32,9 +32,9 @@ public class BurnModule : NegativeStatusModule
             turnsLeft.Value = Math.Max(turnsLeft-1, 1);
         }
     }
-    public override async Task Effect(Character user, Vector3Int pos)
+    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
     {
-        await user.damage(damage);
+        await user.damage(damage, MakeContext(user, pos));
         turnTick();
     }
 }

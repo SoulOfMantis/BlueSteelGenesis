@@ -24,9 +24,9 @@ public class BasicMovement : ActiveModule
     {
         return $"Move to an unoccupied space within {range} cells.\n" + base.Description();
     }
-    public override async Task Effect(Character user, Vector3Int pos)
+    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
     {
-        await user.move(new PositionCollection(pos, user.Position.SideSize), getCellsInRange(user.Position));
+        await user.move(new PositionCollection(pos, user.Position.SideSize), getCellsInRange(user.Position), MakeContext(user, pos));
         Debug.Log("BMM executed");
     }
     public override List<Vector3Int> getCellsInRange(PositionCollection start) =>

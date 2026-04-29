@@ -40,17 +40,17 @@ public class AlliedPurpleDog : Ally
         targetPos = Position.LeftBottom + offset;
         return offset != Vector3Int.zero;
     }
-    public override async Task damage(uint dmg)
+    public override async Task damage(uint dmg, ActionContext ctx)
     {
         Debug.Log($"Собака получила {dmg} урона!");
-        await base.damage(dmg);
+        await base.damage(dmg, ctx);
         //play taking damage animation
     }
 
-    public override async Task heal(uint hp)
+    public override async Task heal(uint hp, ActionContext ctx)
     {
         Debug.Log($"Собака восстановила {hp} здоровья!");
-        await base.heal(hp);
+        await base.heal(hp, ctx);
         //play healing animation
     }
 
