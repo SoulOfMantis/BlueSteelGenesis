@@ -8,6 +8,8 @@ using System.Text;
 public abstract class InternalKeyword : ModuleKeyword {}
 public class DefenseKeyword : InternalKeyword {}
 public class OffenseKeyword : InternalKeyword {}
+public class CounterattackKeyword : InternalKeyword {}
+public class FollowUpKeyword : InternalKeyword {}
 public class MobilityKeyword : InternalKeyword { }
 public class CommonKeyword : InternalKeyword {}
 public class BossKeyword : InternalKeyword {}
