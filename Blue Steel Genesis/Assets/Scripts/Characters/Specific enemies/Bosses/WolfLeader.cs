@@ -35,7 +35,7 @@ public class WolfLeader : Enemy
 
     protected override bool TryGetTargetForTwo(out Vector3Int targetPos)
     {
-        var summonRangeCells = priorityModules[3].getCellsInRange(Position);
+        var summonRangeCells = priorityModules[2].getCellsInRange(Position);
         var freeCells = summonRangeCells.Where(cell => !tracker.IsOccupied(cell) && !tracker.OutOfBounds(cell)).ToList();
         if (freeCells.Any())
         {
@@ -46,8 +46,8 @@ public class WolfLeader : Enemy
         return false;
     }
     protected override bool TryGetTargetForThree(out Vector3Int targetPos) =>
-           GetDirectApproachTarget(out targetPos, priorityModules[2], getEnemies()) ||
-           GetApproachTarget(out targetPos, priorityModules[2], getEnemies());
+           GetDirectApproachTarget(out targetPos, priorityModules[3], getEnemies()) ||
+           GetApproachTarget(out targetPos, priorityModules[3], getEnemies());
 
 }
 
