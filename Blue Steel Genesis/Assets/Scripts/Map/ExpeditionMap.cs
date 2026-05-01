@@ -20,15 +20,43 @@ namespace Map
             this.bosses = bosses;
         }
 
-        public void OnBeforeSerialize() {}
-        public void OnAfterDeserialize() {
-            elites = GameRun.GetElitesByBiomeId(id);
-            bosses = GameRun.GetBossesByBiomeId(id);
-        }
-
         public Dictionary<(uint stage, uint elite_id), Type> elites;
         // (stage, boss_id) => boss_variation_count
         public Dictionary<(uint stage, uint boss_id), uint> bosses;
+
+
+
+        public void OnBeforeSerialize() {
+            if (elites == null || bosses == null)
+                return;
+            elites_serializable_ = elites.Select(
+                e => new EliteSerializable{
+                    stage = e.Key.stage,
+                    elite_id = e.Key.elite_id,
+                    type = e.Value.AssemblyQualifiedName
+                }).ToArray();
+            bosses_serializable_ = bosses.Select(
+                b => new BossSerializable{
+                    stage = b.Key.stage,
+                    boss_id = b.Key.boss_id,
+                    variation = b.Value
+                }).ToArray();
+        }
+        public void OnAfterDeserialize() {
+            if (elites_serializable_ == null || bosses_serializable_ == null)
+                return;
+            elites = elites_serializable_.ToDictionary(e => (e.stage, e.elite_id), e => Type.GetType(e.type));
+            bosses = bosses_serializable_.ToDictionary(b => (b.stage, b.boss_id), b => b.variation);
+        }
+        [Serializable] private struct EliteSerializable {
+            public uint stage, elite_id;
+            public string type;
+        };
+        [Serializable] private struct BossSerializable {
+            public uint stage, boss_id, variation;
+        };
+        [SerializeField] private EliteSerializable[] elites_serializable_;
+        [SerializeField] private BossSerializable[] bosses_serializable_;
     }
 
     [Serializable]
