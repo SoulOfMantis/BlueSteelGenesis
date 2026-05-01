@@ -9,8 +9,7 @@ public class BurnModule : NegativeStatusModule
     {
         damage = 1;
         turnsLeft.Value = 3;
-        //To do add BurnKeyword
-        //AddConstKeyword(new Keyword()); 
+        AddConstKeyword(new BurnKeyword());
         triggerType = TriggerType.OnMove;
         Icon_name = "BurnModule";
     }
@@ -21,7 +20,7 @@ public class BurnModule : NegativeStatusModule
     }
     public override string Description()
     {
-        return $"Take {damage} damage when you move next {turnsLeft} times.\n" + base.Description();
+        return $"Deals {damage} damage when next {turnsLeft} times when target moves.\n" + base.Description();
     }
     public override bool IsExpired() => turnsLeft == 0;
     public override void Refresh(StatusModule other)

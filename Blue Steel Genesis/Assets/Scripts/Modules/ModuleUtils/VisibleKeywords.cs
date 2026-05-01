@@ -24,6 +24,14 @@ public class PoisonKeyword : VisibleKeyword
         ChangeDescription("Some creatures may have resistance or immunity to this.");
     }
 }
+public class BurnKeyword : VisibleKeyword
+{
+    public BurnKeyword() : base()
+    {
+        ChangeName("Burn");
+        ChangeDescription("Some creatures may have resistance or immunity to this.");
+    }
+}
 public class FlightKeyword : VisibleKeyword
 {
     public FlightKeyword()
@@ -101,7 +109,7 @@ public class EnhanceKeyword<T> : TargetedStatusKeyword where T : PositiveStatusM
     public EnhanceKeyword(PossibleTargets target, params object[] args) : base(target, typeof(T), args) 
     {
         ChangeName($"Enhance {Status.Name}");
-        string desc = $"Apply status {Status.Name}.";
+        string desc = $"Apply status {Status.Name}. " + Status.Description();
         ChangeDescription(desc);
     }
 }
@@ -110,7 +118,7 @@ public class InflictKeyword<T> : TargetedStatusKeyword where T:NegativeStatusMod
     public InflictKeyword(PossibleTargets target, params object[] args) : base(target, typeof(T), args)
     {
         ChangeName($"Inflict {Status.Name}");
-        string desc = $"Apply status {Status.Name}.";
+        string desc = $"Apply status {Status.Name}. " + Status.Description();
         ChangeDescription(desc);
     }
 }

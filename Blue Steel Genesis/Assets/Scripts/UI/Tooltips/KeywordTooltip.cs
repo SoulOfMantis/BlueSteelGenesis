@@ -16,7 +16,16 @@ public class KeywordTooltip : MonoBehaviour
         keyword = k;
         Name.text = k.Name;
         Description.text = k.Description;
-        if (k is TargetedStatusKeyword t) tooltipTrigger.updateModuleTrigger(t.Status);
-        else tooltipTrigger.gameObject.SetActive(false);
+        if (k is TargetedStatusKeyword t)
+        {
+            tooltipTrigger.updateModuleTrigger(t.Status);
+            tooltipTrigger.enabled = false;
+        }
+        else
+        {
+            tooltipTrigger.gameObject.SetActive(false);
+            var descRect = Description.GetComponent<RectTransform>();
+            descRect.sizeDelta = new(descRect.sizeDelta.x + 125, descRect.sizeDelta.y);
+        }
     }
 }
