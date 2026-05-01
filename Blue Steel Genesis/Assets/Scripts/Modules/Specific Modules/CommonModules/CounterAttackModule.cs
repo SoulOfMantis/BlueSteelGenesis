@@ -30,7 +30,7 @@ public class CounterAttack : PassiveModule
             await user.strike(target_pos.Value, damage, MakeContext(user, pos));
     }
     public override string Description() {
-        return $"Deals {damage} to the attacker";
+        return $"Deals {damage} to the attacker." + base.Description();
     }
 }
 
