@@ -5,7 +5,8 @@ using UnityEngine;
 
 namespace Map
 {
-    public class BiomeInfo
+    [Serializable]
+    public class BiomeInfo : ISerializationCallbackReceiver
     {
         public uint id;
         public float missing_node_rate = .3f;
@@ -19,12 +20,19 @@ namespace Map
             this.bosses = bosses;
         }
 
+        public void OnBeforeSerialize() {}
+        public void OnAfterDeserialize() {
+            elites = GameRun.GetElitesByBiomeId(id);
+            bosses = GameRun.GetBossesByBiomeId(id);
+        }
+
         public Dictionary<(uint stage, uint elite_id), Type> elites;
         // (stage, boss_id) => boss_variation_count
         public Dictionary<(uint stage, uint boss_id), uint> bosses;
     }
 
-    public class ExpeditionMap
+    [Serializable]
+    public class ExpeditionMap : ISerializationCallbackReceiver
     {
         /// <summary>
         /// Перечисляет вершины, достижимые непосредственно из pos
@@ -71,6 +79,29 @@ namespace Map
             return reachable;
         }
 
+
+        public void OnBeforeSerialize() {
+            if (map == null)
+                return;
+
+            map_serializable_ = new Node[width * height];
+            for (int i = 0; i < height; ++i)
+                for (int j = 0; j < width; ++j)
+                    map_serializable_[i * width + j] = map[i, j];
+        }
+        public void OnAfterDeserialize() {
+            if (map_serializable_?.Length != height * width)
+                return;
+
+            map = new Node[height, width];
+            for (int i = 0; i < height; ++i)
+                for (int j = 0; j < width; ++j)
+                    map[i, j] = map_serializable_[i * width + j];
+        }
+        [SerializeField]
+        private Node[] map_serializable_;
+
+
         public const int width = 5;
         public const int height = 7;
         /// <summary>
@@ -86,7 +117,9 @@ namespace Map
         /// </summary>
         public Vector2Int black_market_node => new(-1, -2);
 
+
         public Node[,] map { get; private set; }
+        [field: SerializeField]
         public bool upside_down { get; private set; }
 
 

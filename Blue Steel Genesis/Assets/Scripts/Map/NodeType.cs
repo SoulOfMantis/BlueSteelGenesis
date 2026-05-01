@@ -2,7 +2,7 @@ using System;
 
 namespace Map
 {
-    [Flags]
+    [Flags, Serializable]
     public enum Node : short
     {
         DISABLED = 0,

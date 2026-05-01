@@ -1,12 +1,12 @@
-﻿using Map;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 using UnityEngine;
-using UnityEngine.UI;
+
+[Serializable]
 public class TreasureSubsystem
 {
+    [SerializeField]
     uint biomeId;
+
     public GameModule Treasure { get; private set; }
     public TreasureSubsystem(uint b)
     {
