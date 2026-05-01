@@ -33,12 +33,7 @@ public class WolfLeader : Enemy
         return possibleTargets.Count() != 0;
     }
 
-    protected override bool TryGetTargetForTwo(out Vector3Int targetPos) =>
-        GetDirectApproachTarget(out targetPos, priorityModules[2], getEnemies()) ||
-        GetApproachTarget(out targetPos, priorityModules[2], getEnemies());
-
-   
-    protected override bool TryGetTargetForThree(out Vector3Int targetPos)
+    protected override bool TryGetTargetForTwo(out Vector3Int targetPos)
     {
         var summonRangeCells = priorityModules[3].getCellsInRange(Position);
         var freeCells = summonRangeCells.Where(cell => !tracker.IsOccupied(cell) && !tracker.OutOfBounds(cell)).ToList();
@@ -50,5 +45,9 @@ public class WolfLeader : Enemy
         targetPos = default;
         return false;
     }
+    protected override bool TryGetTargetForThree(out Vector3Int targetPos) =>
+           GetDirectApproachTarget(out targetPos, priorityModules[2], getEnemies()) ||
+           GetApproachTarget(out targetPos, priorityModules[2], getEnemies());
+
 }
 
