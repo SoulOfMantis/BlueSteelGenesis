@@ -4,29 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 public class WolfLeader : Enemy
 {
-    private int remainingSummons = 2; // Сколько раз можно использовать призыв (каждый раз пытается призвать  до 2 волков)
-
-    public WolfLeader() : base(70, 5, 70) 
+    public WolfLeader() : base(40, 5, 70)
     {
         Name = "Wolf Leader";
-        Description = "The mighty leader of the wolf pack. Can summon smaller wolves to aid him!";
+        Description = "The mighty leader of the wolf pack. Can summon wolves to aid him!";
 
-
-        addModule(new BiteModule());         
+        addModule(new BiteModule());
         addModule(new ClawModule());
-        addModule(new BasicMovement());        
-        addModule(new SummonWolfModule()); 
+        addModule(new SummonWolfModule());
+        addModule(new BasicMovement());
 
-        SetPriorityModules(); 
+        SetPriorityModules();
     }
-
- 
-    public void UseSummon()
-    {
-        remainingSummons--;
-    }
-
-    public bool HasSummonsLeft() => remainingSummons > 0;
 
     protected override bool TryGetTargetForZero(out Vector3Int targetPos)
     {
@@ -44,14 +33,9 @@ public class WolfLeader : Enemy
         return possibleTargets.Count() != 0;
     }
 
-    protected override bool TryGetTargetForTwo(out Vector3Int targetPos) =>
-        GetDirectApproachTarget(out targetPos, priorityModules[2], getEnemies()) ||
-        GetApproachTarget(out targetPos, priorityModules[2], getEnemies());
-
-   
-    protected override bool TryGetTargetForThree(out Vector3Int targetPos)
+    protected override bool TryGetTargetForTwo(out Vector3Int targetPos)
     {
-        var summonRangeCells = priorityModules[3].getCellsInRange(Position);
+        var summonRangeCells = priorityModules[2].getCellsInRange(Position);
         var freeCells = summonRangeCells.Where(cell => !tracker.IsOccupied(cell) && !tracker.OutOfBounds(cell)).ToList();
         if (freeCells.Any())
         {
@@ -61,5 +45,9 @@ public class WolfLeader : Enemy
         targetPos = default;
         return false;
     }
+    protected override bool TryGetTargetForThree(out Vector3Int targetPos) =>
+           GetDirectApproachTarget(out targetPos, priorityModules[3], getEnemies()) ||
+           GetApproachTarget(out targetPos, priorityModules[3], getEnemies());
+
 }
 
