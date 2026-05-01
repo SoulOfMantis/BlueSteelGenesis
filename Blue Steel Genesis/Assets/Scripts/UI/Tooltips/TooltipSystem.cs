@@ -11,6 +11,8 @@ public class TooltipSystem : MonoBehaviour
     public static bool moduleTooltipLocked = false;
     public static readonly float HidingTimeInSeconds = .4f;
     public static readonly float ShowingTimeInSeconds = .4f;
+    public GameObject keywordTooltipPrefab;
+    public static GameObject KeywordTooltipPrefab => instance.keywordTooltipPrefab;
     public static bool IsEntityTooltipActive()
     {
         if (instance == null) return false;
