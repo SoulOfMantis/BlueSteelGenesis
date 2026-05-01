@@ -5,20 +5,14 @@ using UnityEngine;
 public class AcidModule : NegativeStatusModule
 {
     uint damage;
-    public AcidModule() : base()
-    {
-        damage = 1;
-        turnsLeft.Value = 1;
-        AddConstKeyword(new AcidKeyword());
-        triggerType = TriggerType.OnTurnEnd;
-    }
-    public AcidModule(uint dmg, uint dur) : this()
+    public AcidModule(uint dmg, uint dur)
     {
         damage = dmg;
         turnsLeft.Value = dur;
         AddConstKeyword(new AcidKeyword());
         triggerType = TriggerType.OnTurnEnd;
     }
+    public AcidModule() : this(1, 1)  {    }
     public override string Description()
     {
         return $"Take {damage} damage at the end of next {turnsLeft} turns.\n" + base.Description();
