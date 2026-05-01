@@ -11,7 +11,7 @@ public class ClawModule : ActiveModule
 
     public ClawModule() : base()
     {
-        hitDamage = 1;
+        hitDamage = 2;
         energyCost = 1;
         range = 1;
         Icon_name = "ClawModule";
@@ -26,9 +26,9 @@ public class ClawModule : ActiveModule
     {
         this.hitDamage = hitDamage;
     }
-    public override async Task Effect(Character user, Vector3Int pos)
+    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
     {
-        await user.strike(pos, hitDamage);
+        await user.strike(pos, hitDamage, MakeContext(user, pos));
         Debug.Log("BAM executed");
     }
 

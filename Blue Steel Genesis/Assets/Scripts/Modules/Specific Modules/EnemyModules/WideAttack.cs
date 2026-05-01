@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class WideAttack : ActiveModule
 {
-    uint hitDamage = 3;
+    uint hitDamage = 8;
     public WideAttack() : base()
     {
         range = 1;
-        energyCost = 3;
+        energyCost = 4;
         Icon_name = "WideAttack";
         AddConstKeywords(new OffenseKeyword());
     }
-    public override async Task Effect(Character user, Vector3Int pos)
+    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
     {
         var attackPosition = user.Position.Where(x => Entity.tracker.GetNeighborTiles(x)
                     .Contains(pos)).First();
@@ -32,7 +32,7 @@ public class WideAttack : ActiveModule
         flag = true;
         while (flag)
         {
-            await user.strike(pos, hitDamage);
+            await user.strike(pos, hitDamage, MakeContext(user, pos));
             flag = !Entity.tracker.OutOfBounds(pos) && Entity.tracker.GetNeighborTiles(pos)
                     .Any(n => user.Position.Contains(n));
             pos += direction;

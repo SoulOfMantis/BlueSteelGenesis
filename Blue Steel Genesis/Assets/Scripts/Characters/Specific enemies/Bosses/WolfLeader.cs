@@ -6,7 +6,7 @@ public class WolfLeader : Enemy
 {
     private int remainingSummons = 2; // Сколько раз можно использовать призыв (каждый раз пытается призвать  до 2 волков)
 
-    public WolfLeader() : base(40, 5, 70) 
+    public WolfLeader() : base(70, 5, 70) 
     {
         Name = "Wolf Leader";
         Description = "The mighty leader of the wolf pack. Can summon smaller wolves to aid him!";
@@ -44,18 +44,9 @@ public class WolfLeader : Enemy
         return possibleTargets.Count() != 0;
     }
 
-    protected override bool TryGetTargetForTwo(out Vector3Int targetPos)
-    {
-        targetPos = Position.LeftBottom;
-        var moveRange = priorityModules[2].getCellsInRange(Position).Concat(Position).ToHashSet();
-        var path = Navigation.Dijkstra.getPath(Position, getEnemies().SelectMany(e => e.Position.NeighborPositions()),
-            p => !tracker.IsOccupied(p) && !tracker.OutOfBounds(p)) ?? new();
-        foreach (var move in path)
-            if (moveRange.Contains(targetPos + move))
-                targetPos += move;
-            else break;
-        return targetPos != Position.LeftBottom;
-    }
+    protected override bool TryGetTargetForTwo(out Vector3Int targetPos) =>
+        GetDirectApproachTarget(out targetPos, priorityModules[2], getEnemies()) ||
+        GetApproachTarget(out targetPos, priorityModules[2], getEnemies());
 
    
     protected override bool TryGetTargetForThree(out Vector3Int targetPos)

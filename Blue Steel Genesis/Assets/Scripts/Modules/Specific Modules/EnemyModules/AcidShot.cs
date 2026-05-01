@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AcidShot : ActiveModule
 {
-    uint hitDamage = 1;
+    uint hitDamage = 5;
     uint acidDamage = 1;
     uint acidDuration = 1;
     public AcidShot() : base()
@@ -20,10 +20,10 @@ public class AcidShot : ActiveModule
         res.Add(new InflictKeyword<AcidModule>(PossibleTargets.Target, acidDamage, acidDuration));
         return res;
     }
-    public override async Task Effect(Character user, Vector3Int pos)
+    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
     {
-        await user.strike(pos, hitDamage);
-        await user.apply(pos, new AcidModule(acidDamage, acidDuration));
+        await user.strike(pos, hitDamage, MakeContext(user, pos));
+        await user.apply(pos, new AcidModule(acidDamage, acidDuration), MakeContext(user, pos));
     }
     public override string Description()
     {

@@ -18,8 +18,8 @@ public class Expedition
             new MechanicStinger(),
             new BasicMovement(),
         };
-        Player.maxHealth = 50;
-        Player.maxEnergy = 5;
+        Player.maxHealth = 100;
+        Player.maxEnergy = 10;
         Player.GiveMaterials(3);
         Player.GiveMoney(10);
         Player.currentHealth.Value = Player.maxHealth;

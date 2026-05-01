@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class AcidBite : ActiveModule
 {
-    uint hitDamage = 3;
-    uint acidDamage = 1;
-    uint acidDuration = 1;
+    uint hitDamage = 10;
+    uint acidDamage = 3;
+    uint acidDuration = 2;
     public AcidBite() : base()
     {
         Icon_name = "AcidBiteModule";
         range = 1;
-        energyCost = 2;
+        energyCost = 3;
         AddConstKeywords(new OffenseKeyword());
     }
     public override HashSet<ModuleKeyword> renewableKeywords()
@@ -20,10 +20,10 @@ public class AcidBite : ActiveModule
         res.Add(new InflictKeyword<AcidModule>(PossibleTargets.Target, acidDamage, acidDuration));
         return res;
     }
-    public override async Task Effect(Character user, Vector3Int pos)
+    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
     {
-        await user.strike(pos, hitDamage);
-        await user.apply(pos, new AcidModule(acidDamage, acidDuration));
+        await user.strike(pos, hitDamage, MakeContext(user, pos));
+        await user.apply(pos, new AcidModule(acidDamage, acidDuration), MakeContext(user, pos));
     }
     public override string Description()
     {

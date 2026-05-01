@@ -6,7 +6,7 @@ using System.Linq;
 
 public class AlliedRoboWolf : Ally
 {
-    public AlliedRoboWolf() : base(8, 4, 80)
+    public AlliedRoboWolf() : base(32, 4, 32)
     {
         Name = "RoboWolf";
         Description = "A robotic copy of regular wolf, reprogrammed by you. Got some pretty cool enhancements!";
@@ -22,16 +22,7 @@ public class AlliedRoboWolf : Ally
         targetPos = possibleTargets.FirstOrDefault();
         return possibleTargets.Count() != 0;
     }
-    protected override bool TryGetTargetForOne(out Vector3Int targetPos)
-    {
-        targetPos = Position.LeftBottom;
-        var moveRange = priorityModules[1].getCellsInRange(Position).Concat(Position).ToHashSet();
-        var path = Navigation.Dijkstra.getPath(Position, getEnemies().SelectMany(e => e.Position.NeighborPositions()),
-            p => !tracker.IsOccupied(p) && !tracker.OutOfBounds(p)) ?? new();
-        foreach (var move in path)
-            if (moveRange.Contains(targetPos + move))
-                targetPos += move;
-            else break;
-        return targetPos != Position.LeftBottom;
-    }
+    protected override bool TryGetTargetForOne(out Vector3Int targetPos) =>
+        GetDirectApproachTarget(out targetPos, priorityModules[1], getEnemies()) ||
+        GetApproachTarget(out targetPos, priorityModules[1], getEnemies());
 }
