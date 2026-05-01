@@ -47,6 +47,7 @@ public partial class Expedition
 
         CombatSystem = new CombatSystem(Biome, (uint)BiomeStage, LocalSeed);
         ModuleGen = new(LocalSeed);
+        EventSystem = new EventSystem(Biome.id);
         TreasureSubsystem = new(Biome.id);
         Shop = new(Biome.id);
         EventManager.PrepareEventsForStage(Biome.id);
@@ -97,4 +98,5 @@ public partial class Expedition
     public CombatSystem CombatSystem;
     public Shop Shop;
     public ModuleGenerator ModuleGen;
+    public EventSystem EventSystem { get; private set; }
 }

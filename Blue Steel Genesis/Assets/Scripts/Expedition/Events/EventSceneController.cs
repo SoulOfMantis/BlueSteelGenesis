@@ -18,16 +18,7 @@ public class EventSceneController : MonoBehaviour
     private EventData currentEvent;
     private uint currentStateId;
 
-    void Start()
-    {
-        currentEvent = CurrentEventHolder.Event;
-        if (currentEvent == null || currentEvent.states == null || currentEvent.states.Count == 0)
-        {
-            ReturnToMap();
-            return;
-        }
-        SetState(1);
-    }
+
 
     private void SetState(uint stateId)
     {
@@ -169,18 +160,31 @@ public class EventSceneController : MonoBehaviour
         }
     }
 
-    void ReturnToMap()
-    {
-        CurrentEventHolder.Event = null;
-        SceneManager.LoadScene(GameEventConstants.MAP_SCENE_NAME);
-    }
+
 
     private EventData.EventState FindState(uint id)
     {
         return currentEvent.states.Find(s => s.stateId == id);
     }
-}
-public static class CurrentEventHolder
-{
-    public static EventData Event { get; set; }
+
+
+
+    void Start()
+    {
+        var eventSystem = GameState.Run?.Expedition?.EventSystem;
+        currentEvent = eventSystem?.CurrentEvent;
+        if (currentEvent == null || currentEvent.states == null || currentEvent.states.Count == 0)
+        {
+            ReturnToMap();
+            return;
+        }
+        SetState(1);
+    }
+
+    void ReturnToMap()
+    {
+        var eventSystem = GameState.Run?.Expedition?.EventSystem;
+        eventSystem?.ClearCurrentEvent();   
+        SceneManager.LoadScene(GameEventConstants.MAP_SCENE_NAME);
+    }
 }
