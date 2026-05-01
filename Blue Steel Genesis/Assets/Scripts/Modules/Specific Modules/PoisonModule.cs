@@ -25,9 +25,9 @@ public class PoisonModule : NegativeStatusModule
     {
         return $"Target takes {poisonDamage} damage at the start of the turn for another {turnsLeft} turns." + base.Description();
     }
-    public override async Task Effect(Character user, Vector3Int pos)
+    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
     {
-        await user.damage(poisonDamage);
+        await user.damage(poisonDamage, MakeContext(user, pos));
         Debug.Log($"Poison dealt {poisonDamage} damage to {user.GetType().Name}");
         turnTick();
     }

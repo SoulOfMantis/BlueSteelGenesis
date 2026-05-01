@@ -4,9 +4,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 
-/// <summary>
-/// Ìîäóëü ïðèçûâà âîëêîâ äëÿ âîæàêà.
-/// </summary>
 public class SummonWolfModule : ActiveModule
 {
     public SummonWolfModule()
@@ -20,10 +17,9 @@ public class SummonWolfModule : ActiveModule
     public override string Description() =>
         "Summons a Wolf on an adjacent free cell.\n" + base.Description();
 
-    public override Task Effect(Character user, Vector3Int pos)
+    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
     {
-        Entity.summon<Wolf>(new PositionCollection(pos, 1));
-        return Task.CompletedTask;
+        await user.summon<Wolf>(new PositionCollection(pos, 1));
     }
 
     protected override bool checkFinalPosition(Vector3Int pos)
