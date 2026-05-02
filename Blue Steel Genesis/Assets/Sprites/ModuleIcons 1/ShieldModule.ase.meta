@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 35c7ce7ed7b52cf4ab134bd5c9340e05
+guid: 1e6dc006350609e489c3fac432616e3d
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,7 +127,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: FireModuleRoboWolf
+  - name: ShieldModule
     originalName: 
     pivot: {x: 0.5, y: -0.033333335}
     alignment: 9
@@ -139,7 +139,7 @@ ScriptedImporter:
       y: 4
       width: 30
       height: 30
-    spriteID: 2c46709a3bbf58b48b00d474ca59a218
+    spriteID: 62888af7187bd1647822eca0d457c46d
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,17 +153,17 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 3383252858
+      value0: 2707983381
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: FireModuleRoboWolf
+    name: ShieldModule
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: FireModuleRoboWolf
+    - name: ShieldModule
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -171,7 +171,7 @@ ScriptedImporter:
         y: 1
         width: 30
         height: 30
-      spriteId: 2c46709a3bbf58b48b00d474ca59a218
+      spriteId: 62888af7187bd1647822eca0d457c46d
     linkedCells: []
     tileCells: []
     tileSetIndex: 0

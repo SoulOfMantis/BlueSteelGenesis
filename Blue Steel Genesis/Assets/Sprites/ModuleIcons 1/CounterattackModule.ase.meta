@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6ee5600410ef9fc4696bd37e6c5290a2
+guid: 36e3dae50bf89834f98174880d70a553
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,9 +127,9 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: ClowModule
+  - name: CounterattackModule
     originalName: 
-    pivot: {x: 0.5, y: -0.033333335}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -137,9 +137,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 30
-      height: 30
-    spriteID: 7c4ea292d3bf9524dbf5833040ec28c2
+      width: 32
+      height: 32
+    spriteID: 74f14ae8148e0ae4cb0daf290c58eb40
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,25 +153,25 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 277191505
+      value0: 22737486
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: ClowModule
+    name: CounterattackModule
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: ClowModule
+    - name: CounterattackModule
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 1
-        y: 1
-        width: 30
-        height: 30
-      spriteId: 7c4ea292d3bf9524dbf5833040ec28c2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      spriteId: 74f14ae8148e0ae4cb0daf290c58eb40
     linkedCells: []
     tileCells: []
     tileSetIndex: 0

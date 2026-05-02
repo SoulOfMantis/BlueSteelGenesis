@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7279c05083572514d979733b8b1f00a5
+guid: 537cced94e210894f83f753ebc98a3e0
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,9 +127,9 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: CallModuleRobotWolf
+  - name: DefoultEnemy
     originalName: 
-    pivot: {x: 0.5, y: -0.033333335}
+    pivot: {x: 0.5357143, y: -0.033333335}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -137,9 +137,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 30
+      width: 28
       height: 30
-    spriteID: 0edc79563ac3a40458339cbb9f7a762e
+    spriteID: da9abde11e81d30489d949ca1cb765f0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,25 +153,25 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 1737577406
+      value0: 3472675303
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: CallModuleRobotWolf
+    name: DefoultEnemy
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: CallModuleRobotWolf
+    - name: DefoultEnemy
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
         x: 1
         y: 1
-        width: 30
+        width: 28
         height: 30
-      spriteId: 0edc79563ac3a40458339cbb9f7a762e
+      spriteId: da9abde11e81d30489d949ca1cb765f0
     linkedCells: []
     tileCells: []
     tileSetIndex: 0
