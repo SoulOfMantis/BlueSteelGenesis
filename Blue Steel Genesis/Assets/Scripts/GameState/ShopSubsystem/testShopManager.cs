@@ -24,7 +24,7 @@ public class testShopManager : MonoBehaviour
     {
         updateShopModuleIcons();
     }
-    public void ExitToMap() => UnityEngine.SceneManagement.SceneManager.LoadScene("ExpeditionMapTest_usingGameState");
+    public void ExitToMap() => GameState.Run.Expedition.exitNode();
     public void RerollShop()
     {
         GameState.Run.Expedition.Shop.Reroll(ShopMode);
