@@ -1,0 +1,156 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using TMPro;
+using UnityEngine;
+
+public class CharacterVisualHandler : VisualHandlerBase
+{
+    [System.Serializable]
+    public struct AnimationClipRef
+    {
+        public string animationName;
+        public AnimationClip clip;
+        public float transitionDuration;
+    }
+
+    [Header("Character animations")]
+    [SerializeField] private AnimationClipRef idleAnimation;
+    [SerializeField] private AnimationClipRef walkAnimation;
+    [SerializeField] private AnimationClipRef attackAnimation;
+    [SerializeField] private AnimationClipRef hurtAnimation;
+    [SerializeField] private AnimationClipRef deathAnimation;
+    [SerializeField] private AnimationClipRef loseShieldAnimation;
+    [SerializeField] private AnimationClipRef gainShieldAnimation;
+    [SerializeField] private AnimationClipRef startBattleAnimation;
+    [SerializeField] private AnimationClipRef endBattleAnimation;
+    [SerializeField] private AnimationClipRef startTurnAnimation;
+    [SerializeField] private AnimationClipRef endTurnAnimation;
+    [SerializeField] private AnimationClipRef healAnimation;
+
+    //[Header("Floating text")]
+    //[SerializeField] private GameObject floatingTextPrefab;
+    //[SerializeField] private Transform floatingTextSpawnPoint;
+
+    private string currentAnimation;
+
+    public async Task PlayWalkAnimation(Vector3Int direction)
+    {
+        PlayAnimation(walkAnimation.animationName);
+
+        await Task.Delay((int)(walkAnimation.transitionDuration * 1000));
+    }
+
+    public async Task PlayStartBattleAnimation()
+    {
+        PlayAnimation(walkAnimation.animationName);
+
+        await Task.Delay((int)(startBattleAnimation.transitionDuration * 1000));
+    }
+
+    public async Task PlayEndBattleAnimation()
+    {
+        PlayAnimation(walkAnimation.animationName);
+
+        await Task.Delay((int)(endTurnAnimation.transitionDuration * 1000));
+    }
+
+    public async Task PlayStartTurnAnimation()
+    {
+        PlayAnimation(walkAnimation.animationName);
+
+        await Task.Delay((int)(startTurnAnimation.transitionDuration * 1000));
+    }
+
+    public async Task PlayEndTurnAnimation()
+    {
+        PlayAnimation(walkAnimation.animationName);
+
+        await Task.Delay((int)(endBattleAnimation.transitionDuration * 1000));
+    }
+
+    public async Task PlayAttackAnimation(Vector3Int target)
+    {
+        PlayAnimation(attackAnimation.animationName);
+        //LookAt(target);
+
+        await Task.Delay((int)(attackAnimation.transitionDuration * 1000));
+    }
+
+    public async Task PlayHurtAnimation(uint amount)
+    {
+        PlayAnimation(hurtAnimation.animationName);
+
+        //ShowFloatingText($"-{amount}", Color.red);
+
+        await Task.Delay((int)(hurtAnimation.transitionDuration * 1000));
+
+    }
+
+    public async Task PlayDeathAnimation()
+    {
+        PlayAnimation(deathAnimation.animationName);
+
+        await Task.Delay((int)(deathAnimation.transitionDuration * 1000));
+    }
+
+    public async Task PlayHealingAnimation(uint amount)
+    {
+        PlayAnimation(healAnimation.animationName);
+
+        await Task.Delay((int)(healAnimation.transitionDuration * 1000));
+        //ShowFloatingText($"+{amount}", Color.green);
+    }
+
+    public async Task PlayGainShieldAnimation(uint amount)
+    {
+        PlayAnimation(healAnimation.animationName);
+
+        await Task.Delay((int)(gainShieldAnimation.transitionDuration * 1000));
+    }
+
+    public async Task PlayLoseShieldAnimation(uint amount)
+    {
+        PlayAnimation(hurtAnimation.animationName);
+
+        await Task.Delay((int)(loseShieldAnimation.transitionDuration * 1000));
+
+    }
+
+    // Заставить персонажа смотреть в направление клетки
+    //private void LookAt(Vector3Int target)
+    //{
+    //    Vector3 direction = (Character.tracker.CellToWorld(target) - transform.position).normalized;
+
+    //    if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+    //    {
+    //        if (direction.x > 0)
+    //            spriteRenderer.flipX = false;
+    //        else 
+    //            spriteRenderer.flipX = true;
+    //    }
+    //}
+
+
+    // Частично работает, пока закомментировано
+    /*    private void ShowFloatingText(string text, Color color)
+        {
+            if (floatingTextPrefab == null) return;
+
+            Vector3 spawnPos = floatingTextSpawnPoint != null
+                ? floatingTextSpawnPoint.position : transform.position;
+
+            GameObject textObj = Instantiate(floatingTextPrefab, spawnPos, Quaternion.identity);
+
+            TMP_Text tmp = textObj.GetComponent<TMP_Text>();
+            if (tmp != null)
+            {
+                tmp.text = text;
+                tmp.color = color;
+            }
+
+            Destroy(textObj, 1.5f);
+            Destroy(textObj, 1.5f);
+        }*/
+}

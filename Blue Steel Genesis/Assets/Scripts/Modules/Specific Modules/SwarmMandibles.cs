@@ -28,8 +28,8 @@ public class SwarmMandibles : ActiveModule
         return Entity.tracker.IsOccupiedByCharacter(pos);
     }
 
-    public override async Task Effect(Character user, Vector3Int pos) {
+    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx) {
         for (uint i = 0; i < attackCount; ++i)
-            await user.strike(pos, biteDamage);
+            await user.strike(pos, biteDamage, MakeContext(user, pos));
     }
 }

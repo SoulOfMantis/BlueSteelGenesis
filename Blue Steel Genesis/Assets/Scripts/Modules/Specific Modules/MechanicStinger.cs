@@ -37,11 +37,11 @@ public class MechanicStinger : ActiveModule
     {
         return $"Deals {hitDamage} damage to the adjacent creature.\n" + base.Description();
     }
-    public override async Task Effect(Character user, Vector3Int pos)
+    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
     {
-        await user.strike(pos, hitDamage);
+        await user.strike(pos, hitDamage, MakeContext(user, pos));
         PoisonModule poison = new PoisonModule(poisonDamage, duration);
-        await user.apply(pos, poison);
+        await user.apply(pos, poison, MakeContext(user, pos));
     }
 
     protected override bool checkFinalPosition(Vector3Int pos)

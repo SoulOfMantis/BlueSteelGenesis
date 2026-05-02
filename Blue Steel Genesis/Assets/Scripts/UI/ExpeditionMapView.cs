@@ -157,15 +157,8 @@ public class ExpeditionMapView : MonoBehaviour
         switch (last_selection_?.type)
         {
             case Node.TREASURE:
-                {
-                    GameState.Run.Expedition.TreasureSubsystem.Trigger();
-                    break;
-                }
-            default:
+                GameState.Run.Expedition.TreasureSubsystem.Trigger();
                 break;
-        }
-        //TODO: implement
-        switch (last_selection_?.type) {
             case Node.REGULAR_ENEMY:
                 GameState.Run.Expedition.CombatSystem.TriggerNormalEncounter();
                 break;
@@ -177,6 +170,11 @@ public class ExpeditionMapView : MonoBehaviour
                 break;
             case Node.SHOP:
                 GameState.Run.Expedition.Shop.TriggerShop();
+                break;
+            case Node.BLACK_MARKET:
+                GameState.Run.Expedition.Shop.TriggerBlackMarket();
+                break;
+            default:
                 break;
         }
     }

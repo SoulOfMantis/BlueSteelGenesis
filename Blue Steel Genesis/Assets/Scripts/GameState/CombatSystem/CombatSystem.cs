@@ -156,6 +156,8 @@ public class CombatSystem
     void VictoryElite()
     {
         GiveReward(elite_reward_modifier);
+        var module = ModuleGenerator.CreateModuleByType(reward);
+        GameState.Run.Expedition.Player.AddModule(module);
         UnityEngine.Debug.Log($"Reward: {reward.Name}");
     }
 
