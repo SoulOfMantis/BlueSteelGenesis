@@ -18,10 +18,10 @@ public abstract class GameModule
         string res = "";
         foreach (var k in GetVisibleKeywords())
         {
-            res += $"{k.Name}";
+            res += $" {k.Name}";
             if (k is TargetedVisibleKeyword t)
                 res += $" {TargetedVisibleKeyword.TargetDescription(t.Target)}";
-            res += ".\n";
+            res += ".";
         }
         return res;
     }

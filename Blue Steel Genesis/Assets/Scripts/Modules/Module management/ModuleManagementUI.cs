@@ -8,17 +8,6 @@ public class ModuleManagementUI : MonoBehaviour
     [SerializeField] bool InShop = false;
     private List<ModuleEntry> entries = new List<ModuleEntry>();
 
-    // Удалить или закоментировать при релизе, код для теста
-    void Awake()
-    {
-        if (GameState.Run == null || GameState.Run.Expedition == null)
-        {
-            GameState.startGameRun(12345);
-            GameState.Run.startExpedition(1);
-        }
-        gameObject.SetActive(false);
-    }
-
     private void OnEnable()
     {
         ModuleManager.ModulesChanged += RefreshList;
