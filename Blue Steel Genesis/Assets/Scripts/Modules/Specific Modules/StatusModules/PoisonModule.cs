@@ -23,7 +23,7 @@ public class PoisonModule : NegativeStatusModule
     }
     public override string Description()
     {
-        return $"Target takes {poisonDamage} damage at the start of the turn for another {turnsLeft} turns." + base.Description();
+        return $"Deals {poisonDamage} damage to the target at the start next {turnsLeft} turns." + base.Description();
     }
     public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
     {
