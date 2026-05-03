@@ -11,8 +11,9 @@ public class BasicShield : ActiveModule
     private uint shieldGiven;
     public BasicShield() : base()
     {
-        shieldGiven = 3;
-        energyCost = 1;
+        price = 15;
+        shieldGiven = 8;
+        energyCost = 2;
         range = 0;
         AddConstKeywords(new CommonKeyword(), new DefenseKeyword());
     }

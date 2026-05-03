@@ -8,7 +8,8 @@ public class BasicStrongAttack : ActiveModule
 
     public BasicStrongAttack() : base()
     {
-        hitDamage = 5;
+        price = 20;
+        hitDamage = 18;
         energyCost = 3;
         range = 1; 
         AddConstKeywords(new CommonKeyword(), new OffenseKeyword());

@@ -11,7 +11,8 @@ public class BasicAttack : ActiveModule
 
     public BasicAttack() : base()
     {
-        hitDamage = 1;
+        price = 15;
+        hitDamage = 2;
         energyCost = 1;
         range = 1;
         //Icon_name = "...";

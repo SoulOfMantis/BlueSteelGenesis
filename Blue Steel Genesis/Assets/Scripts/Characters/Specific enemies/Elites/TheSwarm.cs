@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TheSwarm : Enemy
 {
-    public TheSwarm() : base(20, 3, 100) {
+    public TheSwarm() : base(25, 4, 100) {
         Name = "The Swarm";
         Description = "A cloud of aggressive insects. These minuscule creatures are not what your metal hands were made for!";
         addModule(new SwarmMandibles(1, 3));

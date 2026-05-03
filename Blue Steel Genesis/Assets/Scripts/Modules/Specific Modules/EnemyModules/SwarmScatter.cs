@@ -9,7 +9,7 @@ public class SwarmScatter : PassiveModule
     public SwarmScatter() : base()
     {
         range = 1;
-        shieldAmount = 3;
+        shieldAmount = 8;
         triggerType = TriggerType.OnTurnEnd;
         AddConstKeywords(new DefenseKeyword(), new ShieldKeyword(shieldAmount, PossibleTargets.Self));
     }

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BurnBite : ActiveModule
 {
-    uint hitDamage = 3;
-    uint burnDamage = 1;
+    uint hitDamage = 6;
+    uint burnDamage = 2;
     uint burnDuration = 1;
     public BurnBite() : base()
     {
