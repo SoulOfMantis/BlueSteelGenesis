@@ -5201,6 +5201,7 @@ GameObject:
   - component: {fileID: 2907876539609426672}
   - component: {fileID: 896703178159881375}
   - component: {fileID: 7321249947158375455}
+  - component: {fileID: 8005742549439456389}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5296,6 +5297,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BlueSteelGenesis.Character_Modules.PlayerCharacter
   bodySize: 1
   visualHandler: {fileID: 7323636043721432031}
+  sfx: {fileID: 8005742549439456389}
   energySlider: {fileID: 8053608964659962663}
   energyDisplay: {fileID: 4317173170482889044}
   healthSlider: {fileID: 3767884888993694187}
@@ -5327,6 +5329,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8005742549439456389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7175306729977158092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71aed81a16fa4724d82ec68668df584e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BlueSteelGenesis::CharacterSFX
+  strike: {fileID: 8300000, guid: 0ec6189d72c014241968424a439ec272, type: 3}
 --- !u!1 &7299589265370220578
 GameObject:
   m_ObjectHideFlags: 0
