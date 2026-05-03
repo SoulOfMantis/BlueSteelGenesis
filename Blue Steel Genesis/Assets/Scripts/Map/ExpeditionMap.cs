@@ -130,8 +130,8 @@ namespace Map
         private Node[] map_serializable_;
 
 
-        public const int width = 5;
-        public const int height = 7;
+        public const int width = 6;
+        public const int height = 9;
         /// <summary>
         /// Специальная позиция, соответствующая начальному узлу (не содержится в map)
         /// </summary>
