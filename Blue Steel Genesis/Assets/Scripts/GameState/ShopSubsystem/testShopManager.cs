@@ -34,7 +34,7 @@ public class testShopManager : MonoBehaviour
     public void BuyModuleNumber(int index)
     {
         if (index < 0 || index >= GameState.Run.Expedition.Shop.OnSale.Count) return;
-        GameState.Run.Expedition.Shop.Buy(GameState.Run.Expedition.Shop.OnSale[index]);
+        ModuleManager.BuyModule(GameState.Run.Expedition.Shop.OnSale[index]);
         UpdateShop();
     }
 }

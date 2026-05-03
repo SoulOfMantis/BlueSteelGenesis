@@ -31,6 +31,13 @@ public static class ModuleManager
         ModulesChanged?.Invoke();
         return true;
     }
+    public static bool BuyModule(GameModule module)
+    {
+        if (module == null || MaxEditableModuleIndex >= 4) return false;
+        GameState.Run.Expedition.Shop.Buy(module);
+        ModulesChanged?.Invoke();
+        return true;
+    }
 
     public static void RemoveModule(uint idx)
     {
