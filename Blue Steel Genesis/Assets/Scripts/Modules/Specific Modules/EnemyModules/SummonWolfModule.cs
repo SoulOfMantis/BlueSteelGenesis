@@ -4,39 +4,26 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 
-/// <summary>
-/// Модуль призыва волков для вожака.
-/// </summary>
 public class SummonWolfModule : ActiveModule
 {
-    public SummonWolfModule() : base()
+    public SummonWolfModule()
     {
-        Name = "Summon Wolves";
-        energyCost = 2;      
-        range = 2;
+        Name = "Summon Wolf";
+        energyCost = 5;
+        range = 1;              
         Icon_name = "SummonWolfModule";
     }
-    public override string Description()
-    {
-        return "Summons 2 wolves.\n" + base.Description();
-    }
+
+    public override string Description() =>
+        "Summons a Wolf on an adjacent free cell.\n" + base.Description();
 
     public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
     {
-        var freeCells = getCellsInRange(user).Where(cell => !Character.tracker.IsOccupied(cell) && !Character.tracker.OutOfBounds(cell)).ToList();
+        await user.summon<Wolf>(new PositionCollection(pos, 1));
+    }
 
-        int summonedCount = 0;
-        foreach (var cell in freeCells)
-        {
-            if (summonedCount >= 2) break;
-            var wolfPos = new PositionCollection(cell, 1);
-            if (Entity.summon<Wolf>(wolfPos))
-                summonedCount++;
-        }
-
-        if (summonedCount > 0)
-            Debug.Log($"{user.Name} summoned {summonedCount} wolf(s)!");
-        else
-            Debug.LogWarning("No free cells to summon wolves!");
+    protected override bool checkFinalPosition(Vector3Int pos)
+    {
+        return !Entity.tracker.OutOfBounds(pos) && !Entity.tracker.IsOccupied(pos);
     }
 }
