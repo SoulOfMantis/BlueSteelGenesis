@@ -20,7 +20,7 @@ public class BurnModule : NegativeStatusModule
     }
     public override string Description()
     {
-        return $"Deals {damage} damage when next {turnsLeft} times when target moves.\n" + base.Description();
+        return $"Deals {damage} damage next {turnsLeft} times when target moves.\n" + base.Description();
     }
     public override bool IsExpired() => turnsLeft == 0;
     public override void Refresh(StatusModule other)
