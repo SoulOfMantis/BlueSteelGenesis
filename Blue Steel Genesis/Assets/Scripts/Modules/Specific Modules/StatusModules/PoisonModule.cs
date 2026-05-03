@@ -8,19 +8,15 @@ using UnityEngine;
 public class PoisonModule : NegativeStatusModule
 {
     protected uint poisonDamage;
-    public PoisonModule() : base()
+    public PoisonModule(uint damage, uint duration)
     {
         triggerType = TriggerType.OnTurnStart;
-        poisonDamage = 1;
-        turnsLeft.Value = 3;
+        poisonDamage = damage;
+        turnsLeft.Value = duration;
         AddConstKeyword(new PoisonKeyword());
         Icon_name = "Module_poison";
     }
-    public PoisonModule(uint damage, uint duration) :this()
-    {
-        poisonDamage = damage;
-        turnsLeft.Value = duration;
-    }
+    public PoisonModule() : this(1, 3) {}
     public override string Description()
     {
         return $"Deals {poisonDamage} damage to the target at the start next {turnsLeft} turns." + base.Description();
@@ -37,7 +33,7 @@ public class PoisonModule : NegativeStatusModule
         if (other is PoisonModule p)
         {
             turnsLeft += p.turnsLeft;
-            poisonDamage = Math.Max(poisonDamage, turnsLeft / 5);
+            poisonDamage = Math.Max(poisonDamage, turnsLeft / 5) + p.poisonDamage/2;
             UpdateTooltipIfCurrent();
         }
     }
