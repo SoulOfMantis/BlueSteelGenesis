@@ -11,8 +11,8 @@ public class BigAcidSlime : Enemy
     protected override void Init()
     {
         addModule(new AcidBite());
-        addModule(new BasicMovement(3));
         addModule(new AcidShot());
+        addModule(new BasicMovement(3));
         addModule(new ExplodeWithSlime(bodySize - 1));
         base.Init();
     }
@@ -22,14 +22,14 @@ public class BigAcidSlime : Enemy
         targetPos = possibleTargets.FirstOrDefault();
         return possibleTargets.Count() != 0;
     }
-    protected override bool TryGetTargetForOne(out Vector3Int targetPos) =>
-        GetDirectApproachTarget(out targetPos, priorityModules[1], getEnemies()) ||
-        GetApproachTarget(out targetPos, priorityModules[1], getEnemies());
-    protected override bool TryGetTargetForTwo(out Vector3Int targetPos)
-    {
+    protected override bool TryGetTargetForOne(out Vector3Int targetPos)
+        var possibleTargets = priorityModules[1].getCellsInRange(Position).Where(p => getEnemies().SelectMany(e => e.Position).Contains(p));
         var possibleTargets = priorityModules[2].getCellsInRange(Position).Where(p => getEnemies().SelectMany(e => e.Position).Contains(p));
         targetPos = possibleTargets.FirstOrDefault();
         return possibleTargets.Count() != 0;
     }
+    protected override bool TryGetTargetForTwo(out Vector3Int targetPos) =>
+        GetDirectApproachTarget(out targetPos, priorityModules[2], getEnemies()) ||
+        GetApproachTarget(out targetPos, priorityModules[2], getEnemies());
 }
 
