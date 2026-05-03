@@ -468,6 +468,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 220041188885393650, guid: 8a6d67f7591c2cf4f85fce6b38203542, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 220041188885393650, guid: 8a6d67f7591c2cf4f85fce6b38203542, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 499621302686242704, guid: 8a6d67f7591c2cf4f85fce6b38203542, type: 3}
       propertyPath: m_Name
       value: BasicCombatSetup
@@ -522,6 +530,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6981140392879809128, guid: 8a6d67f7591c2cf4f85fce6b38203542, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7059475843717271973, guid: 8a6d67f7591c2cf4f85fce6b38203542, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7059475843717271973, guid: 8a6d67f7591c2cf4f85fce6b38203542, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7059475843717271973, guid: 8a6d67f7591c2cf4f85fce6b38203542, type: 3}
+      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7252901110659202553, guid: 8a6d67f7591c2cf4f85fce6b38203542, type: 3}

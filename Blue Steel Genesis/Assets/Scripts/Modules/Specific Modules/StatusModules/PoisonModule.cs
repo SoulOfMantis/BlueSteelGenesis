@@ -16,7 +16,7 @@ public class PoisonModule : NegativeStatusModule
         AddConstKeyword(new PoisonKeyword());
         Icon_name = "Module_poison";
     }
-    public PoisonModule() :this(1, 3) {    }
+    public PoisonModule() : this(1, 3) {}
     public override string Description()
     {
         return $"Deals {poisonDamage} damage to the target at the start next {turnsLeft} turns." + base.Description();

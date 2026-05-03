@@ -12,7 +12,7 @@ public class BigAcidSlime : Enemy
     {
         addModule(new AcidBite());
         addModule(new AcidShot());
-        addModule(new BasicMovement(2));
+        addModule(new BasicMovement(3));
         addModule(new ExplodeWithSlime(bodySize - 1));
         base.Init();
     }
@@ -23,7 +23,7 @@ public class BigAcidSlime : Enemy
         return possibleTargets.Count() != 0;
     }
     protected override bool TryGetTargetForOne(out Vector3Int targetPos)
-    {
+    { 
         var possibleTargets = priorityModules[1].getCellsInRange(Position).Where(p => getEnemies().SelectMany(e => e.Position).Contains(p));
         targetPos = possibleTargets.FirstOrDefault();
         return possibleTargets.Count() != 0;

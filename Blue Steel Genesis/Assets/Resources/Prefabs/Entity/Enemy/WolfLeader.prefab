@@ -104,6 +104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: BlueSteelGenesis::WolfLeader
   bodySize: 2
+  visualHandler: {fileID: 0}
 --- !u!1 &7030514784578829008
 GameObject:
   m_ObjectHideFlags: 0
