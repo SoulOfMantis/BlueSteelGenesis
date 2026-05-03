@@ -1520,7 +1520,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: b9ff38b4fe5aad9449d8085cae52faed, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -2054,23 +2054,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1158189924775547330, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1158189924775547330, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1158189924775547330, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 1040
       objectReference: {fileID: 0}
     - target: {fileID: 1158189924775547330, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 1280
       objectReference: {fileID: 0}
     - target: {fileID: 1158189924775547330, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -1280
       objectReference: {fileID: 0}
     - target: {fileID: 1754261769803301167, guid: e54f211267efc514688d07d2eaf2ae47, type: 3}
       propertyPath: m_LocalPosition.x

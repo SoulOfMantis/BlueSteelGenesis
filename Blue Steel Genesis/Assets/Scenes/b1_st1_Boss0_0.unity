@@ -472,6 +472,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BasicCombatSetup
       objectReference: {fileID: 0}
+    - target: {fileID: 3472966448040734095, guid: 8a6d67f7591c2cf4f85fce6b38203542, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: 93a1167ab6a13d74289ff8aa240017d2, type: 3}
     - target: {fileID: 4384138742890751676, guid: 8a6d67f7591c2cf4f85fce6b38203542, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.3
