@@ -8,6 +8,7 @@ public class ModuleInfoTooltip : MonoBehaviour
 {
     public TMP_Text Name;
     public TMP_Text Type;
+    public TMP_Text Price;
     public TMP_Text Description;
     [SerializeField] Transform contentParent;
     private List<KeywordTooltip> entries = new();
@@ -30,8 +31,11 @@ public class ModuleInfoTooltip : MonoBehaviour
         else if (g is StatusModule) Type.text = "Status";
         else if (g is PassiveModule) Type.text = "Passive";
 
-        foreach (var entry in entries)
-            Destroy(entry.gameObject);
+        if (ModuleGenerator.isBoss(g)) Price.text = "GoldenTicket";
+        else Price.text = $"{g.price} gold";
+
+            foreach (var entry in entries)
+                Destroy(entry.gameObject);
         entries.Clear();
         foreach (var k in g.GetVisibleKeywords())
         {

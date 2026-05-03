@@ -1,18 +1,31 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ModuleManagementUI : MonoBehaviour
 {
     [SerializeField] GameObject moduleEntryPrefab;
     [SerializeField] Transform contentParent;
+    [SerializeField] TMP_Text moneyDisplay;
+    [SerializeField] TMP_Text materialsDisplay;
+    [SerializeField] TMP_Text ticketsDisplay;
     [SerializeField] bool InShop = false;
     private List<ModuleEntry> entries = new List<ModuleEntry>();
 
     private void OnEnable()
     {
         ModuleManager.ModulesChanged += RefreshList;
+        ModuleManager.MoneyChanged += RefreshMoney;
+        ModuleManager.MaterialsChanged += RefreshMaterials;
+        ModuleManager.TicketsChanged += RefreshTickets;
         RefreshList();
+        RefreshMoney();
+        RefreshMaterials();
+        RefreshTickets();
     }
+    void RefreshMoney() => moneyDisplay.text = $"Money: {GameState.Run.Expedition.Player.money}";
+    void RefreshMaterials() => materialsDisplay.text = $"Spare parts: {GameState.Run.Expedition.Player.materials}";
+    void RefreshTickets() => ticketsDisplay.text = $"Golden Tickets: {GameState.Run.Expedition.Player.GoldenTickets}";
     void RefreshList()
     {
         foreach (var entry in entries)
