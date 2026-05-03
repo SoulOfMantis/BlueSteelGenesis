@@ -23,8 +23,8 @@ public class BigAcidSlime : Enemy
         return possibleTargets.Count() != 0;
     }
     protected override bool TryGetTargetForOne(out Vector3Int targetPos)
+    { 
         var possibleTargets = priorityModules[1].getCellsInRange(Position).Where(p => getEnemies().SelectMany(e => e.Position).Contains(p));
-        var possibleTargets = priorityModules[2].getCellsInRange(Position).Where(p => getEnemies().SelectMany(e => e.Position).Contains(p));
         targetPos = possibleTargets.FirstOrDefault();
         return possibleTargets.Count() != 0;
     }
