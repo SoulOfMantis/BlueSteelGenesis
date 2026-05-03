@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
-public class PlayerData
+[Serializable]
+public class PlayerData : ISerializationCallbackReceiver
 {
-    public uint GoldenTickets { get; private set; }
     public bool HasGoldenTickets() => GoldenTickets > 0;
     public void GetGoldenTicket() => GoldenTickets++;
     public void SpendGoldenTicket()
@@ -18,17 +20,6 @@ public class PlayerData
     public void GiveMaterials(uint value) => materials += value;
     public void LoseMaterials(uint value) => materials -= value;
     public bool HasEnoughMaterials(uint value) => materials.Value >= value;
-    public URangeValue currentHealth { get; set; } = new();
-   public uint maxHealth {
-        get => currentHealth.Max;
-        set => currentHealth.Max = value;
-    }
-    public uint maxEnergy { get; set; }
-
-    public URangeValue money { get; set; } = new();
-    public URangeValue materials { get; set; } = new();
-
-    public List<GameModule> modules = new();
 
     public void AddModule(GameModule module)
     {
@@ -42,4 +33,38 @@ public class PlayerData
     {
         return modules.Remove(module);
     }
+
+
+
+    public void OnBeforeSerialize() {
+        modules_serializable_ = modules.Select(m => new GameModuleSerializable(m)).ToList();
+    }
+    public void OnAfterDeserialize() {
+        modules = modules_serializable_.Select(m => m.create()).ToList();
+    }
+    [SerializeField]
+    private List<GameModuleSerializable> modules_serializable_;
+
+
+
+    [field: SerializeField]
+    public URangeValue currentHealth { get; set; } = new();
+    public uint maxHealth {
+        get => currentHealth.Max;
+        set => currentHealth.Max = value;
+    }
+
+    [field: SerializeField]
+    public uint maxEnergy { get; set; }
+
+    [field: SerializeField]
+    public URangeValue money { get; set; } = new();
+
+    [field: SerializeField]
+    public URangeValue materials { get; set; } = new();
+
+    [field: SerializeField]
+    public uint GoldenTickets { get; private set; }
+
+    public List<GameModule> modules = new();
 }

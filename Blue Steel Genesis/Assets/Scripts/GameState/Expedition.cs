@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using HKDF = HKDF<System.Security.Cryptography.HMACSHA1>;
 
+[Serializable]
 public class Expedition
 {
     public Expedition(Map.BiomeInfo biome)
@@ -18,8 +21,8 @@ public class Expedition
             new MechanicStinger(),
             new BasicMovement(),
         };
-        Player.maxHealth = 50;
-        Player.maxEnergy = 5;
+        Player.maxHealth = 100;
+        Player.maxEnergy = 10;
         Player.GiveMaterials(3);
         Player.GiveMoney(10);
         Player.currentHealth.Value = Player.maxHealth;
@@ -47,6 +50,8 @@ public class Expedition
         ModuleGen = new(LocalSeed);
         TreasureSubsystem = new(Biome.id);
         Shop = new(Biome.id);
+
+        GameState.saveGameRun();
     }
 
     public void displayMap(ExpeditionMapView view)
@@ -57,14 +62,55 @@ public class Expedition
             view.make(Map, map_progress_);
     }
 
+    public void enterNode(Map.Node node) {
+        switch (node)
+        {
+            case global::Map.Node.TREASURE:
+                TreasureSubsystem.Trigger();
+                break;
+            case global::Map.Node.REGULAR_ENEMY:
+                CombatSystem.TriggerNormalEncounter();
+                break;
+            case global::Map.Node.ELITE_ENEMY:
+                CombatSystem.TriggerEliteEncounter();
+                break;
+            case global::Map.Node.BOSS:
+                CombatSystem.TriggerBossEncounter();
+                break;
+            case global::Map.Node.SHOP:
+                Shop.TriggerShop();
+                break;
+            case global::Map.Node.BLACK_MARKET:
+                Shop.TriggerBlackMarket();
+                break;
+            default:
+                break;
+        }
+    }
+    public void exitNode() {
+        GameState.saveGameRun();
+        showExpeditionMap();
+    }
+    public void showExpeditionMap() {
+        SceneManager.LoadScene("ExpeditionMapTest_usingGameState");
+    }
+
+    [field: SerializeField]
     public int LocalSeed { get; private set; }
+    [field: SerializeField]
     public int BiomeSeed { get; private set; }
 
+    [field: SerializeField]
     public PlayerData Player { get; private set; } = new();
+
+    [field: SerializeField]
     public Map.ExpeditionMap Map { get; private set; } = null;
+    [field: SerializeField]
     public Map.BiomeInfo Biome { get; private set; }
 
+    [SerializeField]
     private ExpeditionMapProgressInfo map_progress_ = null;
+    [field: SerializeField]
     public int BiomeStage { get; private set; } = -1;
 
 

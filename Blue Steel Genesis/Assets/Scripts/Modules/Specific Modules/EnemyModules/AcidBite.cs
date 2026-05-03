@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class AcidBite : ActiveModule
 {
-    uint hitDamage = 3;
-    uint acidDamage = 1;
-    uint acidDuration = 1;
+    uint hitDamage = 10;
+    uint acidDamage = 3;
+    uint acidDuration = 2;
     public AcidBite() : base()
     {
         Icon_name = "AcidBiteModule";
         range = 1;
-        energyCost = 2;
+        energyCost = 3;
         AddConstKeywords(new OffenseKeyword());
     }
     public override HashSet<ModuleKeyword> renewableKeywords()

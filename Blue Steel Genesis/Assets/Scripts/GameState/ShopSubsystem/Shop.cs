@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,11 +9,14 @@ public enum RerollOptions
     Boss
 }
 
+[Serializable]
 public class Shop
 {
+    [SerializeField]
     uint biome;
     const uint rerollCostIncrease = 20;
     const uint bossRerollCostIncreaseMultiplier = 10;
+    [SerializeField]
     public uint RerollCost = 0;
     public Shop(uint biome)
     {
