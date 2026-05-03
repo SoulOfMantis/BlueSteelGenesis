@@ -16,7 +16,7 @@ public class ModuleManagementUI : MonoBehaviour
     void RefreshList()
     {
         foreach (var entry in entries)
-            Destroy(entry.gameObject);
+            if (entry != null) Destroy(entry.gameObject);
         entries.Clear();
 
         for (int i = 0; i <= ModuleManager.MaxEditableModuleIndex; i++)
