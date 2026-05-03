@@ -32,5 +32,14 @@ public class RevitalizingBite : ActiveModule
     {
         return $"Deals {damage} damage to the adjacent creature.\n" + base.Description();
     }
+    protected override bool checkFinalPosition(Vector3Int pos)
+    {
+        return Entity.tracker.IsOccupied(pos);
+    }
+    public override bool checkPosition(Character user, Vector3Int pos)
+    {
+        return base.checkPosition(user, pos) && !user.Position.Contains(pos);
+    }
+
 }
 
