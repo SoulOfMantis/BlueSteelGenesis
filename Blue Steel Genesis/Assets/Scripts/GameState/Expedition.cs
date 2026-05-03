@@ -113,6 +113,8 @@ public class Expedition
     [field: SerializeField]
     public int BiomeStage { get; private set; } = -1;
 
+    public int VisitedNodeCount => map_progress_.path.Count;
+
 
     private static int generateLocalSeed(int global_seed, uint biome_id, uint biome_stage, uint lives_count, byte[] ship_parts_data)
     {
