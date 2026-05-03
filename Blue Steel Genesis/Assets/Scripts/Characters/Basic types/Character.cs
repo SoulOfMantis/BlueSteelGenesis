@@ -23,7 +23,7 @@ public abstract class Character : Entity
             currentHealth -= dmg;
             if (visualHandler != null)
                 await visualHandler.PlayHurtAnimation(dmg);
-            await changeColorAndWait(Color.crimson, 0.2f*dmg);
+            changeColorAndWait(Color.crimson, 0.2f*dmg);
             await processTrigger(TriggerType.OnHealthDamage);
             if (currentHealth == 0)
                 await die();
