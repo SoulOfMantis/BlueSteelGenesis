@@ -65,9 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Show/Hide
-
-    Inventory'
+  m_text: Show/Hide Sell Menu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -315,7 +313,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -162, y: 26}
+  m_AnchoredPosition: {x: -363, y: 42}
   m_SizeDelta: {x: -562.7241, y: -200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8893770607980986923
@@ -403,7 +401,7 @@ MonoBehaviour:
   moneyDisplay: {fileID: 8462602464121284835}
   materialsDisplay: {fileID: 3507868471372874456}
   ticketsDisplay: {fileID: 3901898572504901250}
-  InShop: 0
+  InShop: 1
 --- !u!1 &2713207232018322098
 GameObject:
   m_ObjectHideFlags: 0
@@ -832,7 +830,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -444, y: 997}
+  m_AnchoredPosition: {x: -781, y: 118}
   m_SizeDelta: {x: 160, y: 84.9935}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2607252975005557193
