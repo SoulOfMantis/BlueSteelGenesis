@@ -590,6 +590,10 @@ MonoBehaviour:
   - {fileID: 225967718}
   - {fileID: 965327055}
   - {fileID: 1388957761}
+  shopModulePrices:
+  - {fileID: 72745861}
+  - {fileID: 74347956}
+  - {fileID: 600109303}
   rerollPrice: {fileID: 1522877920}
   ShopMode: 0
 --- !u!212 &265200801
@@ -1612,7 +1616,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 265200800}
         m_TargetAssemblyTypeName: testShopManager, BlueSteelGenesis
-        m_MethodName: RefreshShop
+        m_MethodName: RerollShop
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2401,6 +2405,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TooltipCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 9223009882252229956, guid: 521817c82a33acc419a5fd5da1282c64, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2417,6 +2425,10 @@ PrefabInstance:
     - target: {fileID: 2713207232018322098, guid: fa16f77182e720f4bbe4f8994f3f5ff0, type: 3}
       propertyPath: m_Name
       value: ModuleManagementCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 2713207232018322098, guid: fa16f77182e720f4bbe4f8994f3f5ff0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3217475129486393137, guid: fa16f77182e720f4bbe4f8994f3f5ff0, type: 3}
       propertyPath: m_SortingOrder

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class testShopManager : MonoBehaviour
 {
     [SerializeField] List<ModuleTooltipTrigger> shopModuleIcons;
+    [SerializeField] List<TMP_Text> shopModulePrices;
     [SerializeField] TMP_Text rerollPrice;
     [SerializeField] RerollOptions ShopMode;
     private void Start()
@@ -17,7 +18,19 @@ public class testShopManager : MonoBehaviour
         for (int i = 0; i < shopModuleIcons.Count; i++)
         {
             shopModuleIcons[i].gameObject.SetActive(i < GameState.Run.Expedition.Shop.OnSale.Count && GameState.Run.Expedition.Shop.OnSale[i] != null);
-            if (shopModuleIcons[i].gameObject.activeSelf) shopModuleIcons[i].updateModuleTrigger(GameState.Run.Expedition.Shop.OnSale[i]);
+            if (shopModuleIcons[i].gameObject.activeSelf)
+            {
+                shopModuleIcons[i].updateModuleTrigger(GameState.Run.Expedition.Shop.OnSale[i]);
+                switch(ShopMode)
+                {
+                    case RerollOptions.Common:
+                        shopModulePrices[i].text = $"Buy for {GameState.Run.Expedition.Shop.OnSale[i].price}";
+                        break;
+                    case RerollOptions.Boss:
+                        shopModulePrices[i].text = "Buy for a golden ticket";
+                        break;
+                }
+            }
         }
     }
     void UpdateShop()
@@ -34,7 +47,7 @@ public class testShopManager : MonoBehaviour
     public void BuyModuleNumber(int index)
     {
         if (index < 0 || index >= GameState.Run.Expedition.Shop.OnSale.Count) return;
-        GameState.Run.Expedition.Shop.Buy(GameState.Run.Expedition.Shop.OnSale[index]);
+        ModuleManager.BuyModule(GameState.Run.Expedition.Shop.OnSale[index]);
         UpdateShop();
     }
 }
