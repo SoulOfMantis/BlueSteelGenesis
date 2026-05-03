@@ -11,7 +11,7 @@ public class ClawModule : ActiveModule
 
     public ClawModule() : base()
     {
-        hitDamage = 1;
+        hitDamage = 2;
         energyCost = 1;
         range = 1;
         Icon_name = "ClawModule";

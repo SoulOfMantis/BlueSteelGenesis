@@ -6,7 +6,7 @@ using System.Linq;
 
 public class CyberLeader : Enemy
 {
-    public CyberLeader() : base(16, 8, 64)
+    public CyberLeader() : base(64, 8, 64)
     {
         Name = "CyberLeader";
         Description = "Came back to life with the power of technology. And is now ready to take revenge! " +

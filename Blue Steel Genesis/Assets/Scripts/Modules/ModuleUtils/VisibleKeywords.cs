@@ -48,6 +48,14 @@ public class AcidKeyword : VisibleKeyword
         ChangeDescription("Some creatures may have resistance or immunity to this.");
     }
 }
+public class LightningKeyword : VisibleKeyword
+{
+    public LightningKeyword() : base()
+    {
+        ChangeName("Lightning");
+        ChangeDescription("Some creatures may have resistance or immunity to this.");
+    }
+}
 public enum PossibleTargets
 {
     Self,

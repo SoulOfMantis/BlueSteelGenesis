@@ -21,8 +21,8 @@ public class Expedition
             new MechanicStinger(),
             new BasicMovement(),
         };
-        Player.maxHealth = 50;
-        Player.maxEnergy = 5;
+        Player.maxHealth = 100;
+        Player.maxEnergy = 10;
         Player.GiveMaterials(3);
         Player.GiveMoney(10);
         Player.currentHealth.Value = Player.maxHealth;
@@ -112,6 +112,8 @@ public class Expedition
     private ExpeditionMapProgressInfo map_progress_ = null;
     [field: SerializeField]
     public int BiomeStage { get; private set; } = -1;
+
+    public int VisitedNodeCount => map_progress_.path.Count;
 
 
     private static int generateLocalSeed(int global_seed, uint biome_id, uint biome_stage, uint lives_count, byte[] ship_parts_data)

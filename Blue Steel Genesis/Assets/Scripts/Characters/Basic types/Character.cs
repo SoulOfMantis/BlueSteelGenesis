@@ -179,6 +179,7 @@ public abstract class Character : Entity
         await processTrigger(TriggerType.OnApply, pos, ctx);
         Debug.Log($"Apply {status.GetType().Name} at {pos}");
     }
+    public async Task apply(StatusModule status, ActionContext ctx) => await apply(Position.RightTop, status, ctx);
 
     public new virtual Task<bool> summon<T>(PositionCollection pos) where T : Entity =>
         Task.FromResult(Entity.summon<T>(pos));
