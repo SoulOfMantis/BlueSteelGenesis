@@ -24,6 +24,14 @@ public class PoisonKeyword : VisibleKeyword
         ChangeDescription("Some creatures may have resistance or immunity to this.");
     }
 }
+public class BurnKeyword : VisibleKeyword
+{
+    public BurnKeyword() : base()
+    {
+        ChangeName("Burn");
+        ChangeDescription("Some creatures may have resistance or immunity to this.");
+    }
+}
 public class FlightKeyword : VisibleKeyword
 {
     public FlightKeyword()
@@ -95,25 +103,30 @@ public class ShieldKeyword : TargetedVisibleKeyword
         ChangeDescription($"Protects from {shield} damage. Resets at the start of turn.");
     }
 }
-public class EnhanceKeyword<T> : TargetedVisibleKeyword where T : PositiveStatusModule
+public abstract class TargetedStatusKeyword : TargetedVisibleKeyword
 {
-    public T Status { get; }
-    public EnhanceKeyword(PossibleTargets target, params object[] args) : base(target)
+    public StatusModule Status { get; protected set; }
+    public TargetedStatusKeyword(PossibleTargets target, Type statusType, params object[] args) : base(target)
     {
-        Status = ModuleGenerator.CreateModuleByType(typeof(T), args) as T;
+        if (!statusType.IsSubclassOf(typeof(StatusModule))) throw new ArgumentException();
+        Status = ModuleGenerator.CreateModuleByType(statusType, args) as StatusModule;
+    }
+}
+public class EnhanceKeyword<T> : TargetedStatusKeyword where T : PositiveStatusModule
+{
+    public EnhanceKeyword(PossibleTargets target, params object[] args) : base(target, typeof(T), args) 
+    {
         ChangeName($"Enhance {Status.Name}");
-        string desc = $"Apply status {Status.Name} " + TargetDescription(Target) + ".";
+        string desc = $"Apply status {Status.Name}. " + Status.Description();
         ChangeDescription(desc);
     }
 }
-public class InflictKeyword<T> : TargetedVisibleKeyword where T:NegativeStatusModule
+public class InflictKeyword<T> : TargetedStatusKeyword where T:NegativeStatusModule
 {
-    public T Status { get; }
-    public InflictKeyword(PossibleTargets target, params object[] args) : base(target)
+    public InflictKeyword(PossibleTargets target, params object[] args) : base(target, typeof(T), args)
     {
-        Status = ModuleGenerator.CreateModuleByType(typeof(T), args) as T;
         ChangeName($"Inflict {Status.Name}");
-        string desc = $"Apply status {Status.Name} " + TargetDescription(Target) + ".";
+        string desc = $"Apply status {Status.Name}. " + Status.Description();
         ChangeDescription(desc);
     }
 }

@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using UnityEngine;
+
+[Serializable]
 public class ModuleGenerator
 {
-    Random gen;
+    [SerializeField]
+    Unity.Mathematics.Random gen;
     static List<Type> commonModuleTypes = null;
     static readonly Type defaultCommonModuleType = typeof(DefaultCommon);
     static List<Type> bossModuleTypes = null;
@@ -14,7 +18,7 @@ public class ModuleGenerator
         if (!type.IsSubclassOf(typeof(GameModule)) || type.IsAbstract) throw new ArgumentException();
         return Activator.CreateInstance(type) as GameModule;
     }
-    public static GameModule CreateModuleByType(Type type, params Object[] parameters)
+    public static GameModule CreateModuleByType(Type type, params System.Object[] parameters)
     {
         if (!type.IsSubclassOf(typeof(GameModule)) || type.IsAbstract) throw new ArgumentException();
         return Activator.CreateInstance(type, parameters) as GameModule;
@@ -28,7 +32,7 @@ public class ModuleGenerator
         if (forbiddenKeywords != null)
             types = commonModuleTypes.Where(t => !hasAnyKeywords(t, forbiddenKeywords)).ToList();
         if (types.Count == 0) return CreateModuleByType(defaultCommonModuleType);
-        int id = gen.Next(types.Count);
+        int id = gen.NextInt(types.Count);
         Type moduleType = types[id];
         return CreateModuleByType(moduleType);
     }
@@ -41,7 +45,7 @@ public class ModuleGenerator
         if (forbiddenKeywords != null)
             types = commonModuleTypes.Where(t => !hasAnyKeywords(t, forbiddenKeywords)).ToList();
         if (types.Count == 0) return CreateModuleByType(defaultBossModuleType);
-        int id = gen.Next(types.Count);
+        int id = gen.NextInt(types.Count);
         Type moduleType = types[id];
         return CreateModuleByType(moduleType);
     }
@@ -68,6 +72,6 @@ public class ModuleGenerator
         bossModuleTypes = typeof(GameModule).Assembly.GetTypes().Where(type => type.IsSubclassOf(typeof(GameModule)) && isBoss(type)).ToList();
         bossModuleTypes.Remove(defaultBossModuleType);
     }
-    public void UpdateSeed(int seed) => gen = new(seed);
+    public void UpdateSeed(int seed) => gen = new((uint)seed);
 }
 
