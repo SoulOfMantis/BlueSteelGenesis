@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class CharacterVisualHandler : VisualHandlerBase
 {
@@ -15,19 +16,24 @@ public class CharacterVisualHandler : VisualHandlerBase
         public float transitionDuration;
     }
 
-    [Header("Character animations")]
+    [Header("Base character animations")]
     [SerializeField] private AnimationClipRef idleAnimation;
     [SerializeField] private AnimationClipRef walkAnimation;
     [SerializeField] private AnimationClipRef attackAnimation;
+
+    [Header("Health/Shield Animations")]
     [SerializeField] private AnimationClipRef hurtAnimation;
     [SerializeField] private AnimationClipRef deathAnimation;
     [SerializeField] private AnimationClipRef loseShieldAnimation;
     [SerializeField] private AnimationClipRef gainShieldAnimation;
+    [SerializeField] private AnimationClipRef healAnimation;
+
+    [Header("Turn/Battle Animations")]
     [SerializeField] private AnimationClipRef startBattleAnimation;
     [SerializeField] private AnimationClipRef endBattleAnimation;
     [SerializeField] private AnimationClipRef startTurnAnimation;
     [SerializeField] private AnimationClipRef endTurnAnimation;
-    [SerializeField] private AnimationClipRef healAnimation;
+
 
     //[Header("Floating text")]
     //[SerializeField] private GameObject floatingTextPrefab;
@@ -38,6 +44,7 @@ public class CharacterVisualHandler : VisualHandlerBase
     public async Task PlayWalkAnimation(Vector3Int direction)
     {
         PlayAnimation(walkAnimation.animationName);
+        LookAt(direction);
 
         await Task.Delay((int)(walkAnimation.transitionDuration * 1000));
     }
@@ -73,7 +80,7 @@ public class CharacterVisualHandler : VisualHandlerBase
     public async Task PlayAttackAnimation(Vector3Int target)
     {
         PlayAnimation(attackAnimation.animationName);
-        //LookAt(target);
+        LookAt(target);
 
         await Task.Delay((int)(attackAnimation.transitionDuration * 1000));
     }
@@ -119,18 +126,16 @@ public class CharacterVisualHandler : VisualHandlerBase
     }
 
     // Заставить персонажа смотреть в направление клетки
-    //private void LookAt(Vector3Int target)
-    //{
-    //    Vector3 direction = (Character.tracker.CellToWorld(target) - transform.position).normalized;
+    private void LookAt(Vector3Int target)
+    {
 
-    //    if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
-    //    {
-    //        if (direction.x > 0)
-    //            spriteRenderer.flipX = false;
-    //        else 
-    //            spriteRenderer.flipX = true;
-    //    }
-    //}
+        bool direction = Character.tracker.CellToWorld(target).x > transform.parent.position.x;
+        Debug.Log($"{target.x}, {transform.parent.position.x}");
+        if (direction)
+            spriteRenderer.flipX = true;
+        else
+            spriteRenderer.flipX = false;
+    }
 
 
     // Частично работает, пока закомментировано

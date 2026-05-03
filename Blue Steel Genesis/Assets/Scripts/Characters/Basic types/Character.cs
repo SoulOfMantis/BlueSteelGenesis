@@ -136,10 +136,11 @@ public virtual async Task drainEnergy(uint amount)
             new_pos.Except(Position).Any(p => tracker.IsOccupiedByCharacter(p)))
             return;
 
-        
-        Position = new_pos;
         if (visualHandler != null)
-            await visualHandler.PlayWalkAnimation(dir);
+            await visualHandler.PlayWalkAnimation(new_pos.First());
+
+        Position = new_pos;
+        
     }
 
     public Task strike(int x, int y, int z, uint dmg) => strike(new Vector3Int(x, y, z), dmg);
