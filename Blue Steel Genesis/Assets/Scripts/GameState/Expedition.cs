@@ -88,7 +88,14 @@ public class Expedition
         }
     }
     public void exitNode() {
-        GameState.saveGameRun();
+        if (map_progress_.currentNode == Map.black_market_node)
+            startNextStage();
+        else if (map_progress_.currentNode == Map.boss_node_pos && !Map.upside_down) {
+            // TODO: handle expedition end
+        }
+        else
+            GameState.saveGameRun();
+
         showExpeditionMap();
     }
     public void showExpeditionMap() {
