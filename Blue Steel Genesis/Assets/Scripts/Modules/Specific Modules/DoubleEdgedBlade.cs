@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class DoubleEdgedBlade : ActiveModule
+public class DoubleEdgedBlade : ActiveModule    
 {
     uint damageDealt = 20;
     uint damageTaken = 3;
@@ -12,10 +12,10 @@ public class DoubleEdgedBlade : ActiveModule
         AddConstKeywords(new BossKeyword(), new OffenseKeyword(), new LimitedPerBattleKeyword());
         range = 2;
     }
-    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
+    public override async Task Effect(Character user, Vector3Int pos)
     {
-        await user.strike(pos, damageDealt, MakeContext(user, pos));
-        await user.damage(damageTaken, MakeContext(user, pos));
+        await user.strike(pos, damageDealt);
+        await user.damage(damageTaken);
     }
     public override string Description()
     {

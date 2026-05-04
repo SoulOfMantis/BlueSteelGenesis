@@ -64,19 +64,15 @@ public abstract class GameModule
         Name = newName;
         UpdateTooltipIfCurrent();
     }
-    public abstract Task Effect(Character user, Vector3Int pos, ActionContext ctx);
-    public async Task Use(Character user, Vector3Int pos, ActionContext ctx)
+    public abstract Task Effect(Character user, Vector3Int pos);
+    public async Task Use(Character user, Vector3Int pos)
     {
         await Awaitable.WaitForSecondsAsync(.1f);
         if (CanBeUsed()) 
-        {
-            SpendUse();
-            await Effect(user, pos, ctx);
+        {        SpendUse();
+            await Effect(user, pos);
         }
     }
-
-    protected ActionContext MakeContext(Character actor, Vector3Int target_position) =>
-        new(actor, this, target_position);
 
     public virtual void Initialize()
     {

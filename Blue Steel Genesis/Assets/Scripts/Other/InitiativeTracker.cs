@@ -70,8 +70,6 @@ public class InitiativeTracker : MonoBehaviour
             HighlightCharacterInInitiative(c, takingTurnColor);
         else HighlightCharacterInInitiative(c, basicColor);
     }
-    public bool isAlive(Character c) =>
-        characters.Contains(c);
     public void StartNextTurn()
     {
         Debug.Log($"StartNextTurn");

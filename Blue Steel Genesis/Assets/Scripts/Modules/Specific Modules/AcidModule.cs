@@ -33,9 +33,9 @@ public class AcidModule : NegativeStatusModule
             UpdateTooltipIfCurrent();
         }
     }
-    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
+    public override async Task Effect(Character user, Vector3Int pos)
     {
-        await user.damage(damage, MakeContext(user, pos));
+        await user.damage(damage);
         turnTick();
     }
 }

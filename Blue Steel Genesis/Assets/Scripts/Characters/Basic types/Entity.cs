@@ -38,11 +38,10 @@ public abstract class Entity : MonoBehaviour
         spriteRenderer.color = baseColor;
     }
 
-    public virtual Task damage(uint dmg, ActionContext ctx) => loseHealth(dmg, ctx);
-    public virtual async Task loseHealth(uint hp, ActionContext ctx) {
-        currentHealth -= Math.Max(hp, 1);
+    public virtual async Task damage(uint dmg) {
+        currentHealth -= Math.Max(dmg, 1);
         UpdateTooltipIfCurrent();
-        await changeColorAndWait(Color.crimson, 0.2f*hp);
+        await changeColorAndWait(Color.crimson, 0.2f*dmg);
         switch (currentHealth)
         {
             case 0:
@@ -52,7 +51,7 @@ public abstract class Entity : MonoBehaviour
                 break;
         }
     }
-    public virtual async Task heal(uint hp, ActionContext ctx) {
+    public virtual async Task heal(uint hp) {
         currentHealth += Math.Max(hp, 1);
         TooltipSystem.Update(TooltipSystem.TooltipType.entityTooltip);
         await changeColorAndWait(Color.green, 0.2f*hp);

@@ -35,12 +35,12 @@ public class AcceleratedMovement : ActiveModule
     {
         return $"Move to an unoccupied space within {range} cells.\n" + base.Description();
     }
-    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
+    public override async Task Effect(Character user, Vector3Int pos)
     {
         await user.move(new PositionCollection(pos, user.Position.SideSize), getCellsInRange(user.Position));
         
         foreach (var item in user.Position.NeighborPositions())
-            await user.apply(item, new BurnModule(burnDamage, burnDuration), MakeContext(user, pos));
+            await user.apply(item, new BurnModule(burnDamage, burnDuration));
     }
     public override List<Vector3Int> getCellsInRange(PositionCollection start) =>
         Navigation.Dijkstra.listReachable(start, p => !Entity.tracker.OutOfBounds(p) && !Entity.tracker.IsOccupied(p), range).ToList();

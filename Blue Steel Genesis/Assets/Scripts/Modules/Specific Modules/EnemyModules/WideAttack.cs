@@ -13,7 +13,7 @@ public class WideAttack : ActiveModule
         Icon_name = "WideAttack";
         AddConstKeywords(new OffenseKeyword());
     }
-    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
+    public override async Task Effect(Character user, Vector3Int pos)
     {
         var attackPosition = user.Position.Where(x => Entity.tracker.GetNeighborTiles(x)
                     .Contains(pos)).First();
@@ -32,7 +32,7 @@ public class WideAttack : ActiveModule
         flag = true;
         while (flag)
         {
-            await user.strike(pos, hitDamage, MakeContext(user, pos));
+            await user.strike(pos, hitDamage);
             flag = !Entity.tracker.OutOfBounds(pos) && Entity.tracker.GetNeighborTiles(pos)
                     .Any(n => user.Position.Contains(n));
             pos += direction;

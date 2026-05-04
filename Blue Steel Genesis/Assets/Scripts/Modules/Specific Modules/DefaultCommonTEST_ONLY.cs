@@ -2,13 +2,13 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class DefaultCommon : PassiveModule
+public class DefaultCommon : PassiveModule    
 {
     public DefaultCommon():base()
     {
         AddConstKeyword(new CommonKeyword());
     }
-    public override Task Effect(Character user, Vector3Int pos, ActionContext ctx)
+    public override Task Effect(Character user, Vector3Int pos)
     {
         return Task.CompletedTask;
     }

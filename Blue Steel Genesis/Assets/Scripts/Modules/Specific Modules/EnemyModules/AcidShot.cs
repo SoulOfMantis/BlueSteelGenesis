@@ -20,10 +20,10 @@ public class AcidShot : ActiveModule
         res.Add(new InflictKeyword<AcidModule>(PossibleTargets.Target, acidDamage, acidDuration));
         return res;
     }
-    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
+    public override async Task Effect(Character user, Vector3Int pos)
     {
-        await user.strike(pos, hitDamage, MakeContext(user, pos));
-        await user.apply(pos, new AcidModule(acidDamage, acidDuration), MakeContext(user, pos));
+        await user.strike(pos, hitDamage);
+        await user.apply(pos, new AcidModule(acidDamage, acidDuration));
     }
     public override string Description()
     {

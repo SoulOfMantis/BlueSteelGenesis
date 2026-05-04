@@ -12,13 +12,13 @@ public class RoboWolfSummonerPlayer : ActiveModule
         AddConstKeywords(new LimitedPerBattleKeyword(2));
         Icon_name = "RoboWolfSummoner";
     }
-    public override string Description() => "Summons an allied RoboWolf.\n" + base.Description();
+    public override string Description() =>
+        "Summons an allied RoboWolf.\n" + base.Description();
 
-    public override Task Effect(Character user, Vector3Int pos, ActionContext ctx) {
+    public override Task Effect(Character user, Vector3Int pos) {
         Entity.summon<AlliedRoboWolf>(new(pos));
         return Task.CompletedTask;
     }
-
     protected override bool checkFinalPosition(Vector3Int pos) {
         return !Entity.tracker.OutOfBounds(pos) && !Entity.tracker.IsOccupied(pos);
     }

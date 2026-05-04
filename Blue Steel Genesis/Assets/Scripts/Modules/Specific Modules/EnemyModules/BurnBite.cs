@@ -20,10 +20,10 @@ public class BurnBite : ActiveModule
         res.Add(new InflictKeyword<BurnModule>(PossibleTargets.Target, burnDamage, burnDuration));
         return res;
     }
-    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
+    public override async Task Effect(Character user, Vector3Int pos)
     {
-        await user.strike(pos, hitDamage, MakeContext(user, pos));
-        await user.apply(pos, new BurnModule(burnDamage, burnDuration), MakeContext(user, pos));
+        await user.strike(pos, hitDamage);
+        await user.apply(pos, new BurnModule(burnDamage, burnDuration));
     }
     public override string Description()
     {

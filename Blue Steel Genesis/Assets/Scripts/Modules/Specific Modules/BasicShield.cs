@@ -25,9 +25,9 @@ public class BasicShield : ActiveModule
     {
         shieldGiven = shield;
     }
-    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
+    public override async Task Effect(Character user, Vector3Int pos)
     {
-        await user.giveShield(shieldGiven, MakeContext(user, pos));
+        await user.giveShield(shieldGiven);
         Debug.Log("BSM executed");
     }
     public override HashSet<ModuleKeyword> renewableKeywords()

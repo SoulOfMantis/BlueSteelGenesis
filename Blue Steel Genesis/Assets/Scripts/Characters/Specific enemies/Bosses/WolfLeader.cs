@@ -4,18 +4,29 @@ using System.Linq;
 using System.Threading.Tasks;
 public class WolfLeader : Enemy
 {
-    public WolfLeader() : base(40, 5, 70)
+    private int remainingSummons = 2; // Сколько раз можно использовать призыв (каждый раз пытается призвать  до 2 волков)
+
+    public WolfLeader() : base(40, 5, 70) 
     {
         Name = "Wolf Leader";
-        Description = "The mighty leader of the wolf pack. Can summon wolves to aid him!";
+        Description = "The mighty leader of the wolf pack. Can summon smaller wolves to aid him!";
 
-        addModule(new BiteModule());
+
+        addModule(new BiteModule());         
         addModule(new ClawModule());
-        addModule(new SummonWolfModule());
-        addModule(new BasicMovement());
+        addModule(new BasicMovement());        
+        addModule(new SummonWolfModule()); 
 
-        SetPriorityModules();
+        SetPriorityModules(); 
     }
+
+ 
+    public void UseSummon()
+    {
+        remainingSummons--;
+    }
+
+    public bool HasSummonsLeft() => remainingSummons > 0;
 
     protected override bool TryGetTargetForZero(out Vector3Int targetPos)
     {
@@ -35,7 +46,24 @@ public class WolfLeader : Enemy
 
     protected override bool TryGetTargetForTwo(out Vector3Int targetPos)
     {
-        var summonRangeCells = priorityModules[2].getCellsInRange(Position);
+        targetPos = Position.LeftBottom;
+        var moveRange = priorityModules[2].getCellsInRange(Position).Concat(Position).ToHashSet();
+        var path = Navigation.Dijkstra.getPath(Position, getEnemies().SelectMany(e => e.Position.NeighborPositions()),
+            p => !tracker.IsOccupied(p) && !tracker.OutOfBounds(p)) ?? new();
+
+        Vector3Int offset = new();
+        foreach (var move in path)
+            if ((Position + offset + move).All(p => moveRange.Contains(p)))
+                offset += move;
+            else break;
+        targetPos = Position.LeftBottom + offset;
+        return offset != Vector3Int.zero;
+    }
+
+   
+    protected override bool TryGetTargetForThree(out Vector3Int targetPos)
+    {
+        var summonRangeCells = priorityModules[3].getCellsInRange(Position);
         var freeCells = summonRangeCells.Where(cell => !tracker.IsOccupied(cell) && !tracker.OutOfBounds(cell)).ToList();
         if (freeCells.Any())
         {
@@ -45,9 +73,5 @@ public class WolfLeader : Enemy
         targetPos = default;
         return false;
     }
-    protected override bool TryGetTargetForThree(out Vector3Int targetPos) =>
-           GetDirectApproachTarget(out targetPos, priorityModules[3], getEnemies()) ||
-           GetApproachTarget(out targetPos, priorityModules[3], getEnemies());
-
 }
 
