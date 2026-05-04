@@ -203,6 +203,10 @@ MonoBehaviour:
     animationName: 
     clip: {fileID: 0}
     transitionDuration: 0
+  healAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
   startBattleAnimation:
     animationName: 
     clip: {fileID: 0}
@@ -216,10 +220,6 @@ MonoBehaviour:
     clip: {fileID: 0}
     transitionDuration: 0
   endTurnAnimation:
-    animationName: 
-    clip: {fileID: 0}
-    transitionDuration: 0
-  healAnimation:
     animationName: 
     clip: {fileID: 0}
     transitionDuration: 0

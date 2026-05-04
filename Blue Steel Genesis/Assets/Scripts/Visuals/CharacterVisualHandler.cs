@@ -51,30 +51,30 @@ public class CharacterVisualHandler : VisualHandlerBase
 
     public async Task PlayStartBattleAnimation()
     {
-        PlayAnimation(walkAnimation.animationName);
+        PlayAnimation(startBattleAnimation.animationName);
 
         await Task.Delay((int)(startBattleAnimation.transitionDuration * 1000));
     }
 
     public async Task PlayEndBattleAnimation()
     {
-        PlayAnimation(walkAnimation.animationName);
+        PlayAnimation(endBattleAnimation.animationName);
 
-        await Task.Delay((int)(endTurnAnimation.transitionDuration * 1000));
+        await Task.Delay((int)(endBattleAnimation.transitionDuration * 1000));
     }
 
     public async Task PlayStartTurnAnimation()
     {
-        PlayAnimation(walkAnimation.animationName);
+        PlayAnimation(startTurnAnimation.animationName);
 
         await Task.Delay((int)(startTurnAnimation.transitionDuration * 1000));
     }
 
     public async Task PlayEndTurnAnimation()
     {
-        PlayAnimation(walkAnimation.animationName);
+        PlayAnimation(endTurnAnimation.animationName);
 
-        await Task.Delay((int)(endBattleAnimation.transitionDuration * 1000));
+        await Task.Delay((int)(endTurnAnimation.transitionDuration * 1000));
     }
 
     public async Task PlayAttackAnimation(Vector3Int target)
@@ -112,14 +112,14 @@ public class CharacterVisualHandler : VisualHandlerBase
 
     public async Task PlayGainShieldAnimation(uint amount)
     {
-        PlayAnimation(healAnimation.animationName);
+        PlayAnimation(gainShieldAnimation.animationName);
 
         await Task.Delay((int)(gainShieldAnimation.transitionDuration * 1000));
     }
 
     public async Task PlayLoseShieldAnimation(uint amount)
     {
-        PlayAnimation(hurtAnimation.animationName);
+        PlayAnimation(loseShieldAnimation.animationName);
 
         await Task.Delay((int)(loseShieldAnimation.transitionDuration * 1000));
 

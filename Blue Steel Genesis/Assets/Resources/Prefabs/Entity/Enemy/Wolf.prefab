@@ -176,19 +176,19 @@ MonoBehaviour:
   animator: {fileID: 5225394422396756077}
   spriteRenderer: {fileID: 6436685001208273242}
   idleAnimation:
-    animationName: 
+    animationName: idle
     clip: {fileID: 0}
     transitionDuration: 0.5
   walkAnimation:
-    animationName: 
+    animationName: Walk
     clip: {fileID: 0}
     transitionDuration: 0.2
   attackAnimation:
-    animationName: 
+    animationName: Attack
     clip: {fileID: 0}
     transitionDuration: 1
   hurtAnimation:
-    animationName: 
+    animationName: Hurt
     clip: {fileID: 0}
     transitionDuration: 0
   deathAnimation:
@@ -200,6 +200,10 @@ MonoBehaviour:
     clip: {fileID: 0}
     transitionDuration: 0
   gainShieldAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  healAnimation:
     animationName: 
     clip: {fileID: 0}
     transitionDuration: 0
@@ -216,10 +220,6 @@ MonoBehaviour:
     clip: {fileID: 0}
     transitionDuration: 0
   endTurnAnimation:
-    animationName: 
-    clip: {fileID: 0}
-    transitionDuration: 0
-  healAnimation:
     animationName: 
     clip: {fileID: 0}
     transitionDuration: 0
