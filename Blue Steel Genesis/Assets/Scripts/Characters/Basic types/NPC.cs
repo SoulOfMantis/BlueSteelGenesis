@@ -85,7 +85,7 @@ public abstract class NPC : Character
     {
         if (myTurn)
             await endTurn();
-        await triggerModules(TriggerType.OnDeath);
+        await processTrigger(TriggerType.OnDeath, null);
         if (TooltipSystem.IsCurrent(this))
         {
             TooltipSystem.Unlock(TooltipSystem.TooltipType.entityTooltip);
@@ -97,6 +97,41 @@ public abstract class NPC : Character
         tracker.RemoveCharacter(this);
         Destroy(gameObject);
     }
+
+    protected bool GetDirectApproachTarget(out Vector3Int targetPos, ActiveModule module, IEnumerable<Vector3Int> targets) {
+        targetPos = Position.LeftBottom;
+        var moveRange = module.getCellsInRange(Position).Concat(Position).ToHashSet();
+        var path = Navigation.Dijkstra.getPath(Position, targets,
+            p => !tracker.IsOccupied(p) && !tracker.OutOfBounds(p)) ?? new();
+
+        Vector3Int offset = new();
+        foreach (var move in path)
+            if ((Position + offset + move).All(p => moveRange.Contains(p)))
+                offset += move;
+            else break;
+        targetPos = Position.LeftBottom + offset;
+        return offset != Vector3Int.zero;
+    }
+    protected bool GetDirectApproachTarget(out Vector3Int targetPos, ActiveModule module, IEnumerable<Entity> targets) =>
+        GetDirectApproachTarget(out targetPos, module, targets.SelectMany(e => e.Position.NeighborPositions()));
+
+    protected bool GetApproachTarget(out Vector3Int targetPos, ActiveModule module, IEnumerable<Vector3Int> targets) {
+        targetPos = Position.LeftBottom;
+        var moveRange = module.getCellsInRange(Position).Concat(Position).ToHashSet();
+        var path = Navigation.Dijkstra.getPath(Position, targets,
+            p => !tracker.IsOccupiedByObstacle(p) && !tracker.OutOfBounds(p)) ?? new();
+
+        Vector3Int offset = new();
+        foreach (var move in path)
+            if ((Position + offset + move).All(p => moveRange.Contains(p)))
+                offset += move;
+            else break;
+        targetPos = Position.LeftBottom + offset;
+        return offset != Vector3Int.zero;
+    }
+    protected bool GetApproachTarget(out Vector3Int targetPos, ActiveModule module, IEnumerable<Entity> targets) =>
+        GetApproachTarget(out targetPos, module, targets.SelectMany(e => e.Position.NeighborPositions()));
+
 
 
     protected abstract IEnumerable<Entity> getEnemies();
