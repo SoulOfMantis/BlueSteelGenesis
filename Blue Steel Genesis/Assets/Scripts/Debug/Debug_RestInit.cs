@@ -25,7 +25,8 @@ public class Debug_RestInit : MonoBehaviour
         player.modules = new System.Collections.Generic.List<GameModule>{
             new DefaultAdaptiveTEST_ONLY(),
             new MechanicStinger(),
-            new BasicMovement()
+            new BasicMovement(),
+            new BasicAttack()
         };
 
         GameState.Run.Expedition.Rest = new Rest(1); 

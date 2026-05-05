@@ -9,6 +9,7 @@ public class testRestManager : MonoBehaviour
     [SerializeField] private Button exitButton;
     [SerializeField] private TMP_Text healthDisplay;
     [SerializeField] private TMP_Text materialDisplay;
+    [SerializeField] private ModuleManagementUI moduleManagementUI;
 
     private void Start()
     {
@@ -16,6 +17,7 @@ public class testRestManager : MonoBehaviour
         freeHealButton.onClick.AddListener(OnFreeHeal);
         paidHealButton.onClick.AddListener(OnPaidHeal);
         exitButton.onClick.AddListener(OnExit);
+        moduleManagementUI.gameObject.SetActive(false);
     }
 
     private void UpdateUI()

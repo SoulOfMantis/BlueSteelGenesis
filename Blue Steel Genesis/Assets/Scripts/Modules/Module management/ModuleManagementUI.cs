@@ -11,6 +11,7 @@ public class ModuleManagementUI : MonoBehaviour
     [SerializeField] TMP_Text ticketsDisplay;
     [SerializeField] bool InShop = false;
     private List<ModuleEntry> entries = new List<ModuleEntry>();
+    public bool UpgradeMode = false;
 
     private void OnEnable()
     {
@@ -36,7 +37,7 @@ public class ModuleManagementUI : MonoBehaviour
         {
             var go = Instantiate(moduleEntryPrefab, contentParent);
             var entry = go.GetComponent<ModuleEntry>();
-            entry.Setup(ModuleManager.Modules[i], (uint)i, this, InShop);
+            entry.Setup(ModuleManager.Modules[i], (uint)i, this, InShop, UpgradeMode);
             entries.Add(entry);
         }
     }
@@ -45,5 +46,6 @@ public class ModuleManagementUI : MonoBehaviour
     public void MoveModuleDown(uint idx) => ModuleManager.MoveModuleDown(idx);
     public void RemoveModule(uint idx) => ModuleManager.RemoveModule(idx);
     public void SellModule(uint idx) => ModuleManager.SellModule(idx);
+    public void UpgradeModule(uint idx) => ModuleManager.UpgradeModule(idx);
 }
 

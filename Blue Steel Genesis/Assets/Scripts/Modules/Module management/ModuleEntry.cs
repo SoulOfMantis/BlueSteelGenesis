@@ -13,31 +13,64 @@ class ModuleEntry : MonoBehaviour
     private uint currentIdx;
     private ModuleManagementUI manager;
 
-    public void Setup(GameModule module, uint idx, ModuleManagementUI mgr, bool InShop = false)
+    public void Setup(GameModule module, uint idx, ModuleManagementUI mgr, bool InShop = false, bool upgradeMode = false)
     {
         currentIdx = idx;
         manager = mgr;
 
-        nameText.text = module.Name;
+        nameText.text = upgradeMode ? $"{module.Name} [Lv.{module.upgradeLevel}/{module.maxUpgradeLevel}]" : module.Name;
         
         upButton.onClick.RemoveAllListeners();
         downButton.onClick.RemoveAllListeners();
 
-        upButton.onClick.AddListener(() => manager.MoveModuleUp(currentIdx));
-        downButton.onClick.AddListener(() => manager.MoveModuleDown(currentIdx));
-        if (InShop && !ModuleGenerator.isBoss(module))
+        if (!upgradeMode)
         {
-            removeButton.image.color = Color.gold;
-            (removeButton.GetComponentInChildren(typeof(TMP_Text)) as TMP_Text).text = $"Sell for {module.price/2}";
-            removeButton.onClick.AddListener(() => manager.SellModule(currentIdx));
+            upButton.onClick.AddListener(() => manager.MoveModuleUp(currentIdx));
+            downButton.onClick.AddListener(() => manager.MoveModuleDown(currentIdx));
+
+            upButton.gameObject.SetActive(idx <= ModuleManager.MaxEditableModuleIndex && idx > ModuleManager.MinEditableModuleIndex);
+            downButton.gameObject.SetActive(idx < ModuleManager.MaxEditableModuleIndex && idx >= ModuleManager.MinEditableModuleIndex);
         }
         else
-            removeButton.onClick.AddListener(() => manager.RemoveModule(currentIdx));
+        {
+            upButton.gameObject.SetActive(false); 
+            downButton.gameObject.SetActive(false);
+        }
 
-        upButton.gameObject.SetActive(idx <= ModuleManager.MaxEditableModuleIndex && idx > ModuleManager.MinEditableModuleIndex);
-        downButton.gameObject.SetActive(idx < ModuleManager.MaxEditableModuleIndex && idx >= ModuleManager.MinEditableModuleIndex);
-        removeButton.gameObject.SetActive(idx <= ModuleManager.MaxEditableModuleIndex && idx >= ModuleManager.MinEditableModuleIndex);
+        if (!upgradeMode)
+        {
+            if (InShop && !ModuleGenerator.isBoss(module))
+            {
+                removeButton.image.color = Color.gold;
+                var tmp = removeButton.GetComponentInChildren(typeof(TMP_Text)) as TMP_Text;
+                tmp.text = $"Sell for {module.price / 2}";
+                removeButton.onClick.AddListener(() => manager.SellModule(currentIdx));
+            }
+            else
+            {
+                var tmp = removeButton.GetComponentInChildren(typeof(TMP_Text)) as TMP_Text;
+                tmp.text = "Remove";
+                removeButton.onClick.AddListener(() => manager.RemoveModule(currentIdx));
+            }
+
+            removeButton.gameObject.SetActive(
+                idx <= ModuleManager.MaxEditableModuleIndex && idx >= ModuleManager.MinEditableModuleIndex);
+        }
+        else
+        {
+            bool canUpgrade = module.CanUpgrade;
+            uint cost = canUpgrade ? module.GetUpgradeCost() : 0;
+            bool hasMaterials = GameState.Run.Expedition.Player.HasEnoughMaterials(cost);
+
+            removeButton.gameObject.SetActive(true);
+            var tmp = removeButton.GetComponentInChildren(typeof(TMP_Text)) as TMP_Text;
+            tmp.text = canUpgrade ? $"Upgrade ({cost} mats)" : "Max Lvl";
+
+            removeButton.interactable = canUpgrade && hasMaterials;
+            removeButton.onClick.AddListener(() => manager.UpgradeModule(currentIdx));
+        }
 
         trigger.updateModuleTrigger(module);
     }
 }
+
