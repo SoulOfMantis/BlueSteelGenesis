@@ -62,4 +62,10 @@ public static class ModuleManager
         GameState.Run.Expedition.Shop.Sell(EditableModules[(int)idx]);
         Refresh();
     }
+    public enum InventoryOptions
+    {
+        Remove,
+        Sell,
+        Upgrade
+    }
 }
