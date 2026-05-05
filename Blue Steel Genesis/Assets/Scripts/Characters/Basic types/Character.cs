@@ -110,10 +110,10 @@ public abstract class Character : Entity
     {
         if (myTurn)
         {
+        myTurn = false;
         if (visualHandler != null)
             await visualHandler.PlayEndTurnAnimation();
         await processTrigger(TriggerType.OnTurnEnd, null);
-        myTurn = false;
         tracker.NextTurn();
         }
     }
