@@ -20,5 +20,6 @@ public class EventData : ScriptableObject
         public uint stateId;           
         [TextArea(3, 5)] public string description;
         public List<EventChoice> choices;
+        public Sprite stateImage;
     }
 }

@@ -58,7 +58,28 @@ public class EventSceneController : MonoBehaviour
             {
                 effectText = $"\n{choice.successEffect.GetDescription()}";
             }
-            btnText.text = choice.buttonText + effectText;
+
+            btnText.text = choice.buttonText;
+
+
+            string details = "";
+            if (choice.isRandom)
+            {
+                details += $"Шанс успеха: {choice.successChance}%\n";
+                details += choice.successEffect.GetDescription() + "\n";
+                details += "Неудача: " + choice.failureEffect.GetDescription();
+            }
+            else
+            {
+                details = choice.successEffect.GetDescription();
+            }
+
+
+            var effectTexts = btnObj.transform.Find("EffectDetails")?.GetComponent<TMP_Text>();
+            if (effectTexts != null)
+            {
+                effectTexts.text = details;
+            }
 
             List<GameModule> affectedModules = new();
             var player = GameState.Run?.Expedition?.Player;
@@ -181,10 +202,21 @@ public class EventSceneController : MonoBehaviour
         SetState(1);
     }
 
+
+
     void ReturnToMap()
     {
         var eventSystem = GameState.Run?.Expedition?.EventSystem;
         eventSystem?.ClearCurrentEvent();   
         SceneManager.LoadScene(GameEventConstants.MAP_SCENE_NAME);
+    }
+
+
+    public void SetEvent(EventData newEvent)
+    {
+        currentEvent = newEvent;
+        // Ручной запуск первого состояния
+        if (currentEvent != null && currentEvent.states != null && currentEvent.states.Count > 0)
+            SetState(1); 
     }
 }
