@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-using UnityEngine.SceneManagement;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class GameRun
 {
     public GameRun(int seed)
@@ -54,9 +55,13 @@ public class GameRun
         Expedition = null;
     }
 
+    [field: SerializeField]
     public int GlobalSeed { get; private set; }
+
+    [field: SerializeField]
     public Expedition Expedition { get; private set; } = null;
     
+    [field: SerializeField]
     public URangeValue playerLivesCount { get; set; }
 
     // ship data

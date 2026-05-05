@@ -2,7 +2,7 @@
 using UnityEngine;
 public class Wolf : Enemy
 {
-    public Wolf() : base(12, 2, 20)
+    public Wolf() : base(10, 3, 20)
     {
         Name = "Wolf";
         Description = "A fierce wolf, loyal to its leader.";

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AcidShot : ActiveModule
 {
-    uint hitDamage = 1;
+    uint hitDamage = 5;
     uint acidDamage = 1;
     uint acidDuration = 1;
     public AcidShot() : base()
