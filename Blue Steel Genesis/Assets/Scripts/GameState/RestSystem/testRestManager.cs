@@ -8,6 +8,8 @@ public class testRestManager : MonoBehaviour
     [SerializeField] private Button paidHealButton;
     [SerializeField] private Button exitButton;
     [SerializeField] private TMP_Text healthDisplay;
+    [SerializeField] private TMP_Text freeHealDisplay;
+    [SerializeField] private TMP_Text paidHealDisplay;
     [SerializeField] private TMP_Text materialDisplay;
     [SerializeField] private ModuleManagementUI moduleManagementUI;
 
@@ -23,8 +25,11 @@ public class testRestManager : MonoBehaviour
     private void UpdateUI()
     {
         var player = GameState.Run.Expedition.Player;
+        var rest = GameState.Run.Expedition.Rest;
         healthDisplay.text = $"HP: {player.currentHealth}/{player.maxHealth}";
-        materialDisplay.text = $"Materials: {player.materials}";
+        freeHealDisplay.text = $"Heal {rest.FreeHealRestores()} for free";
+        paidHealDisplay.text = $"Heal {rest.PaidHealRestores()} for {Rest.PaidHealCost} spare parts";
+        materialDisplay.text = $"Spare parts: {player.materials}";
     }
 
     private void OnFreeHeal()

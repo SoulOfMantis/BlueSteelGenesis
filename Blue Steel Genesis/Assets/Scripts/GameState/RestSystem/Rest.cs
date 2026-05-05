@@ -8,7 +8,9 @@ public class Rest
 {
     [SerializeField]
     private uint biomeId;
-
+    private const float freeHealModifier = 0.3f;
+    private const float paidHealModifier = 1;
+    public const uint PaidHealCost = 50;
     private bool healUsed;
 
     public Rest(uint biomeId)
@@ -22,14 +24,26 @@ public class Rest
         UnityEngine.SceneManagement.SceneManager.LoadScene($"rest_room_b{biomeId}");
     }
 
+    uint HealAmount(float modifier) => (uint)(GameState.Run.Expedition.Player.maxHealth * modifier);
+    uint FreeHealAmount() => HealAmount(freeHealModifier);
+    uint PaidHealAmount() => HealAmount(paidHealModifier);
+    public uint FreeHealRestores()
+    {
+        var player = GameState.Run.Expedition.Player;
+        return Math.Min(FreeHealAmount(), player.maxHealth - player.currentHealth);
+    }
+    public uint PaidHealRestores()
+    {
+        var player = GameState.Run.Expedition.Player;
+        return Math.Min(PaidHealAmount(), player.maxHealth - player.currentHealth);
+    }
+
     public void FreeHeal()
     {
         if (healUsed)
             return;
 
-        var player = GameState.Run.Expedition.Player;
-        uint healAmount = (uint)(player.maxHealth * 0.3f);
-        player.currentHealth.Value = Math.Min(player.currentHealth.Value + healAmount, player.maxHealth);
+        GameState.Run.Expedition.Player.currentHealth.Value += FreeHealAmount();
         
         healUsed = true;
         Debug.Log("Free heal used");
@@ -40,13 +54,12 @@ public class Rest
         if (healUsed) return;
 
         var player = GameState.Run.Expedition.Player;
-        const uint cost = 50;
 
-        if (!player.HasEnoughMaterials(cost))
+        if (!player.HasEnoughMaterials(PaidHealCost))
             return;
 
-        player.LoseMaterials(cost);
-        player.currentHealth.Value = player.maxHealth;
+        player.LoseMaterials(PaidHealCost);
+        player.currentHealth.Value += PaidHealAmount();
 
         healUsed = true;
         Debug.Log("Paid heal used");

@@ -80,4 +80,10 @@ public static class ModuleManager
 
         Refresh();
     }
+    public enum InventoryOptions
+    {
+        Remove,
+        Sell,
+        Upgrade
+    }
 }
