@@ -779,9 +779,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3771213469520559309, guid: fa16f77182e720f4bbe4f8994f3f5ff0, type: 3}
+      propertyPath: m_text
+      value: Show/Hide Inventory
+      objectReference: {fileID: 0}
     - target: {fileID: 5122604425882322587, guid: fa16f77182e720f4bbe4f8994f3f5ff0, type: 3}
       propertyPath: m_SizeDelta.y
       value: 85
+      objectReference: {fileID: 0}
+    - target: {fileID: 5167479225989070246, guid: fa16f77182e720f4bbe4f8994f3f5ff0, type: 3}
+      propertyPath: InShop
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6264470075567615457, guid: fa16f77182e720f4bbe4f8994f3f5ff0, type: 3}
       propertyPath: m_AnchorMax.x
@@ -808,7 +816,8 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7062466731230650938, guid: fa16f77182e720f4bbe4f8994f3f5ff0, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa16f77182e720f4bbe4f8994f3f5ff0, type: 3}
@@ -1163,7 +1172,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Show/Hide Sell Menu
+  m_text: Show/Hide Inventory
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
