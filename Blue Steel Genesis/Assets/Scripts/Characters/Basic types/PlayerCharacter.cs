@@ -73,6 +73,9 @@ public class PlayerCharacter : Character
     {
         //play using module animation
         await base.useActiveModule_internal(m, pos);
+
+        if (false && !canUseAnyModule()) //TODO: check options
+            await endTurn();
     }
     protected override async Task usePassiveModule_internal(PassiveModule m, Vector3Int pos, ActionContext ctx)
     {
@@ -137,6 +140,9 @@ public class PlayerCharacter : Character
     public override async Task startTurn()
     {
         await base.startTurn();
+
+        if (false && !canUseAnyModule()) //TODO: check options
+            await endTurn();
     }
 
     public override async Task endTurn()
