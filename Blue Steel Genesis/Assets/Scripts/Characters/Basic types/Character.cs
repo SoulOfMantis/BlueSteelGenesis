@@ -108,11 +108,14 @@ public abstract class Character : Entity
     }
     public virtual async Task endTurn()
     {
+        if (myTurn)
+        {
+        myTurn = false;
         if (visualHandler != null)
             await visualHandler.PlayEndTurnAnimation();
         await processTrigger(TriggerType.OnTurnEnd, null);
-        myTurn = false;
         tracker.NextTurn();
+        }
     }
 
     public async Task move(Vector3Int target_pos, List<Vector3Int> allowed, ActionContext ctx = null)
