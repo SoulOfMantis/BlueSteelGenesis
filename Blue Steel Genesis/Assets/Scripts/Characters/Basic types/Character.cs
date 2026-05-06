@@ -41,7 +41,8 @@ public abstract class Character : Entity
     {
         currentShield -= value;
         UpdateTooltipIfCurrent();
-        await Awaitable.WaitForSecondsAsync(.1f); //TODO: remove delay; derived classes must await animations
+        if (visualHandler != null)
+            await visualHandler.PlayLoseShieldAnimation(value);
     }
     public override async Task heal(uint hp)
     {
