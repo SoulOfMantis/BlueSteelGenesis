@@ -10,7 +10,6 @@ public class testRestManager : MonoBehaviour
     [SerializeField] private TMP_Text healthDisplay;
     [SerializeField] private TMP_Text freeHealDisplay;
     [SerializeField] private TMP_Text paidHealDisplay;
-    [SerializeField] private TMP_Text materialDisplay;
     [SerializeField] private ModuleManagementUI moduleManagementUI;
 
     private void Start()
@@ -29,7 +28,6 @@ public class testRestManager : MonoBehaviour
         healthDisplay.text = $"HP: {player.currentHealth}/{player.maxHealth}";
         freeHealDisplay.text = $"Heal {rest.FreeHealRestores()} for free";
         paidHealDisplay.text = $"Heal {rest.PaidHealRestores()} for {Rest.PaidHealCost} spare parts";
-        materialDisplay.text = $"Spare parts: {player.materials}";
     }
 
     private void OnFreeHeal()
