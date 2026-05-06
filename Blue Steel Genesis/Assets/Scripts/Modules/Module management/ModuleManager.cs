@@ -65,7 +65,6 @@ public static class ModuleManager
     public enum InventoryOptions
     {
         Remove,
-        Sell,
-        Upgrade
+        Sell
     }
 }
