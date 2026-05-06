@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class WideAttack : ActiveModule
 {
-    uint hitDamage = 3;
+    uint hitDamage = 8;
     public WideAttack() : base()
     {
         range = 1;
-        energyCost = 3;
+        energyCost = 4;
         Icon_name = "WideAttack";
         AddConstKeywords(new OffenseKeyword());
     }

@@ -15,8 +15,6 @@ public class PlayerCharacter : Character
     [SerializeField] TMP_Text healthDisplay;
     [SerializeField] Slider shieldSlider;
     [SerializeField] TMP_Text shieldDisplay;
-    public GameObject VictoryScreen;
-    public GameObject DefeatScreen;
 
     [SerializeField] private ModuleButton[] moduleButtons;
 
@@ -31,8 +29,6 @@ public class PlayerCharacter : Character
     {
         base.Init();
         currentEnergy.Max = GameState.Run.Expedition.Player.maxEnergy;
-        VictoryScreen.SetActive(false);
-        DefeatScreen.SetActive(false);
         energySlider.maxValue = maxEnergy;
         healthSlider.maxValue = maxHealth;
     }
@@ -77,6 +73,9 @@ public class PlayerCharacter : Character
     {
         //play using module animation
         await base.useActiveModule_internal(m, pos);
+
+        if (false && !canUseAnyModule()) //TODO: check options
+            await endTurn();
     }
     protected override async Task usePassiveModule_internal(PassiveModule m, Vector3Int pos, ActionContext ctx)
     {
@@ -141,6 +140,9 @@ public class PlayerCharacter : Character
     public override async Task startTurn()
     {
         await base.startTurn();
+
+        if (false && !canUseAnyModule()) //TODO: check options
+            await endTurn();
     }
 
     public override async Task endTurn()
@@ -204,13 +206,12 @@ public class PlayerCharacter : Character
     {
         updateButtons();
         await endBattle();
-        VictoryScreen.SetActive(true);
         GameState.Run.Expedition.CombatSystem.Victory();
     }
     public void Defeat()
     {
         updateButtons();
-        DefeatScreen.SetActive(true);
+        GameState.Run.Expedition.CombatSystem.Defeat();
     }
     public override URangeValue currentHealth {
         get => GameState.Run.Expedition.Player.currentHealth;

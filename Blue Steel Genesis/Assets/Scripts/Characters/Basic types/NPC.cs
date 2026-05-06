@@ -32,7 +32,7 @@ public abstract class NPC : Character
     {
         if (priorityModules == null) SetPriorityModules();
         bool actionTaken = true;
-        while (actionTaken && CanUseAnyPriorityModule() && tracker.IsPlayerAlive())
+        while (actionTaken && canUseAnyModule() && tracker.IsPlayerAlive())
         {
             actionTaken = false;
             foreach (var module in priorityModules)
@@ -77,9 +77,6 @@ public abstract class NPC : Character
         targetPos = default;
         return false;
     }
-
-    private bool CanUseAnyPriorityModule() =>
-        priorityModules.Any(m => currentEnergy >= m.energyCost && m.CanBeUsed());
 
     protected override async Task die()
     {

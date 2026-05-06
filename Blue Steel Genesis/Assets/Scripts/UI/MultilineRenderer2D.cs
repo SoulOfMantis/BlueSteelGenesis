@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MultilineRenderer2D : Graphic
+public class MultilineRenderer2D : MaskableGraphic
 {
     public struct Line {
         public Vector2 from, to;

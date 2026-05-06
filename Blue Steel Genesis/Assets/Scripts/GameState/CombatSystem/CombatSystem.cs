@@ -1,15 +1,17 @@
 using Map;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
+[Serializable]
 public class CombatSystem
 {
+    [SerializeField]
     uint stage_id;
     Type reward;
+
     internal enum EncounterType
     {
         Normal,
@@ -18,8 +20,11 @@ public class CombatSystem
     }
     EncounterType current_enc;
 
+    [SerializeField]
     Map.BiomeInfo BiomeInfo;
-    System.Random gen;
+
+    [SerializeField]
+    Unity.Mathematics.Random gen;
 
     const uint max_enc_id = 3;
     const uint max_materials_given = 30;
@@ -41,12 +46,12 @@ public class CombatSystem
     {
         this.BiomeInfo = BiomeInfo;
         stage_id = stage;
-        gen = new System.Random(local_seed);
+        gen = new((uint)local_seed);
     }
 
     string NextNormalEncounter()
     {
-        uint enc_id = (uint)gen.Next((int)max_enc_id);
+        uint enc_id = gen.NextUInt(max_enc_id);
         return $"b{BiomeInfo.id}_st{stage_id}_Normal{enc_id}";
     }
 
@@ -57,7 +62,7 @@ public class CombatSystem
 
         if (elite_list.Count != 0)
         {
-            int elite_ind = gen.Next(elite_list.Count);
+            int elite_ind = gen.NextInt(elite_list.Count);
             elite_id = elite_list[elite_ind];
             reward = BiomeInfo.elites[(stage_id, elite_id)];
             BiomeInfo.elites.Remove((stage_id, elite_id));
@@ -78,9 +83,9 @@ public class CombatSystem
 
         if (boss_list.Count != 0)
         {
-            int boss_ind = gen.Next(boss_list.Count);
+            int boss_ind = gen.NextInt(boss_list.Count);
             boss_id = boss_list[boss_ind];
-            boss_variation = (uint)gen.Next((int)BiomeInfo.bosses[(stage_id, boss_id)]);
+            boss_variation = gen.NextUInt(BiomeInfo.bosses[(stage_id, boss_id)]);
             BiomeInfo.bosses.Remove((stage_id, boss_id));
         }
         else
@@ -110,26 +115,25 @@ public class CombatSystem
         current_enc = EncounterType.Boss;
     }
 
-    void GiveReward(uint modifier)
+    (uint money, uint materials) CalculateReward(uint modifier)
     {
         uint materials_given = min_materials_given;
         uint money_given = min_money_given;
 
         for (int i = 0; i < modifier; i++)
         {
-            materials_given += (uint)gen.Next((int)min_materials_given, (int)max_materials_given);
-            money_given += (uint)gen.Next((int)min_money_given, (int)max_money_given);
+            materials_given += gen.NextUInt(min_materials_given, max_materials_given);
+            money_given += gen.NextUInt(min_money_given, max_money_given);
         }
 
-        GameState.Run.Expedition.Player.GiveMaterials(materials_given);
-        GameState.Run.Expedition.Player.GiveMoney(money_given);
-
-        UnityEngine.SceneManagement.SceneManager.LoadScene("ExpeditionMapTest_usingGameState");
+        return (money_given, materials_given);
     }
 
     public void Defeat()
     {
-        GameState.Run.endExpedition();
+        FightResultScreen result_screen = UnityEngine.Object.FindFirstObjectByType<FightResultScreen>();
+        if (result_screen != null)
+            result_screen.ShowDefeat();
     }
 
     public void Victory()
@@ -150,21 +154,35 @@ public class CombatSystem
 
     void VictoryNormal()
     {
-        GiveReward(normal_reward_modifier);
+        var reward = CalculateReward(normal_reward_modifier);
+        GameState.Run.Expedition.Player.GiveMoney(reward.money);
+        GameState.Run.Expedition.Player.GiveMaterials(reward.materials);
+
+        FightResultScreen result_screen = UnityEngine.Object.FindFirstObjectByType<FightResultScreen>();
+        if (result_screen != null)
+            result_screen.ShowVictory(reward.money, reward.materials, 0, null);
     }
 
     void VictoryElite()
     {
-        GiveReward(elite_reward_modifier);
-        var module = ModuleGenerator.CreateModuleByType(reward);
-        GameState.Run.Expedition.Player.AddModule(module);
-        UnityEngine.Debug.Log($"Reward: {reward.Name}");
+        var reward = CalculateReward(elite_reward_modifier);
+        GameState.Run.Expedition.Player.GiveMoney(reward.money);
+        GameState.Run.Expedition.Player.GiveMaterials(reward.materials);
+
+        FightResultScreen result_screen = UnityEngine.Object.FindFirstObjectByType<FightResultScreen>();
+        if (result_screen != null)
+            result_screen.ShowVictory(reward.money, reward.materials, 0, ModuleGenerator.CreateModuleByType(this.reward));
     }
 
     void VictoryBoss()
     {
+        var reward = CalculateReward(boss_reward_modifier);
+        GameState.Run.Expedition.Player.GiveMoney(reward.money);
+        GameState.Run.Expedition.Player.GiveMaterials(reward.materials);
         GameState.Run.Expedition.Player.GetGoldenTicket();
-        GiveReward(boss_reward_modifier);
-        // GameState.Run.Expedition.startNextStage();
+
+        FightResultScreen result_screen = UnityEngine.Object.FindFirstObjectByType<FightResultScreen>();
+        if (result_screen != null)
+            result_screen.ShowVictory(reward.money, reward.materials, 1, null);
     }
 }   

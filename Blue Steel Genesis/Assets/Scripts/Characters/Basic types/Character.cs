@@ -179,6 +179,7 @@ public abstract class Character : Entity
         await processTrigger(TriggerType.OnApply, pos, ctx);
         Debug.Log($"Apply {status.GetType().Name} at {pos}");
     }
+    public async Task apply(StatusModule status, ActionContext ctx) => await apply(Position.RightTop, status, ctx);
 
     public new virtual Task<bool> summon<T>(PositionCollection pos) where T : Entity =>
         Task.FromResult(Entity.summon<T>(pos));
@@ -270,6 +271,7 @@ public abstract class Character : Entity
     public bool isPassive(int module_index) => getModule<PassiveModule>(module_index) != null;
     public bool isActive(int module_index) => getModule<ActiveModule>(module_index) != null;
     public bool doesModuleExist(int module_index) => getModule<GameModule>(module_index) != null;
+    protected bool canUseAnyModule() => listModules<ActiveModule>().Any(m => hasEnoughEnergy(m) && m.CanBeUsed());
     protected virtual bool isCorrectPosition(GameModule module, Vector3Int pos) => module.checkPosition(this, pos);
     protected virtual bool hasEnoughEnergy(ActiveModule module) => module != null && currentEnergy >= module.energyCost;
     protected virtual Task useActiveModule_internal(ActiveModule m, Vector3Int pos) => m.Use(this, pos, null);
