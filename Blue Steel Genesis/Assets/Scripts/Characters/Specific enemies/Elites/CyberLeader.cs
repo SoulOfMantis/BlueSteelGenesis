@@ -11,12 +11,18 @@ public class CyberLeader : Enemy
         Name = "CyberLeader";
         Description = "Came back to life with the power of technology. And is now ready to take revenge! " +
             "His minions have also been improved!";
+    }
+
+    protected override void Init()
+    {
         addModule(new BurnBite());
         addModule(new RoboWolfSummoner());
         addModule(new AcceleratedMovement());
-
         SetPriorityModules();
+
+        base.Init();
     }
+
     protected override bool TryGetTargetForZero(out Vector3Int targetPos)
     {
         var possibleTargets = priorityModules[0].getCellsInRange(Position)
