@@ -9,7 +9,7 @@ public class AcidBite : ActiveModule
     uint acidDuration = 2;
     public AcidBite() : base()
     {
-        Icon_name = "AcidBiteModule";
+        Icon_name = "AcidBite";
         range = 1;
         energyCost = 3;
         AddConstKeywords(new OffenseKeyword());

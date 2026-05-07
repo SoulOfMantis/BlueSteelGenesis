@@ -7,7 +7,7 @@ public class RoboWolfSummoner : ActiveModule {
         changeName("Summonning howl");
         range = 1;
         energyCost = 5;
-        Icon_name = "RoboWolfSummoner";
+        Icon_name = "RoboWolfsSummoner";
     }
 
     public override string Description() =>

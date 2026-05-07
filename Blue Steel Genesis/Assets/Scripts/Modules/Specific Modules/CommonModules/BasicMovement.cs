@@ -14,7 +14,7 @@ public class BasicMovement : ActiveModule
         price = 15;
         range = 4;
         energyCost = 1;
-        Icon_name = "Module_movement";
+        Icon_name = "BasicMovement";
         AddConstKeywords(new MobilityKeyword(), new CommonKeyword());
     }
     public BasicMovement(uint speed) : this()

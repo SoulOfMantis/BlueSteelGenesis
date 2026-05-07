@@ -19,7 +19,7 @@ public class MechanicStinger : ActiveModule
         hitDamage = 2;
         duration = 2;
         poisonDamage = 1;
-        Icon_name = "Module_mechanical_sting2";
+        Icon_name = "MechanicStinger";
         AddConstKeywords(new OffenseKeyword(), new CommonKeyword());
     }
     public MechanicStinger(uint damage, uint duration, uint hitDamage) : this()

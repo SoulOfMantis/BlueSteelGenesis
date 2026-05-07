@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8025140e5e30c4d4f900f2bd27eb3ff2
+guid: d647ce9c672c3f44fa565e8910a0069b
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,7 +127,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: Module_poison
+  - name: Module_movement
     originalName: 
     pivot: {x: 0.5, y: -0.033333335}
     alignment: 9
@@ -139,7 +139,7 @@ ScriptedImporter:
       y: 4
       width: 30
       height: 30
-    spriteID: c70ac8df18a254d47b515f43e4426480
+    spriteID: 937ab7accabb0d04db4c8c6d6bfc1a5b
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,17 +153,17 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 73686569
+      value0: 3552804878
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: Module_poison
+    name: Module_movement
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: Module_poison
+    - name: BasicMovement
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -171,7 +171,7 @@ ScriptedImporter:
         y: 1
         width: 30
         height: 30
-      spriteId: c70ac8df18a254d47b515f43e4426480
+      spriteId: 937ab7accabb0d04db4c8c6d6bfc1a5b
     linkedCells: []
     tileCells: []
     tileSetIndex: 0

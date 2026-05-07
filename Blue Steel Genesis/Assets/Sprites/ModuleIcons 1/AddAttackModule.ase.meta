@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f84eac11eeaaf0c409e153c930c9f27a
+guid: 36e0041275cccfb4a9e29795629385f4
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,7 +127,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: CallModuleRobotWolf
+  - name: AddAttackModule
     originalName: 
     pivot: {x: 0.5, y: -0.033333335}
     alignment: 9
@@ -139,7 +139,7 @@ ScriptedImporter:
       y: 4
       width: 30
       height: 30
-    spriteID: e41a6ebf8f26be44db9898dbef0e2539
+    spriteID: 081f7c01676a7e3458c8074549fbff75
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,17 +153,17 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 1737577406
+      value0: 1128114395
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: CallModuleRobotWolf
+    name: AddAttackModule
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: RoboWolfSummoner
+    - name: AddAttackModule
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -171,7 +171,7 @@ ScriptedImporter:
         y: 1
         width: 30
         height: 30
-      spriteId: e41a6ebf8f26be44db9898dbef0e2539
+      spriteId: 081f7c01676a7e3458c8074549fbff75
     linkedCells: []
     tileCells: []
     tileSetIndex: 0

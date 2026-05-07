@@ -10,7 +10,7 @@ public class ExplodeWithSlime : PassiveModule
     uint acidDuration;
     public ExplodeWithSlime() : base()
     {
-        Icon_name = "AcidExplosionModule";
+        Icon_name = "ExplodeWithSlime";
         acidDamage = 1;
         acidDuration = 2;
         triggerType = TriggerType.OnDeath;
