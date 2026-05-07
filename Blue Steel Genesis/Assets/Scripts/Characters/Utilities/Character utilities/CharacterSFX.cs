@@ -28,6 +28,7 @@ public class CharacterSFX : MonoBehaviour
         if (audio_src == null)
             audio_src = gameObject.AddComponent<AudioSource>();
         audio_src.spatialBlend = 0;
+        audio_src.volume = .5f;
     }
 
     private AudioSource audio_src;
