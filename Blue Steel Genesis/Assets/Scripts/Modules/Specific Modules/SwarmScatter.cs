@@ -24,5 +24,6 @@ public class SwarmScatter : PassiveModule
 
     public override async Task Effect(Character user, Vector3Int pos) {
         await user.giveShield(shieldAmount);
+        await user.visualHandler.PlaySpecialAnimation();
     }
 }

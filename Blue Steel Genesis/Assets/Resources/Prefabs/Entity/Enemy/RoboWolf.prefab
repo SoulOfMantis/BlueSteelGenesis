@@ -90,7 +90,7 @@ SpriteRenderer:
   m_Size: {x: 0.25, y: 0.23}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &3830082207309243854
@@ -176,21 +176,21 @@ MonoBehaviour:
   animator: {fileID: 4622142423043141798}
   spriteRenderer: {fileID: 6436685001208273242}
   idleAnimation:
-    animationName: 
+    animationName: Idle
     clip: {fileID: 0}
     transitionDuration: 0.5
   walkAnimation:
-    animationName: 
+    animationName: Walk
     clip: {fileID: 0}
     transitionDuration: 0.2
   attackAnimation:
-    animationName: 
+    animationName: Attack
     clip: {fileID: 0}
     transitionDuration: 1
   hurtAnimation:
-    animationName: 
+    animationName: Hurt
     clip: {fileID: 0}
-    transitionDuration: 0
+    transitionDuration: 0.2
   deathAnimation:
     animationName: 
     clip: {fileID: 0}
@@ -200,6 +200,10 @@ MonoBehaviour:
     clip: {fileID: 0}
     transitionDuration: 0
   gainShieldAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  healAnimation:
     animationName: 
     clip: {fileID: 0}
     transitionDuration: 0
@@ -219,7 +223,11 @@ MonoBehaviour:
     animationName: 
     clip: {fileID: 0}
     transitionDuration: 0
-  healAnimation:
+  summonAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  specialAnimation:
     animationName: 
     clip: {fileID: 0}
     transitionDuration: 0

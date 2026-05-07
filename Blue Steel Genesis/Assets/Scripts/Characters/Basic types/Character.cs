@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 
 public abstract class Character : Entity
 {
-    [SerializeField] protected CharacterVisualHandler visualHandler;
+    [SerializeField] public CharacterVisualHandler visualHandler;
 
     public override async Task damage(uint dmg)
     {
@@ -23,7 +24,6 @@ public abstract class Character : Entity
             currentHealth -= dmg;
             if (visualHandler != null)
                 await visualHandler.PlayHurtAnimation(dmg);
-            changeColorAndWait(Color.crimson, 0.2f*dmg);
             await processTrigger(TriggerType.OnHealthDamage);
             if (currentHealth == 0)
                 await die();
@@ -35,14 +35,16 @@ public abstract class Character : Entity
         await processTrigger(TriggerType.OnDamageShielded);
         Debug.Log($"{shield_dmg} урона поглощено щитом");
         if (currentShield == 0)
+        {
             await processTrigger(TriggerType.OnShieldBroken);
+            if (visualHandler != null)
+                await visualHandler.PlayLoseShieldAnimation();
+        }
     }
     public virtual async Task loseShield(uint value)
     {
         currentShield -= value;
         UpdateTooltipIfCurrent();
-        if (visualHandler != null)
-            await visualHandler.PlayLoseShieldAnimation(value);
     }
     public override async Task heal(uint hp)
     {

@@ -82,12 +82,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: -3826499590745205340, guid: db7a283136e53354faa32ae5d989417e, type: 3}
+  m_Sprite: {fileID: -4195054242833311747, guid: 4512119bbe0d7cc40ab976843dbdac23, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.25, y: 0.23}
+  m_Size: {x: 0.32, y: 0.32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -208,19 +208,19 @@ MonoBehaviour:
   animator: {fileID: 8859027723903848820}
   spriteRenderer: {fileID: 6436685001208273242}
   idleAnimation:
-    animationName: 
+    animationName: Idle
     clip: {fileID: 0}
     transitionDuration: 0.5
   walkAnimation:
-    animationName: 
+    animationName: Walk
     clip: {fileID: 0}
     transitionDuration: 0.2
   attackAnimation:
-    animationName: 
+    animationName: Attack
     clip: {fileID: 0}
     transitionDuration: 1
   hurtAnimation:
-    animationName: 
+    animationName: Hurt
     clip: {fileID: 0}
     transitionDuration: 0
   deathAnimation:
@@ -232,6 +232,10 @@ MonoBehaviour:
     clip: {fileID: 0}
     transitionDuration: 0
   gainShieldAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  healAnimation:
     animationName: 
     clip: {fileID: 0}
     transitionDuration: 0
@@ -251,7 +255,11 @@ MonoBehaviour:
     animationName: 
     clip: {fileID: 0}
     transitionDuration: 0
-  healAnimation:
+  summonAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  specialAnimation:
     animationName: 
     clip: {fileID: 0}
     transitionDuration: 0

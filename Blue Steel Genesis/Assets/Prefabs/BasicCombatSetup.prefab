@@ -1202,19 +1202,23 @@ MonoBehaviour:
   hurtAnimation:
     animationName: Hurt
     clip: {fileID: 0}
-    transitionDuration: 0.5
+    transitionDuration: 0.2
   deathAnimation:
     animationName: Die
     clip: {fileID: 0}
     transitionDuration: 1
   loseShieldAnimation:
-    animationName: 
+    animationName: LoseShield
     clip: {fileID: 0}
-    transitionDuration: 0
+    transitionDuration: 0.2
   gainShieldAnimation:
-    animationName: 
+    animationName: GainShield
     clip: {fileID: 0}
-    transitionDuration: 0
+    transitionDuration: 0.2
+  healAnimation:
+    animationName: Heal
+    clip: {fileID: 0}
+    transitionDuration: 0.5
   startBattleAnimation:
     animationName: 
     clip: {fileID: 0}
@@ -1231,10 +1235,14 @@ MonoBehaviour:
     animationName: 
     clip: {fileID: 0}
     transitionDuration: 0.1
-  healAnimation:
+  summonAnimation:
+    animationName: Summon
+    clip: {fileID: 0}
+    transitionDuration: 0.3
+  specialAnimation:
     animationName: 
     clip: {fileID: 0}
-    transitionDuration: 0.5
+    transitionDuration: 0
 --- !u!1 &2124079883641599006
 GameObject:
   m_ObjectHideFlags: 0
@@ -4165,7 +4173,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5643922838940263603}
   m_HandleRect: {fileID: 220041188885393650}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

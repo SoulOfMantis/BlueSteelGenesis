@@ -34,12 +34,24 @@ public class CharacterVisualHandler : VisualHandlerBase
     [SerializeField] private AnimationClipRef startTurnAnimation;
     [SerializeField] private AnimationClipRef endTurnAnimation;
 
+    [Header("Special Animations")]
+    [SerializeField] private AnimationClipRef summonAnimation;
+    [SerializeField] private AnimationClipRef specialAnimation;
+
+
 
     //[Header("Floating text")]
     //[SerializeField] private GameObject floatingTextPrefab;
     //[SerializeField] private Transform floatingTextSpawnPoint;
 
     private string currentAnimation;
+
+    public async Task PlaySpecialAnimation()
+    {
+        PlayAnimation(specialAnimation.animationName);
+
+        await Task.Delay((int)(specialAnimation.transitionDuration * 1000));
+    }
 
     public async Task PlayWalkAnimation(Vector3Int direction)
     {
@@ -117,7 +129,7 @@ public class CharacterVisualHandler : VisualHandlerBase
         await Task.Delay((int)(gainShieldAnimation.transitionDuration * 1000));
     }
 
-    public async Task PlayLoseShieldAnimation(uint amount)
+    public async Task PlayLoseShieldAnimation()
     {
         PlayAnimation(loseShieldAnimation.animationName);
 
@@ -125,12 +137,18 @@ public class CharacterVisualHandler : VisualHandlerBase
 
     }
 
+    public async Task PlaySummonAnimation()
+    {
+        PlayAnimation(summonAnimation.animationName);
+
+        await Task.Delay((int)(summonAnimation.transitionDuration * 1000));
+    }
+
     // Заставить персонажа смотреть в направление клетки
     private void LookAt(Vector3Int target)
     {
 
         bool direction = Character.tracker.CellToWorld(target).x > transform.parent.position.x;
-        Debug.Log($"{target.x}, {transform.parent.position.x}");
         if (direction)
             spriteRenderer.flipX = true;
         else

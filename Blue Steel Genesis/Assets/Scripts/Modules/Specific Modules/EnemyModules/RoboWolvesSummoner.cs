@@ -13,6 +13,7 @@ public class RoboWolfSummoner : ActiveModule {
 
     public override Task Effect(Character user, Vector3Int pos) {
         Entity.summon<RoboWolf>(new(pos));
+        user.visualHandler.PlaySummonAnimation();
         return Task.CompletedTask;
     }
     protected override bool checkFinalPosition(Vector3Int pos) {

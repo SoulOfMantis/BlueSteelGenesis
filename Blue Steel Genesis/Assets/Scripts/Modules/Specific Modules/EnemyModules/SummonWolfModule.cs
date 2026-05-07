@@ -33,6 +33,7 @@ public class SummonWolfModule : ActiveModule
             if (Entity.summon<Wolf>(wolfPos))
                 summonedCount++;
         }
+        await user.visualHandler.PlaySummonAnimation();
 
         if (summonedCount > 0)
             Debug.Log($"{user.Name} summoned {summonedCount} wolf(s)!");
