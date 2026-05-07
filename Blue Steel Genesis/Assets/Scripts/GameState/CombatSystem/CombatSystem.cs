@@ -1,7 +1,6 @@
 using Map;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -116,7 +115,7 @@ public class CombatSystem
         current_enc = EncounterType.Boss;
     }
 
-    void GiveReward(uint modifier)
+    (uint money, uint materials) CalculateReward(uint modifier)
     {
         uint materials_given = min_materials_given;
         uint money_given = min_money_given;
@@ -127,15 +126,14 @@ public class CombatSystem
             money_given += gen.NextUInt(min_money_given, max_money_given);
         }
 
-        GameState.Run.Expedition.Player.GiveMaterials(materials_given);
-        GameState.Run.Expedition.Player.GiveMoney(money_given);
-
-        GameState.Run.Expedition.exitNode();
+        return (money_given, materials_given);
     }
 
     public void Defeat()
     {
-        GameState.Run.endExpedition();
+        FightResultScreen result_screen = UnityEngine.Object.FindFirstObjectByType<FightResultScreen>();
+        if (result_screen != null)
+            result_screen.ShowDefeat();
     }
 
     public void Victory()
@@ -156,21 +154,35 @@ public class CombatSystem
 
     void VictoryNormal()
     {
-        GiveReward(normal_reward_modifier);
+        var reward = CalculateReward(normal_reward_modifier);
+        GameState.Run.Expedition.Player.GiveMoney(reward.money);
+        GameState.Run.Expedition.Player.GiveMaterials(reward.materials);
+
+        FightResultScreen result_screen = UnityEngine.Object.FindFirstObjectByType<FightResultScreen>();
+        if (result_screen != null)
+            result_screen.ShowVictory(reward.money, reward.materials, 0, null);
     }
 
     void VictoryElite()
     {
-        GiveReward(elite_reward_modifier);
-        var module = ModuleGenerator.CreateModuleByType(reward);
-        GameState.Run.Expedition.Player.AddModule(module);
-        UnityEngine.Debug.Log($"Reward: {reward.Name}");
+        var reward = CalculateReward(elite_reward_modifier);
+        GameState.Run.Expedition.Player.GiveMoney(reward.money);
+        GameState.Run.Expedition.Player.GiveMaterials(reward.materials);
+
+        FightResultScreen result_screen = UnityEngine.Object.FindFirstObjectByType<FightResultScreen>();
+        if (result_screen != null)
+            result_screen.ShowVictory(reward.money, reward.materials, 0, ModuleGenerator.CreateModuleByType(this.reward));
     }
 
     void VictoryBoss()
     {
+        var reward = CalculateReward(boss_reward_modifier);
+        GameState.Run.Expedition.Player.GiveMoney(reward.money);
+        GameState.Run.Expedition.Player.GiveMaterials(reward.materials);
         GameState.Run.Expedition.Player.GetGoldenTicket();
-        GiveReward(boss_reward_modifier);
-        // GameState.Run.Expedition.startNextStage();
+
+        FightResultScreen result_screen = UnityEngine.Object.FindFirstObjectByType<FightResultScreen>();
+        if (result_screen != null)
+            result_screen.ShowVictory(reward.money, reward.materials, 1, null);
     }
 }   
