@@ -128,7 +128,7 @@ MonoBehaviour:
   energyDrain: {fileID: 0}
   energyRestore: {fileID: 0}
   moveStep: {fileID: 0}
-  strike: {fileID: 8300000, guid: 0ec6189d72c014241968424a439ec272, type: 3}
+  strike: {fileID: 8300000, guid: c88920ae42461e34cb49c7e7f33a8a94, type: 3}
   death: {fileID: 0}
 --- !u!1 &7030514784578829008
 GameObject:
