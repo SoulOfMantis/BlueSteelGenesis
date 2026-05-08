@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SmallAcidSlime : Enemy
 {
-    public SmallAcidSlime() : base(5, 2, 30)
+    public SmallAcidSlime() : base(5, 3, 30)
     {
         Name = "Small Acid Slime";
         Description = "Pathetic remains of slime's glory. Can't even shoot anymore.";

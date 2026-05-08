@@ -4,7 +4,7 @@ using System.Linq;
 
 public class RoboWolf : Enemy
 {
-    public RoboWolf() : base(32, 4, 32)
+    public RoboWolf() : base(16, 4, 32)
     {
         Name = "RoboWolf";
         Description = "A robotic copy of regular wolf. Got some pretty cool enhancements!";
