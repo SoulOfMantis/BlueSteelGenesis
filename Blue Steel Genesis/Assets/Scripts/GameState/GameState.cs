@@ -11,7 +11,7 @@ public static class GameState
             return;
         }
         Run = new(seed ?? generateRandomSeed());
-        Run.AutoEndPlayerTurn = AutoEndPlayerTurn;
+        Run.AutoEndPlayerTurn = autoEndPlayerTurn;
         Run.start();
     }
 
@@ -39,7 +39,14 @@ public static class GameState
     {
         Run = null;
     }
-    public static bool AutoEndPlayerTurn;
+    public static bool AutoEndPlayerTurn { set
+        {
+            autoEndPlayerTurn = value;
+            if (Run != null)
+                Run.AutoEndPlayerTurn = value;
+        }
+    }
+    private static bool autoEndPlayerTurn;
     public static GameRun Run { get; private set; } = null;
     private const string SaveFilename = "save.json";
     private static string SaveFilePath => Path.Combine(Application.persistentDataPath, SaveFilename);

@@ -401,7 +401,7 @@ MonoBehaviour:
   moneyDisplay: {fileID: 8462602464121284835}
   materialsDisplay: {fileID: 3507868471372874456}
   ticketsDisplay: {fileID: 3901898572504901250}
-  InShop: 1
+  inventoryMode: 0
 --- !u!1 &2713207232018322098
 GameObject:
   m_ObjectHideFlags: 0
@@ -463,7 +463,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 50
+  m_SortingOrder: 30
   m_TargetDisplay: 0
 --- !u!114 &8512385357446106975
 MonoBehaviour:
@@ -750,7 +750,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000733923, y: 0.000013465656}
+  m_AnchoredPosition: {x: 0.000733923, y: 0}
   m_SizeDelta: {x: -1319, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &7114346576107854645
