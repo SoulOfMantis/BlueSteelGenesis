@@ -31,6 +31,9 @@ class ModuleEntry : MonoBehaviour
             case ModuleManager.InventoryOptions.Sell:
                 SetupSell(module);
                 break;
+            case ModuleManager.InventoryOptions.Upgrade:
+                SetupUpgrade(module);
+                break;
         }
         actionButton.gameObject.SetActive(idx <= ModuleManager.MaxEditableModuleIndex && idx >= ModuleManager.MinEditableModuleIndex);
         trigger.updateModuleTrigger(module);
@@ -64,4 +67,24 @@ class ModuleEntry : MonoBehaviour
                 actionButton.onClick.AddListener(sfx.playSell);
             }
         }
+    void SetupUpgrade(GameModule module)
+    {
+        nameText.text = $"{module.Name} [Lv.{module.upgradeLevel}/{module.maxUpgradeLevel}]";
+        upButton.gameObject.SetActive(false);
+        downButton.gameObject.SetActive(false);
+        actionButton.onClick.AddListener(() => manager.UpgradeModule(currentIdx));
+
+        var tmp = actionButton.GetComponentInChildren(typeof(TMP_Text)) as TMP_Text;
+        actionButton.interactable = false;
+        if (module.CanUpgrade)
+        {
+            uint cost = module.GetUpgradeCost();
+            tmp.text = $"Upgrade ({cost} parts)";
+            bool hasMaterials = GameState.Run.Expedition.Player.HasEnoughMaterials(cost);
+            actionButton.interactable = hasMaterials;
+            actionButton.image.color = Color.softGreen;
+        }
+        else tmp.text = "Max Lvl";
+    }
 }
+
