@@ -1,7 +1,19 @@
 fileFormatVersion: 2
 guid: f988e289ba798fb4b85582c0020c7d83
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 4347729081090954055
+    second: WolfLeaderAnimationHit_0
+  - first:
+      213: -1567348758119030024
+    second: WolfLeaderAnimationHit_1
+  - first:
+      213: -5575204844744448456
+    second: WolfLeaderAnimationHit_2
+  - first:
+      213: 2158131621952082620
+    second: WolfLeaderAnimationHit_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -110,10 +122,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: af1744be429138741bfc562039a75c20
-      internalID: -1437206416
+      spriteID: 743df02609c365c30800000000000000
+      internalID: 4347729081090954055
       vertices: []
       indices: 
       edges: []
@@ -132,10 +144,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: ab408659b80120b4cb6d58d0e488f0d9
-      internalID: -6355701
+      spriteID: 8f26a21db98af3ae0800000000000000
+      internalID: -1567348758119030024
       vertices: []
       indices: 
       edges: []
@@ -154,10 +166,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 055956d1d8c6338408375dce5da939ef
-      internalID: -389422096
+      spriteID: 83668fe7bb4e0a2b0800000000000000
+      internalID: -5575204844744448456
       vertices: []
       indices: 
       edges: []
@@ -176,10 +188,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 22c44c9906b7f074eb6b400d5cc8a27d
-      internalID: 1433835897
+      spriteID: cb2ddf0a64933fd10800000000000000
+      internalID: 2158131621952082620
       vertices: []
       indices: 
       edges: []
@@ -188,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 8a5cc7c944835cf4399d8066497bc2bc
+    spriteID: 37ae4929009e8e444bf54d5eae82f958
     internalID: 0
     vertices: []
     indices: 
@@ -200,10 +212,10 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      WolfLeaderAnimationHit_0: -1437206416
-      WolfLeaderAnimationHit_1: -6355701
-      WolfLeaderAnimationHit_2: -389422096
-      WolfLeaderAnimationHit_3: 1433835897
+      WolfLeaderAnimationHit_0: 4347729081090954055
+      WolfLeaderAnimationHit_1: -1567348758119030024
+      WolfLeaderAnimationHit_2: -5575204844744448456
+      WolfLeaderAnimationHit_3: 2158131621952082620
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

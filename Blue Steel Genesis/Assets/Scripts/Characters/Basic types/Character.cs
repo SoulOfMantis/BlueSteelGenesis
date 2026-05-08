@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public abstract class Character : Entity
 {
@@ -36,7 +37,6 @@ public abstract class Character : Entity
             currentHealth -= dmg;
             if (visualHandler != null)
                 await visualHandler.PlayHurtAnimation(dmg);
-            await changeColorAndWait(Color.crimson, 0.2f*dmg);
             await processTrigger(TriggerType.OnHealthDamage, ctx?.WithActionData(dmg));
             if (currentHealth == 0)
                 await die();
@@ -61,7 +61,8 @@ public abstract class Character : Entity
     {
         currentShield -= value;
         UpdateTooltipIfCurrent();
-        await Awaitable.WaitForSecondsAsync(.1f); //TODO: remove delay; derived classes must await animations
+        if (visualHandler != null)
+            visualHandler.PlayLoseShieldAnimation();
     }
     public override async Task heal(uint hp, ActionContext ctx)
     {
@@ -170,15 +171,15 @@ public abstract class Character : Entity
         if (!valid_moves.Contains(dir) ||
             new_pos.Except(Position).Any(p => tracker.OutOfBounds(p)) ||
             new_pos.Except(Position).Any(p => tracker.IsOccupiedByCharacter(p)))
-            return;
-
-        
+            return;        
         Position = new_pos;
 
         if (sfx != null)
             sfx.play(TriggerType.OnMove);
         if (visualHandler != null)
-            await visualHandler.PlayWalkAnimation(dir);
+            await visualHandler.PlayWalkAnimation(new_pos.First());
+        Position = new_pos;
+
     }
 
     public Task strike(int x, int y, int z, uint dmg, ActionContext ctx) => strike(new Vector3Int(x, y, z), dmg, ctx);
@@ -204,7 +205,8 @@ public abstract class Character : Entity
         Character target = tracker.FindCharacterAtPosition(pos);
         if (target == null)
             return;
-        await Awaitable.WaitForSecondsAsync(.2f);
+        if (visualHandler != null)
+            await visualHandler.PlayStatusAnimation();
 
         ctx = ctx?.WithActionData(status);
         await target.addStatusModule(status, ctx);

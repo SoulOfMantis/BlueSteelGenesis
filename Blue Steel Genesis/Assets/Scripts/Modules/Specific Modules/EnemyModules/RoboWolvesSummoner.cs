@@ -14,7 +14,7 @@ public class RoboWolfSummoner : ActiveModule {
         "Summons a RoboWolf.\n" + base.Description();
 
     public override Task Effect(Character user, Vector3Int pos, ActionContext ctx) {
-        Entity.summon<RoboWolf>(new(pos));
+        user.summon<RoboWolf>(new(pos));
         return Task.CompletedTask;
     }
     protected override bool checkFinalPosition(Vector3Int pos) {
