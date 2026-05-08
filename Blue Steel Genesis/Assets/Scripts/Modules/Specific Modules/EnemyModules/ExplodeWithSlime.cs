@@ -40,11 +40,11 @@ public class ExplodeWithSlime : PassiveModule
             switch (summonSize)
             {
                 case 1:
-                    if (!Entity.summon<SmallAcidSlime>(new(getCellsInRange(user).First(), (int)summonSize)))
+                    if (!await user.summon<SmallAcidSlime>(new(getCellsInRange(user).First(), (int)summonSize)))
                         Debug.Log("Couldn't summon a small slime.");
                         break;                    
                 case 2:
-                    if(!Entity.summon<BigAcidSlime>(new(getCellsInRange(user).First(), (int)summonSize)))
+                    if(!await user.summon<BigAcidSlime>(new(getCellsInRange(user).First(), (int)summonSize)))
                         Debug.Log("Couldn't summon a big slime.");
                     break;
                 default:
