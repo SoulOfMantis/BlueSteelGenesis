@@ -20,7 +20,6 @@ public class SummonWolfModule : ActiveModule
     public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
     {
         await user.summon<Wolf>(new PositionCollection(pos, 1));
-        await user.visualHandler.PlaySummonAnimation();
     }
 
     protected override bool checkFinalPosition(Vector3Int pos)
