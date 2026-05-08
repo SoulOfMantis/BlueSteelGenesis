@@ -51,13 +51,13 @@ MonoBehaviour:
   position_: {x: 0, y: 0}
   type_: 0
   RegularEnemyIcon: {fileID: -372674217349630506, guid: ec0e298a6276f0447b9d31890ce0c18b, type: 3}
-  EventIcon: {fileID: 0}
+  EventIcon: {fileID: -5198474680853170268, guid: b94bc44d293a21245b9616150c6aa8e3, type: 3}
   ShopIcon: {fileID: 5495121454292350632, guid: 6da65a41cb4b65c43b4859296c6f0a7d, type: 3}
   RestIcon: {fileID: -4992995096616195933, guid: 84e3ec6de96307b48bd54526069cb8e4, type: 3}
   EliteEnemyIcon: {fileID: -197017022953627775, guid: 82defb221e85ae34bb5674c3b320a6b5, type: 3}
   TreasureIcon: {fileID: 6029224591642543062, guid: a3819d5228aefec449afd236d1fd3cf6, type: 3}
   StartIcon: {fileID: 0}
-  BossIcon: {fileID: 0}
+  BossIcon: {fileID: 4854848243135637476, guid: 8a2036802d8b4e849a81f575bae3203c, type: 3}
   BlackMarketIcon: {fileID: -4213302759279698812, guid: 7ce617e6184704f46bab2ee37f872b01, type: 3}
 --- !u!1 &7150776707198773678
 GameObject:
