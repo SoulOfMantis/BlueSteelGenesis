@@ -73,6 +73,8 @@ class ModuleEntry : MonoBehaviour
         upButton.gameObject.SetActive(false);
         downButton.gameObject.SetActive(false);
         actionButton.onClick.AddListener(() => manager.UpgradeModule(currentIdx));
+        if (sfx != null)
+            actionButton.onClick.AddListener(sfx.playUpgrade);
 
         var tmp = actionButton.GetComponentInChildren(typeof(TMP_Text)) as TMP_Text;
         actionButton.interactable = false;
