@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using System;
-using TMPro;
+﻿using System;
 using UnityEngine;
 using System.Linq;
 
@@ -10,11 +8,15 @@ public class RoboWolf : Enemy
     {
         Name = "RoboWolf";
         Description = "A robotic copy of regular wolf. Got some pretty cool enhancements!";
+    }
+
+    protected override void Init()
+    {
         addModule(new BurnBite());
         addModule(new AcceleratedMovement());
-        
-
         SetPriorityModules();
+
+        base.Init();
     }
 
     protected override bool TryGetTargetForZero(out Vector3Int targetPos)

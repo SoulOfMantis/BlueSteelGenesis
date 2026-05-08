@@ -1,20 +1,23 @@
 using UnityEngine;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+
 public class WolfLeader : Enemy
 {
     public WolfLeader() : base(40, 5, 70)
     {
         Name = "Wolf Leader";
         Description = "The mighty leader of the wolf pack. Can summon wolves to aid him!";
+    }
 
+    protected override void Init()
+    {
         addModule(new BiteModule());
         addModule(new ClawModule());
         addModule(new SummonWolfModule());
         addModule(new BasicMovement());
-
         SetPriorityModules();
+
+        base.Init();
     }
 
     protected override bool TryGetTargetForZero(out Vector3Int targetPos)
