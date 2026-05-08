@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f8faaef08b0bfd547afbb8968afa4e08
+guid: d7273f721a9f6ed429415b8eb4ccca2e
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,7 +127,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: BurnBite
+  - name: HitWidthMacheteModule
     originalName: 
     pivot: {x: 0.5, y: -0.033333335}
     alignment: 9
@@ -139,7 +139,7 @@ ScriptedImporter:
       y: 4
       width: 30
       height: 30
-    spriteID: 48b8d8de27e2a2343b37a80f871fb5dc
+    spriteID: 2da93ce6f7848a34ead81cd0f4016a33
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,17 +153,17 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 243546141
+      value0: 1188107872
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: BurnBite
+    name: HitWidthMacheteModule
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: BurnBite
+    - name: WideAttackModule
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -171,7 +171,7 @@ ScriptedImporter:
         y: 1
         width: 30
         height: 30
-      spriteId: 48b8d8de27e2a2343b37a80f871fb5dc
+      spriteId: 2da93ce6f7848a34ead81cd0f4016a33
     linkedCells: []
     tileCells: []
     tileSetIndex: 0

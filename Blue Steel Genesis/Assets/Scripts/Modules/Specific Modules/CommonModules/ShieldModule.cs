@@ -6,23 +6,24 @@ using UnityEngine;
 /// <summary>
 /// ������� ������ ���� (BSM ����������)
 /// </summary>
-public class BasicShield : ActiveModule
+public class BasicShieldModule : ActiveModule
 {
     private uint shieldGiven;
-    public BasicShield() : base()
+    public BasicShieldModule() : base()
     {
         price = 15;
         shieldGiven = 8;
         energyCost = 2;
         range = 0;
         AddConstKeywords(new CommonKeyword(), new DefenseKeyword());
+        Icon_name = "BasicShieldModule";
     }
     public override string Description()
     {
         return $"Give {shieldGiven} shield to yourself.";
     }
 
-    public BasicShield(uint shield) : this()
+    public BasicShieldModule(uint shield) : this()
     {
         shieldGiven = shield;
     }

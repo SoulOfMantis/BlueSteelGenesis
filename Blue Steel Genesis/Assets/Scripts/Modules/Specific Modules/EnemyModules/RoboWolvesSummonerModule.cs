@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class RoboWolfSummoner : ActiveModule {
+public class RoboWolfSummonerModule : ActiveModule {
 
-    public RoboWolfSummoner() {
+    public RoboWolfSummonerModule() {
         changeName("Summonning howl");
         range = 1;
         energyCost = 5;

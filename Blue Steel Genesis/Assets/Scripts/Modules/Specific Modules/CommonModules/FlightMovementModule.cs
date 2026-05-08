@@ -2,16 +2,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class FlightMovement : ActiveModule
+public class FlightMovementModule : ActiveModule
 {
-    public FlightMovement() : base()
+    public FlightMovementModule() : base()
     {
         price = 50;
         range = 2;
         energyCost = 1;
         AddConstKeywords(new MobilityKeyword(), new FlightKeyword(), new CommonKeyword());
+        Icon_name = "FlightMovementModule";
     }
-    public FlightMovement(uint range) : this()
+    public FlightMovementModule(uint range) : this()
     {
         this.range = range;
     }

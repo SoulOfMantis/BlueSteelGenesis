@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d7273f721a9f6ed429415b8eb4ccca2e
+guid: 36e0041275cccfb4a9e29795629385f4
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,7 +127,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: HitWidthMacheteModule
+  - name: AddAttackModule
     originalName: 
     pivot: {x: 0.5, y: -0.033333335}
     alignment: 9
@@ -139,7 +139,7 @@ ScriptedImporter:
       y: 4
       width: 30
       height: 30
-    spriteID: 2da93ce6f7848a34ead81cd0f4016a33
+    spriteID: 081f7c01676a7e3458c8074549fbff75
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,17 +153,17 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 1188107872
+      value0: 1128114395
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: HitWidthMacheteModule
+    name: AddAttackModule
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: WideAttack
+    - name: BasicAttackModule
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -171,7 +171,7 @@ ScriptedImporter:
         y: 1
         width: 30
         height: 30
-      spriteId: 2da93ce6f7848a34ead81cd0f4016a33
+      spriteId: 081f7c01676a7e3458c8074549fbff75
     linkedCells: []
     tileCells: []
     tileSetIndex: 0

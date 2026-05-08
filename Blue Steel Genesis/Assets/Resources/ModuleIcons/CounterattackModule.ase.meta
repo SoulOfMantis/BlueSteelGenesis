@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ef3a257fc0f16374bab40d17ad9c693e
+guid: 36e3dae50bf89834f98174880d70a553
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,7 +127,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: FlyModule
+  - name: CounterattackModule
     originalName: 
     pivot: {x: 0.5, y: 0}
     alignment: 9
@@ -139,7 +139,7 @@ ScriptedImporter:
       y: 4
       width: 32
       height: 32
-    spriteID: c72f4662be309f04f88a0005efa049b8
+    spriteID: 74f14ae8148e0ae4cb0daf290c58eb40
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,17 +153,17 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 2574893057
+      value0: 22737486
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: FlyModule
+    name: CounterattackModule
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: FlyModule
+    - name: CounterattackModule
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -171,7 +171,7 @@ ScriptedImporter:
         y: 0
         width: 32
         height: 32
-      spriteId: c72f4662be309f04f88a0005efa049b8
+      spriteId: 74f14ae8148e0ae4cb0daf290c58eb40
     linkedCells: []
     tileCells: []
     tileSetIndex: 0

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d647ce9c672c3f44fa565e8910a0069b
+guid: 965c8373905624f4eadcfc3e72337015
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,7 +127,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: Module_movement
+  - name: Module_mechanical_sting2
     originalName: 
     pivot: {x: 0.5, y: -0.033333335}
     alignment: 9
@@ -139,7 +139,7 @@ ScriptedImporter:
       y: 4
       width: 30
       height: 30
-    spriteID: 937ab7accabb0d04db4c8c6d6bfc1a5b
+    spriteID: 536cde73b7ef74047935e192635db7da
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,17 +153,17 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 3552804878
+      value0: 3518779808
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: Module_movement
+    name: Module_mechanical_sting2
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: BasicMovement
+    - name: MechanicStingerModule
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -171,7 +171,7 @@ ScriptedImporter:
         y: 1
         width: 30
         height: 30
-      spriteId: 937ab7accabb0d04db4c8c6d6bfc1a5b
+      spriteId: 536cde73b7ef74047935e192635db7da
     linkedCells: []
     tileCells: []
     tileSetIndex: 0

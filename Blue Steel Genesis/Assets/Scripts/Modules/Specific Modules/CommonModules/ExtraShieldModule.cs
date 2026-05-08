@@ -2,18 +2,19 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class EmergencyShield : PassiveModule
+public class ExtraShieldModule : PassiveModule
 {
     uint shieldPercent;
 
-    public EmergencyShield(uint shieldPercent) {
+    public ExtraShieldModule(uint shieldPercent) {
         price = 40;
         this.shieldPercent = shieldPercent;
         range = 0;
         triggerType = TriggerType.OnHealthDamage;
         AddConstKeywords(new CommonKeyword(), new DefenseKeyword(), new LimitedPerTurnKeyword());
+        Icon_name = "ExtraShieldModule";
     }
-    public EmergencyShield() : this(20) {}
+    public ExtraShieldModule() : this(20) {}
 
     public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx) {
         ctx.ThrowIfIncomplete();

@@ -5,17 +5,17 @@ using System.Collections.Generic;
 /// <summary>
 /// ������� ������ ����� (BAM ����������)
 /// </summary>
-public class BasicAttack : ActiveModule
+public class BasicAttackModule : ActiveModule
 {
     protected uint hitDamage;
 
-    public BasicAttack() : base()
+    public BasicAttackModule() : base()
     {
         price = 15;
         hitDamage = 2;
         energyCost = 1;
         range = 1;
-        //Icon_name = "...";
+        Icon_name = "BasicAttackModule";
         AddConstKeywords(new CommonKeyword(), new OffenseKeyword());
     }
     public override string Description()
@@ -23,7 +23,7 @@ public class BasicAttack : ActiveModule
         return $"Deal {hitDamage} damage to the adjacent creature.\n" + base.Description();
     }
 
-    public BasicAttack(uint hitDamage) : this()
+    public BasicAttackModule(uint hitDamage) : this()
     {
         this.hitDamage = hitDamage;
     }

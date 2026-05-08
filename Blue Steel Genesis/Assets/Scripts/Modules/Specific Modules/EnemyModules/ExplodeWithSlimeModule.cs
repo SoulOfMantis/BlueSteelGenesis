@@ -3,14 +3,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class ExplodeWithSlime : PassiveModule
+public class ExplodeWithSlimeModule : PassiveModule
 {
     uint summonSize;
     uint acidDamage;
     uint acidDuration;
-    public ExplodeWithSlime() : base()
+    public ExplodeWithSlimeModule() : base()
     {
-        Icon_name = "ExplodeWithSlime";
+        Icon_name = "ExplodeWithSlimeModule";
         acidDamage = 1;
         acidDuration = 2;
         triggerType = TriggerType.OnDeath;
@@ -18,7 +18,7 @@ public class ExplodeWithSlime : PassiveModule
         summonSize = 1;
         AddConstKeywords(new OffenseKeyword());
     }
-    public ExplodeWithSlime(uint summonSize) : this()
+    public ExplodeWithSlimeModule(uint summonSize) : this()
     {
         this.summonSize = summonSize;
     }

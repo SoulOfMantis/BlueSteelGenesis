@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 36e0041275cccfb4a9e29795629385f4
+guid: 4a864f47486e6bd42b4d0f574e80e7cd
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,7 +127,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: AddAttackModule
+  - name: AcceleratedMovement
     originalName: 
     pivot: {x: 0.5, y: -0.033333335}
     alignment: 9
@@ -139,7 +139,7 @@ ScriptedImporter:
       y: 4
       width: 30
       height: 30
-    spriteID: 081f7c01676a7e3458c8074549fbff75
+    spriteID: e3a9ae745c4f6834da221d9ede204093
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,17 +153,17 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 1128114395
+      value0: 3080387316
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: AddAttackModule
+    name: AcceleratedMovement
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: AddAttackModule
+    - name: AcceleratedMovementModule
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -171,7 +171,7 @@ ScriptedImporter:
         y: 1
         width: 30
         height: 30
-      spriteId: 081f7c01676a7e3458c8074549fbff75
+      spriteId: e3a9ae745c4f6834da221d9ede204093
     linkedCells: []
     tileCells: []
     tileSetIndex: 0

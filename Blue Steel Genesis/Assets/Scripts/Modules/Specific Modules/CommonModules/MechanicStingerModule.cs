@@ -5,13 +5,13 @@ using UnityEngine;
 /// <summary>
 /// �������� ������ ��������� ���� - ������� ���� � ����������� ����������
 /// </summary>
-public class MechanicStinger : ActiveModule
+public class MechanicStingerModule : ActiveModule
 {
     private uint hitDamage;
     private uint poisonDamage;
     private uint duration;
 
-    public MechanicStinger() : base()
+    public MechanicStingerModule() : base()
     {
         price = 20;
         energyCost = 3;
@@ -19,10 +19,10 @@ public class MechanicStinger : ActiveModule
         hitDamage = 2;
         duration = 2;
         poisonDamage = 1;
-        Icon_name = "MechanicStinger";
+        Icon_name = "MechanicStingerModule";
         AddConstKeywords(new OffenseKeyword(), new CommonKeyword());
     }
-    public MechanicStinger(uint damage, uint duration, uint hitDamage) : this()
+    public MechanicStingerModule(uint damage, uint duration, uint hitDamage) : this()
     {
         this.hitDamage = hitDamage;
         poisonDamage = damage;

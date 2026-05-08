@@ -2,32 +2,32 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class AcidShot : ActiveModule
+public class BurnBiteModule : ActiveModule
 {
-    uint hitDamage = 5;
-    uint acidDamage = 1;
-    uint acidDuration = 1;
-    public AcidShot() : base()
+    uint hitDamage = 6;
+    uint burnDamage = 2;
+    uint burnDuration = 1;
+    public BurnBiteModule() : base()
     {
-        Icon_name = "AcidShot";
-        range = 5;
+        range = 1;
         energyCost = 2;
         AddConstKeywords(new OffenseKeyword());
+        Icon_name = "BurnBiteModule";
     }
     public override HashSet<ModuleKeyword> renewableKeywords()
     {
         var res = base.renewableKeywords();
-        res.Add(new InflictKeyword<AcidModule>(PossibleTargets.Target, acidDamage, acidDuration));
+        res.Add(new InflictKeyword<BurnModule>(PossibleTargets.Target, burnDamage, burnDuration));
         return res;
     }
     public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
     {
         await user.strike(pos, hitDamage, MakeContext(user, pos));
-        await user.apply(pos, new AcidModule(acidDamage, acidDuration), MakeContext(user, pos));
+        await user.apply(pos, new BurnModule(burnDamage, burnDuration), MakeContext(user, pos));
     }
     public override string Description()
     {
-        return $"Deals {hitDamage} damage to the cell up to {range} cells away.\n" + base.Description();
+        return $"Deals {hitDamage} damage to the adjacent cell.\n" + base.Description();
     }
     protected override bool checkFinalPosition(Vector3Int pos)
     {

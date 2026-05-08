@@ -2,18 +2,18 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class CounterAttack : PassiveModule
+public class CounterAttackModule : PassiveModule
 {
     public uint damage;
-    public CounterAttack() : this(3) {}
-    public CounterAttack(uint dmg)
+    public CounterAttackModule() : this(3) {}
+    public CounterAttackModule(uint dmg)
     {
         price = 30;
         damage = dmg;
         range = 1;
         triggerType = TriggerType.OnDamage;
         AddConstKeyword(new CounterattackKeyword());
-        Icon_name = "Counterattack";
+        Icon_name = "CounterAttackModule";
     }
     public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
     {

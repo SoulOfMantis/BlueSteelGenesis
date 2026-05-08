@@ -2,16 +2,16 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class AcidBite : ActiveModule
+public class AcidShotModule : ActiveModule
 {
-    uint hitDamage = 10;
-    uint acidDamage = 3;
-    uint acidDuration = 2;
-    public AcidBite() : base()
+    uint hitDamage = 5;
+    uint acidDamage = 1;
+    uint acidDuration = 1;
+    public AcidShotModule() : base()
     {
-        Icon_name = "AcidBite";
-        range = 1;
-        energyCost = 3;
+        Icon_name = "AcidShotModule";
+        range = 5;
+        energyCost = 2;
         AddConstKeywords(new OffenseKeyword());
     }
     public override HashSet<ModuleKeyword> renewableKeywords()
@@ -27,7 +27,7 @@ public class AcidBite : ActiveModule
     }
     public override string Description()
     {
-        return $"Deals {hitDamage} damage to the adjacent cell.\n" + base.Description();
+        return $"Deals {hitDamage} damage to the cell up to {range} cells away.\n" + base.Description();
     }
     protected override bool checkFinalPosition(Vector3Int pos)
     {

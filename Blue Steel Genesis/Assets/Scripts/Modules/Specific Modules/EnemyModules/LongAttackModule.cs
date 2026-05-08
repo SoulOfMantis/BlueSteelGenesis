@@ -3,16 +3,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class LongAttack : ActiveModule
+public class LongAttackModule : ActiveModule
 {
     uint hitDamage = 4;
     uint waveDamage = 4;
 
-    public LongAttack() : base()
+    public LongAttackModule() : base()
     {
         range = 1;
         energyCost = 4;
-        Icon_name = "LongAttack";
+        Icon_name = "LongAttackModule";
         AddConstKeywords(new OffenseKeyword());
     }
     public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)

@@ -7,17 +7,17 @@ using UnityEngine;
 /// <summary>
 /// ������� ������ �������� (BMM ����������)
 /// </summary>
-public class BasicMovement : ActiveModule
+public class BasicMovementModule : ActiveModule
 {
-    public BasicMovement() : base()
+    public BasicMovementModule() : base()
     {
         price = 15;
         range = 4;
         energyCost = 1;
-        Icon_name = "BasicMovement";
+        Icon_name = "BasicMovementModule";
         AddConstKeywords(new MobilityKeyword(), new CommonKeyword());
     }
-    public BasicMovement(uint speed) : this()
+    public BasicMovementModule(uint speed) : this()
     {
         range = speed;
     }

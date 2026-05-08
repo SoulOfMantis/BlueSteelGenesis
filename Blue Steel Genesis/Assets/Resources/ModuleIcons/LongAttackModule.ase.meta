@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4a864f47486e6bd42b4d0f574e80e7cd
+guid: 6d4c59ae8cae8f74f965581beb6301f5
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,7 +127,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: AcceleratedMovement
+  - name: HitLongMacheteModule
     originalName: 
     pivot: {x: 0.5, y: -0.033333335}
     alignment: 9
@@ -139,7 +139,7 @@ ScriptedImporter:
       y: 4
       width: 30
       height: 30
-    spriteID: e3a9ae745c4f6834da221d9ede204093
+    spriteID: 75843f375c6628844b8b704b42fd6bb1
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,17 +153,17 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 3080387316
+      value0: 4263370628
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: AcceleratedMovement
+    name: HitLongMacheteModule
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: AcceleratedMovement
+    - name: LongAttackModule
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -171,7 +171,7 @@ ScriptedImporter:
         y: 1
         width: 30
         height: 30
-      spriteId: e3a9ae745c4f6834da221d9ede204093
+      spriteId: 75843f375c6628844b8b704b42fd6bb1
     linkedCells: []
     tileCells: []
     tileSetIndex: 0

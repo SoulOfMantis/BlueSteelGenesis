@@ -2,28 +2,28 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class BurnBite : ActiveModule
+public class AcidBiteModule : ActiveModule
 {
-    uint hitDamage = 6;
-    uint burnDamage = 2;
-    uint burnDuration = 1;
-    public BurnBite() : base()
+    uint hitDamage = 10;
+    uint acidDamage = 3;
+    uint acidDuration = 2;
+    public AcidBiteModule() : base()
     {
+        Icon_name = "AcidBiteModule";
         range = 1;
-        energyCost = 2;
+        energyCost = 3;
         AddConstKeywords(new OffenseKeyword());
-        Icon_name = "BurnBite";
     }
     public override HashSet<ModuleKeyword> renewableKeywords()
     {
         var res = base.renewableKeywords();
-        res.Add(new InflictKeyword<BurnModule>(PossibleTargets.Target, burnDamage, burnDuration));
+        res.Add(new InflictKeyword<AcidModule>(PossibleTargets.Target, acidDamage, acidDuration));
         return res;
     }
     public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
     {
         await user.strike(pos, hitDamage, MakeContext(user, pos));
-        await user.apply(pos, new BurnModule(burnDamage, burnDuration), MakeContext(user, pos));
+        await user.apply(pos, new AcidModule(acidDamage, acidDuration), MakeContext(user, pos));
     }
     public override string Description()
     {

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 965c8373905624f4eadcfc3e72337015
+guid: f84eac11eeaaf0c409e153c930c9f27a
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,7 +127,7 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: Module_mechanical_sting2
+  - name: CallModuleRobotWolf
     originalName: 
     pivot: {x: 0.5, y: -0.033333335}
     alignment: 9
@@ -139,7 +139,7 @@ ScriptedImporter:
       y: 4
       width: 30
       height: 30
-    spriteID: 536cde73b7ef74047935e192635db7da
+    spriteID: e41a6ebf8f26be44db9898dbef0e2539
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,17 +153,17 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 3518779808
+      value0: 1737577406
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: Module_mechanical_sting2
+    name: CallModuleRobotWolf
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: MechanicStinger
+    - name: RoboWolfsSummonerModule
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -171,7 +171,7 @@ ScriptedImporter:
         y: 1
         width: 30
         height: 30
-      spriteId: 536cde73b7ef74047935e192635db7da
+      spriteId: e41a6ebf8f26be44db9898dbef0e2539
     linkedCells: []
     tileCells: []
     tileSetIndex: 0
