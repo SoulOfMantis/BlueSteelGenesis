@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public abstract class Character : Entity
 {
@@ -175,7 +176,8 @@ public abstract class Character : Entity
         Character target = tracker.FindCharacterAtPosition(pos);
         if (target == null)
             return;
-        await Awaitable.WaitForSecondsAsync(.2f);
+        if (visualHandler != null)
+            await visualHandler.PlayStatusAnimation();
 
         ctx = ctx?.WithActionData(status);
         await target.addStatusModule(status, ctx);
