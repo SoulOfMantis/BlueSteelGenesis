@@ -11,10 +11,11 @@ public class BasicMovementModule : ActiveModule
 {
     public BasicMovementModule() : base()
     {
-        price = 15;
-        range = 4;
+        price = 5;
+        range = 3;
         energyCost = 1;
         Icon_name = "BasicMovementModule";
+        maxUpgradeLevel = 3;
         AddConstKeywords(new MobilityKeyword(), new CommonKeyword());
     }
     public BasicMovementModule(uint speed) : this()
@@ -32,4 +33,12 @@ public class BasicMovementModule : ActiveModule
     }
     public override List<Vector3Int> getCellsInRange(PositionCollection start) =>
         Navigation.Dijkstra.listReachable(start, p => !Entity.tracker.OutOfBounds(p) && !Entity.tracker.IsOccupied(p), range).ToList();
+
+    public override void ApplyUpgrade()
+    {
+        base.ApplyUpgrade();
+        range += 1;
+        price += 15;
+    }
+
 }

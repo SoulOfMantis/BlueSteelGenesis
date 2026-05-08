@@ -6,7 +6,7 @@ using System.Linq;
 
 public class AlliedRoboWolf : Ally
 {
-    public AlliedRoboWolf() : base(32, 4, 32)
+    public AlliedRoboWolf() : base(16, 4, 32)
     {
         Name = "RoboWolf";
         Description = "A robotic copy of regular wolf, reprogrammed by you. Got some pretty cool enhancements!";

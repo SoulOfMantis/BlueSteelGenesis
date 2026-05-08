@@ -8,6 +8,7 @@ public class FlightMovementModule : ActiveModule
     {
         price = 50;
         range = 2;
+        maxUpgradeLevel = 1;
         energyCost = 1;
         AddConstKeywords(new MobilityKeyword(), new FlightKeyword(), new CommonKeyword());
         Icon_name = "FlightMovementModule";
@@ -35,4 +36,11 @@ public class FlightMovementModule : ActiveModule
         !Entity.tracker.OutOfBounds(pos) && !Entity.tracker.IsOccupiedByCharacter(pos);
     protected override bool checkFinalPosition(Vector3Int pos) =>
         !Entity.tracker.IsOccupied(pos);
+    public override void ApplyUpgrade()
+    {
+        base.ApplyUpgrade();
+        range += 1;
+        price += 50;
+    }
+
 }

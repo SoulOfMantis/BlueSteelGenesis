@@ -3,7 +3,7 @@ using System.Linq;
 
 public class WolfLeader : Enemy
 {
-    public WolfLeader() : base(40, 5, 70)
+    public WolfLeader() : base(30, 5, 70)
     {
         Name = "Wolf Leader";
         Description = "The mighty leader of the wolf pack. Can summon wolves to aid him!";
@@ -13,8 +13,8 @@ public class WolfLeader : Enemy
     {
         addModule(new BiteModule());
         addModule(new ClawModule());
-        addModule(new SummonWolfModule());
         addModule(new BasicMovementModule());
+        addModule(new SummonWolfModule());
         SetPriorityModules();
 
         base.Init();
@@ -35,10 +35,12 @@ public class WolfLeader : Enemy
         targetPos = possibleTargets.FirstOrDefault();
         return possibleTargets.Count() != 0;
     }
+    protected override bool TryGetTargetForTwo(out Vector3Int targetPos) =>
+       GetDirectApproachTarget(out targetPos, priorityModules[2], getEnemies());
 
-    protected override bool TryGetTargetForTwo(out Vector3Int targetPos)
+    protected override bool TryGetTargetForThree(out Vector3Int targetPos)
     {
-        var summonRangeCells = priorityModules[2].getCellsInRange(Position);
+        var summonRangeCells = priorityModules[3].getCellsInRange(Position);
         var freeCells = summonRangeCells.Where(cell => !tracker.IsOccupied(cell) && !tracker.OutOfBounds(cell)).ToList();
         if (freeCells.Any())
         {
@@ -48,9 +50,5 @@ public class WolfLeader : Enemy
         targetPos = default;
         return false;
     }
-    protected override bool TryGetTargetForThree(out Vector3Int targetPos) =>
-           GetDirectApproachTarget(out targetPos, priorityModules[3], getEnemies()) ||
-           GetApproachTarget(out targetPos, priorityModules[3], getEnemies());
-
 }
 
