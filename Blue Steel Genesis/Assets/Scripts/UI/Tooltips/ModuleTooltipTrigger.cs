@@ -4,54 +4,16 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Image))]
-public class ModuleTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ModuleTooltipTrigger : MonoBehaviour, IPointerClickHandler
 {
     public GameModule module;
     public Image icon;
-    IEnumerator ShowingTooltip()
+    public void OnPointerClick(PointerEventData eventData)
     {
-        if (TooltipSystem.IsModuleTooltipActive()) yield return new WaitForSeconds(TooltipSystem.HidingTimeInSeconds);
-        TooltipSystem.Load(module);           
-        yield return new WaitForSeconds(TooltipSystem.ShowingTimeInSeconds);
-        TooltipSystem.Show(TooltipSystem.TooltipType.moduleTooltip, this);
-    }
-    IEnumerator HidingTooltip()
-    {
-        yield return new WaitForSeconds(TooltipSystem.HidingTimeInSeconds);
-        TooltipSystem.Hide(TooltipSystem.TooltipType.moduleTooltip);
-    }
-
-    public void OnMouseEnter()
-    {
-        if (!TooltipSystem.moduleTooltipLocked)
+        if (eventData.button == PointerEventData.InputButton.Right)
         {
-            StopCoroutine("HidingTooltip");
-            StartCoroutine("ShowingTooltip");
-        }
-    }
-
-    public void OnMouseExit()
-    {
-        if (!TooltipSystem.moduleTooltipLocked)
-        {
-            StopCoroutine("ShowingTooltip");
-            StartCoroutine("HidingTooltip");
-        }
-    }
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (!TooltipSystem.moduleTooltipLocked)
-        {
-            StopCoroutine("HidingTooltip");
-            StartCoroutine("ShowingTooltip");
-        }
-    }
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (!TooltipSystem.moduleTooltipLocked)
-        {
-            StopCoroutine("ShowingTooltip");
-            StartCoroutine("HidingTooltip");
+            TooltipSystem.Load(module);
+            TooltipSystem.Show(TooltipSystem.TooltipType.moduleTooltip, this);
         }
     }
     public void updateModuleTrigger(GameModule module)

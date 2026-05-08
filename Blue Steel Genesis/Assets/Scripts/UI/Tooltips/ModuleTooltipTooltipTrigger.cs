@@ -1,17 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ModuleTooltipTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ModuleTooltipTooltipTrigger : MonoBehaviour, IDeselectHandler
 {
-    public void OnPointerEnter(PointerEventData eventData)
+    public EntityTooltipTooltipTrigger tooltip;
+    void IDeselectHandler.OnDeselect(BaseEventData eventData)
     {
-        TooltipSystem.Lock(TooltipSystem.TooltipType.moduleTooltip);
-        TooltipSystem.Delay(TooltipSystem.TooltipType.moduleTooltip);
-    }
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        TooltipSystem.Unlock(TooltipSystem.TooltipType.moduleTooltip);
-        TooltipSystem.ResumeHiding(TooltipSystem.TooltipType.moduleTooltip);
-        TooltipSystem.ResumeHiding(TooltipSystem.TooltipType.entityTooltip);
+        gameObject.SetActive(false);
+        if (tooltip != null)
+        {
+            tooltip.Deselect();
+        }
     }
 }

@@ -1120,6 +1120,7 @@ MonoBehaviour:
   Price: {fileID: 4051267748795072245}
   Description: {fileID: 6998366903519619184}
   contentParent: {fileID: 4670763222360102532}
+  trigger: {fileID: 7137545261509560029}
 --- !u!114 &7137545261509560029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1132,6 +1133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f7d432600af6b3438f6a114e5cb77f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BlueSteelGenesis::ModuleTooltipTooltipTrigger
+  tooltip: {fileID: 0}
 --- !u!1 &3111732699720273017
 GameObject:
   m_ObjectHideFlags: 0
@@ -2654,6 +2656,7 @@ MonoBehaviour:
   - {fileID: 4052511491409256994}
   - {fileID: 2220789700157229516}
   - {fileID: 7404507326861176810}
+  trigger: {fileID: 2170760560712695855}
 --- !u!114 &2170760560712695855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2666,6 +2669,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44fb8519a276b4743a6b3fd161549dda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterTooltipTooltipTrigger
+  current: {fileID: 0}
+  myTriggers: []
 --- !u!1 &7133618367232886059
 GameObject:
   m_ObjectHideFlags: 0
@@ -3566,4 +3571,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   entityTooltip: {fileID: 8727232288107476602}
   moduleTooltip: {fileID: 6385707333343637928}
+  currentEntityTrigger: {fileID: 0}
+  currentModuleTrigger: {fileID: 0}
   keywordTooltipPrefab: {fileID: 610763912501953441, guid: 5f2a1e706856c6e49b8ed0b35d9bd1fe, type: 3}

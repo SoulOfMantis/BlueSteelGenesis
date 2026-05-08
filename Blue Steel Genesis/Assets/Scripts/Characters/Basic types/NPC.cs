@@ -84,11 +84,7 @@ public abstract class NPC : Character
             await endTurn();
         await processTrigger(TriggerType.OnDeath, null);
         if (TooltipSystem.IsCurrent(this))
-        {
-            TooltipSystem.Unlock(TooltipSystem.TooltipType.entityTooltip);
             TooltipSystem.Hide(TooltipSystem.TooltipType.entityTooltip);
-        }
-
         if (sfx != null)
             sfx.play(TriggerType.OnDeath);
         if (visualHandler != null)
