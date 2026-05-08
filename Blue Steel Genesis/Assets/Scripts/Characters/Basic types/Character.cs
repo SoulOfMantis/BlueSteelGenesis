@@ -7,8 +7,12 @@ using UnityEngine;
 public abstract class Character : Entity
 {
     [SerializeField] protected CharacterVisualHandler visualHandler;
+    [SerializeField] protected CharacterSFX sfx;
 
     public override async Task loseHealth(uint hp, ActionContext ctx) {
+        if (sfx != null)
+            sfx.play(TriggerType.OnHealthLost);
+
         ctx = ctx?.WithActionData(hp);
         await base.loseHealth(hp, ctx);
         await processTrigger(TriggerType.OnHealthLost, ctx);
@@ -26,6 +30,9 @@ public abstract class Character : Entity
         }
         if (dmg > 0)
         {
+            if (sfx != null)
+                sfx.play(TriggerType.OnHealthDamage);
+
             currentHealth -= dmg;
             if (visualHandler != null)
                 await visualHandler.PlayHurtAnimation(dmg);
@@ -38,6 +45,11 @@ public abstract class Character : Entity
     }
     public virtual async Task shieldDamage(uint shield_dmg, ActionContext ctx)
     {
+        if (sfx != null)
+            sfx.play(shield_dmg == currentShield ?
+                TriggerType.OnShieldBroken :
+                TriggerType.OnDamageShielded);
+
         ctx = ctx?.WithActionData(shield_dmg);
         await loseShield(shield_dmg);
         await processTrigger(TriggerType.OnDamageShielded, ctx);
@@ -53,6 +65,9 @@ public abstract class Character : Entity
     }
     public override async Task heal(uint hp, ActionContext ctx)
     {
+        if (sfx != null)
+            sfx.play(TriggerType.OnHeal);
+
         ctx = ctx?.WithActionData(hp);
         await base.heal(hp, ctx);
         if (visualHandler != null)
@@ -62,6 +77,9 @@ public abstract class Character : Entity
 
     public virtual async Task giveShield(uint amount, ActionContext ctx)
     {
+        if (sfx != null)
+            sfx.play(TriggerType.OnShieldGiven);
+
         currentShield += Math.Max(amount, 1);
         UpdateTooltipIfCurrent();
         if (visualHandler != null)
@@ -71,6 +89,9 @@ public abstract class Character : Entity
     }
     public virtual async Task drainEnergy(uint amount, ActionContext ctx = null)
     {
+        if (sfx != null)
+            sfx.play(TriggerType.OnEnergyDrain);
+
         currentEnergy -= Math.Max(amount, 1);
         UpdateTooltipIfCurrent();
         await changeColorAndWait(Color.blue, 0.1f*amount);
@@ -78,6 +99,9 @@ public abstract class Character : Entity
     }
     public virtual async Task restoreEnergy(uint amount, ActionContext ctx = null)
     {
+        if (sfx != null)
+            sfx.play(TriggerType.OnEnergyRestore);
+
         currentEnergy += Math.Max(amount, 1);
         UpdateTooltipIfCurrent();
         await changeColorAndWait(Color.aquamarine, 0.1f*amount);
@@ -150,6 +174,9 @@ public abstract class Character : Entity
 
         
         Position = new_pos;
+
+        if (sfx != null)
+            sfx.play(TriggerType.OnMove);
         if (visualHandler != null)
             await visualHandler.PlayWalkAnimation(dir);
     }
@@ -161,6 +188,8 @@ public abstract class Character : Entity
         if (target == null)
             return;
         
+        if (sfx != null)
+            sfx.play(TriggerType.OnStrike);
         if (visualHandler != null)
             await visualHandler.PlayAttackAnimation(pos);
   
@@ -204,14 +233,17 @@ public abstract class Character : Entity
             module.Refresh(status);
         else
         {
+            var trigger_type = status switch {
+                NegativeStatusModule => TriggerType.OnNegativeStatusApplied,
+                PositiveStatusModule => TriggerType.OnPositiveStatusApplied,
+            };
+
+            if (sfx != null)
+                sfx.play(trigger_type);
             status_modules_.Add(status);
             UpdateTooltipIfCurrent();
             status.Initialize();
-            await processTrigger(
-                status switch {
-                    NegativeStatusModule => TriggerType.OnNegativeStatusApplied,
-                    PositiveStatusModule => TriggerType.OnPositiveStatusApplied,
-                }, ctx?.WithActionData(status));
+            await processTrigger(trigger_type, ctx?.WithActionData(status));
 
             Debug.Log($"Status module {status.GetType().Name} added to {GetType().Name}");
         }

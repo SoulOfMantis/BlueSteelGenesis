@@ -197,6 +197,8 @@ public class PlayerCharacter : Character
         tracker.RemoveCharacter(this);
         Defeat();
         //TODO: player loss
+        if (sfx != null)
+            sfx.play(TriggerType.OnDeath);
         if (visualHandler != null)
             await visualHandler.PlayDeathAnimation();
     }

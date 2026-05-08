@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Blue Steel Genesis/Assets/Resources/Music.meta
+guid: ff7e06707b29bd14398a453f01167d90
+folderAsset: yes
+========
 guid: 377163b06b4dd6f46b822a43ff68ac92
+>>>>>>>> dev:Blue Steel Genesis/Assets/Scenes/rest_room_b1.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
