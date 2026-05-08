@@ -6,7 +6,7 @@ using System.Linq;
 
 public class CyberLeader : Enemy
 {
-    public CyberLeader() : base(64, 8, 64)
+    public CyberLeader() : base(32, 8, 64)
     {
         Name = "CyberLeader";
         Description = "Came back to life with the power of technology. And is now ready to take revenge! " +
@@ -16,8 +16,8 @@ public class CyberLeader : Enemy
     protected override void Init()
     {
         addModule(new BurnBite());
-        addModule(new RoboWolfSummoner());
         addModule(new AcceleratedMovement());
+        addModule(new RoboWolfSummoner());
         SetPriorityModules();
 
         base.Init();
@@ -31,16 +31,15 @@ public class CyberLeader : Enemy
         return possibleTargets.Count() != 0;
     }
 
-    protected override bool TryGetTargetForOne(out Vector3Int targetPos)
+    protected override bool TryGetTargetForOne(out Vector3Int targetPos) =>
+        GetDirectApproachTarget(out targetPos, priorityModules[1], getEnemies());
+
+    protected override bool TryGetTargetForTwo(out Vector3Int targetPos)
     {
-        var possibleTargets = priorityModules[1].getCellsInRange(Position)
+        var possibleTargets = priorityModules[2].getCellsInRange(Position)
             .Where(p => !Entity.tracker.IsOccupied(p));
         targetPos = possibleTargets.FirstOrDefault();
         return possibleTargets.Count() != 0;
     }
 
-
-    protected override bool TryGetTargetForTwo(out Vector3Int targetPos) =>
-        GetDirectApproachTarget(out targetPos, priorityModules[2], getEnemies()) ||
-        GetApproachTarget(out targetPos, priorityModules[2], getEnemies());
 }
