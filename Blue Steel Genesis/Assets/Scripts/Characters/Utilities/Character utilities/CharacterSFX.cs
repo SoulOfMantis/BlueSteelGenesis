@@ -7,6 +7,8 @@ public class CharacterSFX : MonoBehaviour
         AudioClip clip = trigger switch {
             TriggerType.OnHealthLost => healthLost,
             TriggerType.OnHealthDamage => healthDamage,
+            TriggerType.OnNegativeStatusApplied => negativeStatusApplied,
+            TriggerType.OnPositiveStatusApplied => positiveStatusApplied,
             TriggerType.OnDamageShielded => damageShielded,
             TriggerType.OnShieldBroken => shieldBroken,
             TriggerType.OnShieldGiven => shieldGiven,
@@ -34,6 +36,8 @@ public class CharacterSFX : MonoBehaviour
     private AudioSource audio_src;
     [SerializeField] private AudioClip healthLost;
     [SerializeField] private AudioClip healthDamage;
+    [SerializeField] private AudioClip negativeStatusApplied;
+    [SerializeField] private AudioClip positiveStatusApplied;
     [SerializeField] private AudioClip damageShielded;
     [SerializeField] private AudioClip shieldBroken;
     [SerializeField] private AudioClip shieldGiven;

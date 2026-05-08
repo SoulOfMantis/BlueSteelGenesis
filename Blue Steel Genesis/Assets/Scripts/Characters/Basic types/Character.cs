@@ -233,14 +233,16 @@ public abstract class Character : Entity
             module.Refresh(status);
         else
         {
+            var trigger_type = status switch {
+                NegativeStatusModule => TriggerType.OnNegativeStatusApplied,
+                PositiveStatusModule => TriggerType.OnPositiveStatusApplied,
+            };
+
+            sfx.play(trigger_type);
             status_modules_.Add(status);
             UpdateTooltipIfCurrent();
             status.Initialize();
-            await processTrigger(
-                status switch {
-                    NegativeStatusModule => TriggerType.OnNegativeStatusApplied,
-                    PositiveStatusModule => TriggerType.OnPositiveStatusApplied,
-                }, ctx?.WithActionData(status));
+            await processTrigger(trigger_type, ctx?.WithActionData(status));
 
             Debug.Log($"Status module {status.GetType().Name} added to {GetType().Name}");
         }
