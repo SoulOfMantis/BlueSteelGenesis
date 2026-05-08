@@ -21,7 +21,7 @@ public class GameRun
         {
             case 1:
                 var res = new Dictionary<(uint stage, uint elite_id), System.Type>();
-                res[(0, 1)] = typeof(WideAttack);
+                res[(0, 1)] = typeof(WideAttackModule);
                 return res;
             default:
                 return new Dictionary<(uint stage, uint elite_id), System.Type>();
