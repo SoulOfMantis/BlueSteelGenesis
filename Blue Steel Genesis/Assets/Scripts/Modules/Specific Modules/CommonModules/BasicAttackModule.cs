@@ -10,7 +10,7 @@ public class BasicAttackModule : ActiveModule
     protected uint hitDamage;
 
     public override uint GetUpgradeCost() => (uint)(upgradeLevel + 1) * 10;
-    public BasicAttack() : base()
+    public BasicAttackModule() : base()
     {
         price = 15;
         hitDamage = 2;
