@@ -49,20 +49,21 @@ public class Rest
         Debug.Log("Free heal used");
     }
 
-    public void PaidHeal()
+    public bool PaidHeal()
     {
-        if (healUsed) return;
+        if (healUsed) return false;
 
         var player = GameState.Run.Expedition.Player;
 
         if (!player.HasEnoughMaterials(PaidHealCost))
-            return;
+            return false;
 
         player.LoseMaterials(PaidHealCost);
         player.currentHealth.Value += PaidHealAmount();
 
         healUsed = true;
         Debug.Log("Paid heal used");
+        return true;
     }
 
     public void Exit()

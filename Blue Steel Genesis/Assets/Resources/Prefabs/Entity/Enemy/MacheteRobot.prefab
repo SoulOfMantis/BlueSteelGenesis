@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 910996753969975453}
   - component: {fileID: 6436685001208273242}
   - component: {fileID: 8541471162094064636}
+  - component: {fileID: 3133373147205184443}
   m_Layer: 0
   m_Name: MacheteRobot
   m_TagString: Enemy
@@ -104,6 +105,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: BlueSteelGenesis::MacheteRobot
   bodySize: 2
+  visualHandler: {fileID: 0}
+  sfx: {fileID: 3133373147205184443}
+--- !u!114 &3133373147205184443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344885736801266915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71aed81a16fa4724d82ec68668df584e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BlueSteelGenesis::CharacterSFX
+  healthLost: {fileID: 0}
+  healthDamage: {fileID: 8300000, guid: 202c86bc209d9a44a9fa7409ac1736f6, type: 3}
+  negativeStatusApplied: {fileID: 8300000, guid: 57b0b24d8182d974abe7bef320cdeab0, type: 3}
+  positiveStatusApplied: {fileID: 8300000, guid: 20ba4de673f5b3142afa7e73acf1fb85, type: 3}
+  damageShielded: {fileID: 8300000, guid: 6d509252cfad7d1468ab8156e659787b, type: 3}
+  shieldBroken: {fileID: 8300000, guid: 91bde89182d3b8242adea6071a24aec8, type: 3}
+  shieldGiven: {fileID: 8300000, guid: 4e5ab4d48c1e5ec429cf4233ec7fadaa, type: 3}
+  heal: {fileID: 8300000, guid: 3989552a40c27844888679c3cac51d61, type: 3}
+  energyDrain: {fileID: 8300000, guid: dfefff54599f37742bc12a4008311db6, type: 3}
+  energyRestore: {fileID: 8300000, guid: dfae81d6cc7e43e47ba57b01da46d600, type: 3}
+  moveStep: {fileID: 8300000, guid: df6bdb254fc5869428469051be71070a, type: 3}
+  strike: {fileID: 8300000, guid: c88920ae42461e34cb49c7e7f33a8a94, type: 3}
+  death: {fileID: 8300000, guid: 1dcf8985e73dd0845b997f2dc050dbf0, type: 3}
 --- !u!1 &7030514784578829008
 GameObject:
   m_ObjectHideFlags: 0
