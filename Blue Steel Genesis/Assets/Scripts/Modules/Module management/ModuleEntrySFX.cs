@@ -3,8 +3,8 @@ using UnityEngine;
 public class ModuleEntrySFX : MonoBehaviour
 {
     public void playRemove() => audio_src.PlayOneShot(remove);
-    public void playSell() => audio_src.PlayOneShot(remove);
-    public void playUpgrade() => audio_src.PlayOneShot(remove);
+    public void playSell() => audio_src.PlayOneShot(sell);
+    public void playUpgrade() => audio_src.PlayOneShot(upgrade);
 
     private void Awake() {
         audio_src = GetComponent<AudioSource>();
