@@ -19,6 +19,7 @@ public class testRestManager : MonoBehaviour
         UpdateUI();
         freeHealButton.onClick.AddListener(OnFreeHeal);
         paidHealButton.onClick.AddListener(OnPaidHeal);
+        paidHealButton.interactable = GameState.Run.Expedition.Player.HasEnoughMaterials(Rest.PaidHealCost);
         exitButton.onClick.AddListener(OnExit);
         moduleManagementUI.gameObject.SetActive(false);
     }
