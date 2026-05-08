@@ -129,7 +129,7 @@ MonoBehaviour:
   heal: {fileID: 8300000, guid: 3989552a40c27844888679c3cac51d61, type: 3}
   energyDrain: {fileID: 8300000, guid: dfefff54599f37742bc12a4008311db6, type: 3}
   energyRestore: {fileID: 8300000, guid: dfae81d6cc7e43e47ba57b01da46d600, type: 3}
-  moveStep: {fileID: 8300000, guid: df6bdb254fc5869428469051be71070a, type: 3}
+  moveStep: {fileID: 8300000, guid: b8cbeac14509ff443860b243212a9ac9, type: 3}
   strike: {fileID: 8300000, guid: c88920ae42461e34cb49c7e7f33a8a94, type: 3}
   death: {fileID: 8300000, guid: 1dcf8985e73dd0845b997f2dc050dbf0, type: 3}
 --- !u!1 &7030514784578829008

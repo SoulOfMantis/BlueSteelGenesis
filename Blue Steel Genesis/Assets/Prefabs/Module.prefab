@@ -112,9 +112,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0efbfb293544a3e44a5c335252657870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BlueSteelGenesis::ModuleEntrySFX
-  remove: {fileID: 0}
-  sell: {fileID: 0}
-  upgrade: {fileID: 0}
+  remove: {fileID: 8300000, guid: aa2895fb1b0a69d4ba66c96c9c2082f0, type: 3}
+  sell: {fileID: 8300000, guid: 3046e5cd49d76ac43a88b1231971ef4e, type: 3}
+  upgrade: {fileID: 8300000, guid: b212e33dc13899044b4679eea337a77e, type: 3}
 --- !u!1 &1194870023038627846
 GameObject:
   m_ObjectHideFlags: 0
