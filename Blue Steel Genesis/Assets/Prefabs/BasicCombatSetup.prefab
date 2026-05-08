@@ -4313,7 +4313,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000010967255, y: 0.00006564678}
+  m_AnchoredPosition: {x: -0.000010967255, y: 0.00008806856}
   m_SizeDelta: {x: 0, y: 8.21}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &5470408372509567572
@@ -5106,8 +5106,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: BlueSteelGenesis::CharacterSFX
   healthLost: {fileID: 0}
   healthDamage: {fileID: 8300000, guid: 202c86bc209d9a44a9fa7409ac1736f6, type: 3}
-  negativeStatusApplied: {fileID: 0}
-  positiveStatusApplied: {fileID: 0}
+  negativeStatusApplied: {fileID: 8300000, guid: 57b0b24d8182d974abe7bef320cdeab0, type: 3}
+  positiveStatusApplied: {fileID: 8300000, guid: 20ba4de673f5b3142afa7e73acf1fb85, type: 3}
   damageShielded: {fileID: 8300000, guid: 6d509252cfad7d1468ab8156e659787b, type: 3}
   shieldBroken: {fileID: 8300000, guid: 91bde89182d3b8242adea6071a24aec8, type: 3}
   shieldGiven: {fileID: 8300000, guid: 4e5ab4d48c1e5ec429cf4233ec7fadaa, type: 3}

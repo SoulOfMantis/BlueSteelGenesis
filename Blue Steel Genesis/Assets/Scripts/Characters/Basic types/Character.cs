@@ -238,7 +238,8 @@ public abstract class Character : Entity
                 PositiveStatusModule => TriggerType.OnPositiveStatusApplied,
             };
 
-            sfx.play(trigger_type);
+            if (sfx != null)
+                sfx.play(trigger_type);
             status_modules_.Add(status);
             UpdateTooltipIfCurrent();
             status.Initialize();
