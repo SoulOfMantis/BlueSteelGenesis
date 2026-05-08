@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using UnityEngine;
 
 public static class GameState
@@ -10,15 +11,45 @@ public static class GameState
             return;
         }
         Run = new(seed ?? generateRandomSeed());
+        Run.AutoEndPlayerTurn = autoEndPlayerTurn;
         Run.start();
     }
+
+    public static void saveGameRun()
+    {
+        string serialized = JsonUtility.ToJson(Run);
+        File.WriteAllText(SaveFilePath, serialized);
+    }
+    public static bool loadGameRun()
+    {
+        try {
+            string serialized = File.ReadAllText(SaveFilePath);
+            Run = JsonUtility.FromJson<GameRun>(serialized);
+            return true;
+        }
+        catch (Exception ex) {
+            Debug.LogError(ex);
+            return false;
+        }
+    }
+    public static bool saveFileExists() =>
+        File.Exists(SaveFilePath);
 
     public static void endGameRun()
     {
         Run = null;
     }
-
+    public static bool AutoEndPlayerTurn { set
+        {
+            autoEndPlayerTurn = value;
+            if (Run != null)
+                Run.AutoEndPlayerTurn = value;
+        }
+    }
+    private static bool autoEndPlayerTurn;
     public static GameRun Run { get; private set; } = null;
+    private const string SaveFilename = "save.json";
+    private static string SaveFilePath => Path.Combine(Application.persistentDataPath, SaveFilename);
 
     private static int generateRandomSeed() {
         byte[] seed_bytes = new byte[sizeof(int)];

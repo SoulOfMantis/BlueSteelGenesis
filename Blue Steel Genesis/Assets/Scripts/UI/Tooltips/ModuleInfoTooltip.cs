@@ -1,15 +1,18 @@
-using UnityEngine;
+using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class ModuleInfoTooltip : MonoBehaviour
 {
     public TMP_Text Name;
     public TMP_Text Type;
+    public TMP_Text Price;
     public TMP_Text Description;
-    //public Image Icon;
-
+    [SerializeField] Transform contentParent;
+    private List<KeywordTooltip> entries = new();
+    public ModuleTooltipTooltipTrigger trigger;
     private RectTransform rectTransform;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
@@ -27,7 +30,20 @@ public class ModuleInfoTooltip : MonoBehaviour
         if (g is ActiveModule a) Type.text = $"Active: {a.energyCost} energy";
         else if (g is StatusModule) Type.text = "Status";
         else if (g is PassiveModule) Type.text = "Passive";
-        //Icon.overrideSprite = Resources.Load<Sprite>($"ModuleIcons/{g.Icon_name}");
+
+        if (ModuleGenerator.isBoss(g)) Price.text = "GoldenTicket";
+        else Price.text = $"{g.price} gold";
+
+            foreach (var entry in entries)
+                Destroy(entry.gameObject);
+        entries.Clear();
+        foreach (var k in g.GetVisibleKeywords())
+        {
+            var go = Instantiate(TooltipSystem.KeywordTooltipPrefab, contentParent);
+            var entry = go.GetComponent<KeywordTooltip>();
+            entry.setup(k);
+            entries.Add(entry);
+        }
     }
 
     void OnEnable()

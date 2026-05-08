@@ -1,5 +1,7 @@
 using System;
+using UnityEngine;
 
+[Serializable]
 public class URangeValue {
     public URangeValue(long val = 0, uint max = uint.MaxValue) {
         value_ = (uint)Math.Clamp(val, 0, max);
@@ -17,6 +19,7 @@ public class URangeValue {
             Value = value_;
         }
     }
+    [SerializeField]
     private uint value_, max_;
 
     public static URangeValue operator +(URangeValue rv, int val) => rv.Sum(val);

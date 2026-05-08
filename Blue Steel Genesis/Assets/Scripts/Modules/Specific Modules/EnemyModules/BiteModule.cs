@@ -11,7 +11,7 @@ public class BiteModule : ActiveModule
 
     public BiteModule() : base()
     {
-        hitDamage = 5;
+        hitDamage = 6;
         energyCost = 2;
         range = 1;
         Icon_name = "BiteModule";
@@ -26,9 +26,9 @@ public class BiteModule : ActiveModule
     {
         this.hitDamage = hitDamage;
     }
-    public override async Task Effect(Character user, Vector3Int pos)
+    public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
     {
-        await user.strike(pos, hitDamage);
+        await user.strike(pos, hitDamage, MakeContext(user, pos));
         Debug.Log("BAM executed");
     }
 

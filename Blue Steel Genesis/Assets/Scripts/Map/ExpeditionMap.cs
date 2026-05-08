@@ -5,7 +5,8 @@ using UnityEngine;
 
 namespace Map
 {
-    public class BiomeInfo
+    [Serializable]
+    public class BiomeInfo : ISerializationCallbackReceiver
     {
         public uint id;
         public float missing_node_rate = .3f;
@@ -22,9 +23,44 @@ namespace Map
         public Dictionary<(uint stage, uint elite_id), Type> elites;
         // (stage, boss_id) => boss_variation_count
         public Dictionary<(uint stage, uint boss_id), uint> bosses;
+
+
+
+        public void OnBeforeSerialize() {
+            if (elites == null || bosses == null)
+                return;
+            elites_serializable_ = elites.Select(
+                e => new EliteSerializable{
+                    stage = e.Key.stage,
+                    elite_id = e.Key.elite_id,
+                    type = e.Value.AssemblyQualifiedName
+                }).ToArray();
+            bosses_serializable_ = bosses.Select(
+                b => new BossSerializable{
+                    stage = b.Key.stage,
+                    boss_id = b.Key.boss_id,
+                    variation = b.Value
+                }).ToArray();
+        }
+        public void OnAfterDeserialize() {
+            if (elites_serializable_ == null || bosses_serializable_ == null)
+                return;
+            elites = elites_serializable_.ToDictionary(e => (e.stage, e.elite_id), e => Type.GetType(e.type));
+            bosses = bosses_serializable_.ToDictionary(b => (b.stage, b.boss_id), b => b.variation);
+        }
+        [Serializable] private struct EliteSerializable {
+            public uint stage, elite_id;
+            public string type;
+        };
+        [Serializable] private struct BossSerializable {
+            public uint stage, boss_id, variation;
+        };
+        [SerializeField] private EliteSerializable[] elites_serializable_;
+        [SerializeField] private BossSerializable[] bosses_serializable_;
     }
 
-    public class ExpeditionMap
+    [Serializable]
+    public class ExpeditionMap : ISerializationCallbackReceiver
     {
         /// <summary>
         /// Перечисляет вершины, достижимые непосредственно из pos
@@ -71,8 +107,31 @@ namespace Map
             return reachable;
         }
 
-        public const int width = 5;
-        public const int height = 7;
+
+        public void OnBeforeSerialize() {
+            if (map == null)
+                return;
+
+            map_serializable_ = new Node[width * height];
+            for (int i = 0; i < height; ++i)
+                for (int j = 0; j < width; ++j)
+                    map_serializable_[i * width + j] = map[i, j];
+        }
+        public void OnAfterDeserialize() {
+            if (map_serializable_?.Length != height * width)
+                return;
+
+            map = new Node[height, width];
+            for (int i = 0; i < height; ++i)
+                for (int j = 0; j < width; ++j)
+                    map[i, j] = map_serializable_[i * width + j];
+        }
+        [SerializeField]
+        private Node[] map_serializable_;
+
+
+        public const int width = 6;
+        public const int height = 9;
         /// <summary>
         /// Специальная позиция, соответствующая начальному узлу (не содержится в map)
         /// </summary>
@@ -86,7 +145,9 @@ namespace Map
         /// </summary>
         public Vector2Int black_market_node => new(-1, -2);
 
+
         public Node[,] map { get; private set; }
+        [field: SerializeField]
         public bool upside_down { get; private set; }
 
 
@@ -110,12 +171,11 @@ namespace Map
 
         private static Node[,] generateNodeTypeMap(uint width, uint height, bool upside_down, int local_seed)
         {
-            //TODO: BRING BACK REST!
             var map = new Node[height + 2, width + 2];
             for (int x = 1; x <= width; ++x) {
-                map[1, x] = upside_down ? Node.TREASURE : Node.REGULAR_ENEMY;
+                map[1, x] = upside_down ? Node.REST : Node.REGULAR_ENEMY;
                 map[1 + height/2, x] = Node.TREASURE;
-                map[height, x] = upside_down ? Node.REGULAR_ENEMY : Node.TREASURE;
+                map[height, x] = upside_down ? Node.REGULAR_ENEMY : Node.REST;
             }
 
             System.Random prng = new(local_seed);

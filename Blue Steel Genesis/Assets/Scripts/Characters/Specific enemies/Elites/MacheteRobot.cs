@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class MacheteRobot : Enemy
 {
-    public MacheteRobot() : base(32, 4, 64)
+    public MacheteRobot() : base(35, 5, 40)
     {
-        addModule(new LongAttack());
-        addModule(new WideAttack());
-        addModule(new BasicMovement());
-        Name = "Saber Robot";
-        Description = "A mad robot with long machete.";
+        Name = "Machete Robot";
+        Description = "A mad robot with long machete. Seems to dislike bushes for whatever reason.";
     }
-    protected override bool TryGetTargetForZero(out Vector3Int targetPos)
+
+    protected override void Init()
+    {
+        addModule(new WideAttackModule());
+        addModule(new LongAttackModule());
+        addModule(new BasicMovementModule());
+        SetPriorityModules();
+
+        base.Init();
+    }
+    int possibleTargetsWide(out Vector3Int targetPos)
+    {
+        var possibleTargets = priorityModules[0].getCellsInRange(Position).Where(p => getEnemies().SelectMany(e => e.Position).Contains(p));
+        targetPos = possibleTargets.FirstOrDefault();
+        return possibleTargets.Count();
+    }
+
+    int possibleTargetsLong(out Vector3Int targetPos)
     {
         var possibleTargets = getEnemies().SelectMany(x => x.Position).Where(p => Position.Any(pp => pp.x == p.x || pp.y == p.y));
         var enemyPosition = possibleTargets.FirstOrDefault();
@@ -22,27 +36,22 @@ public class MacheteRobot : Enemy
         var direction = enemyPosition - ourAttackPosition;
         direction.Clamp(new(-1, -1), new(1, 1));
         targetPos = ourAttackPosition + direction;
+        return possibleTargets.Count();
+    }
 
-        return possibleTargets.Count() != 0;
+    protected override bool TryGetTargetForZero(out Vector3Int targetPos)
+    {
+        int Long = possibleTargetsLong(out targetPos), Wide = possibleTargetsWide(out targetPos);
+        return Wide >= Long && Wide > 0;
     }
     protected override bool TryGetTargetForOne(out Vector3Int targetPos)
     {
-        var possibleTargets = priorityModules[1].getCellsInRange(Position).Where(p => getEnemies().SelectMany(e => e.Position).Contains(p));
-        targetPos = possibleTargets.FirstOrDefault();
-        return possibleTargets.Count() != 0;
+        int Wide = possibleTargetsWide(out targetPos), Long = possibleTargetsLong(out targetPos);
+        return Long >= Wide && Long > 0;
     }
-    protected override bool TryGetTargetForTwo(out Vector3Int targetPos)
-    {
-        targetPos = Position.LeftBottom;
-        var moveRange = priorityModules[2].getCellsInRange(Position).Concat(Position).ToHashSet();
-        var path = Navigation.Dijkstra.getPath(Position, getEnemies().SelectMany(e => e.Position.NeighborPositions()),
-            p => !tracker.IsOccupied(p) && !tracker.OutOfBounds(p)) ?? new();
-        foreach (var move in path)
-            if (moveRange.Contains(targetPos + move))
-                targetPos += move;
-            else break;
-        return targetPos != Position.LeftBottom;
-    }
+    protected override bool TryGetTargetForTwo(out Vector3Int targetPos) =>
+        GetDirectApproachTarget(out targetPos, priorityModules[2], getEnemies()) ||
+        GetApproachTarget(out targetPos, priorityModules[2], getEnemies());
 
     protected override IEnumerable<Entity> getEnemies()
     {

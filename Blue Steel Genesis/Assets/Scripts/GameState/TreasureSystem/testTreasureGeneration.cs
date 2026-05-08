@@ -18,7 +18,7 @@ public class testTreasureGeneration : MonoBehaviour
             Destroy(openTheChest);
         }
     }
-    void Exit() => UnityEngine.SceneManagement.SceneManager.LoadScene("ExpeditionMapTest_usingGameState");
+    void Exit() => GameState.Run.Expedition.exitNode();
     private void Start()
     {
         GameState.Run.Expedition.TreasureSubsystem.RerollTreasure();

@@ -154,31 +154,7 @@ public class ExpeditionMapView : MonoBehaviour
     }
     private void triggerSubsystem() {
         Debug.Log($"Player selected: {last_selection_?.type} at {last_selection_?.pos}");
-        switch (last_selection_?.type)
-        {
-            case Node.TREASURE:
-                {
-                    GameState.Run.Expedition.TreasureSubsystem.Trigger();
-                    break;
-                }
-            default:
-                break;
-        }
-        //TODO: implement
-        switch (last_selection_?.type) {
-            case Node.REGULAR_ENEMY:
-                GameState.Run.Expedition.CombatSystem.TriggerNormalEncounter();
-                break;
-            case Node.ELITE_ENEMY:
-                GameState.Run.Expedition.CombatSystem.TriggerEliteEncounter();
-                break;
-            case Node.BOSS:
-                GameState.Run.Expedition.CombatSystem.TriggerBossEncounter();
-                break;
-            case Node.SHOP:
-                GameState.Run.Expedition.Shop.TriggerShop();
-                break;
-        }
+        GameState.Run.Expedition.enterNode(last_selection_.Value.type);
     }
 
     private NodeButton getButton(Vector2Int pos) {
@@ -297,6 +273,7 @@ public class ExpeditionMapView : MonoBehaviour
     }
 }
 
+[Serializable]
 public class ExpeditionMapProgressInfo {
     public ExpeditionMapProgressInfo(ExpeditionMap map) {
         path = new(ExpeditionMap.height + 2);

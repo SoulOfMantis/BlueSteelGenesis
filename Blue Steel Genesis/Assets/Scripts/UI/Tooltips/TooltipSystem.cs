@@ -1,16 +1,20 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TooltipSystem : MonoBehaviour
 {
-    private static TooltipSystem instance;
+    public static TooltipSystem instance;
     public EntityInfoTooltip entityTooltip;
     public ModuleInfoTooltip moduleTooltip;
-    EntityTooltipTrigger currentEntityTrigger;
+    public EntityTooltipTrigger currentEntityTrigger;
     public static bool entityTooltipLocked = false;
-    ModuleTooltipTrigger currentModuleTrigger;
+    public ModuleTooltipTrigger currentModuleTrigger;
     public static bool moduleTooltipLocked = false;
     public static readonly float HidingTimeInSeconds = .4f;
     public static readonly float ShowingTimeInSeconds = .4f;
+    public GameObject keywordTooltipPrefab;
+    public static GameObject KeywordTooltipPrefab => instance.keywordTooltipPrefab;
+    
     public static bool IsEntityTooltipActive()
     {
         if (instance == null) return false;
@@ -65,46 +69,24 @@ public class TooltipSystem : MonoBehaviour
     {
         instance.moduleTooltip.updateInfo(m);
     }
-    public static void Lock(TooltipType type)
-    {
-        switch (type)
-        {
-            case TooltipType.entityTooltip:
-                entityTooltipLocked = true;
-                break;
-            case TooltipType.moduleTooltip:
-                moduleTooltipLocked = true;
-                break;
-        }
-    }
-    public static void Unlock(TooltipType type)
-    {
-        switch (type)
-        {
-            case TooltipType.entityTooltip:
-                entityTooltipLocked = false;
-                break;
-            case TooltipType.moduleTooltip:
-                moduleTooltipLocked = false;
-                break;
-        }
-    }
-
     public static void Show(TooltipType type)
     {
         switch (type)
         {
             case TooltipType.entityTooltip:
                 instance.entityTooltip.gameObject.SetActive(true);
-                 break;
+                EventSystem.current.SetSelectedGameObject(instance.entityTooltip.gameObject);
+                break;
             case TooltipType.moduleTooltip:
                 instance.moduleTooltip.gameObject.SetActive(true);
+                EventSystem.current.SetSelectedGameObject(instance.moduleTooltip.gameObject);
                 break;
         }
     }
     public static void Show(TooltipType type, EntityTooltipTrigger trigger)
     {
         instance.currentEntityTrigger = trigger;
+        instance.currentEntityTrigger.entity.changeColor(Color.yellow);
         Show(type);
     }
     public static void Show(TooltipType type, ModuleTooltipTrigger trigger)
@@ -112,52 +94,19 @@ public class TooltipSystem : MonoBehaviour
         instance.currentModuleTrigger = trigger;
         Show(type);
     }
-    public static void Delay(TooltipType type)
-    {
-        switch (type)
-        {
-            case TooltipType.entityTooltip:
-                if (instance.currentEntityTrigger)
-                    instance.currentEntityTrigger.StopCoroutine("HidingTooltip");
-                break;
-            case TooltipType.moduleTooltip:
-                Delay(TooltipType.entityTooltip);
-                if (instance.currentModuleTrigger)
-                    instance.currentModuleTrigger.StopCoroutine("HidingTooltip");
-                break;
-        }
-    }
-    public static void ResumeHiding(TooltipType type)
-    {
-        switch (type)
-        {
-            case TooltipType.entityTooltip:
-                if (instance.currentEntityTrigger)
-                {
-                    instance.currentEntityTrigger.StopCoroutine("HidingTooltip");
-                    instance.currentEntityTrigger.StartCoroutine("HidingTooltip");
-                }                
-                break;
-            case TooltipType.moduleTooltip:
-                if (instance.currentModuleTrigger)
-                {   
-                    instance.currentModuleTrigger.StopCoroutine("HidingTooltip");
-                    instance.currentModuleTrigger.StartCoroutine("HidingTooltip");
-                }     
-                break;
-        }
-    }
+  
 
     public static void Hide(TooltipType type)
     {
         switch (type)
         {
             case TooltipType.entityTooltip:
-                instance.entityTooltip.gameObject.SetActive(false);               
+                if (EventSystem.current.currentSelectedGameObject == instance.entityTooltip)
+                    EventSystem.current.SetSelectedGameObject(null);
                 break;
             case TooltipType.moduleTooltip:
-                instance.moduleTooltip.gameObject.SetActive(false);
-                Unlock(TooltipType.entityTooltip);
+                if (EventSystem.current.currentSelectedGameObject == instance.moduleTooltip)
+                    EventSystem.current.SetSelectedGameObject(null);
                 break;
         }
 

@@ -2,7 +2,7 @@ using System;
 
 namespace Map
 {
-    [Flags]
+    [Flags, Serializable]
     public enum Node : short
     {
         DISABLED = 0,
@@ -17,7 +17,7 @@ namespace Map
         BOSS =          0b_0000_0000_1000_0000,
         BLACK_MARKET =  0b_0000_0001_0000_0000,
 
-        RANDOMLY_GENERATABLE    = REGULAR_ENEMY | /*EVENT |*/ SHOP | /*REST | |*/ELITE_ENEMY,
+        RANDOMLY_GENERATABLE    = REGULAR_ENEMY | /*EVENT |*/ SHOP | REST | ELITE_ENEMY,
         ALL_REGULAR             = REGULAR_ENEMY | EVENT | SHOP | REST | ELITE_ENEMY | TREASURE
     }
 }

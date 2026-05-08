@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,16 +12,20 @@ public abstract class GameModule
     public string Icon_name { get => icon_name; protected set => icon_name = value; }
     public uint price;
     public uint range = 0;
+    public int upgradeLevel { get; protected set;  } = 0;
+    public int maxUpgradeLevel = 0;
+    public virtual uint GetUpgradeCost() => price/10;
+    public virtual bool CanUpgrade => upgradeLevel < maxUpgradeLevel;
 
     public virtual string Description()
     {
         string res = "";
         foreach (var k in GetVisibleKeywords())
         {
-            res += $"{k.Name}";
+            res += $" {k.Name}";
             if (k is TargetedVisibleKeyword t)
                 res += $" {TargetedVisibleKeyword.TargetDescription(t.Target)}";
-            res += ".\n";
+            res += ".";
         }
         return res;
     }
@@ -64,15 +67,19 @@ public abstract class GameModule
         Name = newName;
         UpdateTooltipIfCurrent();
     }
-    public abstract Task Effect(Character user, Vector3Int pos);
-    public async Task Use(Character user, Vector3Int pos)
+    public abstract Task Effect(Character user, Vector3Int pos, ActionContext ctx);
+    public async Task Use(Character user, Vector3Int pos, ActionContext ctx)
     {
         await Awaitable.WaitForSecondsAsync(.1f);
         if (CanBeUsed()) 
-        {        SpendUse();
-            await Effect(user, pos);
+        {
+            SpendUse();
+            await Effect(user, pos, ctx);
         }
     }
+
+    protected ActionContext MakeContext(Character actor, Vector3Int target_position) =>
+        new(actor, this, target_position);
 
     public virtual void Initialize()
     {
@@ -146,6 +153,18 @@ public abstract class GameModule
     {
         if (TooltipSystem.IsCurrent(this))
             TooltipSystem.Update(TooltipSystem.TooltipType.moduleTooltip);
+    }
+
+    public virtual void ApplyUpgrade()
+    {
+        if (!CanUpgrade) return;
+        upgradeLevel++;
+        UpdateTooltipIfCurrent();
+    }
+
+    public void SetUpgradeLevel(int level)
+    {
+        upgradeLevel = Mathf.Clamp(level, 0, maxUpgradeLevel);
     }
 }
 

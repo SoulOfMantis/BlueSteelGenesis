@@ -3,12 +3,19 @@ using UnityEngine;
 
 public class TheSwarm : Enemy
 {
-    public TheSwarm() : base(20, 3, 100) {
+    public TheSwarm() : base(25, 4, 100) {
         Name = "The Swarm";
         Description = "A cloud of aggressive insects. These minuscule creatures are not what your metal hands were made for!";
+    }
+
+    protected override void Init()
+    {
         addModule(new SwarmMandibles(1, 3));
-        addModule(new FlightMovement(4));
+        addModule(new FlightMovementModule(4));
         addModule(new SwarmScatter());
+        SetPriorityModules();
+
+        base.Init();
     }
 
     protected override bool TryGetTargetForZero(out Vector3Int targetPos)
