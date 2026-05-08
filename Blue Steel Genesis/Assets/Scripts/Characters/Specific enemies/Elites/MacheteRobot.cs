@@ -7,7 +7,7 @@ public class MacheteRobot : Enemy
     public MacheteRobot() : base(35, 5, 40)
     {
         Name = "Machete Robot";
-        Description = "A mad robot with long machete.";
+        Description = "A mad robot with long machete. Seems to dislike bushes for whatever reason.";
     }
 
     protected override void Init()
