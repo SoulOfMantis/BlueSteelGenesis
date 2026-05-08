@@ -9,6 +9,9 @@ public class testShopManager : MonoBehaviour
     [SerializeField] List<TMP_Text> shopModulePrices;
     [SerializeField] TMP_Text rerollPrice;
     [SerializeField] RerollOptions ShopMode;
+    [SerializeField] TryButtonSFX buy_button_sfx;
+    [SerializeField] TryButtonSFX reroll_button_sfx;
+
     private void Start()
     {
         UpdateShop();
@@ -41,13 +44,19 @@ public class testShopManager : MonoBehaviour
     public void ExitToMap() => GameState.Run.Expedition.exitNode();
     public void RerollShop()
     {
-        GameState.Run.Expedition.Shop.Reroll(ShopMode);
+        if (GameState.Run.Expedition.Shop.Reroll(ShopMode))
+            reroll_button_sfx.playSuccess();
+        else
+            reroll_button_sfx.playFailure();
         UpdateShop();
     }    
     public void BuyModuleNumber(int index)
     {
         if (index < 0 || index >= GameState.Run.Expedition.Shop.OnSale.Count) return;
-        ModuleManager.BuyModule(GameState.Run.Expedition.Shop.OnSale[index]);
+        if (ModuleManager.BuyModule(GameState.Run.Expedition.Shop.OnSale[index]))
+            buy_button_sfx.playSuccess();
+        else
+            buy_button_sfx.playFailure();
         UpdateShop();
     }
 }

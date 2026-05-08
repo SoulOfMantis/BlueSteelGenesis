@@ -64,6 +64,8 @@ public class GameRun
     [field: SerializeField]
     public URangeValue playerLivesCount { get; set; }
 
+    [field: SerializeField]
+    public bool AutoEndPlayerTurn = false;
     // ship data
     // available biomes
     // ...

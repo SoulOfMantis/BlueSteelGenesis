@@ -74,7 +74,7 @@ public class PlayerCharacter : Character
         //play using module animation
         await base.useActiveModule_internal(m, pos);
 
-        if (false && !canUseAnyModule()) //TODO: check options
+        if (GameState.Run.AutoEndPlayerTurn && !canUseAnyModule()) //TODO: check options
             await endTurn();
     }
     protected override async Task usePassiveModule_internal(PassiveModule m, Vector3Int pos, ActionContext ctx)
@@ -141,7 +141,7 @@ public class PlayerCharacter : Character
     {
         await base.startTurn();
 
-        if (false && !canUseAnyModule()) //TODO: check options
+        if (GameState.Run.AutoEndPlayerTurn && !canUseAnyModule()) //TODO: check options
             await endTurn();
     }
 
@@ -198,6 +198,8 @@ public class PlayerCharacter : Character
         tracker.RemoveCharacter(this);
         Defeat();
         //TODO: player loss
+        if (sfx != null)
+            sfx.play(TriggerType.OnDeath);
         if (visualHandler != null)
             await visualHandler.PlayDeathAnimation();
     }

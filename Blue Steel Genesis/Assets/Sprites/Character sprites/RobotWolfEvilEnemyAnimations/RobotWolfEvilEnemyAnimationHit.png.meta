@@ -1,7 +1,19 @@
 fileFormatVersion: 2
 guid: 3138e3d1c5352fd43b2773e2a26b44e0
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -3610852523279567928
+    second: RobotWolfEvilEnemyAnimationHit_0
+  - first:
+      213: -7560607013256301347
+    second: RobotWolfEvilEnemyAnimationHit_1
+  - first:
+      213: -6577168427909701882
+    second: RobotWolfEvilEnemyAnimationHit_2
+  - first:
+      213: 546076923866224240
+    second: RobotWolfEvilEnemyAnimationHit_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -110,10 +122,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 6bc0f5e357e205444bd07a89a11cfe17
-      internalID: 884110117
+      spriteID: 8c3399dd2cca3edc0800000000000000
+      internalID: -3610852523279567928
       vertices: []
       indices: 
       edges: []
@@ -132,10 +144,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 88ebbcedb4b653d4281d706be6adcf32
-      internalID: -177635473
+      spriteID: dd4f780baf3531790800000000000000
+      internalID: -7560607013256301347
       vertices: []
       indices: 
       edges: []
@@ -154,10 +166,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: f62b7f451d5646c47b3abebf23b53874
-      internalID: 1653795435
+      spriteID: 60f1782892439b4a0800000000000000
+      internalID: -6577168427909701882
       vertices: []
       indices: 
       edges: []
@@ -176,10 +188,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 7ff192d550409004f84f7dc5e25d8983
-      internalID: 1726129739
+      spriteID: 076951ba11e049700800000000000000
+      internalID: 546076923866224240
       vertices: []
       indices: 
       edges: []
@@ -188,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: adbfc84cbd7f14d49b3d566aa78d320a
+    spriteID: b1b44485ea4e6d2469d65330e2d327ea
     internalID: 0
     vertices: []
     indices: 
@@ -200,10 +212,10 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      RobotWolfEvilEnemyAnimationHit_0: 884110117
-      RobotWolfEvilEnemyAnimationHit_1: -177635473
-      RobotWolfEvilEnemyAnimationHit_2: 1653795435
-      RobotWolfEvilEnemyAnimationHit_3: 1726129739
+      RobotWolfEvilEnemyAnimationHit_0: -3610852523279567928
+      RobotWolfEvilEnemyAnimationHit_1: -7560607013256301347
+      RobotWolfEvilEnemyAnimationHit_2: -6577168427909701882
+      RobotWolfEvilEnemyAnimationHit_3: 546076923866224240
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

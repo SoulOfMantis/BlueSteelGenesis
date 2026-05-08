@@ -1,7 +1,19 @@
 fileFormatVersion: 2
 guid: e8b253ae24ed568419f3ce3b630e6ec7
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 7805665084662334314
+    second: WolfLeaderAnimationDamage_0
+  - first:
+      213: 5890163810389367785
+    second: WolfLeaderAnimationDamage_1
+  - first:
+      213: 5112443855366632282
+    second: WolfLeaderAnimationDamage_2
+  - first:
+      213: 3173459259080312348
+    second: WolfLeaderAnimationDamage_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -110,10 +122,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: a4172c8ae8e2a76449efd2257806da2e
-      internalID: -865608913
+      spriteID: a63c7fec90b435c60800000000000000
+      internalID: 7805665084662334314
       vertices: []
       indices: 
       edges: []
@@ -132,10 +144,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: ebc1a702b2bd5cf48945c54565734ddf
-      internalID: -320709205
+      spriteID: 9eb9e1337c01eb150800000000000000
+      internalID: 5890163810389367785
       vertices: []
       indices: 
       edges: []
@@ -154,10 +166,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 172cbed8ff7d45e41885b477fcf870a3
-      internalID: -1044209456
+      spriteID: a53b14d799c03f640800000000000000
+      internalID: 5112443855366632282
       vertices: []
       indices: 
       edges: []
@@ -176,10 +188,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 9c5ca2aebe2a2e149967a270d328d70d
-      internalID: -759290258
+      spriteID: c1608a6e1646a0c20800000000000000
+      internalID: 3173459259080312348
       vertices: []
       indices: 
       edges: []
@@ -188,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 89c2de9b5e8ee324d88774271e3dbe4f
+    spriteID: 1386d0a607e8c774b96cfd7a3b21c55f
     internalID: 0
     vertices: []
     indices: 
@@ -200,10 +212,10 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      WolfLeaderAnimationDamage_0: -865608913
-      WolfLeaderAnimationDamage_1: -320709205
-      WolfLeaderAnimationDamage_2: -1044209456
-      WolfLeaderAnimationDamage_3: -759290258
+      WolfLeaderAnimationDamage_0: 7805665084662334314
+      WolfLeaderAnimationDamage_1: 5890163810389367785
+      WolfLeaderAnimationDamage_2: 5112443855366632282
+      WolfLeaderAnimationDamage_3: 3173459259080312348
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

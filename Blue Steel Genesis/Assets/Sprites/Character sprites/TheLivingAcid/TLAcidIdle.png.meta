@@ -11,9 +11,6 @@ TextureImporter:
   - first:
       213: 7158054060704185152
     second: TLAcidIdle_2
-  - first:
-      213: 33473972504787940
-    second: TLAcidIdle_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -188,10 +185,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 4eb7e50966ce67000800000000000000
-      internalID: 33473972504787940
+      spriteID: b38de67e77afe1a41a1cd9e6ece1a312
+      internalID: -1385264773
       vertices: []
       indices: 
       edges: []
@@ -200,7 +197,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 9e2532a492c6f004fab88985c4587361
+    spriteID: d4ffdd598ea743e4e851a752965d8eaa
     internalID: 0
     vertices: []
     indices: 
@@ -215,7 +212,7 @@ TextureImporter:
       TLAcidIdle_0: -6643555661340835497
       TLAcidIdle_1: -2501858126302570933
       TLAcidIdle_2: 7158054060704185152
-      TLAcidIdle_3: 33473972504787940
+      TLAcidIdle_3: -1385264773
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 607cdf126b7a3584fa26a6879c120444
+guid: 6c225f6d6c6f33a4091a2d81890a28ec
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7042847911465117151
-    second: menu_0
+      213: 356431026072087101
+    second: win_screen_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: menu_0
+      name: win_screen_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 3
-        width: 61
-        height: 61
+        x: 1
+        y: 4
+        width: 59
+        height: 59
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 11, y: 8, z: 8, w: 11}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fd5eaf16cd83db160800000000000000
-      internalID: 7042847911465117151
+      spriteID: d3a64f7312c42f400800000000000000
+      internalID: 356431026072087101
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: b4f32cb2e7b85f1499292b24b6a97bc8
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      menu_0: 7042847911465117151
+      win_screen_0: 356431026072087101
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

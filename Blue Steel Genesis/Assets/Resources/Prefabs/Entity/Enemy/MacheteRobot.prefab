@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 910996753969975453}
   - component: {fileID: 6436685001208273242}
   - component: {fileID: 8541471162094064636}
+  - component: {fileID: 4781908891236212830}
+  - component: {fileID: 951133218774152042}
   m_Layer: 0
   m_Name: MacheteRobot
   m_TagString: Enemy
@@ -30,7 +32,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 7.5, y: 7.5, z: 7.5}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 5648252903529816650}
   m_Father: {fileID: 4196047120132471949}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6436685001208273242
@@ -80,12 +83,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 7794950827767713583, guid: c8da7c89063b1054393c939288886333, type: 3}
+  m_Sprite: {fileID: 1137738612752916293, guid: bec82ecd28e39c149ab3cdba8ec73944, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.34, y: 0.31}
+  m_Size: {x: 0.64, y: 0.64}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -104,6 +107,161 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: BlueSteelGenesis::MacheteRobot
   bodySize: 2
+  visualHandler: {fileID: 1899322335125247751}
+  sfx: {fileID: 951133218774152042}
+--- !u!95 &4781908891236212830
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344885736801266915}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f7ec7e1979d718c4196b212c3381f724, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &951133218774152042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344885736801266915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71aed81a16fa4724d82ec68668df584e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BlueSteelGenesis::CharacterSFX
+  healthLost: {fileID: 0}
+  healthDamage: {fileID: 8300000, guid: 202c86bc209d9a44a9fa7409ac1736f6, type: 3}
+  negativeStatusApplied: {fileID: 8300000, guid: 57b0b24d8182d974abe7bef320cdeab0, type: 3}
+  positiveStatusApplied: {fileID: 8300000, guid: 20ba4de673f5b3142afa7e73acf1fb85, type: 3}
+  damageShielded: {fileID: 8300000, guid: 6d509252cfad7d1468ab8156e659787b, type: 3}
+  shieldBroken: {fileID: 8300000, guid: 91bde89182d3b8242adea6071a24aec8, type: 3}
+  shieldGiven: {fileID: 8300000, guid: 4e5ab4d48c1e5ec429cf4233ec7fadaa, type: 3}
+  heal: {fileID: 8300000, guid: 3989552a40c27844888679c3cac51d61, type: 3}
+  energyDrain: {fileID: 8300000, guid: dfefff54599f37742bc12a4008311db6, type: 3}
+  energyRestore: {fileID: 8300000, guid: dfae81d6cc7e43e47ba57b01da46d600, type: 3}
+  moveStep: {fileID: 8300000, guid: df6bdb254fc5869428469051be71070a, type: 3}
+  strike: {fileID: 8300000, guid: c88920ae42461e34cb49c7e7f33a8a94, type: 3}
+  death: {fileID: 8300000, guid: 1dcf8985e73dd0845b997f2dc050dbf0, type: 3}
+--- !u!1 &1261280002839036655
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5648252903529816650}
+  - component: {fileID: 1899322335125247751}
+  m_Layer: 0
+  m_Name: Visuals
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5648252903529816650
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1261280002839036655}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.024266668, y: 0.624, z: 0}
+  m_LocalScale: {x: 1.3000001, y: 1.3000001, z: 1.3000001}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 910996753969975453}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1899322335125247751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1261280002839036655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f0585ac2972b2446ab6410c834b9bf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BlueSteelGenesis::CharacterVisualHandler
+  animator: {fileID: 4781908891236212830}
+  spriteRenderer: {fileID: 6436685001208273242}
+  idleAnimation:
+    animationName: Idle
+    clip: {fileID: 0}
+    transitionDuration: 0.5
+  walkAnimation:
+    animationName: Walk
+    clip: {fileID: 0}
+    transitionDuration: 0.2
+  attackAnimation:
+    animationName: Attack
+    clip: {fileID: 0}
+    transitionDuration: 1
+  hurtAnimation:
+    animationName: Hurt
+    clip: {fileID: 0}
+    transitionDuration: 0.2
+  deathAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  loseShieldAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  gainShieldAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  healAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  startBattleAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  endBattleAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  startTurnAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  endTurnAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  summonAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  specialAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  statusAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
 --- !u!1 &7030514784578829008
 GameObject:
   m_ObjectHideFlags: 0
