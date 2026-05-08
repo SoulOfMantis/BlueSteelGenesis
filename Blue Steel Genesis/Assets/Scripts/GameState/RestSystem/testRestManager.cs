@@ -12,12 +12,14 @@ public class testRestManager : MonoBehaviour
     [SerializeField] private TMP_Text freeHealDisplay;
     [SerializeField] private TMP_Text paidHealDisplay;
     [SerializeField] private ModuleManagementUI moduleManagementUI;
+    [SerializeField] private TryButtonSFX healSFX;
 
     private void Start()
     {
         UpdateUI();
         freeHealButton.onClick.AddListener(OnFreeHeal);
         paidHealButton.onClick.AddListener(OnPaidHeal);
+        paidHealButton.interactable = GameState.Run.Expedition.Player.HasEnoughMaterials(Rest.PaidHealCost);
         exitButton.onClick.AddListener(OnExit);
         moduleManagementUI.gameObject.SetActive(false);
     }
@@ -38,11 +40,15 @@ public class testRestManager : MonoBehaviour
         GameState.Run.Expedition.Rest.FreeHeal();
         UpdateUI();
         DisableHealButtons();
+        healSFX.playSuccess();
     }
 
     private void OnPaidHeal()
     {
-        GameState.Run.Expedition.Rest.PaidHeal();
+        if (GameState.Run.Expedition.Rest.PaidHeal())
+            healSFX.playSuccess();
+        else
+            healSFX.playFailure();
         UpdateUI();
         DisableHealButtons();
     }

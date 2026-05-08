@@ -5,15 +5,6 @@ TextureImporter:
   - first:
       213: -37018797965867807
     second: SSlimeWalk_0
-  - first:
-      213: -4817732978683212624
-    second: SSlimeWalk_1
-  - first:
-      213: -1778823494007064484
-    second: SSlimeWalk_2
-  - first:
-      213: 8978448244885893177
-    second: SSlimeWalk_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -144,10 +135,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 0bc07ee9169f32db0800000000000000
-      internalID: -4817732978683212624
+      spriteID: aa7cb825a8b294340bdd3cb81aa0a8fb
+      internalID: -774129159
       vertices: []
       indices: 
       edges: []
@@ -166,10 +157,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: c58f691f4795057e0800000000000000
-      internalID: -1778823494007064484
+      spriteID: c118e594df11df54a961922aeef1aa76
+      internalID: 1519774453
       vertices: []
       indices: 
       edges: []
@@ -188,10 +179,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 93037aedb1bd99c70800000000000000
-      internalID: 8978448244885893177
+      spriteID: 4e8875aa65b5b824199254114ed705bc
+      internalID: -398042453
       vertices: []
       indices: 
       edges: []
@@ -200,7 +191,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: b536fe593fb39cb4480933b53f02261c
+    spriteID: 72c54baa0d7916f4486e04aec51b191d
     internalID: 0
     vertices: []
     indices: 
@@ -213,9 +204,9 @@ TextureImporter:
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       SSlimeWalk_0: -37018797965867807
-      SSlimeWalk_1: -4817732978683212624
-      SSlimeWalk_2: -1778823494007064484
-      SSlimeWalk_3: 8978448244885893177
+      SSlimeWalk_1: -774129159
+      SSlimeWalk_2: 1519774453
+      SSlimeWalk_3: -398042453
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

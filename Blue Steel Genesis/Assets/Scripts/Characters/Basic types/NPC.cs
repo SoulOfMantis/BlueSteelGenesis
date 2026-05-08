@@ -88,8 +88,12 @@ public abstract class NPC : Character
             TooltipSystem.Unlock(TooltipSystem.TooltipType.entityTooltip);
             TooltipSystem.Hide(TooltipSystem.TooltipType.entityTooltip);
         }
+
+        if (sfx != null)
+            sfx.play(TriggerType.OnDeath);
         if (visualHandler != null)
             await visualHandler.PlayDeathAnimation();
+
         Debug.Log($"{name} умер");
         tracker.RemoveCharacter(this);
         Destroy(gameObject);

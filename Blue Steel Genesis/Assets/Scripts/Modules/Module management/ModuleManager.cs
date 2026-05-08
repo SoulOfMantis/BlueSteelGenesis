@@ -45,9 +45,9 @@ public static class ModuleManager
     public static bool BuyModule(GameModule module)
     {
         if (module == null || MaxEditableModuleIndex >= 4) return false;
-        GameState.Run.Expedition.Shop.Buy(module);
+        bool success = GameState.Run.Expedition.Shop.Buy(module);
         Refresh();
-        return true;
+        return success;
     }
 
     public static void RemoveModule(uint idx)

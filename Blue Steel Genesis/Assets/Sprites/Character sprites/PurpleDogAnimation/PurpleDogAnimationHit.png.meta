@@ -1,7 +1,19 @@
 fileFormatVersion: 2
 guid: 789028b18ade56e4584a0774b5b36dd3
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 2388955082696647600
+    second: PurpleDogAnimationHit_0
+  - first:
+      213: 8641638211922104444
+    second: PurpleDogAnimationHit_1
+  - first:
+      213: 8161628078923775715
+    second: PurpleDogAnimationHit_2
+  - first:
+      213: -925347739463030046
+    second: PurpleDogAnimationHit_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -110,10 +122,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: a85baf946622306479fea93f81905a02
-      internalID: 961268543
+      spriteID: 0b36f709df5472120800000000000000
+      internalID: 2388955082696647600
       vertices: []
       indices: 
       edges: []
@@ -132,10 +144,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: c2ade4df1a0e35148a9083ab7a0a1bc9
-      internalID: 528727226
+      spriteID: c701f0b1b244de770800000000000000
+      internalID: 8641638211922104444
       vertices: []
       indices: 
       edges: []
@@ -154,10 +166,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: b7c686c97f6c11a4f8dd46675598bac6
-      internalID: -1314954450
+      spriteID: 3eefa11ee7de34170800000000000000
+      internalID: 8161628078923775715
       vertices: []
       indices: 
       edges: []
@@ -176,10 +188,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 904643d4d9abf1e458e80e85edbb6d42
-      internalID: 46975031
+      spriteID: 2ea689732218823f0800000000000000
+      internalID: -925347739463030046
       vertices: []
       indices: 
       edges: []
@@ -188,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 3e1d58d4c8bec674e94c928a3673d554
+    spriteID: 16f79ea4968b6094897560cff1bdc0ad
     internalID: 0
     vertices: []
     indices: 
@@ -200,10 +212,10 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":48.0,"y":48.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      PurpleDogAnimationHit_0: 961268543
-      PurpleDogAnimationHit_1: 528727226
-      PurpleDogAnimationHit_2: -1314954450
-      PurpleDogAnimationHit_3: 46975031
+      PurpleDogAnimationHit_0: 2388955082696647600
+      PurpleDogAnimationHit_1: 8641638211922104444
+      PurpleDogAnimationHit_2: 8161628078923775715
+      PurpleDogAnimationHit_3: -925347739463030046
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

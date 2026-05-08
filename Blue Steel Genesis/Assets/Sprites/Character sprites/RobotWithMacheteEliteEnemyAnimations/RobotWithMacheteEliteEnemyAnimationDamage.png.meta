@@ -1,7 +1,19 @@
 fileFormatVersion: 2
 guid: bec82ecd28e39c149ab3cdba8ec73944
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 1137738612752916293
+    second: RobotWithMacheteEliteEnemyAnimationDamage_0
+  - first:
+      213: -1771271822981728981
+    second: RobotWithMacheteEliteEnemyAnimationDamage_1
+  - first:
+      213: -5201669649177220254
+    second: RobotWithMacheteEliteEnemyAnimationDamage_2
+  - first:
+      213: 5813182140297005643
+    second: RobotWithMacheteEliteEnemyAnimationDamage_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -110,10 +122,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: b29b6cc3dfb2d85428ceddb0de83fca3
-      internalID: 1180252005
+      spriteID: 54f12648d3f0acf00800000000000000
+      internalID: 1137738612752916293
       vertices: []
       indices: 
       edges: []
@@ -132,10 +144,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 3724e8b3593eda542b9a2a3c696a06a3
-      internalID: 1963682270
+      spriteID: b25f38e59ad2b67e0800000000000000
+      internalID: -1771271822981728981
       vertices: []
       indices: 
       edges: []
@@ -154,10 +166,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: a8df9d853ebc9ea4c84308945e8f6549
-      internalID: -1870695800
+      spriteID: 26b6cd18305ffc7b0800000000000000
+      internalID: -5201669649177220254
       vertices: []
       indices: 
       edges: []
@@ -176,10 +188,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 471961e2782cc764ebd97919ddc05e9d
-      internalID: -177597768
+      spriteID: b4a4c076b529ca050800000000000000
+      internalID: 5813182140297005643
       vertices: []
       indices: 
       edges: []
@@ -188,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 70b7a0df22a0635498a8104bebafc3a3
+    spriteID: 9f2a8e0e37c2382438798e108c46d5a7
     internalID: 0
     vertices: []
     indices: 
@@ -200,10 +212,10 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      RobotWithMacheteEliteEnemyAnimationDamage_0: 1180252005
-      RobotWithMacheteEliteEnemyAnimationDamage_1: 1963682270
-      RobotWithMacheteEliteEnemyAnimationDamage_2: -1870695800
-      RobotWithMacheteEliteEnemyAnimationDamage_3: -177597768
+      RobotWithMacheteEliteEnemyAnimationDamage_0: 1137738612752916293
+      RobotWithMacheteEliteEnemyAnimationDamage_1: -1771271822981728981
+      RobotWithMacheteEliteEnemyAnimationDamage_2: -5201669649177220254
+      RobotWithMacheteEliteEnemyAnimationDamage_3: 5813182140297005643
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
