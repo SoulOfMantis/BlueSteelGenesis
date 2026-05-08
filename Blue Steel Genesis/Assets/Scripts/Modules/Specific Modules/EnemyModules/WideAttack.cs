@@ -28,15 +28,17 @@ public class WideAttack : ActiveModule
             pos += direction;
         }
         direction *= -1;
+        pos += direction;
 
         flag = true;
         while (flag)
         {
             await user.strike(pos, hitDamage, MakeContext(user, pos));
+            pos += direction;
             flag = !Entity.tracker.OutOfBounds(pos) && Entity.tracker.GetNeighborTiles(pos)
                     .Any(n => user.Position.Contains(n));
-            pos += direction;
         }
+        await user.strike(pos, hitDamage, MakeContext(user, pos));
     }
     public override string Description()
     {
