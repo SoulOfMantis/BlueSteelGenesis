@@ -9,11 +9,17 @@ public class PurpleDog : Enemy
     {
         Name = "Purple Dog";
         Description = "The first enemy. Will move closer to you and bite, if it has an opportunity!";
+    }
+
+    protected override void Init()
+    {
         addModule(new BasicAttack());
         addModule(new BasicMovement());
-
         SetPriorityModules();
+
+        base.Init();
     }
+
     protected override bool TryGetTargetForZero(out Vector3Int targetPos)
     {
         var possibleTargets = priorityModules[0].getCellsInRange(Position)

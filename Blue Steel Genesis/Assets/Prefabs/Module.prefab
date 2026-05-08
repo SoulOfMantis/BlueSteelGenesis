@@ -96,7 +96,7 @@ MonoBehaviour:
   nameText: {fileID: 4757248826593270291}
   upButton: {fileID: 8228359363978419705}
   downButton: {fileID: 5552307416025357928}
-  removeButton: {fileID: 4549892936472955428}
+  actionButton: {fileID: 4549892936472955428}
   trigger: {fileID: 2850990977049281817}
 --- !u!1 &1194870023038627846
 GameObject:

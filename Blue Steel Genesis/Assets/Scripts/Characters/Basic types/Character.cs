@@ -108,11 +108,14 @@ public abstract class Character : Entity
     }
     public virtual async Task endTurn()
     {
+        if (myTurn)
+        {
+        myTurn = false;
         if (visualHandler != null)
             await visualHandler.PlayEndTurnAnimation();
         await processTrigger(TriggerType.OnTurnEnd, null);
-        myTurn = false;
         tracker.NextTurn();
+        }
     }
 
     public async Task move(Vector3Int target_pos, List<Vector3Int> allowed, ActionContext ctx = null)
@@ -271,6 +274,7 @@ public abstract class Character : Entity
     public bool isPassive(int module_index) => getModule<PassiveModule>(module_index) != null;
     public bool isActive(int module_index) => getModule<ActiveModule>(module_index) != null;
     public bool doesModuleExist(int module_index) => getModule<GameModule>(module_index) != null;
+    protected bool canUseAnyModule() => listModules<ActiveModule>().Any(m => hasEnoughEnergy(m) && m.CanBeUsed());
     protected virtual bool isCorrectPosition(GameModule module, Vector3Int pos) => module.checkPosition(this, pos);
     protected virtual bool hasEnoughEnergy(ActiveModule module) => module != null && currentEnergy >= module.energyCost;
     protected virtual Task useActiveModule_internal(ActiveModule m, Vector3Int pos) => m.Use(this, pos, null);

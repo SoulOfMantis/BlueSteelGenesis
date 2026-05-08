@@ -6,12 +6,20 @@ public class MacheteRobot : Enemy
 {
     public MacheteRobot() : base(50, 5, 40)
     {
-        addModule(new LongAttack());
-        addModule(new WideAttack());
-        addModule(new BasicMovement());
         Name = "Saber Robot";
         Description = "A mad robot with long machete.";
     }
+
+    protected override void Init()
+    {
+        addModule(new LongAttack());
+        addModule(new WideAttack());
+        addModule(new BasicMovement());
+        SetPriorityModules();
+
+        base.Init();
+    }
+
     protected override bool TryGetTargetForZero(out Vector3Int targetPos)
     {
         var possibleTargets = getEnemies().SelectMany(x => x.Position).Where(p => Position.Any(pp => pp.x == p.x || pp.y == p.y));
