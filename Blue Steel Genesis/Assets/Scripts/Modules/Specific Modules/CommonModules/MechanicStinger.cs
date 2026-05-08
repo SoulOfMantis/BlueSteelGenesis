@@ -19,6 +19,7 @@ public class MechanicStinger : ActiveModule
         hitDamage = 2;
         duration = 2;
         poisonDamage = 1;
+        maxUpgradeLevel = 3;
         Icon_name = "Module_mechanical_sting2";
         AddConstKeywords(new OffenseKeyword(), new CommonKeyword());
     }
@@ -52,6 +53,12 @@ public class MechanicStinger : ActiveModule
     public override bool checkPosition(Character user, Vector3Int pos)
     {
         return base.checkPosition(user, pos) && !user.Position.Contains(pos);
+    }
+    public override void ApplyUpgrade()
+    {
+        base.ApplyUpgrade();
+        poisonDamage += 1;
+        price += 30;
     }
 
 }

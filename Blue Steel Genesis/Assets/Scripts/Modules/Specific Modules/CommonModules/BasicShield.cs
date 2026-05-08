@@ -14,6 +14,7 @@ public class BasicShield : ActiveModule
         price = 15;
         shieldGiven = 8;
         energyCost = 2;
+        maxUpgradeLevel = 3;
         range = 0;
         AddConstKeywords(new CommonKeyword(), new DefenseKeyword());
     }
@@ -37,6 +38,13 @@ public class BasicShield : ActiveModule
         rk.Add(new ShieldKeyword(shieldGiven, PossibleTargets.Self));
         return rk;
     }
+    public override void ApplyUpgrade()
+    {
+        base.ApplyUpgrade();
+        shieldGiven += 2;
+        price += 10;
+    }
+
 }
 
 
