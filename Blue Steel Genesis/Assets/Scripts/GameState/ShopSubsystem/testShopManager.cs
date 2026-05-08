@@ -11,7 +11,7 @@ public class testShopManager : MonoBehaviour
     [SerializeField] RerollOptions ShopMode;
     private void Start()
     {
-        RerollShop();
+        UpdateShop();
     }
     void updateShopModuleIcons()
     {
@@ -36,12 +36,12 @@ public class testShopManager : MonoBehaviour
     void UpdateShop()
     {
         updateShopModuleIcons();
+        rerollPrice.text = $"Price: {GameState.Run.Expedition.Shop.RerollCost}";
     }
     public void ExitToMap() => GameState.Run.Expedition.exitNode();
     public void RerollShop()
     {
         GameState.Run.Expedition.Shop.Reroll(ShopMode);
-        rerollPrice.text = $"Price: {GameState.Run.Expedition.Shop.RerollCost}";
         UpdateShop();
     }    
     public void BuyModuleNumber(int index)
