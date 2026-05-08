@@ -8,6 +8,7 @@ public class testRestManager : MonoBehaviour
     [SerializeField] private Button paidHealButton;
     [SerializeField] private Button exitButton;
     [SerializeField] private TMP_Text healthDisplay;
+    [SerializeField] private Slider healthSlider;
     [SerializeField] private TMP_Text freeHealDisplay;
     [SerializeField] private TMP_Text paidHealDisplay;
     [SerializeField] private ModuleManagementUI moduleManagementUI;
@@ -25,7 +26,9 @@ public class testRestManager : MonoBehaviour
     {
         var player = GameState.Run.Expedition.Player;
         var rest = GameState.Run.Expedition.Rest;
-        healthDisplay.text = $"HP: {player.currentHealth}/{player.maxHealth}";
+        healthDisplay.text = $"{player.currentHealth}/{player.maxHealth}";
+        healthSlider.maxValue = player.maxHealth;
+        healthSlider.value = player.currentHealth.Value;
         freeHealDisplay.text = $"Heal {rest.FreeHealRestores()} for free";
         paidHealDisplay.text = $"Heal {rest.PaidHealRestores()} for {Rest.PaidHealCost} spare parts";
     }
