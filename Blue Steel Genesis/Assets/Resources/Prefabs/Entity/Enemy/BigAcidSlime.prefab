@@ -90,7 +90,7 @@ SpriteRenderer:
   m_Size: {x: 0.55, y: 0.51}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
 --- !u!114 &1477556361739014106
@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d25a7759b96ccde49a413d93b5897d4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: BlueSteelGenesis::BigAcidSlime
-  bodySize: 1
+  bodySize: 2
   visualHandler: {fileID: 2162790770232429445}
 --- !u!95 &4315196108829073927
 Animator:
@@ -220,6 +220,14 @@ MonoBehaviour:
     clip: {fileID: 0}
     transitionDuration: 0
   endTurnAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  summonAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  specialAnimation:
     animationName: 
     clip: {fileID: 0}
     transitionDuration: 0
