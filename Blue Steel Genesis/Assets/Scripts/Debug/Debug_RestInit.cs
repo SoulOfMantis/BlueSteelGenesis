@@ -24,9 +24,9 @@ public class Debug_RestInit : MonoBehaviour
         player.maxEnergy = 10;
         player.modules = new System.Collections.Generic.List<GameModule>{
             new DefaultAdaptiveTEST_ONLY(),
-            new MechanicStinger(),
-            new BasicMovement(),
-            new BasicAttack()
+            new MechanicStingerModule(),
+            new BasicMovementModule(),
+            new BasicAttackModule()
         };
 
         GameState.Run.Expedition.Rest = new Rest(1); 
