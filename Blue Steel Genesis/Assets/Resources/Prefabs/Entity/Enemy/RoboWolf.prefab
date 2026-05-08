@@ -82,15 +82,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 7262922348641676942, guid: fe4bd74127dfd2146816968d76057b4d, type: 3}
+  m_Sprite: {fileID: 6178819966401492677, guid: 7d1c280ff4f1299448fcfc938c029985, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.25, y: 0.23}
+  m_Size: {x: 0.32, y: 0.32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &3830082207309243854
@@ -231,6 +231,10 @@ MonoBehaviour:
     animationName: 
     clip: {fileID: 0}
     transitionDuration: 0
+  statusAnimation:
+    animationName: Status
+    clip: {fileID: 0}
+    transitionDuration: 0.2
 --- !u!1 &7030514784578829008
 GameObject:
   m_ObjectHideFlags: 0

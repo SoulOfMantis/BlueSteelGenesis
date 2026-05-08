@@ -82,8 +82,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 2571479059450760285, guid: 826a34f0d545ba947a544cf0787fdaee, type: 3}
-  m_Color: {r: 0.7529412, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 3091671286099175291, guid: 20243eccb2efa164fa84926575c0777e, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
@@ -176,19 +176,19 @@ MonoBehaviour:
   animator: {fileID: 4676547718873740510}
   spriteRenderer: {fileID: 6436685001208273242}
   idleAnimation:
-    animationName: 
+    animationName: Idle
     clip: {fileID: 0}
     transitionDuration: 0.5
   walkAnimation:
-    animationName: 
+    animationName: Walk
     clip: {fileID: 0}
     transitionDuration: 0.2
   attackAnimation:
-    animationName: 
+    animationName: Attack
     clip: {fileID: 0}
     transitionDuration: 1
   hurtAnimation:
-    animationName: 
+    animationName: Hurt
     clip: {fileID: 0}
     transitionDuration: 0
   deathAnimation:
@@ -200,6 +200,10 @@ MonoBehaviour:
     clip: {fileID: 0}
     transitionDuration: 0
   gainShieldAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  healAnimation:
     animationName: 
     clip: {fileID: 0}
     transitionDuration: 0
@@ -219,10 +223,14 @@ MonoBehaviour:
     animationName: 
     clip: {fileID: 0}
     transitionDuration: 0
-  healAnimation:
+  summonAnimation:
     animationName: 
     clip: {fileID: 0}
     transitionDuration: 0
+  specialAnimation:
+    animationName: Scatter
+    clip: {fileID: 0}
+    transitionDuration: 0.3
 --- !u!1 &7030514784578829008
 GameObject:
   m_ObjectHideFlags: 0

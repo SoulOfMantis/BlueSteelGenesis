@@ -37,6 +37,7 @@ public class CharacterVisualHandler : VisualHandlerBase
     [Header("Special Animations")]
     [SerializeField] private AnimationClipRef summonAnimation;
     [SerializeField] private AnimationClipRef specialAnimation;
+    [SerializeField] private AnimationClipRef statusAnimation;
 
 
 
@@ -51,6 +52,13 @@ public class CharacterVisualHandler : VisualHandlerBase
         PlayAnimation(specialAnimation.animationName);
 
         await Task.Delay((int)(specialAnimation.transitionDuration * 1000));
+    }
+
+    public async Task PlayStatusAnimation()
+    {
+        PlayAnimation(statusAnimation.animationName);
+
+        await Task.Delay((int)(statusAnimation.transitionDuration * 1000));
     }
 
     public async Task PlayWalkAnimation(Vector3Int direction)

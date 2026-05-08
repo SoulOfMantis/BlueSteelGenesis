@@ -167,7 +167,8 @@ public virtual async Task drainEnergy(uint amount)
         Character target = tracker.FindCharacterAtPosition(pos);
         if (target == null)
             return;
-        await Awaitable.WaitForSecondsAsync(.2f);
+        if (visualHandler != null)
+            await visualHandler.PlayStatusAnimation();
         target.addStatusModule(status);
         await processTrigger(TriggerType.OnApply, pos);
         Debug.Log($"Apply {status.GetType().Name} at {pos}");

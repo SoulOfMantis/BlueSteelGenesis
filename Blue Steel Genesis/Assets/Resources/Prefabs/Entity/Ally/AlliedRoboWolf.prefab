@@ -263,3 +263,7 @@ MonoBehaviour:
     animationName: 
     clip: {fileID: 0}
     transitionDuration: 0
+  statusAnimation:
+    animationName: Status
+    clip: {fileID: 0}
+    transitionDuration: 0.2

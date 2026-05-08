@@ -1,0 +1,272 @@
+fileFormatVersion: 2
+guid: 15f64dd9d0f21d044b6b76ce5475ada4
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -47822580803409374
+    second: SwarmScatter_0
+  - first:
+      213: 4057214820755741245
+    second: SwarmScatter_1
+  - first:
+      213: 292361102968650299
+    second: SwarmScatter_2
+  - first:
+      213: -2537886181820963451
+    second: SwarmScatter_3
+  - first:
+      213: 3313950099950464094
+    second: SwarmScatter_4
+  - first:
+      213: 6955009525379017173
+    second: SwarmScatter_5
+  - first:
+      213: -1283540736838450175
+    second: SwarmScatter_6
+  - first:
+      213: 8373762332270724821
+    second: SwarmScatter_7
+  - first:
+      213: -2611154096171779854
+    second: SwarmScatter_8
+  - first:
+      213: -4514572934671941231
+    second: SwarmScatter_9
+  - first:
+      213: -4230433020731853030
+    second: SwarmScatter_10
+  - first:
+      213: -3489736735013830931
+    second: SwarmScatter_11
+  - first:
+      213: 1108762580292709424
+    second: SwarmScatter_12
+  - first:
+      213: -6670892033503047635
+    second: SwarmScatter_13
+  - first:
+      213: 9215487472170835930
+    second: SwarmScatter_14
+  - first:
+      213: 8083173101411934826
+    second: SwarmScatter_15
+  - first:
+      213: -6163876655578192451
+    second: SwarmScatter_16
+  - first:
+      213: -173019678261704940
+    second: SwarmScatter_17
+  - first:
+      213: 542743476406644127
+    second: SwarmScatter_18
+  - first:
+      213: 1053749002496133250
+    second: SwarmScatter_19
+  - first:
+      213: -1296679483289208570
+    second: SwarmScatter_20
+  - first:
+      213: 561727238899892492
+    second: SwarmScatter_21
+  - first:
+      213: -8608032462521671280
+    second: SwarmScatter_22
+  - first:
+      213: -1197525992304327408
+    second: SwarmScatter_23
+  - first:
+      213: 4146017308413758207
+    second: SwarmScatter_24
+  - first:
+      213: 1986581328903616030
+    second: SwarmScatter_25
+  - first:
+      213: 3418929604542450162
+    second: SwarmScatter_26
+  - first:
+      213: 2818746558636875857
+    second: SwarmScatter_27
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SwarmScatter_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22a68fabd99165ff0800000000000000
+      internalID: -47822580803409374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SwarmScatter_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3a9898226f1e4830800000000000000
+      internalID: 4057214820755741245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SwarmScatter_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3a7698cfdcae0400800000000000000
+      internalID: 292361102968650299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 7535d7e0a6dd0e748ac3d1ba9c323cc4
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      SwarmScatter_0: -47822580803409374
+      SwarmScatter_1: 4057214820755741245
+      SwarmScatter_2: 292361102968650299
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
