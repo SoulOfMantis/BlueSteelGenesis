@@ -10,11 +10,16 @@ public class AlliedRoboWolf : Ally
     {
         Name = "RoboWolf";
         Description = "A robotic copy of regular wolf, reprogrammed by you. Got some pretty cool enhancements!";
+    }
+    protected override void Init()
+    {
         addModule(new BurnBite());
         addModule(new AcceleratedMovement());
-
         SetPriorityModules();
+
+        base.Init();
     }
+
     protected override bool TryGetTargetForZero(out Vector3Int targetPos)
     {
         var possibleTargets = priorityModules[0].getCellsInRange(Position)
