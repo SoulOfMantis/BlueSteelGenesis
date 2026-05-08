@@ -46,16 +46,12 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-<<<<<<< Updated upstream
     filterMode: 0
-=======
-    filterMode: 1
->>>>>>> Stashed changes
     aniso: 1
     mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: 1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -116,29 +112,20 @@ TextureImporter:
       name: HealPlayer_0
       rect:
         serializedVersion: 2
-<<<<<<< Updated upstream
         x: 0
         y: 32
         width: 32
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-=======
-        x: 1
-        y: 35
-        width: 27
-        height: 29
-      alignment: 0
-      pivot: {x: 0, y: 0}
->>>>>>> Stashed changes
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 47016d3a145aefae0800000000000000
-      internalID: -1513590723409735564
+      spriteID: f499bf9f291e8684ca9a64698a4f2c1e
+      internalID: 1117478421
       vertices: []
       indices: 
       edges: []
@@ -147,29 +134,20 @@ TextureImporter:
       name: HealPlayer_1
       rect:
         serializedVersion: 2
-<<<<<<< Updated upstream
         x: 32
         y: 32
         width: 32
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-=======
-        x: 37
-        y: 35
-        width: 22
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
->>>>>>> Stashed changes
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 9b46124ce310ad6e0800000000000000
-      internalID: -1812134530973080391
+      spriteID: 835e2cafbb44a3d479be696f7699fddb
+      internalID: -473518409
       vertices: []
       indices: 
       edges: []
@@ -178,29 +156,20 @@ TextureImporter:
       name: HealPlayer_2
       rect:
         serializedVersion: 2
-<<<<<<< Updated upstream
         x: 0
         y: 0
         width: 32
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-=======
-        x: 5
-        y: 3
-        width: 22
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
->>>>>>> Stashed changes
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 72b13aeb583bc4a20800000000000000
-      internalID: 3048008434833365799
+      spriteID: f1d8a89bf46218a449e56eeb91a0c51f
+      internalID: -1752783935
       vertices: []
       indices: 
       edges: []
@@ -209,29 +178,20 @@ TextureImporter:
       name: HealPlayer_3
       rect:
         serializedVersion: 2
-<<<<<<< Updated upstream
         x: 32
         y: 0
         width: 32
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-=======
-        x: 37
-        y: 3
-        width: 22
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
->>>>>>> Stashed changes
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: f346025b860bd9dc0800000000000000
-      internalID: -3630551760828865473
+      spriteID: 89f8bb6a393614f489f3796cfdbe67fd
+      internalID: -95505772
       vertices: []
       indices: 
       edges: []
@@ -240,11 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-<<<<<<< Updated upstream
-    spriteID: 88cc47013d18be744a94be54bd44a880
-=======
-    spriteID: 
->>>>>>> Stashed changes
+    spriteID: 4dc3d5b23bbc03e48bfc7298ade1dfc4
     internalID: 0
     vertices: []
     indices: 
@@ -252,18 +208,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-<<<<<<< Updated upstream
       entries:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
-=======
-      entries: []
->>>>>>> Stashed changes
     nameFileIdTable:
-      HealPlayer_0: -1513590723409735564
-      HealPlayer_1: -1812134530973080391
-      HealPlayer_2: 3048008434833365799
-      HealPlayer_3: -3630551760828865473
+      HealPlayer_0: 1117478421
+      HealPlayer_1: -473518409
+      HealPlayer_2: -1752783935
+      HealPlayer_3: -95505772
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

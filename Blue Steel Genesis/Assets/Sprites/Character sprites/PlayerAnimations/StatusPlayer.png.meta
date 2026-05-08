@@ -55,16 +55,12 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-<<<<<<< Updated upstream
     filterMode: 0
-=======
-    filterMode: 1
->>>>>>> Stashed changes
     aniso: 1
     mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: 1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -125,29 +121,20 @@ TextureImporter:
       name: StatusPlayer_0
       rect:
         serializedVersion: 2
-<<<<<<< Updated upstream
         x: 0
         y: 32
         width: 32
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-=======
-        x: 5
-        y: 35
-        width: 23
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
->>>>>>> Stashed changes
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 9d02c4f6d3524c980800000000000000
-      internalID: -8519643649287642919
+      spriteID: bc5f2db24faa0d847b2e797051c5953f
+      internalID: -686660547
       vertices: []
       indices: 
       edges: []
@@ -156,29 +143,20 @@ TextureImporter:
       name: StatusPlayer_1
       rect:
         serializedVersion: 2
-<<<<<<< Updated upstream
         x: 32
         y: 32
         width: 32
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-=======
-        x: 37
-        y: 35
-        width: 22
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
->>>>>>> Stashed changes
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 2476c71b3e9bd9ed0800000000000000
-      internalID: -2405562238359541950
+      spriteID: c8e3ed1bebeb7a54e9c6f929f7bc3218
+      internalID: -1876190933
       vertices: []
       indices: 
       edges: []
@@ -187,29 +165,20 @@ TextureImporter:
       name: StatusPlayer_2
       rect:
         serializedVersion: 2
-<<<<<<< Updated upstream
         x: 0
         y: 0
         width: 32
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-=======
-        x: 55
-        y: 55
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
->>>>>>> Stashed changes
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: f81085e9194f4d8e0800000000000000
-      internalID: -1669440655583608433
+      spriteID: d8fee61f5aab2d54ab211b8966f20dfe
+      internalID: -286113144
       vertices: []
       indices: 
       edges: []
@@ -218,111 +187,29 @@ TextureImporter:
       name: StatusPlayer_3
       rect:
         serializedVersion: 2
-<<<<<<< Updated upstream
         x: 32
         y: 0
         width: 32
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-=======
-        x: 5
-        y: 3
-        width: 22
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
->>>>>>> Stashed changes
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 8f8cbe7825b1f4900800000000000000
-      internalID: 670784910783138040
+      spriteID: 7100ec8a91654ed40a69acd6b87eeedd
+      internalID: -1896965847
       vertices: []
       indices: 
       edges: []
       weights: []
-<<<<<<< Updated upstream
-=======
-    - serializedVersion: 2
-      name: StatusPlayer_4
-      rect:
-        serializedVersion: 2
-        x: 23
-        y: 21
-        width: 8
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7d2a1375c3b007470800000000000000
-      internalID: 8390218459580048087
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: StatusPlayer_5
-      rect:
-        serializedVersion: 2
-        x: 37
-        y: 3
-        width: 22
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d3fff71329717b070800000000000000
-      internalID: 8121986369649114941
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: StatusPlayer_6
-      rect:
-        serializedVersion: 2
-        x: 54
-        y: 20
-        width: 10
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: be65ad61d5c3b31d0800000000000000
-      internalID: -3370033525643651349
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
->>>>>>> Stashed changes
     outline: []
     customData: 
     physicsShape: []
     bones: []
-<<<<<<< Updated upstream
-    spriteID: bd0b1c71cc7d1f0409fb387cd8375ae2
-=======
-    spriteID: 
->>>>>>> Stashed changes
+    spriteID: d06202edb79dec3408ca51be282c971b
     internalID: 0
     vertices: []
     indices: 
@@ -330,24 +217,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-<<<<<<< Updated upstream
       entries:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
-=======
-      entries: []
->>>>>>> Stashed changes
     nameFileIdTable:
-      StatusPlayer_0: -8519643649287642919
-      StatusPlayer_1: -2405562238359541950
-      StatusPlayer_2: -1669440655583608433
-      StatusPlayer_3: 670784910783138040
-<<<<<<< Updated upstream
-=======
-      StatusPlayer_4: 8390218459580048087
-      StatusPlayer_5: 8121986369649114941
-      StatusPlayer_6: -3370033525643651349
->>>>>>> Stashed changes
+      StatusPlayer_0: -686660547
+      StatusPlayer_1: -1876190933
+      StatusPlayer_2: -286113144
+      StatusPlayer_3: -1896965847
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

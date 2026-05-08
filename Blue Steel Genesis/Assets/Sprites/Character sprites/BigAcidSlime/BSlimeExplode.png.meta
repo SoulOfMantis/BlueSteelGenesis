@@ -67,16 +67,12 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-<<<<<<< Updated upstream
     filterMode: 0
-=======
-    filterMode: 1
->>>>>>> Stashed changes
     aniso: 1
     mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: 1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -132,287 +128,12 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: BSlimeExplode_0
-      rect:
-        serializedVersion: 2
-        x: 0
-<<<<<<< Updated upstream
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-=======
-        y: 67
-        width: 46
-        height: 33
-      alignment: 0
-      pivot: {x: 0, y: 0}
->>>>>>> Stashed changes
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 700c3ffb2eb7fd3c0800000000000000
-      internalID: -4332608102693879801
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BSlimeExplode_1
-      rect:
-        serializedVersion: 2
-<<<<<<< Updated upstream
-        x: 64
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-=======
-        x: 18
-        y: 94
-        width: 33
-        height: 29
-      alignment: 0
-      pivot: {x: 0, y: 0}
->>>>>>> Stashed changes
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d404b7b6d4e78bd70800000000000000
-      internalID: 9059129521436573773
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BSlimeExplode_2
-      rect:
-        serializedVersion: 2
-<<<<<<< Updated upstream
-        x: 0
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-=======
-        x: 63
-        y: 67
-        width: 45
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
->>>>>>> Stashed changes
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d4937d81cf0d380e0800000000000000
-      internalID: -2268740006097503923
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-<<<<<<< Updated upstream
-=======
-    - serializedVersion: 2
-      name: BSlimeExplode_3
-      rect:
-        serializedVersion: 2
-        x: 91
-        y: 87
-        width: 22
-        height: 19
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 044aa6837805227b0800000000000000
-      internalID: -5250545673863257024
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BSlimeExplode_4
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 93
-        width: 14
-        height: 34
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a4087a878b25442c0800000000000000
-      internalID: -4448339579683504054
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BSlimeExplode_5
-      rect:
-        serializedVersion: 2
-        x: 43
-        y: 67
-        width: 20
-        height: 21
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0bcc346ce3ea4bf00800000000000000
-      internalID: 1131720991014374576
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BSlimeExplode_6
-      rect:
-        serializedVersion: 2
-        x: 107
-        y: 67
-        width: 20
-        height: 21
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a12ddf30496b131b0800000000000000
-      internalID: -5678556908299103718
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BSlimeExplode_7
-      rect:
-        serializedVersion: 2
-        x: 4
-        y: 33
-        width: 24
-        height: 30
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: eba1511cc0e5d5c20800000000000000
-      internalID: 3196814719374924478
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BSlimeExplode_8
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 29
-        width: 14
-        height: 34
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6395ca0d3e26176a0800000000000000
-      internalID: -6453268060447155914
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BSlimeExplode_9
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 3
-        width: 44
-        height: 23
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 784c38f7513ccfc20800000000000000
-      internalID: 3241680328900985991
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BSlimeExplode_10
-      rect:
-        serializedVersion: 2
-        x: 43
-        y: 3
-        width: 20
-        height: 21
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 65e546284983ee800800000000000000
-      internalID: 643514007254490710
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
->>>>>>> Stashed changes
+    sprites: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-<<<<<<< Updated upstream
-    spriteID: fd8c6222c4163e044ace0f136a8c53ca
-=======
     spriteID: 
->>>>>>> Stashed changes
     internalID: 0
     vertices: []
     indices: 
@@ -420,29 +141,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-<<<<<<< Updated upstream
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
-    nameFileIdTable:
-      BSlimeExplode_0: -4332608102693879801
-      BSlimeExplode_1: 9059129521436573773
-      BSlimeExplode_2: -2268740006097503923
-=======
       entries: []
-    nameFileIdTable:
-      BSlimeExplode_0: -4332608102693879801
-      BSlimeExplode_1: 9059129521436573773
-      BSlimeExplode_10: 643514007254490710
-      BSlimeExplode_2: -2268740006097503923
-      BSlimeExplode_3: -5250545673863257024
-      BSlimeExplode_4: -4448339579683504054
-      BSlimeExplode_5: 1131720991014374576
-      BSlimeExplode_6: -5678556908299103718
-      BSlimeExplode_7: 3196814719374924478
-      BSlimeExplode_8: -6453268060447155914
-      BSlimeExplode_9: 3241680328900985991
->>>>>>> Stashed changes
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

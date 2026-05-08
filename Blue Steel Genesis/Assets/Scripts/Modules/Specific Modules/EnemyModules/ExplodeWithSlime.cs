@@ -50,6 +50,7 @@ public class ExplodeWithSlime : PassiveModule
                 default:
                     break;
             }
+        await user.visualHandler.PlaySummonAnimation();
     }
     protected override bool checkFinalPosition(Vector3Int pos)
     {

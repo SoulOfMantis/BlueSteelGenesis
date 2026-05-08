@@ -58,16 +58,12 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-<<<<<<< Updated upstream
     filterMode: 0
-=======
-    filterMode: 1
->>>>>>> Stashed changes
     aniso: 1
     mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: 1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -128,29 +124,20 @@ TextureImporter:
       name: TLAcidStatus_0
       rect:
         serializedVersion: 2
-<<<<<<< Updated upstream
         x: 0
         y: 96
         width: 96
         height: 96
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-=======
-        x: 68
-        y: 181
-        width: 10
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
->>>>>>> Stashed changes
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 406f631178172e3c0800000000000000
-      internalID: -4331775066653657596
+      spriteID: 0d71decfd21eb5044a70d4c84bc9e095
+      internalID: 527347629
       vertices: []
       indices: 
       edges: []
@@ -159,29 +146,20 @@ TextureImporter:
       name: TLAcidStatus_1
       rect:
         serializedVersion: 2
-<<<<<<< Updated upstream
         x: 96
         y: 96
         width: 96
         height: 96
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-=======
-        x: 164
-        y: 176
-        width: 10
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
->>>>>>> Stashed changes
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 1ade0d852a34f3b60800000000000000
-      internalID: 7727969850144910753
+      spriteID: 1954a47db8ba4014a98c88a1257958ca
+      internalID: -790927962
       vertices: []
       indices: 
       edges: []
@@ -190,29 +168,20 @@ TextureImporter:
       name: TLAcidStatus_2
       rect:
         serializedVersion: 2
-<<<<<<< Updated upstream
         x: 0
         y: 0
         width: 96
         height: 96
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-=======
-        x: 9
-        y: 108
-        width: 69
-        height: 69
-      alignment: 0
-      pivot: {x: 0, y: 0}
->>>>>>> Stashed changes
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: b935e3748fff7dc30800000000000000
-      internalID: 4384254204080706459
+      spriteID: 2707e04a34fd96c44892cf5677257856
+      internalID: 1503238602
       vertices: []
       indices: 
       edges: []
@@ -221,133 +190,29 @@ TextureImporter:
       name: TLAcidStatus_3
       rect:
         serializedVersion: 2
-<<<<<<< Updated upstream
         x: 96
         y: 0
         width: 96
         height: 96
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-=======
-        x: 105
-        y: 108
-        width: 69
-        height: 69
-      alignment: 0
-      pivot: {x: 0, y: 0}
->>>>>>> Stashed changes
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: e93d9427ba3dff810800000000000000
-      internalID: 1801391109281797022
+      spriteID: 23398d52d31b24740a89eee944c11402
+      internalID: 481179051
       vertices: []
       indices: 
       edges: []
       weights: []
-<<<<<<< Updated upstream
-=======
-    - serializedVersion: 2
-      name: TLAcidStatus_4
-      rect:
-        serializedVersion: 2
-        x: 9
-        y: 12
-        width: 69
-        height: 69
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 62cf870a6a75a8e00800000000000000
-      internalID: 1047746236485532710
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: TLAcidStatus_5
-      rect:
-        serializedVersion: 2
-        x: 67
-        y: 76
-        width: 10
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c51c09f1de62cacf0800000000000000
-      internalID: -239773880278793892
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: TLAcidStatus_6
-      rect:
-        serializedVersion: 2
-        x: 105
-        y: 12
-        width: 69
-        height: 69
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8f796180701f4a3b0800000000000000
-      internalID: -5502007832237139976
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: TLAcidStatus_7
-      rect:
-        serializedVersion: 2
-        x: 163
-        y: 68
-        width: 10
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: effe19a430bfcbf60800000000000000
-      internalID: 8051586225386156030
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
->>>>>>> Stashed changes
     outline: []
     customData: 
     physicsShape: []
     bones: []
-<<<<<<< Updated upstream
-    spriteID: c7a6a15380efb4d47967a3f9c98023ca
-=======
-    spriteID: 
->>>>>>> Stashed changes
+    spriteID: 0ccf36dfc8d00e84c934c04b2d82ddc7
     internalID: 0
     vertices: []
     indices: 
@@ -355,25 +220,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-<<<<<<< Updated upstream
       entries:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":96.0,"y":96.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
-=======
-      entries: []
->>>>>>> Stashed changes
     nameFileIdTable:
-      TLAcidStatus_0: -4331775066653657596
-      TLAcidStatus_1: 7727969850144910753
-      TLAcidStatus_2: 4384254204080706459
-      TLAcidStatus_3: 1801391109281797022
-<<<<<<< Updated upstream
-=======
-      TLAcidStatus_4: 1047746236485532710
-      TLAcidStatus_5: -239773880278793892
-      TLAcidStatus_6: -5502007832237139976
-      TLAcidStatus_7: 8051586225386156030
->>>>>>> Stashed changes
+      TLAcidStatus_0: 527347629
+      TLAcidStatus_1: -790927962
+      TLAcidStatus_2: 1503238602
+      TLAcidStatus_3: 481179051
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

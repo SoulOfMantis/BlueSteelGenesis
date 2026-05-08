@@ -6,7 +6,7 @@ using UnityEngine;
 
 public abstract class Character : Entity
 {
-    [SerializeField] protected CharacterVisualHandler visualHandler;
+    [SerializeField] public CharacterVisualHandler visualHandler;
 
     public override async Task loseHealth(uint hp, ActionContext ctx) {
         ctx = ctx?.WithActionData(hp);
@@ -29,7 +29,6 @@ public abstract class Character : Entity
             currentHealth -= dmg;
             if (visualHandler != null)
                 await visualHandler.PlayHurtAnimation(dmg);
-            await changeColorAndWait(Color.crimson, 0.2f*dmg);
             await processTrigger(TriggerType.OnHealthDamage, ctx?.WithActionData(dmg));
             if (currentHealth == 0)
                 await die();
@@ -49,7 +48,8 @@ public abstract class Character : Entity
     {
         currentShield -= value;
         UpdateTooltipIfCurrent();
-        await Awaitable.WaitForSecondsAsync(.1f); //TODO: remove delay; derived classes must await animations
+        if (visualHandler != null)
+            visualHandler.PlayLoseShieldAnimation();
     }
     public override async Task heal(uint hp, ActionContext ctx)
     {
@@ -148,10 +148,10 @@ public abstract class Character : Entity
             new_pos.Except(Position).Any(p => tracker.IsOccupiedByCharacter(p)))
             return;
 
-        
-        Position = new_pos;
         if (visualHandler != null)
-            await visualHandler.PlayWalkAnimation(dir);
+            await visualHandler.PlayWalkAnimation(new_pos.First());
+        Position = new_pos;
+
     }
 
     public Task strike(int x, int y, int z, uint dmg, ActionContext ctx) => strike(new Vector3Int(x, y, z), dmg, ctx);

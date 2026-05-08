@@ -90,7 +90,7 @@ SpriteRenderer:
   m_Size: {x: 0.21, y: 0.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
 --- !u!114 &4881362635187566609
@@ -224,13 +224,17 @@ MonoBehaviour:
     clip: {fileID: 0}
     transitionDuration: 0
   summonAnimation:
-    animationName: 
+    animationName: Summon
     clip: {fileID: 0}
-    transitionDuration: 0
+    transitionDuration: 0.5
   specialAnimation:
     animationName: 
     clip: {fileID: 0}
     transitionDuration: 0
+  statusAnimation:
+    animationName: Status
+    clip: {fileID: 0}
+    transitionDuration: 0.2
 --- !u!1 &7030514784578829008
 GameObject:
   m_ObjectHideFlags: 0

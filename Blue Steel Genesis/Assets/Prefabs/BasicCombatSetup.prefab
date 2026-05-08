@@ -791,13 +791,17 @@ MonoBehaviour:
     clip: {fileID: 0}
     transitionDuration: 1
   loseShieldAnimation:
-    animationName: 
+    animationName: LoseShiel
     clip: {fileID: 0}
-    transitionDuration: 0
+    transitionDuration: 0.2
   gainShieldAnimation:
-    animationName: 
+    animationName: GainShield
     clip: {fileID: 0}
-    transitionDuration: 0
+    transitionDuration: 0.3
+  healAnimation:
+    animationName: Heal
+    clip: {fileID: 0}
+    transitionDuration: 0.5
   startBattleAnimation:
     animationName: 
     clip: {fileID: 0}
@@ -814,10 +818,18 @@ MonoBehaviour:
     animationName: 
     clip: {fileID: 0}
     transitionDuration: 0.1
-  healAnimation:
+  summonAnimation:
+    animationName: Summon
+    clip: {fileID: 0}
+    transitionDuration: 0
+  specialAnimation:
     animationName: 
     clip: {fileID: 0}
-    transitionDuration: 0.5
+    transitionDuration: 0
+  statusAnimation:
+    animationName: Status
+    clip: {fileID: 0}
+    transitionDuration: 0.2
 --- !u!1 &2439203578322715929
 GameObject:
   m_ObjectHideFlags: 0
@@ -3872,7 +3884,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000010967255, y: 0.000019640293}
+  m_AnchoredPosition: {x: -0.000010967255, y: 0.00007568996}
   m_SizeDelta: {x: 0, y: 8.21}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &5470408372509567572

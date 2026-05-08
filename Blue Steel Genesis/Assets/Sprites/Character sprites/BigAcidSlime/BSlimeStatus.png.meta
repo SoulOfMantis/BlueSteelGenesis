@@ -58,16 +58,12 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-<<<<<<< Updated upstream
     filterMode: 0
-=======
-    filterMode: 1
->>>>>>> Stashed changes
     aniso: 1
     mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: 1
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -123,231 +119,12 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: BSlimeStatus_0
-      rect:
-        serializedVersion: 2
-<<<<<<< Updated upstream
-        x: 0
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-=======
-        x: 1
-        y: 67
-        width: 57
-        height: 53
-      alignment: 0
-      pivot: {x: 0, y: 0}
->>>>>>> Stashed changes
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9a2e3f622bcb69600800000000000000
-      internalID: 474774284077884073
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BSlimeStatus_1
-      rect:
-        serializedVersion: 2
-<<<<<<< Updated upstream
-        x: 64
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-=======
-        x: 51
-        y: 117
-        width: 10
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
->>>>>>> Stashed changes
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 92b3eca3d8ef1b7d0800000000000000
-      internalID: -2904260402146821335
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BSlimeStatus_2
-      rect:
-        serializedVersion: 2
-<<<<<<< Updated upstream
-        x: 0
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-=======
-        x: 65
-        y: 67
-        width: 57
-        height: 53
-      alignment: 0
-      pivot: {x: 0, y: 0}
->>>>>>> Stashed changes
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f16885a9aa1232a70800000000000000
-      internalID: 8800915113429730847
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BSlimeStatus_3
-      rect:
-        serializedVersion: 2
-<<<<<<< Updated upstream
-        x: 64
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-=======
-        x: 115
-        y: 112
-        width: 10
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
->>>>>>> Stashed changes
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e7e574a83b499fc30800000000000000
-      internalID: 4393706410316619390
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-<<<<<<< Updated upstream
-=======
-    - serializedVersion: 2
-      name: BSlimeStatus_4
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 3
-        width: 57
-        height: 53
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d9f893c5665286440800000000000000
-      internalID: 4929230913721175965
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BSlimeStatus_5
-      rect:
-        serializedVersion: 2
-        x: 51
-        y: 46
-        width: 10
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e6c297184e4a183c0800000000000000
-      internalID: -4359021662986228626
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BSlimeStatus_6
-      rect:
-        serializedVersion: 2
-        x: 65
-        y: 3
-        width: 57
-        height: 53
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c28a1b378dff408d0800000000000000
-      internalID: -2880896556491233236
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BSlimeStatus_7
-      rect:
-        serializedVersion: 2
-        x: 115
-        y: 32
-        width: 10
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 4ce07d4d1f61d4350800000000000000
-      internalID: 6002479106268532420
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
->>>>>>> Stashed changes
+    sprites: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-<<<<<<< Updated upstream
-    spriteID: 4968b1735c3b2ca41afe65cdf3e66cdb
-=======
     spriteID: 
->>>>>>> Stashed changes
     internalID: 0
     vertices: []
     indices: 
@@ -355,25 +132,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-<<<<<<< Updated upstream
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
-=======
       entries: []
->>>>>>> Stashed changes
-    nameFileIdTable:
-      BSlimeStatus_0: 474774284077884073
-      BSlimeStatus_1: -2904260402146821335
-      BSlimeStatus_2: 8800915113429730847
-      BSlimeStatus_3: 4393706410316619390
-<<<<<<< Updated upstream
-=======
-      BSlimeStatus_4: 4929230913721175965
-      BSlimeStatus_5: -4359021662986228626
-      BSlimeStatus_6: -2880896556491233236
-      BSlimeStatus_7: 6002479106268532420
->>>>>>> Stashed changes
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
