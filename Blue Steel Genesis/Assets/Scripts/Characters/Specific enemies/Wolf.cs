@@ -6,13 +6,16 @@ public class Wolf : Enemy
     {
         Name = "Wolf";
         Description = "A fierce wolf, loyal to its leader.";
-
-        addModule(new BasicAttack());
-        addModule(new BasicMovement());
-
-        SetPriorityModules();
     }
 
+    protected override void Init()
+    {
+        addModule(new BasicAttack());
+        addModule(new BasicMovement());
+        SetPriorityModules();
+        
+        base.Init();
+    }
 
     protected override bool TryGetTargetForZero(out Vector3Int targetPos)
     {
