@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,6 +16,7 @@ public class EntityInfoTooltip : MonoBehaviour
     [SerializeField] TMP_Text shieldDisplay;
     [SerializeField] List<ModuleTooltipTrigger> module_icons;
     [SerializeField] List<ModuleTooltipTrigger> status_icons;
+    public EntityTooltipTooltipTrigger trigger;
 
     private RectTransform rectTransform;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -62,6 +64,9 @@ public class EntityInfoTooltip : MonoBehaviour
                 status_icons[i].updateModuleTrigger(c.Statuses[i]);
             }
         }
+        trigger.current = entity;
+        trigger.myTriggers = module_icons.Union(status_icons).ToList();
+        
     }
     void OnEnable()
     {

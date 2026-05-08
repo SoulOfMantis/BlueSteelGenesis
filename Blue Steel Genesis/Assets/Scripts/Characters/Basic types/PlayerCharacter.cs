@@ -74,7 +74,7 @@ public class PlayerCharacter : Character
         //play using module animation
         await base.useActiveModule_internal(m, pos);
 
-        if (false && !canUseAnyModule()) //TODO: check options
+        if (GameState.Run.AutoEndPlayerTurn && !canUseAnyModule()) //TODO: check options
             await endTurn();
     }
     protected override async Task usePassiveModule_internal(PassiveModule m, Vector3Int pos, ActionContext ctx)
@@ -141,7 +141,7 @@ public class PlayerCharacter : Character
     {
         await base.startTurn();
 
-        if (false && !canUseAnyModule()) //TODO: check options
+        if (GameState.Run.AutoEndPlayerTurn && !canUseAnyModule()) //TODO: check options
             await endTurn();
     }
 
@@ -191,7 +191,6 @@ public class PlayerCharacter : Character
         await processTrigger(TriggerType.OnDeath, null);
         if (TooltipSystem.IsCurrent(this))
         {
-            TooltipSystem.Unlock(TooltipSystem.TooltipType.entityTooltip);
             TooltipSystem.Hide(TooltipSystem.TooltipType.entityTooltip);
         }
         await Awaitable.WaitForSecondsAsync(.5f);

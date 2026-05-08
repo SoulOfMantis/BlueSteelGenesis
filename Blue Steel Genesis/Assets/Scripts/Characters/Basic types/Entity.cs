@@ -21,6 +21,7 @@ public abstract class Entity : MonoBehaviour
             tracker.AddObstacle(o);
         else
             Debug.LogWarning("Enity is not added");
+        baseColor = gameObject.GetComponent<SpriteRenderer>().color;
 
         EntityInfoTooltipSetup();
     }
@@ -29,13 +30,15 @@ public abstract class Entity : MonoBehaviour
         gameObject.AddComponent<EntityTooltipTrigger>().entity = this;
         gameObject.AddComponent<BoxCollider2D>();
     }
-    protected async Task changeColorAndWait(Color color, float seconds = 0.1f)
+    public void changeColor(Color color) =>
+        gameObject.GetComponent<SpriteRenderer>().color = color;
+    public void unchangeColor() => changeColor(baseColor);
+
+    public async Task changeColorAndWait(Color color, float seconds = 0.1f, float cap = 10)
     {
-        var spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        var baseColor = spriteRenderer.color;
-        spriteRenderer.color = color;
-        await Awaitable.WaitForSecondsAsync(Math.Min(seconds, 10));
-        spriteRenderer.color = baseColor;
+        changeColor(color);
+        await Awaitable.WaitForSecondsAsync(Math.Min(seconds, cap));
+        unchangeColor();
     }
 
     public virtual Task damage(uint dmg, ActionContext ctx) => loseHealth(dmg, ctx);
@@ -54,7 +57,7 @@ public abstract class Entity : MonoBehaviour
     }
     public virtual async Task heal(uint hp, ActionContext ctx) {
         currentHealth += Math.Max(hp, 1);
-        TooltipSystem.Update(TooltipSystem.TooltipType.entityTooltip);
+        UpdateTooltipIfCurrent();
         await changeColorAndWait(Color.green, 0.2f*hp);
     }
     protected void UpdateTooltipIfCurrent()
@@ -87,7 +90,7 @@ public abstract class Entity : MonoBehaviour
 
     private PositionCollection position_;
 
-
+    private Color baseColor;
 
     public static bool summon<T>(PositionCollection pos) where T : Entity {
         if (pos.Any(p => tracker.OutOfBounds(p) || tracker.IsOccupied(p)))
