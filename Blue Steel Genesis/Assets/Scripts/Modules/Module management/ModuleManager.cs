@@ -45,9 +45,9 @@ public static class ModuleManager
     public static bool BuyModule(GameModule module)
     {
         if (module == null || MaxEditableModuleIndex >= 4) return false;
-        GameState.Run.Expedition.Shop.Buy(module);
+        bool success = GameState.Run.Expedition.Shop.Buy(module);
         Refresh();
-        return true;
+        return success;
     }
 
     public static void RemoveModule(uint idx)
@@ -62,9 +62,28 @@ public static class ModuleManager
         GameState.Run.Expedition.Shop.Sell(EditableModules[(int)idx]);
         Refresh();
     }
+
+    public static void UpgradeModule(uint idx)
+    {
+        if (idx < MinEditableModuleIndex || idx > MaxEditableModuleIndex) return;
+        var module = EditableModules[(int)idx];
+        
+        if (!module.CanUpgrade) return;
+
+        uint cost = module.GetUpgradeCost();
+        var player = GameState.Run.Expedition.Player;
+
+        if (!player.HasEnoughMaterials(cost)) return;
+
+        player.LoseMaterials(cost);
+        module.ApplyUpgrade();
+
+        Refresh();
+    }
     public enum InventoryOptions
     {
         Remove,
-        Sell
+        Sell,
+        Upgrade
     }
 }

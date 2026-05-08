@@ -5,12 +5,12 @@ using UnityEngine;
 class GameModuleSerializable {
     public GameModuleSerializable(GameModule module) {
         type = module.GetType().AssemblyQualifiedName;
-        //TODO: save level
+        level = module.upgradeLevel;   
     }
 
     public GameModule create() {
         GameModule module = ModuleGenerator.CreateModuleByType(Type.GetType(type));
-        //TODO: apply level
+        module.SetUpgradeLevel(level);
         return module;
     }
 

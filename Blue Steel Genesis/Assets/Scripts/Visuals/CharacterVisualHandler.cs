@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class CharacterVisualHandler : VisualHandlerBase
 {
@@ -15,19 +16,30 @@ public class CharacterVisualHandler : VisualHandlerBase
         public float transitionDuration;
     }
 
-    [Header("Character animations")]
+    [Header("Base character animations")]
     [SerializeField] private AnimationClipRef idleAnimation;
     [SerializeField] private AnimationClipRef walkAnimation;
     [SerializeField] private AnimationClipRef attackAnimation;
+
+    [Header("Health/Shield Animations")]
     [SerializeField] private AnimationClipRef hurtAnimation;
     [SerializeField] private AnimationClipRef deathAnimation;
     [SerializeField] private AnimationClipRef loseShieldAnimation;
     [SerializeField] private AnimationClipRef gainShieldAnimation;
+    [SerializeField] private AnimationClipRef healAnimation;
+
+    [Header("Turn/Battle Animations")]
     [SerializeField] private AnimationClipRef startBattleAnimation;
     [SerializeField] private AnimationClipRef endBattleAnimation;
     [SerializeField] private AnimationClipRef startTurnAnimation;
     [SerializeField] private AnimationClipRef endTurnAnimation;
-    [SerializeField] private AnimationClipRef healAnimation;
+
+    [Header("Special Animations")]
+    [SerializeField] private AnimationClipRef summonAnimation;
+    [SerializeField] private AnimationClipRef specialAnimation;
+    [SerializeField] private AnimationClipRef statusAnimation;
+
+
 
     //[Header("Floating text")]
     //[SerializeField] private GameObject floatingTextPrefab;
@@ -35,45 +47,60 @@ public class CharacterVisualHandler : VisualHandlerBase
 
     private string currentAnimation;
 
+    public async Task PlaySpecialAnimation()
+    {
+        PlayAnimation(specialAnimation.animationName);
+
+        await Task.Delay((int)(specialAnimation.transitionDuration * 1000));
+    }
+
+    public async Task PlayStatusAnimation()
+    {
+        PlayAnimation(statusAnimation.animationName);
+
+        await Task.Delay((int)(statusAnimation.transitionDuration * 1000));
+    }
+
     public async Task PlayWalkAnimation(Vector3Int direction)
     {
         PlayAnimation(walkAnimation.animationName);
+        LookAt(direction);
 
         await Task.Delay((int)(walkAnimation.transitionDuration * 1000));
     }
 
     public async Task PlayStartBattleAnimation()
     {
-        PlayAnimation(walkAnimation.animationName);
+        PlayAnimation(startBattleAnimation.animationName);
 
         await Task.Delay((int)(startBattleAnimation.transitionDuration * 1000));
     }
 
     public async Task PlayEndBattleAnimation()
     {
-        PlayAnimation(walkAnimation.animationName);
+        PlayAnimation(endBattleAnimation.animationName);
 
-        await Task.Delay((int)(endTurnAnimation.transitionDuration * 1000));
+        await Task.Delay((int)(endBattleAnimation.transitionDuration * 1000));
     }
 
     public async Task PlayStartTurnAnimation()
     {
-        PlayAnimation(walkAnimation.animationName);
+        PlayAnimation(startTurnAnimation.animationName);
 
         await Task.Delay((int)(startTurnAnimation.transitionDuration * 1000));
     }
 
     public async Task PlayEndTurnAnimation()
     {
-        PlayAnimation(walkAnimation.animationName);
+        PlayAnimation(endTurnAnimation.animationName);
 
-        await Task.Delay((int)(endBattleAnimation.transitionDuration * 1000));
+        await Task.Delay((int)(endTurnAnimation.transitionDuration * 1000));
     }
 
     public async Task PlayAttackAnimation(Vector3Int target)
     {
         PlayAnimation(attackAnimation.animationName);
-        //LookAt(target);
+        LookAt(target);
 
         await Task.Delay((int)(attackAnimation.transitionDuration * 1000));
     }
@@ -105,32 +132,36 @@ public class CharacterVisualHandler : VisualHandlerBase
 
     public async Task PlayGainShieldAnimation(uint amount)
     {
-        PlayAnimation(healAnimation.animationName);
+        PlayAnimation(gainShieldAnimation.animationName);
 
         await Task.Delay((int)(gainShieldAnimation.transitionDuration * 1000));
     }
 
-    public async Task PlayLoseShieldAnimation(uint amount)
+    public async Task PlayLoseShieldAnimation()
     {
-        PlayAnimation(hurtAnimation.animationName);
+        PlayAnimation(loseShieldAnimation.animationName);
 
         await Task.Delay((int)(loseShieldAnimation.transitionDuration * 1000));
 
     }
 
-    // Заставить персонажа смотреть в направление клетки
-    //private void LookAt(Vector3Int target)
-    //{
-    //    Vector3 direction = (Character.tracker.CellToWorld(target) - transform.position).normalized;
+    public async Task PlaySummonAnimation()
+    {
+        PlayAnimation(summonAnimation.animationName);
 
-    //    if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
-    //    {
-    //        if (direction.x > 0)
-    //            spriteRenderer.flipX = false;
-    //        else 
-    //            spriteRenderer.flipX = true;
-    //    }
-    //}
+        await Task.Delay((int)(summonAnimation.transitionDuration * 1000));
+    }
+
+    // Заставить персонажа смотреть в направление клетки
+    private void LookAt(Vector3Int target)
+    {
+
+        bool direction = Character.tracker.CellToWorld(target).x > transform.parent.position.x;
+        if (direction)
+            spriteRenderer.flipX = true;
+        else
+            spriteRenderer.flipX = false;
+    }
 
 
     // Частично работает, пока закомментировано

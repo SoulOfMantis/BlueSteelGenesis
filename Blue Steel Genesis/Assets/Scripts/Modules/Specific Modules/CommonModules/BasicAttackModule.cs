@@ -9,13 +9,15 @@ public class BasicAttackModule : ActiveModule
 {
     protected uint hitDamage;
 
-    public BasicAttackModule() : base()
+    public override uint GetUpgradeCost() => (uint)(upgradeLevel + 1) * 10;
+    public BasicAttack() : base()
     {
         price = 15;
         hitDamage = 2;
         energyCost = 1;
         range = 1;
         Icon_name = "BasicAttackModule";
+        maxUpgradeLevel = 3;
         AddConstKeywords(new CommonKeyword(), new OffenseKeyword());
     }
     public override string Description()
@@ -40,6 +42,13 @@ public class BasicAttackModule : ActiveModule
     public override bool checkPosition(Character user, Vector3Int pos)
     {
         return base.checkPosition(user, pos) && !user.Position.Contains(pos);
+    }
+
+    public override void ApplyUpgrade()
+    {
+        base.ApplyUpgrade();
+        hitDamage += 2;
+        price += 5;
     }
 }
 

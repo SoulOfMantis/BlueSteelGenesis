@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 910996753969975453}
   - component: {fileID: 6436685001208273242}
   - component: {fileID: 1194632349428790487}
+  - component: {fileID: 9162699899319039361}
   m_Layer: 0
   m_Name: Bush
   m_TagString: Enemy
@@ -104,6 +105,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: BlueSteelGenesis::Tree
   bodySize: 1
+  sfx: {fileID: 9162699899319039361}
+--- !u!114 &9162699899319039361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344885736801266915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40c8e0c68fc29df428d171df08db879e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BlueSteelGenesis::ObstacleSFX
+  healthLost: {fileID: 0}
+  damage: {fileID: 0}
+  heal: {fileID: 0}
+  death: {fileID: 0}
 --- !u!1 &7030514784578829008
 GameObject:
   m_ObjectHideFlags: 0
