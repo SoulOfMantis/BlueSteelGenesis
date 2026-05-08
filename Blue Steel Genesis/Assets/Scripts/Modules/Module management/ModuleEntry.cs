@@ -1,5 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 class ModuleEntry : MonoBehaviour
@@ -9,6 +10,7 @@ class ModuleEntry : MonoBehaviour
     [SerializeField] Button downButton;
     [SerializeField] Button actionButton;
     [SerializeField] ModuleTooltipTrigger trigger;
+    ModuleEntrySFX sfx;
 
     private uint currentIdx;
     private ModuleManagementUI manager;
@@ -19,6 +21,8 @@ class ModuleEntry : MonoBehaviour
         manager = mgr;
         upButton.onClick.RemoveAllListeners();
         downButton.onClick.RemoveAllListeners();
+        if (sfx == null)
+            sfx = FindFirstObjectByType<ModuleEntrySFX>();
         switch (mode)
         {
             case ModuleManager.InventoryOptions.Remove:
@@ -26,6 +30,9 @@ class ModuleEntry : MonoBehaviour
                 break;
             case ModuleManager.InventoryOptions.Sell:
                 SetupSell(module);
+                break;
+            case ModuleManager.InventoryOptions.Upgrade:
+                SetupUpgrade(module);
                 break;
         }
         actionButton.gameObject.SetActive(idx <= ModuleManager.MaxEditableModuleIndex && idx >= ModuleManager.MinEditableModuleIndex);
@@ -43,6 +50,8 @@ class ModuleEntry : MonoBehaviour
             var tmp = actionButton.GetComponentInChildren(typeof(TMP_Text)) as TMP_Text;
             tmp.text = "Remove";
             actionButton.onClick.AddListener(() => manager.RemoveModule(currentIdx));
+            if (sfx != null)
+                actionButton.onClick.AddListener(sfx.playRemove);
         }
         void SetupSell(GameModule module)        
         {
@@ -54,6 +63,30 @@ class ModuleEntry : MonoBehaviour
             var tmp = actionButton.GetComponentInChildren(typeof(TMP_Text)) as TMP_Text;
             tmp.text = $"Sell for {module.price / 2}";
             actionButton.onClick.AddListener(() => manager.SellModule(currentIdx));
+            if (sfx != null)
+                actionButton.onClick.AddListener(sfx.playSell);
             }
         }
+    void SetupUpgrade(GameModule module)
+    {
+        nameText.text = $"{module.Name} [Lv.{module.upgradeLevel}/{module.maxUpgradeLevel}]";
+        upButton.gameObject.SetActive(false);
+        downButton.gameObject.SetActive(false);
+        actionButton.onClick.AddListener(() => manager.UpgradeModule(currentIdx));
+        if (sfx != null)
+            actionButton.onClick.AddListener(sfx.playUpgrade);
+
+        var tmp = actionButton.GetComponentInChildren(typeof(TMP_Text)) as TMP_Text;
+        actionButton.interactable = false;
+        if (module.CanUpgrade)
+        {
+            uint cost = module.GetUpgradeCost();
+            tmp.text = $"Upgrade ({cost} parts)";
+            bool hasMaterials = GameState.Run.Expedition.Player.HasEnoughMaterials(cost);
+            actionButton.interactable = hasMaterials;
+            actionButton.image.color = Color.softGreen;
+        }
+        else tmp.text = "Max Lvl";
+    }
 }
+

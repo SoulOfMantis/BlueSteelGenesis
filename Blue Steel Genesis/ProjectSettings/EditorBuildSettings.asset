@@ -56,6 +56,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/b1_st0_Normal2.unity
     guid: 201dc3eca5a2ff3489e49a769e612c1e
+  - enabled: 1
+    path: Assets/Scenes/rest_room_b1.unity
+    guid: 377163b06b4dd6f46b822a43ff68ac92
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

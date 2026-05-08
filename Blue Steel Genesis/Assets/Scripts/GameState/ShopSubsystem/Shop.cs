@@ -23,7 +23,7 @@ public class Shop
         this.biome = biome;
     }
     public List<GameModule> OnSale = new();
-    public void Reroll(RerollOptions r)
+    public bool Reroll(RerollOptions r)
     {
         if (GameState.Run.Expedition.Player.HasEnoughMoney(RerollCost))
         {
@@ -41,7 +41,9 @@ public class Shop
                 default:
                     break;
             }
+            return true;
         }
+        return false;
     }
     void CommonRefresh()
     {
@@ -57,9 +59,9 @@ public class Shop
         OnSale.Add(GameState.Run.Expedition.ModuleGen.GetNextBossModule(GameState.Run.Expedition.Player.modules.Union(OnSale)));
         OnSale.Add(GameState.Run.Expedition.ModuleGen.GetNextBossModule(GameState.Run.Expedition.Player.modules.Union(OnSale)));
     }
-    public void Buy(GameModule module)
+    public bool Buy(GameModule module)
     {
-        if (!OnSale.Contains(module)) return;
+        if (!OnSale.Contains(module)) return false;
         switch (ModuleGenerator.isBoss(module))
         {
             case true:
@@ -69,6 +71,7 @@ public class Shop
                     OnSale.Remove(module);
                     GameState.Run.Expedition.Player.AddModule(module);
                     Debug.Log($"Player bought {module.Name} for a golden ticket");
+                    return true;
                 }
                 break;
 
@@ -79,9 +82,11 @@ public class Shop
                     OnSale.Remove(module);
                     GameState.Run.Expedition.Player.AddModule(module);
                     Debug.Log($"Player bought {module.Name} for {module.price} gold");
+                    return true;
                 }
                 break;
         }
+        return false;
     }
     public void Sell(GameModule module)
     {

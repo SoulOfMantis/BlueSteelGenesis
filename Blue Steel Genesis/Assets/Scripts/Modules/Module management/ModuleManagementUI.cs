@@ -45,5 +45,6 @@ public class ModuleManagementUI : MonoBehaviour
     public void MoveModuleDown(uint idx) => ModuleManager.MoveModuleDown(idx);
     public void RemoveModule(uint idx) => ModuleManager.RemoveModule(idx);
     public void SellModule(uint idx) => ModuleManager.SellModule(idx);
+    public void UpgradeModule(uint idx) => ModuleManager.UpgradeModule(idx);
 }
 

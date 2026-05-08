@@ -50,6 +50,7 @@ public class Expedition
         ModuleGen = new(LocalSeed);
         TreasureSubsystem = new(Biome.id);
         Shop = new(Biome.id);
+        Rest = new(Biome.id);
 
         GameState.saveGameRun();
     }
@@ -82,6 +83,9 @@ public class Expedition
                 break;
             case global::Map.Node.BLACK_MARKET:
                 Shop.TriggerBlackMarket();
+                break;
+            case global::Map.Node.REST:
+                Rest.Trigger();
                 break;
             default:
                 break;
@@ -148,5 +152,6 @@ public class Expedition
     public TreasureSubsystem TreasureSubsystem;
     public CombatSystem CombatSystem;
     public Shop Shop;
+    public Rest Rest;
     public ModuleGenerator ModuleGen;
 }
