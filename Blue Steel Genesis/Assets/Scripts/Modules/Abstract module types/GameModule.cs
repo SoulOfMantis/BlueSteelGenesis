@@ -14,7 +14,7 @@ public abstract class GameModule
     public uint range = 0;
     public int upgradeLevel { get; protected set;  } = 0;
     public int maxUpgradeLevel = 0;
-    public virtual uint GetUpgradeCost() => 0;
+    public virtual uint GetUpgradeCost() => price/10;
     public virtual bool CanUpgrade => upgradeLevel < maxUpgradeLevel;
 
     public virtual string Description()
