@@ -10,8 +10,8 @@ public class SmallAcidSlime : Enemy
     }
     protected override void Init()
     {
-        addModule(new AcidBite());
-        addModule(new BasicMovement(4));
+        addModule(new AcidBiteModule());
+        addModule(new BasicMovementModule(4));
         base.Init();
     }
     protected override bool TryGetTargetForZero(out Vector3Int targetPos)

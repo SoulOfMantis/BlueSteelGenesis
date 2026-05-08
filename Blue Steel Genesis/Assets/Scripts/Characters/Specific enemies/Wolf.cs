@@ -10,8 +10,8 @@ public class Wolf : Enemy
 
     protected override void Init()
     {
-        addModule(new BasicAttack());
-        addModule(new BasicMovement());
+        addModule(new BasicAttackModule());
+        addModule(new BasicMovementModule());
         SetPriorityModules();
         
         base.Init();
@@ -27,7 +27,7 @@ public class Wolf : Enemy
 
 
     protected override bool TryGetTargetForOne(out Vector3Int targetPos) =>
-        GetDirectApproachTarget(out targetPos, priorityModules[1] as BasicMovement, getEnemies()) ||
-        GetApproachTarget(out targetPos, priorityModules[1] as BasicMovement, getEnemies());
+        GetDirectApproachTarget(out targetPos, priorityModules[1] as BasicMovementModule, getEnemies()) ||
+        GetApproachTarget(out targetPos, priorityModules[1] as BasicMovementModule, getEnemies());
 }
 

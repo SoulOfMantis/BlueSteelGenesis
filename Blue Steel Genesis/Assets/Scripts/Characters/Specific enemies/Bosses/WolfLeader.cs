@@ -14,7 +14,7 @@ public class WolfLeader : Enemy
         addModule(new BiteModule());
         addModule(new ClawModule());
         addModule(new SummonWolfModule());
-        addModule(new BasicMovement());
+        addModule(new BasicMovementModule());
         SetPriorityModules();
 
         base.Init();

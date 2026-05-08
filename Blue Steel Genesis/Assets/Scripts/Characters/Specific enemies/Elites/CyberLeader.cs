@@ -15,9 +15,9 @@ public class CyberLeader : Enemy
 
     protected override void Init()
     {
-        addModule(new BurnBite());
-        addModule(new RoboWolfSummoner());
-        addModule(new AcceleratedMovement());
+        addModule(new BurnBiteModule());
+        addModule(new RoboWolfSummonerModule());
+        addModule(new AcceleratedMovementModule());
         SetPriorityModules();
 
         base.Init();

@@ -13,8 +13,8 @@ public class AlliedRoboWolf : Ally
     }
     protected override void Init()
     {
-        addModule(new BurnBite());
-        addModule(new AcceleratedMovement());
+        addModule(new BurnBiteModule());
+        addModule(new AcceleratedMovementModule());
         SetPriorityModules();
 
         base.Init();
