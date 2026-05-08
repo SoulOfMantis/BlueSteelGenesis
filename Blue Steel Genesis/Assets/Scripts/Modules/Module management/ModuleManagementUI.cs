@@ -9,7 +9,7 @@ public class ModuleManagementUI : MonoBehaviour
     [SerializeField] TMP_Text moneyDisplay;
     [SerializeField] TMP_Text materialsDisplay;
     [SerializeField] TMP_Text ticketsDisplay;
-    [SerializeField] bool InShop = false;
+    [SerializeField] ModuleManager.InventoryOptions inventoryMode = ModuleManager.InventoryOptions.Remove;
     private List<ModuleEntry> entries = new List<ModuleEntry>();
 
     private void OnEnable()
@@ -36,7 +36,7 @@ public class ModuleManagementUI : MonoBehaviour
         {
             var go = Instantiate(moduleEntryPrefab, contentParent);
             var entry = go.GetComponent<ModuleEntry>();
-            entry.Setup(ModuleManager.Modules[i], (uint)i, this, InShop);
+            entry.Setup(ModuleManager.Modules[i], (uint)i, this, inventoryMode);
             entries.Add(entry);
         }
     }
