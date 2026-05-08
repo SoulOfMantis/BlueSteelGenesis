@@ -11,6 +11,7 @@ public class BasicStrongAttack : ActiveModule
         price = 20;
         hitDamage = 18;
         energyCost = 3;
+        maxUpgradeLevel = 2;
         range = 1; 
         AddConstKeywords(new CommonKeyword(), new OffenseKeyword());
         //Icon_name = "...";
@@ -37,6 +38,12 @@ public class BasicStrongAttack : ActiveModule
     public override bool checkPosition(Character user, Vector3Int pos)
     {
         return base.checkPosition(user, pos) && !user.Position.Contains(pos);
+    }
+    public override void ApplyUpgrade()
+    {
+        base.ApplyUpgrade();
+        hitDamage += 4;
+        price += 20;
     }
 
 }
