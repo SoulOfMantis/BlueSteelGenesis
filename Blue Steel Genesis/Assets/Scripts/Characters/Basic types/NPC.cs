@@ -84,10 +84,7 @@ public abstract class NPC : Character
             await endTurn();
         await processTrigger(TriggerType.OnDeath, null);
         if (TooltipSystem.IsCurrent(this))
-        {
-            TooltipSystem.Unlock(TooltipSystem.TooltipType.entityTooltip);
             TooltipSystem.Hide(TooltipSystem.TooltipType.entityTooltip);
-        }
         if (visualHandler != null)
             await visualHandler.PlayDeathAnimation();
         Debug.Log($"{name} умер");

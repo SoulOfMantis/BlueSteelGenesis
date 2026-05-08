@@ -191,7 +191,6 @@ public class PlayerCharacter : Character
         await processTrigger(TriggerType.OnDeath, null);
         if (TooltipSystem.IsCurrent(this))
         {
-            TooltipSystem.Unlock(TooltipSystem.TooltipType.entityTooltip);
             TooltipSystem.Hide(TooltipSystem.TooltipType.entityTooltip);
         }
         await Awaitable.WaitForSecondsAsync(.5f);
