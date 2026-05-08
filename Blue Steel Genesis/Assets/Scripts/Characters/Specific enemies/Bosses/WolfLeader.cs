@@ -13,7 +13,7 @@ public class WolfLeader : Enemy
     {
         addModule(new BiteModule());
         addModule(new ClawModule());
-        addModule(new BasicMovement());
+        addModule(new BasicMovementModule());
         addModule(new SummonWolfModule());
         SetPriorityModules();
 

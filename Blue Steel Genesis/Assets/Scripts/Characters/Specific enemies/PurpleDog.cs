@@ -13,8 +13,8 @@ public class PurpleDog : Enemy
 
     protected override void Init()
     {
-        addModule(new BasicAttack());
-        addModule(new BasicMovement());
+        addModule(new BasicAttackModule());
+        addModule(new BasicMovementModule());
         SetPriorityModules();
 
         base.Init();

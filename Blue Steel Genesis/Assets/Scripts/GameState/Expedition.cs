@@ -18,8 +18,8 @@ public class Expedition
         // TODO: handle player creation properly
         Player.modules = new List<GameModule>{
             new DefaultAdaptiveTEST_ONLY(),
-            new MechanicStinger(),
-            new BasicMovement(),
+            new MechanicStingerModule(),
+            new BasicMovementModule(),
         };
         Player.maxHealth = 100;
         Player.maxEnergy = 10;

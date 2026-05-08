@@ -14,7 +14,7 @@ public class PoisonModule : NegativeStatusModule
         poisonDamage = damage;
         turnsLeft.Value = duration;
         AddConstKeyword(new PoisonKeyword());
-        Icon_name = "Module_poison";
+        Icon_name = "PoisonModule";
     }
     public PoisonModule() : this(1, 3) {}
     public override string Description()

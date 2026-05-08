@@ -10,10 +10,10 @@ public class LivingAcid : Enemy
     }
     protected override void Init()
     {
-        addModule(new AcidBite());
-        addModule(new AcidShot());
-        addModule(new BasicMovement(2));
-        addModule(new ExplodeWithSlime(bodySize - 1));
+        addModule(new AcidBiteModule());
+        addModule(new AcidShotModule());
+        addModule(new BasicMovementModule(2));
+        addModule(new ExplodeWithSlimeModule(bodySize - 1));
         base.Init();
     }
     protected override bool TryGetTargetForZero(out Vector3Int targetPos)

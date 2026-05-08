@@ -11,7 +11,7 @@ public class TheSwarm : Enemy
     protected override void Init()
     {
         addModule(new SwarmMandibles(1, 3));
-        addModule(new FlightMovement(4));
+        addModule(new FlightMovementModule(4));
         addModule(new SwarmScatter());
         SetPriorityModules();
 

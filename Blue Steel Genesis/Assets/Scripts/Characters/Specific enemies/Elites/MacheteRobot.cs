@@ -12,9 +12,9 @@ public class MacheteRobot : Enemy
 
     protected override void Init()
     {
-        addModule(new WideAttack());
-        addModule(new LongAttack());
-        addModule(new BasicMovement());
+        addModule(new WideAttackModule());
+        addModule(new LongAttackModule());
+        addModule(new BasicMovementModule());
         SetPriorityModules();
 
         base.Init();
