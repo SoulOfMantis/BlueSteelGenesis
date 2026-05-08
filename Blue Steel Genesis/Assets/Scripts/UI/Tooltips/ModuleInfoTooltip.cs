@@ -12,7 +12,7 @@ public class ModuleInfoTooltip : MonoBehaviour
     public TMP_Text Description;
     [SerializeField] Transform contentParent;
     private List<KeywordTooltip> entries = new();
-
+    public ModuleTooltipTooltipTrigger trigger;
     private RectTransform rectTransform;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()

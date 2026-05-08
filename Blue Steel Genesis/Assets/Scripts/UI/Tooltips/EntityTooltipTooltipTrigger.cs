@@ -1,20 +1,24 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.EventSystems;
+using static UnityEngine.EventSystems.EventTrigger;
 
-public class EntityTooltipTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class EntityTooltipTooltipTrigger : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
-    public void OnPointerClick(PointerEventData eventData)
+    public Entity current;
+    public List<ModuleTooltipTrigger> myTriggers;
+    void ISelectHandler.OnSelect(BaseEventData eventData)
     {
-        TooltipSystem.Delay(TooltipSystem.TooltipType.entityTooltip);
+        current.changeColor(Color.yellow);
     }
-    public void OnPointerEnter(PointerEventData eventData)
+    void IDeselectHandler.OnDeselect(BaseEventData eventData)
     {
-        TooltipSystem.Lock(TooltipSystem.TooltipType.entityTooltip);
-        TooltipSystem.Delay(TooltipSystem.TooltipType.entityTooltip);
-    }    
-    public void OnPointerExit(PointerEventData eventData)
+        if (!myTriggers.Contains(TooltipSystem.instance.currentModuleTrigger)) Deselect();
+        else TooltipSystem.instance.moduleTooltip.trigger.tooltip = this;
+    }
+    public void Deselect()
     {
-        TooltipSystem.Unlock(TooltipSystem.TooltipType.entityTooltip);
-        TooltipSystem.ResumeHiding(TooltipSystem.TooltipType.entityTooltip);
+        current.unchangeColor();
+        gameObject.SetActive(false);
     }
 }
