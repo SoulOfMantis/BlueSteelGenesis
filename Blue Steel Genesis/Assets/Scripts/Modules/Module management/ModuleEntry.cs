@@ -9,6 +9,7 @@ class ModuleEntry : MonoBehaviour
     [SerializeField] Button downButton;
     [SerializeField] Button actionButton;
     [SerializeField] ModuleTooltipTrigger trigger;
+    [SerializeField] ModuleEntrySFX sfx;
 
     private uint currentIdx;
     private ModuleManagementUI manager;
@@ -43,6 +44,7 @@ class ModuleEntry : MonoBehaviour
             var tmp = actionButton.GetComponentInChildren(typeof(TMP_Text)) as TMP_Text;
             tmp.text = "Remove";
             actionButton.onClick.AddListener(() => manager.RemoveModule(currentIdx));
+            actionButton.onClick.AddListener(sfx.playRemove);
         }
         void SetupSell(GameModule module)        
         {
@@ -54,6 +56,7 @@ class ModuleEntry : MonoBehaviour
             var tmp = actionButton.GetComponentInChildren(typeof(TMP_Text)) as TMP_Text;
             tmp.text = $"Sell for {module.price / 2}";
             actionButton.onClick.AddListener(() => manager.SellModule(currentIdx));
+            actionButton.onClick.AddListener(sfx.playSell);
             }
         }
 }

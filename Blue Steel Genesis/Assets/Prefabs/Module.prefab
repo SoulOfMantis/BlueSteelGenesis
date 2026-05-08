@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1480299054862880414}
   - component: {fileID: 6546223957528394214}
   - component: {fileID: 4956139835445845715}
+  - component: {fileID: 7923368964762395037}
   m_Layer: 5
   m_Name: Module
   m_TagString: Untagged
@@ -98,6 +99,22 @@ MonoBehaviour:
   downButton: {fileID: 5552307416025357928}
   actionButton: {fileID: 4549892936472955428}
   trigger: {fileID: 2850990977049281817}
+  sfx: {fileID: 7923368964762395037}
+--- !u!114 &7923368964762395037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 610763912501953441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0efbfb293544a3e44a5c335252657870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BlueSteelGenesis::ModuleEntrySFX
+  remove: {fileID: 0}
+  sell: {fileID: 0}
+  upgrade: {fileID: 0}
 --- !u!1 &1194870023038627846
 GameObject:
   m_ObjectHideFlags: 0
