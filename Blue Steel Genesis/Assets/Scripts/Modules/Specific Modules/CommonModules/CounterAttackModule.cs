@@ -13,6 +13,7 @@ public class CounterAttack : PassiveModule
         range = 1;
         triggerType = TriggerType.OnDamage;
         AddConstKeyword(new CounterattackKeyword());
+        Icon_name = "Counterattack";
     }
     public override async Task Effect(Character user, Vector3Int pos, ActionContext ctx)
     {
