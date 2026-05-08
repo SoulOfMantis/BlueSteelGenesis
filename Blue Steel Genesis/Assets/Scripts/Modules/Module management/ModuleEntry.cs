@@ -49,10 +49,11 @@ class ModuleEntry : MonoBehaviour
             SetupRemove(module);
             if (!ModuleGenerator.isBoss(module))
             {
-                actionButton.image.color = Color.gold;
-                var tmp = actionButton.GetComponentInChildren(typeof(TMP_Text)) as TMP_Text;
-                tmp.text = $"Sell for {module.price / 2}";
-                actionButton.onClick.AddListener(() => manager.SellModule(currentIdx));
+            actionButton.onClick.RemoveAllListeners();
+            actionButton.image.color = Color.gold;
+            var tmp = actionButton.GetComponentInChildren(typeof(TMP_Text)) as TMP_Text;
+            tmp.text = $"Sell for {module.price / 2}";
+            actionButton.onClick.AddListener(() => manager.SellModule(currentIdx));
             }
         }
 }
