@@ -1,7 +1,19 @@
 fileFormatVersion: 2
 guid: 88967270b96518f45ba4e6513bf2ad63
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -1703587945469462318
+    second: BasedWolfEnemyAnimationStep_0
+  - first:
+      213: -4727888468341547829
+    second: BasedWolfEnemyAnimationStep_1
+  - first:
+      213: 600003345358615743
+    second: BasedWolfEnemyAnimationStep_2
+  - first:
+      213: 8330936233047159468
+    second: BasedWolfEnemyAnimationStep_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -110,10 +122,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 7317dded3946e1242b7b411d5e7688f1
-      internalID: 730813991
+      spriteID: 2d8b7a22ac3ab58e0800000000000000
+      internalID: -1703587945469462318
       vertices: []
       indices: 
       edges: []
@@ -132,10 +144,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: c87fa21023dcfd747b3c9f3f9652b7ea
-      internalID: -1465496956
+      spriteID: bcc16dacc7a236eb0800000000000000
+      internalID: -4727888468341547829
       vertices: []
       indices: 
       edges: []
@@ -154,10 +166,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: a366ae33d24461f4b98c15d6fbd082c4
-      internalID: 1758517783
+      spriteID: fb475281dd3a35800800000000000000
+      internalID: 600003345358615743
       vertices: []
       indices: 
       edges: []
@@ -176,10 +188,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 63767e91848e6954fa6ddd947f3cb32f
-      internalID: -901226774
+      spriteID: ca2f4316d5e6d9370800000000000000
+      internalID: 8330936233047159468
       vertices: []
       indices: 
       edges: []
@@ -188,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 4a9d41c425fe49b4a8e2d22125c88220
+    spriteID: 03415cbb18accc746bf42a3d01d9b738
     internalID: 0
     vertices: []
     indices: 
@@ -200,10 +212,10 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      BasedWolfEnemyAnimationStep_0: 730813991
-      BasedWolfEnemyAnimationStep_1: -1465496956
-      BasedWolfEnemyAnimationStep_2: 1758517783
-      BasedWolfEnemyAnimationStep_3: -901226774
+      BasedWolfEnemyAnimationStep_0: -1703587945469462318
+      BasedWolfEnemyAnimationStep_1: -4727888468341547829
+      BasedWolfEnemyAnimationStep_2: 600003345358615743
+      BasedWolfEnemyAnimationStep_3: 8330936233047159468
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

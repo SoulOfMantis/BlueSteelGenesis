@@ -64,7 +64,11 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
+<<<<<<< Updated upstream
     filterMode: 0
+=======
+    filterMode: 1
+>>>>>>> Stashed changes
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -130,12 +134,21 @@ TextureImporter:
       name: TLAcidExplode_0
       rect:
         serializedVersion: 2
+<<<<<<< Updated upstream
         x: 0
         y: 96
         width: 96
         height: 96
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+=======
+        x: 9
+        y: 108
+        width: 69
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+>>>>>>> Stashed changes
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -152,12 +165,21 @@ TextureImporter:
       name: TLAcidExplode_1
       rect:
         serializedVersion: 2
+<<<<<<< Updated upstream
         x: 96
         y: 96
         width: 96
         height: 96
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+=======
+        x: 99
+        y: 108
+        width: 76
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+>>>>>>> Stashed changes
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -174,12 +196,21 @@ TextureImporter:
       name: TLAcidExplode_2
       rect:
         serializedVersion: 2
+<<<<<<< Updated upstream
         x: 0
         y: 0
         width: 96
         height: 96
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+=======
+        x: 3
+        y: 4
+        width: 79
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+>>>>>>> Stashed changes
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -196,12 +227,21 @@ TextureImporter:
       name: TLAcidExplode_3
       rect:
         serializedVersion: 2
+<<<<<<< Updated upstream
         x: 96
         y: 0
         width: 96
         height: 96
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+=======
+        x: 99
+        y: 51
+        width: 18
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+>>>>>>> Stashed changes
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -214,11 +254,150 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+<<<<<<< Updated upstream
+=======
+    - serializedVersion: 2
+      name: TLAcidExplode_4
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 60
+        width: 33
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f443307cd32c0ed0800000000000000
+      internalID: -2446541067886836494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TLAcidExplode_5
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 33
+        width: 24
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa97aef54f1dd25c0800000000000000
+      internalID: -4238500826774341206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TLAcidExplode_6
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 4
+        width: 63
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80756abc1ed9018b0800000000000000
+      internalID: -5183469577993562360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TLAcidExplode_7
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 32
+        width: 23
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57052c89fc8ba6420800000000000000
+      internalID: 2624112934657347701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TLAcidExplode_8
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 10
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6319cb51f582bab0800000000000000
+      internalID: -4993781765126941843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TLAcidExplode_9
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 10
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbf392941cc35ae40800000000000000
+      internalID: 5667002506969431997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+>>>>>>> Stashed changes
     outline: []
     customData: 
     physicsShape: []
     bones: []
+<<<<<<< Updated upstream
     spriteID: aba0c9eb5fb6ce04e87c0e5b25cd9947
+=======
+    spriteID: 
+>>>>>>> Stashed changes
     internalID: 0
     vertices: []
     indices: 
@@ -226,14 +405,27 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
+<<<<<<< Updated upstream
       entries:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":96.0,"y":96.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+=======
+      entries: []
+>>>>>>> Stashed changes
     nameFileIdTable:
       TLAcidExplode_0: 1889805545550418986
       TLAcidExplode_1: -7629195756754079351
       TLAcidExplode_2: -6861732027429783522
       TLAcidExplode_3: 1697742187690724122
+<<<<<<< Updated upstream
+=======
+      TLAcidExplode_4: -2446541067886836494
+      TLAcidExplode_5: -4238500826774341206
+      TLAcidExplode_6: -5183469577993562360
+      TLAcidExplode_7: 2624112934657347701
+      TLAcidExplode_8: -4993781765126941843
+      TLAcidExplode_9: 5667002506969431997
+>>>>>>> Stashed changes
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

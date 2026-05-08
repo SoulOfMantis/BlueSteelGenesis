@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 910996753969975453}
   - component: {fileID: 6436685001208273242}
   - component: {fileID: 1477556361739014106}
+  - component: {fileID: 4315196108829073927}
   m_Layer: 0
   m_Name: BigAcidSlime
   m_TagString: Enemy
@@ -30,7 +31,8 @@ Transform:
   m_LocalPosition: {x: 0.14, y: 3.6, z: 0}
   m_LocalScale: {x: 7.5, y: 7.5, z: 7.5}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 988496533735318647}
   m_Father: {fileID: 4196047120132471949}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6436685001208273242
@@ -88,7 +90,7 @@ SpriteRenderer:
   m_Size: {x: 0.55, y: 0.51}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
 --- !u!114 &1477556361739014106
@@ -104,7 +106,131 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: BlueSteelGenesis::BigAcidSlime
   bodySize: 2
-  visualHandler: {fileID: 0}
+  visualHandler: {fileID: 2162790770232429445}
+--- !u!95 &4315196108829073927
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344885736801266915}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: eabdc5a57deefe842a5c363f2b222e66, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &2427910941053312644
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 988496533735318647}
+  - component: {fileID: 2162790770232429445}
+  m_Layer: 0
+  m_Name: Visuals
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &988496533735318647
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2427910941053312644}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 910996753969975453}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2162790770232429445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2427910941053312644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f0585ac2972b2446ab6410c834b9bf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BlueSteelGenesis::CharacterVisualHandler
+  animator: {fileID: 4315196108829073927}
+  spriteRenderer: {fileID: 6436685001208273242}
+  idleAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0.5
+  walkAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0.2
+  attackAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 1
+  hurtAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  deathAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  loseShieldAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  gainShieldAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  healAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  startBattleAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  endBattleAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  startTurnAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  endTurnAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  summonAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
+  specialAnimation:
+    animationName: 
+    clip: {fileID: 0}
+    transitionDuration: 0
 --- !u!1 &7030514784578829008
 GameObject:
   m_ObjectHideFlags: 0

@@ -55,7 +55,11 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
+<<<<<<< Updated upstream
     filterMode: 0
+=======
+    filterMode: 1
+>>>>>>> Stashed changes
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -121,12 +125,21 @@ TextureImporter:
       name: SSlimeStatus_0
       rect:
         serializedVersion: 2
+<<<<<<< Updated upstream
         x: 0
         y: 32
         width: 32
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+=======
+        x: 3
+        y: 37
+        width: 23
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+>>>>>>> Stashed changes
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -143,12 +156,21 @@ TextureImporter:
       name: SSlimeStatus_1
       rect:
         serializedVersion: 2
+<<<<<<< Updated upstream
         x: 32
         y: 32
         width: 32
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+=======
+        x: 21
+        y: 55
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+>>>>>>> Stashed changes
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -165,12 +187,21 @@ TextureImporter:
       name: SSlimeStatus_2
       rect:
         serializedVersion: 2
+<<<<<<< Updated upstream
         x: 0
         y: 0
         width: 32
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+=======
+        x: 35
+        y: 37
+        width: 23
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+>>>>>>> Stashed changes
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -187,12 +218,21 @@ TextureImporter:
       name: SSlimeStatus_3
       rect:
         serializedVersion: 2
+<<<<<<< Updated upstream
         x: 32
         y: 0
         width: 32
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+=======
+        x: 53
+        y: 51
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+>>>>>>> Stashed changes
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -205,11 +245,84 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+<<<<<<< Updated upstream
+=======
+    - serializedVersion: 2
+      name: SSlimeStatus_4
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 5
+        width: 23
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04bf9f3a274bdedf0800000000000000
+      internalID: -149264808163017920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SSlimeStatus_5
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 17
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcaf6647c3466cf90800000000000000
+      internalID: -6933744365476578611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SSlimeStatus_6
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 5
+        width: 26
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c28932d32d23e850800000000000000
+      internalID: 6405012726925066953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+>>>>>>> Stashed changes
     outline: []
     customData: 
     physicsShape: []
     bones: []
+<<<<<<< Updated upstream
     spriteID: 518cd376d57c9974cacc7d9f0fe47caf
+=======
+    spriteID: 
+>>>>>>> Stashed changes
     internalID: 0
     vertices: []
     indices: 
@@ -217,14 +330,24 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
+<<<<<<< Updated upstream
       entries:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+=======
+      entries: []
+>>>>>>> Stashed changes
     nameFileIdTable:
       SSlimeStatus_0: -3832434908216179122
       SSlimeStatus_1: -1794363593019822722
       SSlimeStatus_2: 7303802643760720181
       SSlimeStatus_3: 3052810190469138819
+<<<<<<< Updated upstream
+=======
+      SSlimeStatus_4: -149264808163017920
+      SSlimeStatus_5: -6933744365476578611
+      SSlimeStatus_6: 6405012726925066953
+>>>>>>> Stashed changes
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
