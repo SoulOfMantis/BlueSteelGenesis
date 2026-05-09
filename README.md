@@ -52,3 +52,9 @@ Godmode может быть активирован из интерфейса к�
 
 Живая Кислота (недоступен из-за бага, блокирующего переход на 2 этап): Огромный слизняк, состоящий из кислоты. Обладает мощным укусом, накладывающим кислоту, дальней атакой, накладывающей кислоту, очень медленным передвижением. При смерти осыпает всех существ кислотой и распадается на меньшие версии себя.
 
+## Использованные ассеты:
+- [400 Sounds Pack](https://ci.itch.io/400-sounds-pack)
+- [FilmCow SFX](https://filmcow.itch.io/filmcow-sfx)
+- [RPG Essentials Free](https://leohpaz.itch.io/rpg-essentials-sfx-free)
+- [FreeSFX](https://kronbits.itch.io/freesfx)
+- [Minifantasy Dungeon SFX](https://leohpaz.itch.io/minifantasy-dungeon-sfx-pack)
