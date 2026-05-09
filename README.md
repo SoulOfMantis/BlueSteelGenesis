@@ -58,3 +58,4 @@ Godmode может быть активирован из интерфейса к�
 - [RPG Essentials Free](https://leohpaz.itch.io/rpg-essentials-sfx-free)
 - [FreeSFX](https://kronbits.itch.io/freesfx)
 - [Minifantasy Dungeon SFX](https://leohpaz.itch.io/minifantasy-dungeon-sfx-pack)
+- [bees attack 1.wav](https://freesound.org/people/bruno.auzet/sounds/570916/)
